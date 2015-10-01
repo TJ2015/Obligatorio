@@ -21,7 +21,8 @@ public class Nota implements Serializable {
 
 	public Nota() {
 		super();
-	}   
+	}
+	
 	public long getIdNota() {
 		return this.idNota;
 	}

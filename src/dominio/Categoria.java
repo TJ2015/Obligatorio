@@ -17,6 +17,7 @@ public class Categoria implements Serializable {
 	@Id
 	private long idCategoria;
 	private String nombre;
+	@OneToMany(mappedBy = "categoria")
 	private List<Producto> productos;
 	private static final long serialVersionUID = 1L;
 

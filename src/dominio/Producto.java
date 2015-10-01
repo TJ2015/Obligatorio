@@ -19,6 +19,8 @@ public class Producto implements Serializable {
 	private String nombre;
 	private String descripcion;
 	private double precio;
+	@ManyToOne
+	private Categoria categoria;
 	// agregar imagen
 	private static final long serialVersionUID = 1L;
 

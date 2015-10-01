@@ -2,6 +2,7 @@ package dominio;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import javax.persistence.*;
 
 public class Usuario implements Serializable {
 
-	   
 	@Id
 	private long idUsuario;
 	private String nombre;
@@ -22,8 +22,13 @@ public class Usuario implements Serializable {
 	private String nick;
 	private String pasword;
 	private String email;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
+	
+	@OneToMany(mappedBy = "usuarioCreador")
 	private List<AV> AVs;
+	@ManyToMany(mappedBy = "usuariosCompartidos")
+	private List<AV> AVcompartidos;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
@@ -35,14 +40,16 @@ public class Usuario implements Serializable {
 
 	public void setIdUsuario(long idUsuario) {
 		this.idUsuario = idUsuario;
-	}   
+	}  
+	
 	public String getNombre() {
 		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}   
+	}
+	
 	public String getApellido() {
 		return this.apellido;
 	}
@@ -71,11 +78,11 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}   
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return this.fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
    
