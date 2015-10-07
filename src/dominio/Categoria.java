@@ -18,6 +18,7 @@ public class Categoria implements Serializable {
 	private long idCategoria;
 	private String nombre;
 	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+	@ElementCollection
 	private List<Producto> productos;
 	private static final long serialVersionUID = 1L;
 
