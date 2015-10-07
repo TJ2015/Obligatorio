@@ -25,15 +25,28 @@ public class Usuario implements Serializable {
 	private Date fechaNacimiento;
 	
 	@OneToMany(mappedBy = "usuarioCreador")
+	@ElementCollection
 	private List<AV> AVs;
 	@ManyToMany(mappedBy = "usuariosCompartidos")
+	@ElementCollection
 	private List<AV> AVcompartidos;
 	
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
 		super();
-	}   
+	}
+	
+	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.nick = nick;
+		this.pasword = pasword;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 	public long getIdUsuario() {
 		return this.idUsuario;
 	}

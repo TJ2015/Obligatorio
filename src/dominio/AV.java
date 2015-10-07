@@ -2,6 +2,8 @@ package dominio;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +22,13 @@ public class AV implements Serializable {
 	private String nombreAV;
 	@ManyToOne
 	private Usuario usuarioCreador;
+	@ElementCollection
 	@ManyToMany
 	private List<Usuario> usuariosCompartidos;
+	@ElementCollection
 	private List<Nota> notas;
-	private Map<String, Categoria> categorias;
+	@ElementCollection
+	private List<Categoria> categorias;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +36,7 @@ public class AV implements Serializable {
 		super();
 		this.nombreAV = nombreAV;
 		this.usuarioCreador = usuarioCreador;
-		this.categorias = new HashMap<>();
+		this.categorias = new ArrayList<>();
 	}
 
 	public AV() {
@@ -69,11 +74,11 @@ public class AV implements Serializable {
 		this.notas = notas;
 	}
 
-	public Map<String, Categoria> getCategorias() {
+	public List<Categoria> getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(Map<String, Categoria> categorias) {
+	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
 	
