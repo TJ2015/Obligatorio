@@ -14,6 +14,7 @@ public class Notificacion implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idNotificacion;
 	private String texto;
 	private boolean leido;

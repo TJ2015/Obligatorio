@@ -7,12 +7,14 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 public class DataBaseManager {
 	
-	static public void crearBaseDeDatos(String nombre, String url) throws SQLException {
+	static public void crearBaseDeDatos(String nombre, String url) throws Exception {
 		Connection connection;
+		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://" + url + "/?user=root");
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS " + nombre);
@@ -23,11 +25,10 @@ public class DataBaseManager {
 	}
 	
 	static public boolean setupTenant(String PU, String idTenant, String url, int port) {
-		
-		
+		/*
 		try {
 			crearBaseDeDatos(idTenant, url);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
@@ -36,6 +37,12 @@ public class DataBaseManager {
 		Map properties = new HashMap<>();
 		properties.put("javax.persistence.jdbc.url", "jdbc:mysql://" + url + ":" + port + "/" + idTenant);
 		Persistence.generateSchema("MultiTeanantTest", properties);
+		
+		*/
+		Map<String, String> properties = new HashMap<>();
+		
+		properties.put("connection.url", "jdbc:mysql://localhost/caca");
+		EntityManager em = Persistence.createEntityManagerFactory("Obligatorio", properties).createEntityManager();		
 		
 		return true;
 	}

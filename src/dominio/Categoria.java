@@ -15,6 +15,7 @@ public class Categoria implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
 	private String nombre;
 	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)

@@ -10,14 +10,22 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.Multitenant;
+import org.eclipse.persistence.annotations.MultitenantType;
+import org.eclipse.persistence.annotations.TenantTableDiscriminator;
+import org.eclipse.persistence.annotations.TenantTableDiscriminatorType;
+
 /**
  * Entity implementation class for Entity: AV
  *
  */
 @Entity
+@Multitenant(value = MultitenantType.TABLE_PER_TENANT)
+@TenantTableDiscriminator(type = TenantTableDiscriminatorType.PREFIX, contextProperty="tenant")
 public class AV implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idAV;
 	private String nombreAV;
 	@ManyToOne

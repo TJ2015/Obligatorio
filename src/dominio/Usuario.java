@@ -16,12 +16,14 @@ import javax.persistence.*;
 public class Usuario implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idUsuario;
 	private String nombre;
 	private String apellido;
 	private String nick;
 	private String pasword;
 	private String email;
+	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
 	@OneToMany(mappedBy = "usuarioCreador")

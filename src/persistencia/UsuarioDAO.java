@@ -6,6 +6,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import org.eclipse.persistence.config.EntityManagerProperties;
+
+import dominio.AV;
 import dominio.Usuario;
 
 @Stateless
@@ -19,13 +22,24 @@ public class UsuarioDAO implements IUsuarioDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean altaUsuario(Usuario usuario) {
 		boolean seRegistro = false;
+		
 		try {
 			//Persiste un usuario a la base de datos
+			
+			em.setProperty("other.tenant.id.property", "707"); 
+			em.setProperty(EntityManagerProperties.MULTITENANT_PROPERTY_DEFAULT, "707");
 			em.persist(usuario);
+			AV av = new AV("heladera", usuario);
+			em.persist(av);
+			
 			seRegistro = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 		return seRegistro;
 	}
 
