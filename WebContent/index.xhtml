@@ -2,10 +2,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      > 
 
-<h:head></h:head>
-<h:body>
-	<h1>#{pruebaMB.pruebaManejoDB()}</h1>
-</h:body>
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+</h:head> 
+<body>
+	<h:form styleClass="form">
+		<div class="container-fluid">
+			<div class="page-header text-center">
+			  <h1>Iniciar Sesión</h1>
+			</div>
+			<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Ingrese usuario y contraseña</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<h:outputLabel value="Usuario:" styleClass="sr-only" for="textoUsuario" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</div>
+							  	<h:inputText id="textoUsuario" styleClass="form-control" name="texto" value="#{usuarioBean.nick}" required="true" requiredMessage="Debe ingresar su usuario" a:placeholder="Usuario" />
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								</div>
+								<h:inputSecret id="textoContrasenia" styleClass="form-control" name="pass" value="#{usuarioBean.pass}" required="true" requiredMessage="Debe ingresar su contraseña" a:placeholder="Contraseña" />
+							</div>
+						</div>
+						<div class="form-group">
+							<h:commandButton id="botonLogin" styleClass="btn btn-primary" actionListener="#{usuarioBean.iniciarSesion()}" value="Iniciar Sesión" />
+						</div>
+					</div>
+					<div class="panel-footer">
+						<h:outputLabel value="#{usuarioBean.mensaje}" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</body> 
 </html>
