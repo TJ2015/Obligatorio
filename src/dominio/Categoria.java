@@ -39,11 +39,11 @@ public class Categoria implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}   
-	public List getProductos() {
+	public List<Producto> getProductos() {
 		return this.productos;
 	}
 
-	public void setProductos(List productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
    
