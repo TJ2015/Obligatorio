@@ -9,7 +9,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Nota implements Serializable {
 
 	   
@@ -20,7 +19,7 @@ public class Nota implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Nota() {
-		super();
+		
 	}
 	
 	public long getIdNota() {

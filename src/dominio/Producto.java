@@ -38,7 +38,7 @@ public class Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Producto() {
-		super();
+		
 	}	
 	public Long getIdProducto() {
 		return this.idProducto;

@@ -12,7 +12,7 @@ public class Atributo implements Serializable {
 	private String valor;
 	
 	public Atributo() {
-		super();
+		
 	}
 	public Atributo(String nombre, String valor) {
 		super();

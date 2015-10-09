@@ -20,7 +20,7 @@ public class AV implements Serializable {
 	@Id
 	private long idAV;
 	private String nombreAV;
-	@ManyToOne
+	//@ManyToOne
 	private Usuario usuarioCreador;
 	@ElementCollection
 	@ManyToMany
