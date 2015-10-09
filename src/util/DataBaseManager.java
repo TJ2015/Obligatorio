@@ -33,7 +33,7 @@ public class DataBaseManager {
 			return false;
 		}
 		
-		Map properties = new HashMap<>();
+		Map<Object, Object> properties = new HashMap<>();
 		properties.put("javax.persistence.jdbc.url", "jdbc:mysql://" + url + ":" + port + "/" + idTenant);
 		Persistence.generateSchema("MultiTeanantTest", properties);
 		
