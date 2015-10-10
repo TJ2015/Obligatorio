@@ -35,16 +35,17 @@ public class ControladorInventario implements IControladorInventario {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	
 	@Override
-	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria,
+	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, String categoria,
 			List<String> atributos, long idAV) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
-	public boolean crearProducto(String nombre, String descripcion, double precio, Categoria categoria,
+	public boolean crearProducto(String nombre, String descripcion, double precio, String categoria,
 			List<String> atributos, long idAV) {
 		// TODO Auto-generated method stub
 		return false;
@@ -58,14 +59,14 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public void modificarProducto(long idProducto, long idAV, String nombre, String descripcion, double precio,
-			Categoria categoria, List<String> atributos) {
+			String categoria, List<String> atributos) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void modificarProductoDescripcion(long idProducto, long idAV, String nombre, String descripcion,
-			double precio, Categoria categoria, List<String> atributos) {
+			double precio, String categoria, List<String> atributos) {
 		// TODO Auto-generated method stub
 
 	}
