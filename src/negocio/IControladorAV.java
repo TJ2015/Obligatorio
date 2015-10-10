@@ -2,8 +2,8 @@ package negocio;
 
 import javax.ejb.Local;
 
-import dominio.datatype.DataAV;
-import dominio.datatype.DataUsuario;
+import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataAV;
 
 @Local
 public interface IControladorAV {

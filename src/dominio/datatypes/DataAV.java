@@ -1,11 +1,11 @@
-package dominio.datatype;
+package dominio.datatypes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dominio.datatype.DataCategoria;
+import dominio.datatypes.DataCategoria;
 //import dominio.DataNota;
-import dominio.datatype.DataUsuario;
+import dominio.datatypes.DataUsuario;
 
 public class DataAV {
 	

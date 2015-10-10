@@ -3,7 +3,8 @@ package negocio;
 import javax.ejb.Stateless;
 import dominio.AV;
 import dominio.Usuario;
-import dominio.datatype.DataAV;
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
 
 
 /**
@@ -12,8 +13,8 @@ import dominio.datatype.DataAV;
 @Stateless
 public class ControladorAV implements IControladorAV {
 
-	@Override
-	public DataAV altaAV(String nombreAV, Usuario usuarioCreador) {
+	
+	public DataAV altaAV(String nombreAV, DataUsuario usuarioCreador) {
 		DataAV av= new DataAV(nombreAV,usuarioCreador);
 	    return av;
 		
