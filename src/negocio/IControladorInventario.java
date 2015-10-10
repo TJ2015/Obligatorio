@@ -1,9 +1,8 @@
 package negocio;
-
 import java.util.List;
 
 import dominio.Categoria;
-import dominio.datatypes.DataCategoria;
+
 
 public interface IControladorInventario {
 	

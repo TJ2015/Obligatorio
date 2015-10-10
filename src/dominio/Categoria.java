@@ -24,7 +24,7 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Categoria() {
-		super();
+		
 	}   
 	public long getIdCategoria() {
 		return this.idCategoria;

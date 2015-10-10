@@ -1,8 +1,12 @@
 package negocio;
 
+import dominio.Categoria;
+
 import java.util.List;
 
-import dominio.Categoria;
+
+
+
 
 public class ControladorInventario implements IControladorInventario {
 
