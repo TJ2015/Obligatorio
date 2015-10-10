@@ -17,10 +17,12 @@ public class DataAV {
 	private List<DataCategoria> categorias;
 	private static final long serialVersionUID = 1L;
 
-	public void DataAV(String nombreAV, DataUsuario usuarioCreador) {
+
+	public DataAV(String nombreAV, DataUsuario usuarioCreador) {
 		this.nombreAV = nombreAV;
 		this.usuarioCreador = usuarioCreador;
 		this.categorias = new ArrayList<>();
+		
 	}
 
 	public long getIdAV() {

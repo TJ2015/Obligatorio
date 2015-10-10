@@ -30,83 +30,40 @@
 <h:body>
 	<div class="container-fluid">
 		<div class="page-header text-center">
-		  <h1>Registro de Usuario</h1>
+		  <h1>Crear AV</h1>
 		</div>
 		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Registro de Usuario</div>
+				<div class="panel-heading">Crear AV</div>
 				<div class="panel-body">
 				
 			  		<h:form styleClass="form">
 						<div class="form-group">
-							<h:outputLabel value="Nickname" styleClass="sr-only" for="nickUsuario" />
+							<h:outputLabel value="nombreAV" styleClass="sr-only" for="nombreAV" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								</div>
-							  <h:inputText id="nickUsuario" value="#{usuarioBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nickname" a:placeholder="Nickname"/>
+							  <h:inputText id="nombreAV" value="#{avBean.nombreAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el nombre" a:placeholder="NombreAV"/>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<h:outputLabel value="Nombre" styleClass="sr-only" for="nombreUsuario" />
+							<h:outputLabel value="Nombre Usuario" styleClass="sr-only" for="usuarioCreador" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								</div>
-							  <h:inputText id="nombreUsuario" value="#{usuarioBean.nombre}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre" a:placeholder="Nombre"/>
+							  <h:inputText id="usuarioCreador" value="#{avBean.usuarioCreador}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre" a:placeholder="usuarioCreador"/>
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<h:outputLabel value="Apellido" styleClass="sr-only" for="apellidoUsuario" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="apellidoUsuario" value="#{usuarioBean.apellido}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar su apellido" a:placeholder="Apellido"/>
-							</div>
-						</div>
 						
-						<div class="form-group">
-							<h:outputLabel value="Correo" styleClass="sr-only" for="correoUsuario" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="correoUsuario" value="#{usuarioBean.correo}" styleClass="form-control" required="true" requiredMessage="Debe ingresar su correo electrónico" a:placeholder="E-mail"/>
-							</div>
-						</div>
-										
-												
-						<div class="form-group">
-							<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								</div>
-								<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.pass}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
-							</div>
-						</div>
-						
-											
-						<div class="form-group">
-							<h:outputLabel value="Fecha" styleClass="sr-only" for="date" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								</div>
-								
-								<h:inputText id="date" value="#{usuarioBean.fecha}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
-          								<f:convertDateTime pattern="d-M-yyyy" />
-        						</h:inputText>
-							</div>
-						</div>
 						
 	
 
-<h:commandButton id="botonRegistrar" styleClass="btn btn-primary" value="Registrarse" 
-				action="#{usuarioBean.registroUsuario()}"/>
+<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
+				action="#{avBean.agregarAV()}"/>
 </h:form>
 					
 				</div>

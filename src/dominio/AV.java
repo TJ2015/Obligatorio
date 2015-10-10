@@ -15,6 +15,10 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name="AV.findAll", query="SELECT u FROM AV u"),
+	@NamedQuery(name="AV.buscarPorNombre", query="SELECT av FROM AV av WHERE av.nombreAV = :nombreAV")
+})
 public class AV implements Serializable {
 
 	@Id
