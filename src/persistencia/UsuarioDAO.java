@@ -34,7 +34,10 @@ public class UsuarioDAO implements IUsuarioDAO {
 		Usuario usuario = null;
 		try {
 			//Se busca el usuario en la base 
-			usuario = em.find(Usuario.class, nick);
+			//usuario = em.find(Usuario.class, nick);
+			usuario = em.createNamedQuery("Usuario.buscarPorNick", Usuario.class)
+			.setParameter("nick", nick)
+			.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,11 +50,27 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try {
 			//Actualiza el en la base de datos.
 			em.merge(usuario);
+			
 			seActualizo = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return seActualizo;
+	}
+
+	@Override
+	public Usuario buscarUsuarioEmail(String email) {
+		Usuario usuario = null;
+		try {
+			//Se busca el usuario en la base 
+			//usuario = em.find(Usuario.class, nick);
+			usuario = em.createNamedQuery("Usuario.buscarPorEmail", Usuario.class)
+			.setParameter("email", email)
+			.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usuario;
 	}
 
 }

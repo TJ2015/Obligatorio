@@ -14,6 +14,7 @@ public class Nota implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idNota;
 	private String texto;
 	private Usuario usuario;

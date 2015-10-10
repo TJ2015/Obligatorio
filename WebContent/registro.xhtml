@@ -74,7 +74,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 								</div>
-							  <h:inputText id="correoUsuario" value="#{usuarioBean.correo}" styleClass="form-control" required="true" requiredMessage="Debe ingresar su correo electrónico" a:placeholder="E-mail"/>
+							  <h:inputText id="correoUsuario" value="#{usuarioBean.email}" styleClass="form-control" required="true" requiredMessage="Debe ingresar su correo electrónico" a:placeholder="E-mail"/>
 							</div>
 						</div>
 										
@@ -85,7 +85,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 								</div>
-								<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.pass}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
+								<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.password}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
 							</div>
 						</div>
 						
@@ -97,7 +97,7 @@
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 								</div>
 								
-								<h:inputText id="date" value="#{usuarioBean.fecha}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
+								<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
           								<f:convertDateTime pattern="d-M-yyyy" />
         						</h:inputText>
 							</div>

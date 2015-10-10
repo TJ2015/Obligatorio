@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import dominio.AV;
@@ -18,33 +20,46 @@ public class ControladorAV implements IControladorAV {
 
 	@EJB
 	private IUsuarioDAO usuarioDAO;
+	@EJB
 	private IAvDAO avDAO;
 	
-	
+
+	//TODO ARREGLAR JOIN
 	public boolean altaAV(String nombreAV, String usuarioCreador) {
 		//String nombreUsu=usuarioCreador.getNombre();
-		if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
-			Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
-			AV av= new AV(nombreAV,usu);
-		    return true;
+		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
+		if (usu!=null){
+			if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
+				AV av= new AV(nombreAV,usu);
+				usu.addAV(av);
+				avDAO.altaAV(av);
+				usuarioDAO.actualizarUsuario(usu);	
+			    return true;
+			}
 		}
 		return false;
+		
 	}
 	
 	//El usuario ya tiene un Av con ese nombre?
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador){
 		boolean existe = false;
-		try {
-			//Si nos devuelve un av, existe es igual a true 
-			AV av=this.avDAO.traerAV(nombreAV);
-			String usuCreadorAV=av.getUsuarioCreador().getNombre();
-			existe=(usuCreadorAV ==usuarioCreador);	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return existe;
 		
-	}
+			Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
+			if (usu!=null){
+				List <AV> listaav=usu.getAVs();
+				for(AV i:listaav){
+					if(i.getNombreAV()==nombreAV){
+						return true;
+					}
+				}
+			}	
+			return false;
+	}		
+			
+		
+		
+	
 	public boolean existeAV(String nombreAV){
 		boolean existe = false;
 		try {

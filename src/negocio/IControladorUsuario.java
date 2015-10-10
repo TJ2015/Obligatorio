@@ -9,9 +9,11 @@ import dominio.datatypes.DataUsuario;
 @Local
 public interface IControladorUsuario {
 	
-	public boolean existeUsuario(String nickname, String email);
-	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento);
-	public void modificarInfoUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento);
+	public boolean existeUsuarioNick(String nickname);
+	public boolean existeUsuarioEmail(String nickname);
+	public boolean registrarUsuario(String nombre, String apellido, String nick, String password, String email, Date fechaNacimiento);
+	public void modificarInfoUsuario(String nombre, String apellido, String nick, String password, String email, Date fechaNacimiento);
 	public boolean login(String nickname, String password);
+	public void eliminarUsuario(String nickname);
 	
 }

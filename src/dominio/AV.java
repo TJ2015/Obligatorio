@@ -22,17 +22,20 @@ import javax.persistence.*;
 public class AV implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idAV;
 	private String nombreAV;
 	@ManyToOne
 	private Usuario usuarioCreador;
 	@ElementCollection
 	@ManyToMany
-	private List<Usuario> usuariosCompartidos;
+	private List<Usuario> usuariosCompartidos = new ArrayList<>();
 	@ElementCollection
-	private List<Nota> notas;
+	private List<Nota> notas  = new ArrayList<>();
 	@ElementCollection
-	private List<Categoria> categorias;
+	private List<Categoria> categorias = new ArrayList<>();
+	@ElementCollection
+	private List<Producto> productos = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -86,6 +89,22 @@ public class AV implements Serializable {
 		this.categorias = categorias;
 	}
 	
+	public List<Usuario> getUsuariosCompartidos() {
+		return usuariosCompartidos;
+	}
+
+	public void setUsuariosCompartidos(List<Usuario> usuariosCompartidos) {
+		this.usuariosCompartidos = usuariosCompartidos;
+	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

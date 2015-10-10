@@ -11,16 +11,23 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Usuario
  *
  */
-@Entity
 
+
+@Entity
+@NamedQueries({
+	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="Usuario.buscarPorNick", query="SELECT u FROM Usuario u WHERE u.nick = :nick"),
+	@NamedQuery(name="Usuario.buscarPorEmail", query="SELECT u FROM Usuario u WHERE u.email = :email")
+})
 public class Usuario implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idUsuario;
 	private String nombre;
 	private String apellido;
 	private String nick;
-	private String pasword;
+	private String password;
 	private String email;
 	private Date fechaNacimiento;
 	
@@ -42,7 +49,7 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
-		this.pasword = pasword;
+		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
 	}
@@ -77,13 +84,7 @@ public class Usuario implements Serializable {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}   
-	public String getPasword() {
-		return this.pasword;
-	}
-
-	public void setPasword(String pasword) {
-		this.pasword = pasword;
-	}   
+	
 	public String getEmail() {
 		return this.email;
 	}
@@ -98,5 +99,31 @@ public class Usuario implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-   
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<AV> getAVs() {
+		return AVs;
+	}
+
+	public void setAVs(List<AV> aVs) {
+		AVs = aVs;
+	}
+
+	public List<AV> getAVcompartidos() {
+		return AVcompartidos;
+	}
+
+	public void setAVcompartidos(List<AV> aVcompartidos) {
+		AVcompartidos = aVcompartidos;
+	}
+   public void addAV(AV av){
+	   AVs.add(av);
+   }
 }
