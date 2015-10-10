@@ -39,7 +39,22 @@ public class Producto implements Serializable {
 
 	public Producto() {
 		super();
-	}	
+	}
+	
+	
+	
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria,
+			List<Atributo> atributosList) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+	}
+
+
+
 	public Long getIdProducto() {
 		return this.idProducto;
 	}	
