@@ -15,11 +15,12 @@ public class Categoria implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
 	private String nombre;
 	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
 	@ElementCollection
-	private List<Producto> productos;
+	private List<ProductoDescripcion> productos;
 	private static final long serialVersionUID = 1L;
 
 	public Categoria() {

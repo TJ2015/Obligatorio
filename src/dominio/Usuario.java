@@ -11,16 +11,23 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Usuario
  *
  */
-@Entity
 
+
+@Entity
+@NamedQueries({
+	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="Usuario.buscarPorNick", query="SELECT u FROM Usuario u WHERE u.nick = :nick"),
+	@NamedQuery(name="Usuario.buscarPorEmail", query="SELECT u FROM Usuario u WHERE u.email = :email")
+})
 public class Usuario implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idUsuario;
 	private String nombre;
 	private String apellido;
 	private String nick;
-	private String pasword;
+	private String password;
 	private String email;
 	private Date fechaNacimiento;
 	
@@ -42,7 +49,7 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
-		this.pasword = pasword;
+		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
 	}
@@ -78,11 +85,11 @@ public class Usuario implements Serializable {
 		this.nick = nick;
 	}   
 	public String getPasword() {
-		return this.pasword;
+		return this.password;
 	}
 
 	public void setPasword(String pasword) {
-		this.pasword = pasword;
+		this.password = pasword;
 	}   
 	public String getEmail() {
 		return this.email;

@@ -15,8 +15,8 @@ public class ControladorAV implements IControladorAV {
 
 	
 	public DataAV altaAV(String nombreAV, DataUsuario usuarioCreador) {
-		DataAV av= new DataAV(nombreAV,usuarioCreador);
-	    return av;
+		//DataAV av= new DataAV(nombreAV,usuarioCreador);
+	    return null;
 		
 	}
 	public boolean existeAVusuario(String nombreAV, DataUsuario usuarioCreador){
