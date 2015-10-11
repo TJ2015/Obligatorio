@@ -37,6 +37,7 @@ public class ControladorAV implements IControladorAV {
 				List <AV> listaav=usu.getAVs();//nuevo
 				listaav.add(av);//nuevo
 				av.setUsuarioCreador(usu);//usu
+				usu.setAVs(listaav);
 				avDAO.altaAV(av);
 				
 				usuarioDAO.actualizarUsuario(usu);	

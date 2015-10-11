@@ -34,9 +34,9 @@ public class Usuario implements Serializable {
 	
 	//@OneToMany(mappedBy = "usuarioCreador")
 	//@ElementCollection
-	 @OneToMany
+	 @OneToMany 
 	 @JoinTable(name = "av_usuarioCreador",
-	            joinColumns = @JoinColumn(name = "idAV"),
+	            joinColumns = @JoinColumn(name = "usuarioCreador") ,
 	            inverseJoinColumns = @JoinColumn(name = "idUsuario"))
 	  
 	private List<AV> AVs;
