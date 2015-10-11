@@ -25,8 +25,10 @@ public class AV implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idAV;
 	private String nombreAV;
+	
 	@ManyToOne
 	private Usuario usuarioCreador;
+	
 	@ElementCollection
 	@ManyToMany
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();

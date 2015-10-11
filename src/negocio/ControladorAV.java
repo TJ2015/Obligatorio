@@ -27,7 +27,30 @@ public class ControladorAV implements IControladorAV {
 	//TODO ARREGLAR JOIN
 	public boolean altaAV(String nombreAV, String usuarioCreador) {
 		//String nombreUsu=usuarioCreador.getNombre();
+		
+		
 		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
+		if (usu!=null){
+			if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
+				AV av= new AV(nombreAV,usu);
+				//Long idUsuario = usu.getIdUsuario();
+				List <AV> listaav=usu.getAVs();//nuevo
+				listaav.add(av);//nuevo
+				av.setUsuarioCreador(usu);//usu
+				avDAO.altaAV(av);
+				
+				usuarioDAO.actualizarUsuario(usu);	
+			    return true;
+			}
+		}
+		return false;
+		
+		
+		
+		
+		
+		
+	/*	Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
 		if (usu!=null){
 			if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
 				AV av= new AV(nombreAV,usu);
@@ -37,7 +60,7 @@ public class ControladorAV implements IControladorAV {
 			    return true;
 			}
 		}
-		return false;
+		return false;*/
 		
 	}
 	

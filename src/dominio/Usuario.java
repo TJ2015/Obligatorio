@@ -31,9 +31,16 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date fechaNacimiento;
 	
-	@OneToMany(mappedBy = "usuarioCreador")
-	@ElementCollection
+	
+	//@OneToMany(mappedBy = "usuarioCreador")
+	//@ElementCollection
+	 @OneToMany
+	 @JoinTable(name = "av_usuarioCreador",
+	            joinColumns = @JoinColumn(name = "idAV"),
+	            inverseJoinColumns = @JoinColumn(name = "idUsuario"))
+	  
 	private List<AV> AVs;
+	
 	@ManyToMany(mappedBy = "usuariosCompartidos")
 	@ElementCollection
 	private List<AV> AVcompartidos;
@@ -126,4 +133,7 @@ public class Usuario implements Serializable {
    public void addAV(AV av){
 	   AVs.add(av);
    }
+   
+   
+     
 }
