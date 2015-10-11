@@ -32,12 +32,11 @@ public class Usuario implements Serializable {
 	private Date fechaNacimiento;
 	
 	
-	//@OneToMany(mappedBy = "usuarioCreador")
-	//@ElementCollection
+
 	 @OneToMany 
 	 @JoinTable(name = "av_usuarioCreador",
 	            joinColumns = @JoinColumn(name = "usuarioCreador") ,
-	            inverseJoinColumns = @JoinColumn(name = "idUsuario"))
+	            inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
 	  
 	private List<AV> AVs;
 	

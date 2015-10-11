@@ -3,6 +3,7 @@ package negocio;
 import javax.ejb.Local;
 
 import dominio.datatypes.DataUsuario;
+import dominio.AV;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
 

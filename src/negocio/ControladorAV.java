@@ -39,31 +39,17 @@ public class ControladorAV implements IControladorAV {
 				av.setUsuarioCreador(usu);//usu
 				usu.setAVs(listaav);
 				avDAO.altaAV(av);
-				
 				usuarioDAO.actualizarUsuario(usu);	
 			    return true;
+			    
+			    
 			}
 		}
 		return false;
 		
-		
-		
-		
-		
-		
-	/*	Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
-		if (usu!=null){
-			if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
-				AV av= new AV(nombreAV,usu);
-				usu.addAV(av);
-				avDAO.altaAV(av);
-				usuarioDAO.actualizarUsuario(usu);	
-			    return true;
-			}
-		}
-		return false;*/
-		
 	}
+	
+	
 	
 	//El usuario ya tiene un Av con ese nombre?
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador){
@@ -107,6 +93,12 @@ public class ControladorAV implements IControladorAV {
 	}
 
 
+	
+	
+	public void mostrarAVxUsuario(String usuario, String AV){
+		
+		
+	}
 	
 
 

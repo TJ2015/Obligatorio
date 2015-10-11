@@ -1,12 +1,19 @@
 package managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import negocio.IControladorAV;
+import dominio.datatypes.*;
+
 
 @ManagedBean
 @SessionScoped
@@ -56,6 +63,14 @@ public class AvBean implements Serializable{
 		else
 			this.mensaje = "Ya tienes un AV con ese nombre";
 	}
+	
+	
+	
+	/*INVENTO PARA LISTAR AV DE MARIANELA*/
+	
+	  public List<DataAV> mostrarAV() {
+	    	return null;
+	    }
 	
 	
 	

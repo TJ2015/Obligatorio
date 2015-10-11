@@ -1,19 +1,23 @@
 package negocio;
 import java.util.List;
 
+import javax.ejb.Local;
+
+import dominio.Atributo;
 import dominio.Categoria;
 
-
+@Local
 public interface IControladorInventario {
 	
-	public boolean crearCategoria(String nombre, long idAV);
-	public boolean crearCategoria(String nombre);
+	public boolean crearCategoria(String nombre,String nombreAV);
+	//public boolean crearCategoria(String nombre);
 	public boolean existeCategoria(String nombre, String nombreAV);
 	public void modificarNombreCategoria(String nombre, long idAV, long idCategoria);
 	public void eliminarCategoria(String nombre, long idAV);
 	
-	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria, List<String> atributos, long idAV);
+	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, long idAV);
 	public boolean crearProducto(String nombre, String descripcion, double precio, Categoria categoria, List<String> atributos, long idAV);
+	
 	public boolean copiarProductoGenerico(long idProducto, long idAV);
 	public void modificarProducto(long idProducto, long idAV, String nombre, String descripcion, double precio, Categoria categoria, List<String> atributos);
 	public void modificarProductoDescripcion(long idProducto, long idAV, String nombre, String descripcion, double precio, Categoria categoria, List<String> atributos);

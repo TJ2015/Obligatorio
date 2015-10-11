@@ -22,8 +22,13 @@ public class Categoria implements Serializable {
 	@ElementCollection
 	private List<ProductoDescripcion> productos;
 	private static final long serialVersionUID = 1L;
+	
+	public Categoria(){
+		
+	}
 
-	public Categoria() {
+	public Categoria(String nombre) {
+		this.nombre=nombre;
 		
 	}   
 	public long getIdCategoria() {

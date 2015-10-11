@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import negocio.IControladorUsuario;
 
+
 @ManagedBean
 @SessionScoped
 public class UsuarioBean implements Serializable {
@@ -92,6 +93,7 @@ public class UsuarioBean implements Serializable {
 			if( cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento) ) {
 				logueado = true;
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
+				
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}

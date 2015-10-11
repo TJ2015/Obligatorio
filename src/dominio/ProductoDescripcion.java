@@ -38,6 +38,22 @@ public class ProductoDescripcion implements Serializable {
 	// TODO agregar imagen
 	@Transient
 	private List<Atributo> atributosList;
+	
+	
+	
+	
+	//para descripcion producto// MARIANELA!!!!
+	private long idAV;
+	
+	
+	
+	public long getIdAV() {
+		return idAV;
+	}
+
+	public void setIdAV(long idAV) {
+		this.idAV = idAV;
+	}
 
 	private static final long serialVersionUID = 1L;
 

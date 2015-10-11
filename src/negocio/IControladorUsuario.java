@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.ejb.Local;
 
-import dominio.datatypes.DataUsuario;
 
 @Local
 public interface IControladorUsuario {
