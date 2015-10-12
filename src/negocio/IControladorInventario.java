@@ -14,7 +14,7 @@ public interface IControladorInventario {
 	public void modificarNombreCategoria(String nombre, long idAV, long idCategoria);
 	public void eliminarCategoria(String nombre, long idAV);
 	
-	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, long idAV);
+	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV);
 	public boolean crearProducto(String nombre, String descripcion, double precio, Categoria categoria, List<String> atributos, long idAV);
 	
 	public boolean copiarProductoGenerico(long idProducto, long idAV);

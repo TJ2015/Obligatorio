@@ -32,6 +32,7 @@ public class AV implements Serializable {
 	
 	@ElementCollection
 	@ManyToMany
+	@JoinTable(name = "av_usuarioscompartidos")
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
 	@ElementCollection
 	private List<Nota> notas  = new ArrayList<>();

@@ -18,7 +18,10 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"			
+			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"
+			var usuario = document.getElementById('#{textoUsuario.clientId}');
+			$(usuario).focus();
+			
 		})
 	</script>
 
@@ -27,58 +30,40 @@
 <h:body>
 	<div class="container-fluid">
 		<div class="page-header text-center">
-		  <h1>Crear Producto Descripción</h1>
+		  <h1>Crear AV</h1>
 		</div>
 		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Crear Producto Descripción</div>
+				<div class="panel-heading">Compartir AV</div>
 				<div class="panel-body">
 				
 			  		<h:form styleClass="form">
 						<div class="form-group">
-							<h:outputLabel value="Nombre" styleClass="sr-only" for="nickUsuario" />
+							<h:outputLabel value="idAV" styleClass="sr-only" for="idAv" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								</div>
-							  <h:inputText id="nombre" value="#{productoBean.nombre}" styleClass="form-control" required="true" requiredMessage="" a:placeholder="Nombre del producto"/>
+							  <h:inputText id="idAv" value="#{avBean.idAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el id" a:placeholder="idAv"/>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<h:outputLabel value="Descripción" styleClass="sr-only" for="descripcion" />
+							<h:outputLabel value="Nick Usuario" styleClass="sr-only" for="nick" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								</div>
-							  <h:inputText id="descripcion" value="#{productoBean.descripcion}" styleClass="form-control" required="true" requiredMessage="" a:placeholder="Descripción"/>
+							  <h:inputText id="nick" value="#{avBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nick" a:placeholder="nick"/>
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<h:outputLabel value="Precio" styleClass="sr-only" for="precio" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="precio" value="#{productoBean.precio}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el precio" a:placeholder="Precio"/>
-							</div>
-						</div>												
-											
-						<div class="form-group">
-							<h:outputLabel value="categoria" styleClass="sr-only" for="categoria" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								</div>
-
-							</div>
-						</div>
+						
 						
 	
 
-				<h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
-				action="#{productoBean.crearProductoDescripción()}"/>
+<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Compartir" 
+				action="#{avBean.compartirAV()}"/>
 </h:form>
 					
 				</div>
@@ -88,3 +73,4 @@
 </h:body>
 
 </html>
+

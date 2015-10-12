@@ -2,15 +2,12 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 
-import dominio.Atributo;
-import dominio.Categoria;
 import negocio.IControladorInventario;
 
 
@@ -20,17 +17,11 @@ public class ProductoBean implements Serializable {
 	@EJB
 	IControladorInventario cinv;
 	
-	private Long idProducto;
 	private String nombre;
 	private String descripcion;
 	private double precio;
-	private int stock;
-	@ManyToOne
-	private Categoria categoria;
-
-	// TODO agregar imagen
-	@Transient
-	private List<Atributo> atributosList;
+	private String categoria;
+	private String atributosList;
 	private static final long serialVersionUID = 1L;
 	
 	//para descripcion producto
@@ -49,21 +40,6 @@ public class ProductoBean implements Serializable {
 	
 	
 	
-	
-	
-	
-
-	
-	public Long getIdProducto() {
-		return idProducto;
-	}
-
-
-	public void setIdProducto(Long idProducto) {
-		this.idProducto = idProducto;
-	}
-
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -94,32 +70,22 @@ public class ProductoBean implements Serializable {
 	}
 
 
-	public int getStock() {
-		return stock;
-	}
-
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
 
-	public List<Atributo> getAtributosList() {
+	public String getAtributosList() {
 		return atributosList;
 	}
 
 
-	public void setAtributosList(List<Atributo> atributosList) {
+	public void setAtributosList(String atributosList) {
 		this.atributosList = atributosList;
 	}
 
@@ -133,7 +99,6 @@ public class ProductoBean implements Serializable {
 		this.idAV = idAV;
 	}
 
-	
 
 	public void crearProductoDescripción(){
 		
@@ -149,8 +114,6 @@ public class ProductoBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 	}
 	

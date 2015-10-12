@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,12 +46,13 @@ public class Usuario implements Serializable {
 
 	 @OneToMany 
 	 @JoinTable(name = "av_usuarioCreador",
-	            joinColumns = @JoinColumn(name = "usuarioCreador") ,
-	            inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
+	        joinColumns = @JoinColumn(name = "usuarioCreador") ,
+	        inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
 	private List<AV> AVs = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "usuariosCompartidos")
+	@ManyToMany
 	@ElementCollection
+	@JoinTable(name = "usuario_avcompartidos")
 	private List<AV> AVcompartidos;
 	
 	private static final long serialVersionUID = 1L;
