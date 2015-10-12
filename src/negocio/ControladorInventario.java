@@ -22,38 +22,20 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean crearCategoria(String nombre, String nombreAV) {
+	public boolean crearCategoria(String nombre, long idAV) {
 		
-		Categoria cat=new Categoria(nombre);
-		invDAO.crearCategoria(cat);
+		Categoria cat = new Categoria(nombre);
 		
-		/*AV av= avDAO.traerAV(nombreAV);
-		List <Categoria> listcat=av.getCategorias();
-		listcat.add(cat);//nuevo
-		av.setCategorias(listcat);	
+		AV av = avDAO.traerAV(idAV);
 		
-		/*if(existeCategoria(nombre,nombreAV)){
-			return false;
+		if( av != null) {
+			
+			cat.setAv(av);
+			invDAO.crearCategoria(cat);
+			av.addCategoria(cat);
+			avDAO.actualizarAV(av);
 		}
-		else{
-			//Crear categoria
-			if(!existeCategoria(nombre,nombreAV)){
-				Categoria cat=new Categoria(nombre);
-				invDAO.crearCategoria(cat);
-				if (avDAO.buscarAV(nombreAV)){
-					AV av= avDAO.traerAV(nombreAV);
-					List <Categoria> listcat=av.getCategorias();
-					listcat.add(cat);//nuevo
-					av.setCategorias(listcat);	
-					
-				}
-			
-			}
-			
-			
-		}*/
 		
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -64,19 +46,18 @@ public class ControladorInventario implements IControladorInventario {
 	}*/
 
 	@Override
-	public boolean existeCategoria(String nombre, String nombreAV) {
+	public boolean existeCategoria(String nombre, long idAV) {
 		//if (nombreAV!= "0"){
-			AV av= avDAO.traerAV(nombreAV);
-			if(av!=null){
-				List <Categoria> listCat=av.getCategorias();
-				for(Categoria i:listCat){
-					if(i.getNombre()==nombre){
-						return true;
-					}
+		AV av = avDAO.traerAV(idAV);
+		if(av != null) {
+			List <Categoria> listCat = av.getCategorias();
+			for(Categoria i : listCat) {
+				if(i.getNombre() == nombre) {
+					return true;
 				}
-			} else return false;
-			return false;
-		
+			}
+		}
+		return false;
 	}
 
 	@Override

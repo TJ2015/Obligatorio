@@ -33,12 +33,12 @@ public class AvDAO implements IAvDAO {
 			return seRegistro;
 		}
 		
-		public AV traerAV(String nombreAV){
+		public AV traerAV(long id){
 			AV av = null;
 			try {
 				
-				av = em.createNamedQuery("Av.buscarPorNombre", AV.class)
-				.setParameter("nombreAV", nombreAV)
+				av = em.createNamedQuery("AV.buscarPorId", AV.class)
+				.setParameter("idAV", id)
 				.getSingleResult();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -49,11 +49,11 @@ public class AvDAO implements IAvDAO {
 		
 
 		@Override
-		public boolean buscarAV(String nombreAV) {//TODO existe
+		public boolean buscarAV(long id) {//TODO existe
 			
 			boolean existe=false;
 			//AV av = null;
-			existe=(traerAV(nombreAV)!=null);
+			existe=(traerAV(id)!=null);
 			return existe;
 		}
 

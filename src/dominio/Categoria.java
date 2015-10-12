@@ -27,10 +27,6 @@ public class Categoria implements Serializable {
 	@ManyToOne
 	private AV av;
 
-	
-
-	
-
 	public Categoria(){
 		
 	}

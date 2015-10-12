@@ -70,10 +70,10 @@ public class ControladorAV implements IControladorAV {
 		
 		
 	
-	public boolean existeAV(String nombreAV){
+	public boolean existeAV(long idAV){
 		boolean existe = false;
 		try {
-			existe=(this.avDAO.buscarAV(nombreAV));
+			existe=(this.avDAO.buscarAV(idAV));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,9 +85,9 @@ public class ControladorAV implements IControladorAV {
 		//TERMINARRRRR
 		
 	}
-	public void eliminarAV(String nombreAV){
+	public void eliminarAV(long idAV){
 		AV av=null;
-		av=this.avDAO.traerAV(nombreAV);
+		//av=this.avDAO.traerAV(nombreAV);
 		//TERMINARRRRRR
 		
 	}

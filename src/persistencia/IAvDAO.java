@@ -6,8 +6,8 @@ import dominio.AV;
 
 @Local
 public interface IAvDAO {
-	public AV traerAV(String nombreAV);
+	public AV traerAV(long id);
 	public boolean altaAV(AV av);
-	public boolean buscarAV(String nombreAV);
+	public boolean buscarAV(long id);
 	public boolean actualizarAV(AV av);
 }

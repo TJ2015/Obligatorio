@@ -1,6 +1,7 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,8 +47,7 @@ public class Usuario implements Serializable {
 	 @JoinTable(name = "av_usuarioCreador",
 	            joinColumns = @JoinColumn(name = "usuarioCreador") ,
 	            inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
-	  
-	private List<AV> AVs;
+	private List<AV> AVs = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "usuariosCompartidos")
 	@ElementCollection

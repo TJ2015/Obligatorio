@@ -9,9 +9,8 @@ import dominio.Categoria;
 @Local
 public interface IControladorInventario {
 	
-	public boolean crearCategoria(String nombre,String nombreAV);
-	//public boolean crearCategoria(String nombre);
-	public boolean existeCategoria(String nombre, String nombreAV);
+	public boolean crearCategoria(String nombre, long idAV);
+	public boolean existeCategoria(String nombre, long idAV);
 	public void modificarNombreCategoria(String nombre, long idAV, long idCategoria);
 	public void eliminarCategoria(String nombre, long idAV);
 	

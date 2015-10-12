@@ -24,13 +24,9 @@ public class CategoriaBean implements Serializable {
 	//IControladorAV cAV;
 	
 	private String nombre;
-	private String nombreAV;
-	
+	private long idAV;
 	
 	private static final long serialVersionUID = 1L;
-	
-	
-	
 	
 	public String getNombre() {
 		return nombre;
@@ -38,15 +34,19 @@ public class CategoriaBean implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-	public String getNombreAV() {
-		return nombreAV;
+		
+	public IControladorInventario getCinv() {
+		return cinv;
 	}
-	public void setNombreAV(String nombreAV) {
-		this.nombreAV = nombreAV;
+	public void setCinv(IControladorInventario cinv) {
+		this.cinv = cinv;
 	}
-	
+	public long getIdAV() {
+		return idAV;
+	}
+	public void setIdAV(long idAV) {
+		this.idAV = idAV;
+	}
 	public CategoriaBean() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -73,13 +73,9 @@ public class CategoriaBean implements Serializable {
 			}
 		}*/
 
-	
-	
-	
-
 	public void crearCategoria(){
 		try {
-			if( cinv.crearCategoria(nombre, nombreAV) ) {
+			if( cinv.crearCategoria(nombre, idAV) ) {
 
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
 			} else {

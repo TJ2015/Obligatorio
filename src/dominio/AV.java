@@ -17,6 +17,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="AV.findAll", query="SELECT u FROM AV u"),
+	@NamedQuery(name="AV.buscarPorId", query="SELECT av FROM AV av WHERE av.idAV =:idAV"),
 	@NamedQuery(name="AV.buscarPorNombre", query="SELECT av FROM AV av WHERE av.nombreAV =:nombreAV")
 })
 public class AV implements Serializable {
@@ -35,15 +36,11 @@ public class AV implements Serializable {
 	@ElementCollection
 	private List<Nota> notas  = new ArrayList<>();
 	
-	
-	
-	
-	@OneToMany(mappedBy = "av", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "categorias_av",
+	    joinColumns = @JoinColumn(name = "av"),
+	    inverseJoinColumns = @JoinColumn (name = "idAV"))
 	private List<Categoria> categorias = new ArrayList<>();
-	
-	
-	
-	
 	@ElementCollection
 	private List<Producto> productos = new ArrayList<>();
 	
@@ -113,6 +110,10 @@ public class AV implements Serializable {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
+	}
+	
+	public void addCategoria(Categoria cat) {
+		this.categorias.add(cat);
 	}
 
 	@Override
