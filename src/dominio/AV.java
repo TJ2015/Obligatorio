@@ -34,15 +34,10 @@ public class AV implements Serializable {
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
 	@ElementCollection
 	private List<Nota> notas  = new ArrayList<>();
-	
-	
-	
+
 	
 	@OneToMany(mappedBy = "av", cascade = CascadeType.ALL)
 	private List<Categoria> categorias = new ArrayList<>();
-	
-	
-	
 	
 	@ElementCollection
 	private List<Producto> productos = new ArrayList<>();

@@ -17,6 +17,7 @@ public interface IControladorAV {
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);
 	public void modificarAV(String nombreAV, String nuevoNombreAV);//datos de estilo si se modifican
 	public void eliminarAV(String nombreAV);
+	public void compartirAV(long idAV, String nickUsuario);
 	
 	
 }

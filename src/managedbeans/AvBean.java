@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import negocio.IControladorAV;
+import negocio.IControladorUsuario;
 import dominio.datatypes.*;
 
 
@@ -20,7 +21,11 @@ import dominio.datatypes.*;
 public class AvBean implements Serializable{
 	@EJB
 	IControladorAV cAV;
+	@EJB
+	IControladorUsuario cUsu;
 	
+	private long idAV;
+	private String nickname;
 	private String nombreAV;
 	private String mensaje; 
 	private String usuarioCreador;
@@ -52,7 +57,26 @@ public class AvBean implements Serializable{
 	public void setUsuarioCreador(String usuarioCreador) {
 		this.usuarioCreador = usuarioCreador;
 	}
+	  public long getIdAV() {
+			return idAV;
+		}
 
+		public void setIdAv(long idAV) {
+			this.idAV = idAV;
+		}
+
+		public String getNick() {
+			return nickname;
+		}
+
+		public void setNick(String nickname) {
+			this.nickname = nickname;
+		}
+
+		public List<DataAV> mostrarAV() {
+		    	return null;
+		    }
+		
 	public void agregarAV(){
 	boolean creo=false;
 		
@@ -64,15 +88,11 @@ public class AvBean implements Serializable{
 			this.mensaje = "Ya tienes un AV con ese nombre";
 	}
 	
-	
-	
-	/*INVENTO PARA LISTAR AV DE MARIANELA*/
-	
-	  public List<DataAV> mostrarAV() {
-	    	return null;
-	    }
-	
-	
-	
+	public void compartirAV(){
+		if(cUsu.existeUsuarioNick(nickname)){
+			cAV.compartirAV(idAV, nickname);
+		}
+		
+	}
 
 }

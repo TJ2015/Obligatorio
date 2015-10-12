@@ -93,13 +93,23 @@ public class ControladorAV implements IControladorAV {
 	}
 
 
-	
-	
 	public void mostrarAVxUsuario(String usuario, String AV){
 		
 		
 	}
-	
+	public void compartirAV(long idAV, String nickname){
+		Usuario usu=usuarioDAO.buscarUsuario(nickname);
+		AV av=avDAO.traerAV(idAV);
+		
+		List <Usuario> usuComp=av.getUsuariosCompartidos();
+		usuComp.add(usu);
+		av.setUsuariosCompartidos(usuComp);
+		
+		List <AV> avsComp=usu.getAVcompartidos();
+		avsComp.add(av);
+		usu.setAVcompartidos(avsComp);
+		
+	}
 
 
 }
