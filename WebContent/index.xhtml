@@ -12,20 +12,18 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-	
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
 		})
 	</script>
-
 </h:head> 
 
 <h:body>
-	<div class="container-fluid">
+<ui:composition template="/templates/layout.xhtml">
+
+	<ui:define name="contenido">
+	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>SAPo</h1>
 		</div>
@@ -49,7 +47,7 @@
 							<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
 							<div class="input-group">
 								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
 								</div>
 								<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.password}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
 							</div>
@@ -63,6 +61,8 @@
 			</div>
 		</div>
 	</div>
+	</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>
