@@ -23,34 +23,66 @@ public class Categoria implements Serializable {
 	private List<ProductoDescripcion> productos;
 	private static final long serialVersionUID = 1L;
 	
+	//MARIANELA
+	@ManyToOne
+	private AV av;
+
+	
+
+	
+
 	public Categoria(){
 		
 	}
-
-	public Categoria(String nombre) {
+	
+	public Categoria(String nombre){
 		this.nombre=nombre;
-		
-	}   
-	public long getIdCategoria() {
-		return this.idCategoria;
 	}
+
+
+	public long getIdCategoria() {
+		return idCategoria;
+	}
+
 
 	public void setIdCategoria(long idCategoria) {
 		this.idCategoria = idCategoria;
-	}   
-	public String getNombre() {
-		return this.nombre;
 	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}   
-	public List getProductos() {
-		return this.productos;
 	}
 
-	public void setProductos(List productos) {
+
+
+	public List<ProductoDescripcion> getProductos() {
+		return productos;
+	}
+
+
+
+	public void setProductos(List<ProductoDescripcion> productos) {
 		this.productos = productos;
 	}
-   
+
+
+	public AV getAv() {
+		return av;
+	}
+
+	public void setAv(AV av) {
+		this.av = av;
+	}
+
+	
+	
+	
+
+	   
 }
