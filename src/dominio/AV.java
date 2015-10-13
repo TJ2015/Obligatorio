@@ -45,8 +45,6 @@ public class AV implements Serializable {
 	    joinColumns = @JoinColumn(name = "av"),
 	    inverseJoinColumns = @JoinColumn (name = "idAV"))
 	private List<Categoria> categorias = new ArrayList<>();
-	@ElementCollection
-	private List<Producto> productos = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -113,14 +111,6 @@ public class AV implements Serializable {
 		this.usuariosCompartidos = usuariosCompartidos;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-	
 	public void addCategoria(Categoria cat) {
 		this.categorias.add(cat);
 	}
@@ -134,7 +124,7 @@ public class AV implements Serializable {
 		result = prime * result + ((usuarioCreador == null) ? 0 : usuarioCreador.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -158,11 +148,10 @@ public class AV implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador + "]";
 	}
-	
 	
 }

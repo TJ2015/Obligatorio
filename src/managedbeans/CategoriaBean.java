@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import dominio.ProductoDescripcion;
+import dominio.Producto;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 
