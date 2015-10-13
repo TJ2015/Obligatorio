@@ -8,7 +8,6 @@
 		<class>dominio.Nota</class>
 		<class>dominio.Notificacion</class>
 		<class>dominio.Producto</class>
-		<class>dominio.ProductoDescripcion</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

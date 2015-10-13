@@ -1,15 +1,18 @@
 package negocio;
 
-import dominio.AV;
-import dominio.Atributo;
-import dominio.Categoria;
-import persistencia.IAvDAO;
-import persistencia.IInventarioDAO;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
+import dominio.AV;
+import dominio.Atributo;
+import dominio.Categoria;
+import dominio.Producto;
+import persistencia.AvDAO;
+import persistencia.IAvDAO;
+import persistencia.IInventarioDAO;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
@@ -73,17 +76,34 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, long idAV){
-		return false;
-		// TODO Auto-generated method stub
+	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock) throws Exception{
 		
-	}
+		AV av = avDAO.traerAV(idAV);
+		
+		List<Categoria> cats = av.getCategorias();
+		Categoria cat = null;
+		for(Categoria c : cats ) {
+			if( c.getNombre().equals(categoria)) {
+				cat = c;
+			}
+		}
+		
+		if(cat == null)
+			throw new Exception("No existe la categoria '" + categoria + "'");
+		
+		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
+			
+		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs,stock);
+		prod.setCategoria(cat);
+		
+		prod.setIdAV(idAV);
+			
+		invDAO.persistirProductoDescripcion(prod);
+		
+		cat.addProducto(prod);
+		invDAO.actualizarCategoria(cat);
+		
 
-	@Override
-	public boolean crearProducto(String nombre, String descripcion, double precio, Categoria categoria,
-			List<String> atributos, long idAV) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -107,9 +127,28 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void setStockProducto(long idProducto, long idAV, int stock) {
-		// TODO Auto-generated method stub
-
+	public void setStockProducto(String nombreProd, long idAV, int stock) {
+		
+		AV av= avDAO.traerAV(idAV);
+		
+		List<Categoria> cat;
+		cat = av.getCategorias();
+		
+		List<Producto> prod=null;
+		String nombreProducto;
+				
+		for(Categoria c: cat){
+			for(Producto p: prod){
+				nombreProducto=p.getNombre();
+				if(nombreProducto==nombreProd){
+					p.setStock(stock);
+				}
+			}	
+			
+		}
+		
+		
+		//prod.setStock(stock);		
 	}
 
 	@Override

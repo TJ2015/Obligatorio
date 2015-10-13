@@ -2,15 +2,15 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import negocio.IControladorInventario;
 
 
+@ManagedBean
 public class ProductoBean implements Serializable {
 
 
@@ -21,14 +21,12 @@ public class ProductoBean implements Serializable {
 	private String descripcion;
 	private double precio;
 	private String categoria;
-	private String atributosList;
+	private String atributos;
+	private int stock;
 	private static final long serialVersionUID = 1L;
 	
 	//para descripcion producto
-		private long idAV;
-	
-	
-		
+	private long idAV;
 	
 	public ProductoBean(long idAV) {
 			super();
@@ -80,13 +78,13 @@ public class ProductoBean implements Serializable {
 	}
 
 
-	public String getAtributosList() {
-		return atributosList;
+	public String getAtributos() {
+		return atributos;
 	}
 
 
-	public void setAtributosList(String atributosList) {
-		this.atributosList = atributosList;
+	public void setAtributos(String atributosList) {
+		this.atributos = atributosList;
 	}
 
 
@@ -98,25 +96,32 @@ public class ProductoBean implements Serializable {
 	public void setIdAV(long idAV) {
 		this.idAV = idAV;
 	}
+	
+	public int getStock() {
+		return stock;
+	}
 
 
-	public void crearProductoDescripción(){
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+
+	public void crearProductoDescripción() {
 		
 		try {
-			if( cinv.crearProductoDescripcion(nombre, descripcion, precio, categoria, atributosList, idAV))
-			{
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
-			} else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
+			//cinv.setStockProducto(nombre, idAV, stock);
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
+		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}
-	
-	
 
 }

@@ -25,7 +25,7 @@
 </h:head> 
 
 <h:body>
-	<div class="container-fluid">
+	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Crear Producto Descripción</h1>
 		</div>
@@ -36,7 +36,7 @@
 				
 			  		<h:form styleClass="form">
 						<div class="form-group">
-							<h:outputLabel value="Nombre" styleClass="sr-only" for="nickUsuario" />
+							<h:outputLabel value="Nombre" styleClass="sr-only" for="nombre" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -66,15 +66,41 @@
 						</div>												
 											
 						<div class="form-group">
-							<h:outputLabel value="categoria" styleClass="sr-only" for="categoria" />
+							<h:outputLabel value="Categoria" styleClass="sr-only" for="categoria" />
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 								</div>
-
+								<h:inputText id="categoria" value="#{productoBean.categoria}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar la categoria" a:placeholder="Categoria"/>
 							</div>
 						</div>
-						
+						<div class="form-group">
+							<h:outputLabel value="Atributos" styleClass="sr-only" for="atributos" />	
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								</div>
+								<h:inputText id="atributos" value="#{productoBean.atributos}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el precio" a:placeholder="Atributos (por ej.: atr1:val;atr2:val;...atrn:val;)"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="idAV" styleClass="sr-only" for="idAV" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								</div>
+								<h:inputText id="idAV" value="#{productoBean.idAV}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el idAV" a:placeholder="idAV"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Stock" styleClass="sr-only" for="stock" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								</div>
+								<h:inputText id="stock" value="#{productoBean.stock}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el stock" a:placeholder="stock"/>
+							</div>
+						</div>
 	
 
 				<h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 

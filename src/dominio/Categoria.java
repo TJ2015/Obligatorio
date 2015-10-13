@@ -1,9 +1,19 @@
 package dominio;
 
 import java.io.Serializable;
-import java.lang.String;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * Entity implementation class for Entity: Categoria
@@ -13,14 +23,16 @@ import javax.persistence.*;
 
 public class Categoria implements Serializable {
 
-	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
 	private String nombre;
-	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@ElementCollection
-	private List<ProductoDescripcion> productos;
+	@JoinTable(name = "categoria_productos",
+	    joinColumns = @JoinColumn(name = "categoria"),
+	    inverseJoinColumns = @JoinColumn (name = "idCategoria"))
+	private List<Producto> productos = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	
 	//MARIANELA
@@ -35,38 +47,29 @@ public class Categoria implements Serializable {
 		this.nombre=nombre;
 	}
 
-
 	public long getIdCategoria() {
 		return idCategoria;
 	}
-
 
 	public void setIdCategoria(long idCategoria) {
 		this.idCategoria = idCategoria;
 	}
 
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
-	public List<ProductoDescripcion> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
-
-
-	public void setProductos(List<ProductoDescripcion> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
-
 
 	public AV getAv() {
 		return av;
@@ -76,9 +79,8 @@ public class Categoria implements Serializable {
 		this.av = av;
 	}
 
-	
-	
-	
+	public void addProducto(Producto prod) {
+		this.productos.add(prod);
+	}
 
-	   
 }
