@@ -18,6 +18,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
+
 /**
  * Entity implementation class for Entity: Usuario
  *
@@ -69,6 +72,19 @@ public class Usuario implements Serializable {
 		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	public DataUsuario getDataUsuario() {
+		
+		List<DataAV>listDav=new ArrayList<>();
+		for(AV avs:AVs){
+			listDav.add(avs.getDataAV());
+		}
+		List<DataAV>listDavcomp=new ArrayList<>();
+		for(AV avs:AVcompartidos){
+			listDavcomp.add(avs.getDataAV());
+		}
+		return new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, listDav,listDavcomp);
 	}
 
 	public long getIdUsuario() {

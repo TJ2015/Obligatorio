@@ -28,7 +28,9 @@
 </h:head> 
 
 <h:body>
-	<div class="container-fluid">
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
+	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Crear AV</h1>
 		</div>
@@ -57,19 +59,18 @@
 							  <h:inputText id="usuarioCreador" value="#{avBean.usuarioCreador}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre" a:placeholder="usuarioCreador"/>
 							</div>
 						</div>
-						
-						
-						
-	
 
-<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
-				action="#{avBean.agregarAV()}"/>
-</h:form>
+
+						<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
+										action="#{avBean.agregarAV()}"/>
+						</h:form>
 					
 				</div>
 			</div>
 		</div>
 	</div>
+	</ui:define>
+</ui:composition>
 </h:body>
 
 </html>

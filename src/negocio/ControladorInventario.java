@@ -72,12 +72,12 @@ public class ControladorInventario implements IControladorInventario {
 
 	}
 
-	@Override
+	/*@Override
 	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, long idAV){
 		return false;
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 	@Override
 	public boolean crearProducto(String nombre, String descripcion, double precio, Categoria categoria,
@@ -120,6 +120,13 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean tienePermiso(String nickname, String idAV) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean crearProductoDescripcion(String nombre, String descripcion, double precio, String categoria,
+			String atributosList, long idAV) {
 		// TODO Auto-generated method stub
 		return false;
 	}

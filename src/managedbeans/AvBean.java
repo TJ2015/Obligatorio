@@ -1,11 +1,13 @@
 package managedbeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import dominio.datatypes.DataAV;
 import negocio.IControladorAV;
@@ -74,14 +76,19 @@ public class AvBean implements Serializable{
 		    }
 		
 	public void agregarAV(){
-	boolean creo=false;
-		
+		boolean creo=false;
+	
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))){
 			creo=cAV.altaAV(nombreAV, usuarioCreador);
-			this.mensaje = "AV creado";
+	 
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-		else
-			this.mensaje = "Ya tienes un AV con ese nombre";
 	}
 	
 	public void compartirAV(){

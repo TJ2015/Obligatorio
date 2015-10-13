@@ -10,6 +10,9 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
+
 /**
  * Entity implementation class for Entity: AV
  *
@@ -55,6 +58,11 @@ public class AV implements Serializable {
 	}
 
 	public AV() {
+	}
+	public DataAV getDataAV(){
+		String nombreUsu= usuarioCreador.getNombre();
+		DataAV dav=new DataAV(nombreAV, nombreUsu);
+		return dav;
 	}
 
 	public long getIdAV() {

@@ -1,7 +1,11 @@
 package dominio.datatypes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import dominio.AV;
 
 public class DataUsuario implements Serializable {
 	
@@ -11,11 +15,25 @@ public class DataUsuario implements Serializable {
 	private String pasword;
 	private String email;
 	private Date fechaNacimiento;
+	private List<DataAV> AVs = new ArrayList<>();
+	private List<DataAV> AVsCompar = new ArrayList<>();
 	
+	public List<DataAV> getAVs() {
+		return AVs;
+	}
+	public List<DataAV> getAVsCompar() {
+		return AVsCompar;
+	}
+	public void setAVsCompar(List<DataAV> aVsCompar) {
+		AVsCompar = aVsCompar;
+	}
+	public void setAVs(List<DataAV> aVs) {
+		AVs = aVs;
+	}
 	public DataUsuario() {
 	}
 	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento) {
+			Date fechaNacimiento,List <DataAV> avs,List <DataAV> avsComp) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -23,6 +41,8 @@ public class DataUsuario implements Serializable {
 		this.pasword = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.AVs=avs;
+		this.AVsCompar=avsComp;
 	}
 	public String getNombre() {
 		return nombre;

@@ -28,6 +28,8 @@
 </h:head> 
 
 <h:body>
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
 	<div class="container-fluid">
 		<div class="page-header text-center">
 		  <h1>Crear AV</h1>
@@ -58,9 +60,6 @@
 							</div>
 						</div>
 						
-						
-						
-	
 
 <h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Compartir" 
 				action="#{avBean.compartirAV()}"/>
@@ -70,6 +69,8 @@
 			</div>
 		</div>
 	</div>
+</ui:define>
+</ui:composition>
 </h:body>
 
 </html>

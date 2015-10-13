@@ -1,12 +1,18 @@
 package negocio;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+
+
+import dominio.AV;
 import dominio.Usuario;
+import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
+import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
 /**
@@ -17,6 +23,8 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@EJB
 	private IUsuarioDAO usuarioDAO;
+	@EJB
+	private IAvDAO avDAO;
     /**
      * Default constructor. 
      */
@@ -70,6 +78,13 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public void eliminarUsuario(String nickname) {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public List <DataAV> mostrarListaAv(String nickname) {
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		
+			return usu.getDataUsuario().getAVs();	
 		
 	}
 
