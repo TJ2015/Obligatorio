@@ -17,7 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
-import com.google.gson.Gson;
+
 
 /**
  * Entity implementation class for Entity: Producto

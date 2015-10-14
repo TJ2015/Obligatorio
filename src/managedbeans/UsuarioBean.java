@@ -9,17 +9,18 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import dominio.AV;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import negocio.IControladorUsuario;
 
 
+
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializable {
 	
 	@EJB
 	IControladorUsuario cusu;
@@ -39,6 +40,7 @@ public class UsuarioBean implements Serializable {
 	
 	
 	public UsuarioBean() {
+		
 	}
 	
 	
@@ -224,4 +226,23 @@ public class UsuarioBean implements Serializable {
 		
 		
 	}
+	
+	
+	
+		
+	public void logout() {
+		
+		
+	}
+	
+	
 }
+	
+		
+		
+		
+		    
+		
+		
+	
+

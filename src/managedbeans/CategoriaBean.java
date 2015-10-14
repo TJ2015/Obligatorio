@@ -51,33 +51,12 @@ public class CategoriaBean implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-	
-	
-	/*public void crearCategoria(){
-		
-		
-			try {
-				if( cinv.crearCategoria(nombre) ) {
-	
-					FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
-				} else {
-					FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-				}
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
 
 	public void crearCategoria(){
 		try {
 			if( cinv.crearCategoria(nombre, idAV) ) {
 
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}

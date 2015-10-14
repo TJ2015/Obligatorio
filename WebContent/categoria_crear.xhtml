@@ -28,7 +28,9 @@
 </h:head> 
 
 <h:body>
-	<div class="container-fluid">
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
+	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Crear Categoría</h1>
 		</div>
@@ -69,6 +71,8 @@
 			</div>
 		</div>
 	</div>
+	</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>

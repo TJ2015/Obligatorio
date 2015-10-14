@@ -112,7 +112,7 @@ public class ProductoBean implements Serializable {
 		try {
 			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
 			//cinv.setStockProducto(nombre, idAV, stock);
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/bienvenida.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {

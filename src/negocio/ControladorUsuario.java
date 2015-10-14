@@ -86,6 +86,6 @@ public class ControladorUsuario implements IControladorUsuario {
 		
 			return usu.getDataUsuario().getAVs();	
 		
-	}
+	}	
 
 }

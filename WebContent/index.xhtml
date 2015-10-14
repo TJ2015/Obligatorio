@@ -13,7 +13,6 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	
 </h:head> 
 
 <h:body>
@@ -25,47 +24,20 @@
 			  <h1>SAPo</h1>
 			</div>
 			
-				<h:form styleClass="form">
-						
-						
-						
-						<h:commandButton id="botonVerAv" styleClass="btn btn-primary" value="VerAV" 
-				action="#{usuarioBean.mostrarListaAV()}"/>
-						</h:form>
+				<c:if test="${usuarioBean.logueado == true}">
+					<h:form styleClass="form">
+						<h:commandButton id="botonVerAv" styleClass="btn btn-primary" value="Ver lista de AV" 
+					action="#{usuarioBean.mostrarListaAV()}"/>
+					</h:form>
+					<ul class="nav btn btn-primary nav-pills nav-stacked" style="width:150px; ">
+						<li><a href="av_crear.xhtml" style="color: white;">Crear AV</a></li>
+						<li><a href="compartirAv.xhtml" style="color: white;">Compartir AV</a> <br /></li>
+						<li><a href="categoria_crear.xhtml" style="color: white;">Crear Categoria</a> <br /></li>
+						<li><a href="producto_crear.xhtml" style="color: white;">Crear Producto</a> <br /></li>
+					</ul>
+				</c:if>
 			
-			<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-				<div class="panel panel-primary">
-					<div class="panel-heading">Ingresar</div>
-					<div class="panel-body">
-					
-				  		<h:form styleClass="form">
-							<div class="form-group">
-								<h:outputLabel value="Nickname" styleClass="sr-only" for="nickUsuario" />
-								<div class="input-group">
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-									</div>
-								  <h:inputText id="nickUsuario" value="#{usuarioBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nickname" a:placeholder="Nickname"/>
-								</div>
-							</div>
-									
-							<div class="form-group">
-								<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
-								<div class="input-group">
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
-									</div>
-									<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.password}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
-								</div>
-							</div>
-							
-							<h:commandButton id="login" styleClass="btn btn-primary" value="ingresar" 
-										action="#{usuarioBean.login()}"/>
-						</h:form>
-						
-					</div>
-				</div>
-			</div>
+			<center><h1>Bienvenido</h1></center>
 		</div>
 		</ui:define>
 	</ui:composition>

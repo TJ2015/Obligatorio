@@ -94,6 +94,12 @@ public class AvBean implements Serializable{
 	public void compartirAV(){
 		if(cUsu.existeUsuarioNick(nickname)){
 			cAV.compartirAV(idAV, nickname);
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

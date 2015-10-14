@@ -35,7 +35,10 @@ public class DatosPrecargados {
 		usuDAO.altaUsuario(usu);
 		usu = new Usuario("Lucia", "Fernandez", "lucifer", "lucifer", "lucifer@gmail.com", new Date());
 		usuDAO.altaUsuario(usu);
-		
+		usu = new Usuario("1", "1", "1", "1", "1@1.com", new Date());
+		usuDAO.altaUsuario(usu);
+		usu = new Usuario("2", "2", "2", "2", "2@2.com", new Date());
+		usuDAO.altaUsuario(usu);
 	}
 
     @PreDestroy
