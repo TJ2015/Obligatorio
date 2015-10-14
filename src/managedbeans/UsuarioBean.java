@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
@@ -35,10 +37,24 @@ public class UsuarioBean implements Serializable {
 	
 	private boolean logueado = false;
 	
+	// para manejar las sesiones MARIANELA
+	  private final HttpServletRequest httpServletRequest;
+	  private final FacesContext faceContext;
+	  private FacesMessage facesMessage;
+	
 	
 	
 	
 	public UsuarioBean() {
+		// SE AGREGÓ PARA MANEJAR LAS SESIONES
+		 	faceContext=FacesContext.getCurrentInstance();
+	        httpServletRequest=(HttpServletRequest)faceContext.getExternalContext().getRequest();
+	      
+	        if(httpServletRequest.getSession().getAttribute("sessionUsuario")!=null)
+	        {
+	            nick=httpServletRequest.getSession().getAttribute("sessionUsuario").toString();
+	        }
+	        
 	}
 	
 	
@@ -174,9 +190,23 @@ public class UsuarioBean implements Serializable {
 		try {
 			if( cusu.login(nick, password) ) {
 				logueado = true;
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
+				
+				//lo nuevo para sesiones
+				 httpServletRequest.getSession().setAttribute("sessionUsuario", nick);
+		            facesMessage=new FacesMessage(FacesMessage.SEVERITY_INFO, "Acceso Correcto", null);
+		            faceContext.addMessage(null, facesMessage);
+		         // fin de lo nuevo en sesiones 
+				
+				
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");			
 				
 			} else {
+				
+				//lo nuevo para la sesión
+				 facesMessage=new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario o contraseña incorrecto", null);
+		            faceContext.addMessage(null, facesMessage);
+		          // fin de lo nuevo  para la sesión		
+				
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
 		} catch (IOException e) {
@@ -224,4 +254,18 @@ public class UsuarioBean implements Serializable {
 		
 		
 	}
+	
+	public void logout() throws IOException
+    {
+        httpServletRequest.getSession().removeAttribute("sessionUsuario");
+        facesMessage=new FacesMessage(FacesMessage.SEVERITY_INFO, "Sesión finalizada correctamente", null);
+        faceContext.addMessage(null, facesMessage);
+        FacesContext.getCurrentInstance().getExternalContext().dispatch("/login.xhtml");
+        
+    }
+	
+	
+	
+	
+	
 }
