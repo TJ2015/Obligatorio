@@ -2,6 +2,7 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
 import negocio.IControladorAV;
 import negocio.IControladorUsuario;
 
@@ -27,6 +29,7 @@ public class AvBean implements Serializable{
 	private String nombreAV;
 	private String mensaje; 
 	private String usuarioCreador;
+	private List<DataCategoria> cats=new ArrayList<>();
 
 	public String getNombreAV() {
 		return nombreAV;
@@ -103,5 +106,27 @@ public class AvBean implements Serializable{
 		}
 		
 	}
+	
+	public void mostrarListaCategoria(){
+		
+			cats=cAV.mostrarListaCat(idAV);
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+	}
+
+	public List<DataCategoria> getCats() {
+		return cats;
+	}
+
+	public void setCats(List<DataCategoria> cats) {
+		this.cats = cats;
+	}
+	
 
 }

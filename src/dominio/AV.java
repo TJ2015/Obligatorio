@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.persistence.*;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataUsuario;
 
 /**
@@ -59,7 +60,11 @@ public class AV implements Serializable {
 	}
 	public DataAV getDataAV(){
 		String nombreUsu= usuarioCreador.getNombre();
-		DataAV dav=new DataAV(nombreAV, nombreUsu);
+		List<DataCategoria>listDcat=new ArrayList<>();
+		for(Categoria cate:categorias){
+			listDcat.add(cate.getDataCategoria());
+		}
+		DataAV dav=new DataAV(nombreAV, nombreUsu,listDcat);
 		return dav;
 	}
 

@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import dominio.AV;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataUsuario;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
@@ -113,6 +114,13 @@ public class ControladorAV implements IControladorAV {
 		avDAO.actualizarAV(av);
 		
 	}
+
+	@Override
+	public List <DataCategoria> mostrarListaCat(long idAv) {
+		AV av= avDAO.traerAV(idAv);		
+		return av.getDataAV().getCategorias();
+
+	}	
 
 
 }

@@ -15,6 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
+import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataUsuario;
+
 /**
  * Entity implementation class for Entity: Categoria
  *
@@ -45,6 +50,17 @@ public class Categoria implements Serializable {
 	
 	public Categoria(String nombre){
 		this.nombre=nombre;
+	}
+	public DataCategoria getDataCategoria(){
+		
+		List<DataProducto>listDprod=new ArrayList<>();
+		for(Producto prods:productos){
+			listDprod.add(prods.getDataProducto());
+		}
+		DataAV dav=new DataAV(av.getNombreAV(),av.getUsuarioCreador().getNick(), av.getDataAV().getCategorias());
+		return new DataCategoria(nombre,listDprod,dav);
+		
+		
 	}
 
 	public long getIdCategoria() {

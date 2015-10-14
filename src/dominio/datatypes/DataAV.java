@@ -12,6 +12,18 @@ public class DataAV {
 	private long idAV;
 	private String nombreAV;
 	private String nickname;
+	private List<DataUsuario> usuariosCompartidos;
+	//private List<DataNota> notas;
+	private List<DataCategoria> categorias=new ArrayList<>();
+	private static final long serialVersionUID = 1L;
+
+
+	public DataAV(String nombreAV, String nickname,List<DataCategoria> categorias) {
+		this.nombreAV = nombreAV;
+		this.nickname = nickname;
+		this.categorias = new ArrayList<>();
+		
+	}
 	public String getNickname() {
 		return nickname;
 	}
@@ -20,21 +32,16 @@ public class DataAV {
 		this.nickname = nickname;
 	}
 
-	private List<DataUsuario> usuariosCompartidos;
-	//private List<DataNota> notas;
-	private List<DataCategoria> categorias;
-	private static final long serialVersionUID = 1L;
-
-
-	public DataAV(String nombreAV, String nickname) {
-		this.nombreAV = nombreAV;
-		this.nickname = nickname;
-		this.categorias = new ArrayList<>();
-		
-	}
-
 	public long getIdAV() {
 		return idAV;
+	}
+
+	public List<DataCategoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<DataCategoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	public void setIdAV(long idAV) {

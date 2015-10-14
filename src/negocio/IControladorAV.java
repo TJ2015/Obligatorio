@@ -1,11 +1,14 @@
 package negocio;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import dominio.datatypes.DataUsuario;
 import dominio.AV;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
 
 @Local
 public interface IControladorAV {
@@ -18,6 +21,7 @@ public interface IControladorAV {
 	public void modificarAV(String nombreAV, String nuevoNombreAV);//datos de estilo si se modifican
 	public void eliminarAV(long idAV);
 	public void compartirAV(long idAV, String nickUsuario);
+	List<DataCategoria> mostrarListaCat(long idAv);
 
 	
 }
