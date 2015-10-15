@@ -50,6 +50,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try {
 			//Actualiza el en la base de datos.
 			em.merge(usuario);
+			
 			seActualizo = true;
 		} catch (Exception e) {
 			e.printStackTrace();

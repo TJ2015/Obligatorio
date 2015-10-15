@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+	  xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+	
+	
+    <p:dataList value="#{equipoMB.Jugadores()}" var="jug">
+    	<h:panelGroup class="panelJug">
+    	<p:panelGrid  columns="2">
+		    <f:facet name="header">
+		        <p:graphicImage name="#{jug.imagen}"/>
+		    </f:facet>
+		 
+		    <h:outputText value="Nombre:" />
+		    <h:outputText value= "#{jug.nombre}" />
+		    
+		    <h:outputText value="Posicion:" />
+		    <h:outputText value= "#{jug.posicion}" />
+		    
+		    <h:outputText value="Ataque:" />
+		    <h:outputText value= "#{jug.ataque}" />
+		    
+		    <h:outputText value="Defensa:" />
+		    <h:outputText value= "#{jug.defensa}" />
+		    
+		    <h:outputText value="Velocidad:" />
+		    <h:outputText value= "#{jug.velocidad}" />
+		    
+		    <h:outputText value="Tecnica:" />
+		    <h:outputText value= "#{jug.tecnica}" />		    
+		    
+		</p:panelGrid>
+         </h:panelGroup>
+       
+    </p:dataList>
+   
+    
+   
+	
+	
+	
+</html> 

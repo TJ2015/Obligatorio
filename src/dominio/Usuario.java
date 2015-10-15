@@ -1,11 +1,25 @@
 package dominio;
 
 import java.io.Serializable;
-import java.lang.String;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
 
 /**
  * Entity implementation class for Entity: Usuario
@@ -31,11 +45,17 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date fechaNacimiento;
 	
-	@OneToMany(mappedBy = "usuarioCreador")
+	
+
+	 @OneToMany 
+	 @JoinTable(name = "av_usuarioCreador",
+	        joinColumns = @JoinColumn(name = "usuarioCreador") ,
+	        inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
+	private List<AV> AVs = new ArrayList<>();
+	
+	@ManyToMany
 	@ElementCollection
-	private List<AV> AVs;
-	@ManyToMany(mappedBy = "usuariosCompartidos")
-	@ElementCollection
+	@JoinTable(name = "usuario_avcompartidos")
 	private List<AV> AVcompartidos;
 	
 	private static final long serialVersionUID = 1L;
@@ -52,6 +72,19 @@ public class Usuario implements Serializable {
 		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	public DataUsuario getDataUsuario() {
+		
+		List<DataAV>listDav=new ArrayList<>();
+		for(AV avs:AVs){
+			listDav.add(avs.getDataAV());
+		}
+		List<DataAV>listDavcomp=new ArrayList<>();
+		for(AV avs:AVcompartidos){
+			listDavcomp.add(avs.getDataAV());
+		}
+		return new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, listDav,listDavcomp);
 	}
 
 	public long getIdUsuario() {
@@ -84,13 +117,7 @@ public class Usuario implements Serializable {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}   
-	public String getPasword() {
-		return this.password;
-	}
-
-	public void setPasword(String pasword) {
-		this.password = pasword;
-	}   
+	
 	public String getEmail() {
 		return this.email;
 	}
@@ -105,5 +132,34 @@ public class Usuario implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<AV> getAVs() {
+		return AVs;
+	}
+
+	public void setAVs(List<AV> aVs) {
+		AVs = aVs;
+	}
+
+	public List<AV> getAVcompartidos() {
+		return AVcompartidos;
+	}
+
+	public void setAVcompartidos(List<AV> aVcompartidos) {
+		AVcompartidos = aVcompartidos;
+	}
+   public void addAV(AV av){
+	   AVs.add(av);
+   }
    
+   
+     
 }

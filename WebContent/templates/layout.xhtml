@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+    <h:head>
+
+
+		<meta charset="utf-8"></meta>
+		<link href="resources/flattheme/css/bootstrap.min.css" rel="stylesheet"></link>
+		<link href="resources/flattheme/css/font-awesome.min.css" rel="stylesheet"></link>
+		<link href="resources/flattheme/css/prettyPhoto.css" rel="stylesheet"></link>
+		<link href="resources/flattheme/css/animate.css" rel="stylesheet"></link>
+		<link href="resources/flattheme/css/main.css" rel="stylesheet"></link>
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<script src="js/respond.min.js"></script>
+		<![endif]-->       
+		<link rel="shortcut icon" href="resources/flattheme/images/ico/favicon.ico"></link>
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="resources/flattheme/images/ico/apple-touch-icon-144-precomposed.png"></link>
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="resources/flattheme/images/ico/apple-touch-icon-114-precomposed.png"></link>
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="resources/flattheme/images/ico/apple-touch-icon-72-precomposed.png"></link>
+		<link rel="apple-touch-icon-precomposed" href="resources/flattheme/images/ico/apple-touch-icon-57-precomposed.png"></link>
+    </h:head>
+    
+    <h:body>
+
+	<div id="page">
+		
+	    <div id="header">
+			<ui:insert name="header" >
+			  	<ui:include src="/templates/header.xhtml" />
+			</ui:insert>
+	    </div>
+		<div id="contenido">
+			<ui:insert name="contenido">
+			
+			</ui:insert>
+		</div>
+	    <div id="footer">
+	    	<ui:insert name="footer" >
+	    	 	 <ui:include src="/templates/footer.xhtml" />
+	    	</ui:insert>
+   	    </div>
+     </div>
+
+		<script src="resources/flattheme/js/jquery.js"></script>
+	    <script src="resources/flattheme/js/bootstrap.min.js"></script>
+	    <script src="resources/flattheme/js/jquery.prettyPhoto.js"></script>
+	    <script src="resources/flattheme/js/main.js"></script>
+    </h:body>
+</html>

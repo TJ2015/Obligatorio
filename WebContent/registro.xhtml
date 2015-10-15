@@ -9,26 +9,13 @@
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
 <h:head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"
-			var usuario = document.getElementById('#{textoUsuario.clientId}');
-			$(usuario).focus();
-			
-		})
-	</script>
 
 </h:head> 
 
 <h:body>
-	<div class="container-fluid">
+	<ui:composition template="/templates/layout.xhtml">
+	<ui:define name="contenido">
+	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Registro de Usuario</h1>
 		</div>
@@ -113,6 +100,8 @@
 			</div>
 		</div>
 	</div>
+	</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>

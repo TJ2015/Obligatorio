@@ -10,28 +10,41 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
+
 /**
  * Entity implementation class for Entity: AV
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name="AV.findAll", query="SELECT u FROM AV u"),
+	@NamedQuery(name="AV.buscarPorId", query="SELECT av FROM AV av WHERE av.idAV =:idAV"),
+	@NamedQuery(name="AV.buscarPorNombre", query="SELECT av FROM AV av WHERE av.nombreAV =:nombreAV")
+})
 public class AV implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idAV;
 	private String nombreAV;
+	
 	@ManyToOne
 	private Usuario usuarioCreador;
+	
 	@ElementCollection
 	@ManyToMany
+	@JoinTable(name = "av_usuarioscompartidos")
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
 	@ElementCollection
 	private List<Nota> notas  = new ArrayList<>();
-	@ElementCollection
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "categorias_av",
+	    joinColumns = @JoinColumn(name = "av"),
+	    inverseJoinColumns = @JoinColumn (name = "idAV"))
 	private List<Categoria> categorias = new ArrayList<>();
-	@ElementCollection
-	private List<Producto> productos = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
 
@@ -43,6 +56,11 @@ public class AV implements Serializable {
 	}
 
 	public AV() {
+	}
+	public DataAV getDataAV(){
+		String nombreUsu= usuarioCreador.getNombre();
+		DataAV dav=new DataAV(nombreAV, nombreUsu);
+		return dav;
 	}
 
 	public long getIdAV() {
@@ -93,12 +111,8 @@ public class AV implements Serializable {
 		this.usuariosCompartidos = usuariosCompartidos;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
+	public void addCategoria(Categoria cat) {
+		this.categorias.add(cat);
 	}
 
 	@Override
@@ -110,7 +124,7 @@ public class AV implements Serializable {
 		result = prime * result + ((usuarioCreador == null) ? 0 : usuarioCreador.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,11 +148,10 @@ public class AV implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador + "]";
 	}
-	
 	
 }

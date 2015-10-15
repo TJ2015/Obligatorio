@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      > 
+      
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"
+			var usuario = document.getElementById('#{textoUsuario.clientId}');
+			$(usuario).focus();
+			
+		})
+	</script>
+
+</h:head> 
+
+<h:body>
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
+	<div class="container-fluid clearfix">
+		<div class="page-header text-center">
+		  <h1>Crear AV</h1>
+		</div>
+		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Compartir AV</div>
+				<div class="panel-body">
+				
+			  		<h:form styleClass="form">
+						<div class="form-group">
+							<h:outputLabel value="idAV" styleClass="sr-only" for="idAv" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</div>
+							  <h:inputText id="idAv" value="#{avBean.idAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el id" a:placeholder="idAv"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<h:outputLabel value="Nick Usuario" styleClass="sr-only" for="nick" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</div>
+							  <h:inputText id="nick" value="#{avBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nick" a:placeholder="nick"/>
+							</div>
+						</div>
+						
+
+<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Compartir" 
+				action="#{avBean.compartirAV()}"/>
+</h:form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</ui:define>
+</ui:composition>
+</h:body>
+
+</html>
+

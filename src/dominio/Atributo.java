@@ -58,7 +58,7 @@ public class Atributo implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Atributo [nombre=" + nombre + ", valor=" + valor + "]";
+		return nombre + ":" + valor + ";";
 	}
 	
 }
