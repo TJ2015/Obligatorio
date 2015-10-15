@@ -112,7 +112,8 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void modificarProducto(long idProducto, long idAV, String nombre, String descripcion, double precio,
+	public void modificarProducto(
+long idProducto, long idAV, String nombre, String descripcion, double precio, 
 			String categoria, List<String> atributos) {
 		// TODO Auto-generated method stub
 

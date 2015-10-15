@@ -3,14 +3,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/wildfly-9.0.1.Final/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.0_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EclipseLink 2.5.2">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 			<attribute name="owner.project.facets" value="jpt.jpa"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/wildfly-9.0.1.Final/modules/system/layers/base/javax/faces/api/main/jboss-jsf-api_2.2_spec-2.2.11.jar"/>
-	<classpathentry kind="lib" path="C:/wildfly-9.0.1.Final/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/WildFly9/wildfly-9.0.1.Final/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/WildFly9/wildfly-9.0.1.Final/modules/system/layers/base/javax/faces/api/main/jboss-jsf-api_2.2_spec-2.2.11.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -36,141 +36,63 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 	
 	private boolean logueado = false;
 	
-	
-	
-	
 	public UsuarioBean() {
 		
 	}
-	
-	
-	
-	
 	public String getNombre() {
 		return nombre;
 	}
-
-
-
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
-
-
 	public String getApellido() {
 		return apellido;
 	}
-
-
-
-
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-
-
-
-
 	public String getNick() {
 		return nick;
 	}
-
-
-
-
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-
-
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-
-
 	public String getEmail() {
 		return email;
 	}
-
-
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
-
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-
-
-
-
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
-
-
-
 	public List<DataAV> getAVs() {
 		return AVs;
 	}
-
-
-
-
 	public void setAVs(List<DataAV> aVs) {
 		AVs = aVs;
 	}
-
-
-
-
 	public DataUsuario getDusu() {
 		return dusu;
 	}
-
-
-
-
 	public void setDusu(DataUsuario dusu) {
 		this.dusu = dusu;
 	}
-
-
-
-
 	public boolean isLogueado() {
 		return logueado;
 	}
-
-
-
-
 	public void setLogueado(boolean logueado) {
 		this.logueado = logueado;
 	}
-
-
-
 
 	public void login() {
 		try {
@@ -205,7 +127,6 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 			e.printStackTrace();
 		}
 	}
-
 	
 	public void mostrarListaAV(){
 		try {
@@ -223,13 +144,8 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
-	
-	
-		
 	public void logout() {
 		
 		
