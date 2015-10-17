@@ -7,10 +7,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.SessionBean;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
@@ -20,7 +22,7 @@ import negocio.IControladorUsuario;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializable {
+public class UsuarioBean implements Serializable {
 	
 	@EJB
 	IControladorUsuario cusu;
@@ -172,8 +174,8 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 
 
 
-	public void login() {
-		try {
+	public void login() throws IOException {
+		/*try {
 			if( cusu.login(nick, password) ) {
 				logueado = true;
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
@@ -184,8 +186,42 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+	try {
+			if ( cusu.login(nick, password)){
+				logueado = true;
+				HttpSession session = SesionBean.getSession();
+				session.setAttribute("nickUsuario", nick);
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
+				
+			}
+			 else {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			 }
+		} 
+	
+	catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	}
+		
+		
+		
+	
+	
+	
+	
+	public void logout()  {
+		
+		HttpSession session = SesionBean.getSession();
+		session.invalidate();
+		
+	}
+	
+	
+	
 	
 	public void registroUsuario() {
 		try {
@@ -230,11 +266,7 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 	
 	
 		
-	public void logout() {
-		
-		
-	}
-	
+
 	
 }
 	

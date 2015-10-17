@@ -47,6 +47,9 @@ public class AV implements Serializable {
 	private List<Categoria> categorias = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
+	
+	
+	
 
 	public AV(String nombreAV, Usuario usuarioCreador) {
 		super();
