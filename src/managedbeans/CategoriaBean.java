@@ -25,7 +25,14 @@ public class CategoriaBean implements Serializable {
 	
 	private String nombre;
 	private long idAV;
+	private long idCat;
 	
+	public long getIdCat() {
+		return idCat;
+	}
+	public void setIdCat(long idCat) {
+		this.idCat = idCat;
+	}
 	private static final long serialVersionUID = 1L;
 	
 	public String getNombre() {
@@ -66,7 +73,35 @@ public class CategoriaBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+	public void modificarCategoria(){
+		try {
+			if( cinv.existeCategoria(nombre, idAV))  {
+				cinv.modificarNombreCategoria(nombre, idAV, idCat);
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} else {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void eliminarCategoria(){
+		try {
+			if( cinv.existeCategoria(nombre, idAV) ) {
+				cinv.eliminarCategoria(nombre, idAV);
+
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} else {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 		
 		

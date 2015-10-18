@@ -33,6 +33,7 @@ public class ControladorInventario implements IControladorInventario {
 		
 		if( av != null) {
 			
+			
 			cat.setAv(av);
 			invDAO.crearCategoria(cat);
 			av.addCategoria(cat);
@@ -41,12 +42,6 @@ public class ControladorInventario implements IControladorInventario {
 		
 		return true;
 	}
-
-	/*@Override
-	public boolean crearCategoria(String nombre) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
 
 	@Override
 	public boolean existeCategoria(String nombre, long idAV) {
@@ -65,15 +60,21 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public void modificarNombreCategoria(String nombre, long idAV, long idCategoria) {
-		// TODO Auto-generated method stub
-
+		Categoria cat=invDAO.encontrarCategoria(idCategoria);
+		cat.setNombre(nombre);
 	}
 
 	@Override
-	public void eliminarCategoria(String nombre, long idAV) {
-		// TODO Auto-generated method stub
+	public void eliminarCategoria(String nombreCat, long idCat) {
+		Categoria cat=invDAO.encontrarCategoria(idCat);
+		List <Producto> listProd=cat.getProductos();
+		for(Producto prod:listProd){
+		   eliminarProducto(prod.getNombre(),prod.getIdProducto());
+		}
+		invDAO.eliminarCategoria(cat);
 
 	}
+	
 
 	@Override
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock) throws Exception{
@@ -105,23 +106,16 @@ public class ControladorInventario implements IControladorInventario {
 		
 	}
 
-	@Override
-	public boolean copiarProductoGenerico(long idProducto, long idAV) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public void modificarProducto(long idProducto, long idAV, String nombre, String descripcion, double precio,
-			Categoria categoria, List<String> atributos) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void modificarProductoDescripcion(long idProducto, long idAV, String nombre, String descripcion,
-			double precio, Categoria categoria, List<String> atributos) {
-		// TODO Auto-generated method stub
+	public void modificarProducto(long idProducto,String nombre, String descripcion, double precio){
+	/*public void modificarProducto(long idProducto, long idAV, String nombre, String descripcion, double precio,
+			Categoria categoria, List<String> atributos) {*/
+		Producto prod=invDAO.encontrarProducto(nombre, idProducto);
+		prod.setNombre(nombre);
+		prod.setDescripcion(descripcion);
+		prod.setPrecio(precio);
+		
 
 	}
 
@@ -149,17 +143,10 @@ public class ControladorInventario implements IControladorInventario {
 		
 		//prod.setStock(stock);		
 	}
-
 	@Override
-	public void cambiarCategoriaProducto(String categoria, String producto, String av) {
-		// TODO Auto-generated method stub
+	public void eliminarProducto(String nombreProd, long idProducto) {
+		Producto pd=invDAO.encontrarProducto(nombreProd, idProducto);
+		invDAO.eliminarProducto(pd);
 
 	}
-
-	@Override
-	public boolean tienePermiso(String nickname, String idAV) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

@@ -52,13 +52,20 @@ public class Categoria implements Serializable {
 		this.nombre=nombre;
 	}
 	public DataCategoria getDataCategoria(){
-		
 		List<DataProducto>listDprod=new ArrayList<>();
-		for(Producto prods:productos){
+		if (productos!=null){
+
+		/*for(Producto prods:productos){
 			listDprod.add(prods.getDataProducto());
+		}*/
 		}
-		DataAV dav=new DataAV(av.getNombreAV(),av.getUsuarioCreador().getNick(), av.getDataAV().getCategorias());
-		return new DataCategoria(nombre,listDprod,dav);
+		
+		/*List<DataCategoria>listDcat=new ArrayList<>();
+		DataAV dav=av.getDataAV();
+		listDcat=dav.getCategorias();
+		dav.setCategorias(listDcat);*/
+		long idAV=av.getIdAV();
+		return new DataCategoria(nombre,listDprod,idAV);
 		
 		
 	}

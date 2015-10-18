@@ -29,6 +29,18 @@ public class InventarioDAO implements IInventarioDAO {
 		}
 			
 	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void eliminarCategoria(Categoria cat) {
+		try {
+			em.remove(cat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -62,23 +74,52 @@ public class InventarioDAO implements IInventarioDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void eliminarProducto(Producto pd) {
+		try {
+			//Persiste un categoria a la base de datos
+			em.remove(pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 
-	/*@Override
-	public Producto encontrarProducto(String nombreProd, long idAV) {
+	@Override
+	public Producto encontrarProducto(String nombreProd, long idProd) {
 		Producto prod = null;
 		try {
 			//Se busca el usuario en la base 
 			//usuario = em.find(Usuario.class, nick);
 			prod = em.createNamedQuery("Producto.buscarPorId", Producto.class)
 			.setParameter("nombreProd", nombreProd)
-			.setParameter("idAV", idAV)
+			.setParameter("idProd", idProd)
 			.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return prod;
-	}*/
+	}
 
+	@Override
+	public Categoria encontrarCategoria(long idCat) {
+		Categoria cat = null;
+		try {
+			//Se busca el usuario en la base 
+			//usuario = em.find(Usuario.class, nick);
+			cat = em.createNamedQuery("Categoria.buscarPorId", Categoria.class)
+			.setParameter("idCat", idCat)
+			.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cat;
+	}
 }
 
 

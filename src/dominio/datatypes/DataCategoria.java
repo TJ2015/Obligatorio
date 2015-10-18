@@ -24,11 +24,12 @@ package dominio.datatypes;
 		private List<DataProducto> productos = new ArrayList<>();
 		private static final long serialVersionUID = 1L;
 		private DataAV av;
+		private long idAV;
 
-		public DataCategoria(String nombre,List<DataProducto> productos,DataAV av){
+		public DataCategoria(String nombre,List<DataProducto> productos,long idAV){
 			this.nombre=nombre;
 			this.productos=productos;
-			this.av=av;
+			this.idAV=idAV;
 			
 		}
 

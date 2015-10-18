@@ -26,12 +26,12 @@ import dominio.datatypes.DataProducto;
  */
 @Entity
 @Access(AccessType.FIELD)
-/*@NamedQueries({
+@NamedQueries({
 	
 	
-	
-	@NamedQuery(name="Producto.buscarPorId", query="SELECT p FROM Producto p JOIN Categoria c join AV av WHERE av.idAV = :idAV AND p.nombre = :nombreProd")
-})*/
+	@NamedQuery(name="Producto.buscarPorId", query="SELECT p FROM Producto p  WHERE p.idProducto = :idProd")
+	//@NamedQuery(name="Producto.buscarPorId", query="SELECT p FROM Producto p JOIN Categoria c join AV av WHERE av.idAV = :idAV AND p.nombre = :nombreProd")
+})
 public class Producto implements Serializable {
 
 	   

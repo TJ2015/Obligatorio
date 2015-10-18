@@ -29,16 +29,15 @@
 						<h:commandButton id="botonVerAv" styleClass="btn btn-primary" value="Ver lista de AV" 
 					action="#{usuarioBean.mostrarListaAV()}"/>
 					</h:form>
-					<h:form styleClass="form">
-						<h:commandButton id="botonVerCategorias" styleClass="btn btn-primary" value="Ver lista de Categorias" 
-					action="#{avBean.mostrarListaCategoria()}"/>
-					</h:form>
+					
 					<ul class="nav btn btn-primary nav-pills nav-stacked" style="width:150px; ">
+						<li><a href="verListaCategoria.xhtml" style="color: white;">Ver Lisca Cat</a></li>
 						<li><a href="av_crear.xhtml" style="color: white;">Crear AV</a></li>
 						<li><a href="compartirAv.xhtml" style="color: white;">Compartir AV</a> <br /></li>
 						<li><a href="categoria_crear.xhtml" style="color: white;">Crear Categoria</a> <br /></li>
 						<li><a href="producto_crear.xhtml" style="color: white;">Crear Producto</a> <br /></li>
 					</ul>
+					
 				</c:if>
 			
 			<center><h1>Bienvenido</h1></center>

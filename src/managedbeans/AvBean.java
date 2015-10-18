@@ -58,7 +58,7 @@ public class AvBean implements Serializable{
 	public void setUsuarioCreador(String usuarioCreador) {
 		this.usuarioCreador = usuarioCreador;
 	}
-	  public long getIdAV() {
+	public long getIdAV() {
 			return idAV;
 		}
 

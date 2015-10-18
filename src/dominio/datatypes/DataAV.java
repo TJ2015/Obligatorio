@@ -21,7 +21,7 @@ public class DataAV {
 	public DataAV(String nombreAV, String nickname,List<DataCategoria> categorias) {
 		this.nombreAV = nombreAV;
 		this.nickname = nickname;
-		this.categorias = new ArrayList<>();
+		this.categorias = categorias;
 		
 	}
 	public String getNickname() {

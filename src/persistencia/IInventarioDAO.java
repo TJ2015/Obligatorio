@@ -12,6 +12,9 @@ public interface IInventarioDAO {
 	public void persistirProductoDescripcion(Producto pd);
 	public void actualizarCategoria(Categoria obj);
 	public void actualizarProductoDescripcion(Producto pd);
-	//public Producto encontrarProducto(String nombreProd, long idAV);
+	public Producto encontrarProducto(String nombreProd, long idProd);
+	void eliminarProducto(Producto pd);
+	void eliminarCategoria(Categoria cat);
+	public Categoria encontrarCategoria(long idCat);
 
 }

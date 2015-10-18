@@ -1,14 +1,14 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
 import dominio.AV;
 import dominio.Usuario;
-import dominio.datatypes.DataAV;
 import dominio.datatypes.DataCategoria;
-import dominio.datatypes.DataUsuario;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -118,8 +118,10 @@ public class ControladorAV implements IControladorAV {
 	@Override
 	public List <DataCategoria> mostrarListaCat(long idAv) {
 		AV av= avDAO.traerAV(idAv);		
+		if (av!=null){
 		return av.getDataAV().getCategorias();
-
+		}
+		return new ArrayList<>();
 	}	
 
 
