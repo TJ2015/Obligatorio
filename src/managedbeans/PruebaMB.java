@@ -18,8 +18,7 @@ public class PruebaMB implements Serializable {
 	}
 	
 	public String pruebaManejoDB() {
-		util.DataBaseManager.setupTenant("Obligatorio", "PIJA666", "localhost");
-		return "PIJA";
+		return "caca";
 	}
 	
 }

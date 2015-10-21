@@ -38,6 +38,8 @@ public class Categoria implements Serializable {
 	//MARIANELA
 	@ManyToOne
 	private AV av;
+	
+	
 
 	public Categoria(){
 		

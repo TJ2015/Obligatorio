@@ -1,21 +1,10 @@
 package managedbeans;
 
 import java.io.IOException;
->>>>>>> logica
 import java.io.Serializable;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-<<<<<<< HEAD
-
-import negocio.IControladorInventario;
-
-@ManagedBean
-public class ProductoBean implements Serializable {
-	
-=======
 import javax.faces.context.FacesContext;
-
 import negocio.IControladorInventario;
 
 

@@ -41,6 +41,7 @@ public class AV implements Serializable {
 	private List<Nota> notas  = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@ElementCollection
 	@JoinTable(name = "categorias_av",
 	    joinColumns = @JoinColumn(name = "av"),
 	    inverseJoinColumns = @JoinColumn (name = "idAV"))
