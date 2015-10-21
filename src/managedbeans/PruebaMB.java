@@ -18,6 +18,7 @@ public class PruebaMB implements Serializable {
 	}
 	
 	public String pruebaManejoDB() {
+
 		return "caca";
 	}
 	

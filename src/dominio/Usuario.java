@@ -20,12 +20,6 @@ import javax.persistence.OneToMany;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 
-/**
- * Entity implementation class for Entity: Usuario
- *
- */
-
-
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),

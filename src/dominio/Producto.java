@@ -25,14 +25,10 @@ import javax.persistence.Transient;
 @Entity
 @Access(AccessType.FIELD)
 /*@NamedQueries({
-	
-	
-	
 	@NamedQuery(name="Producto.buscarPorId", query="SELECT p FROM Producto p JOIN Categoria c join AV av WHERE av.idAV = :idAV AND p.nombre = :nombreProd")
 })*/
 public class Producto implements Serializable {
 
-	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProducto;
@@ -45,8 +41,7 @@ public class Producto implements Serializable {
 	// TODO agregar imagen
 	@Transient
 	private List<Atributo> atributosList;
-		
-	//para descripcion producto// MARIANELA!!!!
+	
 	private long idAV;
 	
 	

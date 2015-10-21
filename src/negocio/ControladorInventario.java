@@ -24,7 +24,7 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean crearCategoria(String nombre, long idAV) {
-		
+		/*
 		Categoria cat = new Categoria(nombre);
 		
 		AV av = avDAO.traerAV(idAV);
@@ -36,7 +36,7 @@ public class ControladorInventario implements IControladorInventario {
 			av.addCategoria(cat);
 			avDAO.actualizarAV(av);
 		}
-		
+		*/
 		return true;
 	}
 
@@ -49,6 +49,7 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public boolean existeCategoria(String nombre, long idAV) {
 		//if (nombreAV!= "0"){
+		/*
 		AV av = avDAO.traerAV(idAV);
 		if(av != null) {
 			List <Categoria> listCat = av.getCategorias();
@@ -58,6 +59,7 @@ public class ControladorInventario implements IControladorInventario {
 				}
 			}
 		}
+		*/
 		return false;
 	}
 
@@ -78,7 +80,7 @@ public class ControladorInventario implements IControladorInventario {
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock) throws Exception{
 		
 		AV av = avDAO.traerAV(idAV);
-		
+		/*
 		List<Categoria> cats = av.getCategorias();
 		Categoria cat = null;
 		for(Categoria c : cats ) {
@@ -101,6 +103,7 @@ public class ControladorInventario implements IControladorInventario {
 		
 		cat.addProducto(prod);
 		invDAO.actualizarCategoria(cat);
+		*/
 	}
 
 	@Override
@@ -114,6 +117,7 @@ public class ControladorInventario implements IControladorInventario {
 		
 		AV av= avDAO.traerAV(idAV);
 		
+		/*
 		List<Categoria> cat;
 		cat = av.getCategorias();
 		
@@ -130,7 +134,7 @@ public class ControladorInventario implements IControladorInventario {
 			
 		}
 		
-		
+		*/
 		//prod.setStock(stock);		
 	}
 

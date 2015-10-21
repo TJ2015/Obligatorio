@@ -1,17 +1,21 @@
 package dominio;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import dominio.datatypes.DataAV;
-import dominio.datatypes.DataUsuario;
 
 /**
  * Entity implementation class for Entity: AV
@@ -29,10 +33,8 @@ public class AV implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idAV;
 	private String nombreAV;
-	
 	@ManyToOne
 	private Usuario usuarioCreador;
-	
 	@ElementCollection
 	@ManyToMany
 	@JoinTable(name = "av_usuarioscompartidos")
@@ -40,20 +42,12 @@ public class AV implements Serializable {
 	@ElementCollection
 	private List<Nota> notas  = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@ElementCollection
-	@JoinTable(name = "categorias_av",
-	    joinColumns = @JoinColumn(name = "av"),
-	    inverseJoinColumns = @JoinColumn (name = "idAV"))
-	private List<Categoria> categorias = new ArrayList<>();
-	
 	private static final long serialVersionUID = 1L;
 
 	public AV(String nombreAV, Usuario usuarioCreador) {
 		super();
 		this.nombreAV = nombreAV;
 		this.usuarioCreador = usuarioCreador;
-		this.categorias = new ArrayList<>();
 	}
 
 	public AV() {
@@ -95,14 +89,6 @@ public class AV implements Serializable {
 	public void setNotas(List<Nota> notas) {
 		this.notas = notas;
 	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
-	}
 	
 	public List<Usuario> getUsuariosCompartidos() {
 		return usuariosCompartidos;
@@ -110,10 +96,6 @@ public class AV implements Serializable {
 
 	public void setUsuariosCompartidos(List<Usuario> usuariosCompartidos) {
 		this.usuariosCompartidos = usuariosCompartidos;
-	}
-
-	public void addCategoria(Categoria cat) {
-		this.categorias.add(cat);
 	}
 
 	@Override
@@ -149,10 +131,11 @@ public class AV implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador + "]";
+		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador
+				+ ", usuariosCompartidos=" + usuariosCompartidos + ", notas=" + notas + "]";
 	}
 	
 }

@@ -30,6 +30,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Usuario buscarUsuario(String nick) {
 		Usuario usuario = null;
 		try {
@@ -45,6 +46,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean actualizarUsuario(Usuario usuario) {
 		boolean seActualizo = false;
 		try {
@@ -59,6 +61,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Usuario buscarUsuarioEmail(String email) {
 		Usuario usuario = null;
 		try {

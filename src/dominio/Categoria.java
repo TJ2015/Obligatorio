@@ -35,12 +35,6 @@ public class Categoria implements Serializable {
 	private List<Producto> productos = new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	
-	//MARIANELA
-	@ManyToOne
-	private AV av;
-	
-	
-
 	public Categoria(){
 		
 	}
@@ -71,14 +65,6 @@ public class Categoria implements Serializable {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
-	}
-
-	public AV getAv() {
-		return av;
-	}
-
-	public void setAv(AV av) {
-		this.av = av;
 	}
 
 	public void addProducto(Producto prod) {
