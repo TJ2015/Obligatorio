@@ -18,6 +18,8 @@ public interface IControladorAV {
 	public void modificarAV(String nombreAV, String nuevoNombreAV);//datos de estilo si se modifican
 	public void eliminarAV(long idAV);
 	public void compartirAV(long idAV, String nickUsuario);
+	
+	public AV traerAvPorNombre(String nombre); 
 
 	
 }

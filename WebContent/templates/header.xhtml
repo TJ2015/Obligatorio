@@ -33,9 +33,11 @@
 		                   <li ><a href="registro.xhtml" >Registrarse</a></li>
 		                   </c:if>
 		                    <c:if test="${usuarioBean.logueado == true}">
-		                    <li><a href="login.xhtml" >Cerrar sesión</a></li>
-		                	<li><h:commandLink action="#{usuarioBean.logout()}" value="Cerrar sesión MARIANELA" /></li>	
-		                   
+		                    
+		                	<h:form styleClass="form">
+		                	   	<li><h:commandLink action="#{usuarioBean.logout}" value="Cerrar sesión" ></h:commandLink></li>
+		                	 	                	   	
+		                   </h:form>
 		                   </c:if>
 		                   
 		                   

@@ -50,20 +50,23 @@
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<h:outputLabel value="Nombre Usuario" styleClass="sr-only" for="usuarioCreador" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="usuarioCreador" value="#{avBean.usuarioCreador}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre" a:placeholder="usuarioCreador"/>
-							</div>
-						</div>
-
+						
+					<input type="hidden" name="hidden1" value="#{usuarioBean.nick}"  />
+					
+					
+				
+										
+										
+				
+						
 
 						<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
 										action="#{avBean.agregarAV()}"/>
 						</h:form>
+						
+						
+						
+						
 					
 				</div>
 			</div>

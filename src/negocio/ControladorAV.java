@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
+
 import dominio.AV;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
@@ -28,6 +30,10 @@ public class ControladorAV implements IControladorAV {
 	public boolean altaAV(String nombreAV, String usuarioCreador) {
 		//String nombreUsu=usuarioCreador.getNombre();
 		
+		
+		String usuarioCreador1 = FacesContext.getCurrentInstance().
+				getExternalContext().getRequestParameterMap().get("hidden1");
+		usuarioCreador = usuarioCreador1;
 		
 		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
 		if (usu!=null){
@@ -113,6 +119,23 @@ public class ControladorAV implements IControladorAV {
 		avDAO.actualizarAV(av);
 		
 	}
+	
+	
+	
+	
+	
+
+
+
+	@Override
+	public AV traerAvPorNombre(String nombre) {
+		AV av = avDAO.traerAvPorNombre(nombre);
+		return av;
+	}
+	
+	
+	
+	
 
 
 }

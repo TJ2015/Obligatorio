@@ -8,7 +8,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
+import dominio.AV;
 import dominio.datatypes.DataAV;
 import negocio.IControladorAV;
 import negocio.IControladorUsuario;
@@ -77,12 +79,14 @@ public class AvBean implements Serializable{
 		
 	public void agregarAV(){
 		boolean creo=false;
+		
 	
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))){
 			creo=cAV.altaAV(nombreAV, usuarioCreador);
-	 
+				 
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +94,8 @@ public class AvBean implements Serializable{
 			
 		}
 	}
+	
+	
 	
 	public void compartirAV(){
 		if(cUsu.existeUsuarioNick(nickname)){
@@ -104,4 +110,14 @@ public class AvBean implements Serializable{
 		
 	}
 
+	
+	
+	public long traerIdAV(){
+		AV av=cAV.traerAvPorNombre(nombreAV);
+		 idAV=av.getIdAV();
+		return idAV;
+		
+		
+	}
+	
 }

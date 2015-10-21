@@ -6,6 +6,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import dominio.AV;
 import dominio.Categoria;
 //import dominio.Usuario;
 import dominio.Producto;
@@ -62,6 +63,9 @@ public class InventarioDAO implements IInventarioDAO {
 			e.printStackTrace();
 		}
 	}
+	
+
+	
 
 	/*@Override
 	public Producto encontrarProducto(String nombreProd, long idAV) {

@@ -25,6 +25,8 @@ import dominio.datatypes.DataUsuario;
 	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
 	@NamedQuery(name="Usuario.buscarPorNick", query="SELECT u FROM Usuario u WHERE u.nick = :nick"),
 	@NamedQuery(name="Usuario.buscarPorEmail", query="SELECT u FROM Usuario u WHERE u.email = :email")
+	
+	
 })
 public class Usuario implements Serializable {
 
