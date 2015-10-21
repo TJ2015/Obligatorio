@@ -14,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import negocio.IControladorUsuario;
@@ -190,9 +191,16 @@ public class UsuarioBean implements Serializable {
 	try {
 			if ( cusu.login(nick, password)){
 				logueado = true;
-				HttpSession session = SesionBean.getSession();
-				session.setAttribute("nickUsuario", nick);
+				
+				/*HttpSession session = SesionBean.getSession();
+				session.setAttribute("nickUsuario", nick);*/
+			
+				//session.setAttribute("usuario", this);
+				
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/datosSesionUsuario.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
+				
+				
 				
 			}
 			 else {
@@ -218,7 +226,12 @@ public class UsuarioBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		session.invalidate();
 		
+	
+		//logueado=false;
+		
 	}
+	
+	
 	
 	
 	
@@ -227,9 +240,13 @@ public class UsuarioBean implements Serializable {
 		try {
 			if( cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento) ) {
 				logueado = true;
+				
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/datosSesionUsuario.xhtml");
+				
 				//dusu=cusu.mostraListaAv(nick);
 				 //AVs=dusu.getAVs();
 				
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/login.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 				
 			} else {

@@ -16,14 +16,7 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"
-			var usuario = document.getElementById('#{textoUsuario.clientId}');
-			$(usuario).focus();
-			
-		})
-	</script>
+	
 
 </h:head> 
 
@@ -49,23 +42,43 @@
 							  <h:inputText id="nombre" value="#{categoriaBean.nombre}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre de Categoría" a:placeholder="NombreCategoria"/>
 							</div>
 						</div>
-									
-							<div class="form-group">
-							<h:outputLabel value="idAV" styleClass="sr-only" for="idAV" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="idAv" value="#{categoriaBean.idAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el id de Categoría" a:placeholder="idAV"/>
-							</div>
-						</div>
-									
-	
+																	
+								nombre				
+						<h:outputText id="txtCiudad" value="#{avBean.nombreAV}"/>
+								ID AV levantado de la base
+								<h:outputText id="txtCiudad2" value="#{avBean.traerIdAV()}"/>
+								 
+								
+						<h:inputHidden id="lat" value="#{avBean.idAV}" />
+						<h:inputHidden id="lat1" value="#{avBean.nombreAV}" />
+		        		
+							
+							
+							
+						
+						
+							
+						
 	
 
 <h:commandButton id="botonCrearCategoria" styleClass="btn btn-primary" value="Crear categoría" 
 				action="#{categoriaBean.crearCategoria()}"/>
 </h:form>
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
 					
 				</div>
 			</div>

@@ -6,27 +6,44 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
+import dominio.AV;
 import dominio.Producto;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 
 @ManagedBean
 @ViewScoped
+//@SessionScoped
 public class CategoriaBean implements Serializable {
 	
 	@EJB
 	IControladorInventario cinv;
-	//@EJB
-	//IControladorAV cAV;
+	
+	@EJB
+	IControladorAV cAV;
 	
 	private String nombre;
 	private long idAV;
 	
 	private static final long serialVersionUID = 1L;
+	
+	
+	private String nombreAV;
+	
+	
+	public String getNombreAV() {
+		return nombreAV;
+	}
+	public void setNombreAV(String nombreAV) {
+		this.nombreAV = nombreAV;
+	}
+
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -54,8 +71,9 @@ public class CategoriaBean implements Serializable {
 
 	public void crearCategoria(){
 		try {
-			if( cinv.crearCategoria(nombre, idAV) ) {
-
+			
+			if( cinv.crearCategoria(nombre, idAV)) { 	
+				
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
@@ -67,10 +85,7 @@ public class CategoriaBean implements Serializable {
 		}
 	}
 	
-	
-		
-		
-	}
+}
 	
 	
 	

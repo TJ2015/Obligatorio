@@ -2,6 +2,7 @@ package persistencia;
 
 import javax.ejb.Local;
 
+import dominio.AV;
 import dominio.Categoria;
 import dominio.Producto;
 
@@ -13,5 +14,9 @@ public interface IInventarioDAO {
 	public void actualizarCategoria(Categoria obj);
 	public void actualizarProductoDescripcion(Producto pd);
 	//public Producto encontrarProducto(String nombreProd, long idAV);
+	
+	
+	
+	
 
 }

@@ -10,4 +10,8 @@ public interface IAvDAO {
 	public boolean altaAV(AV av);
 	public boolean buscarAV(long id);
 	public boolean actualizarAV(AV av);
+	
+	
+	public AV traerAvPorNombre(String nombre);
+
 }

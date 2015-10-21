@@ -161,5 +161,32 @@ public class ControladorInventario implements IControladorInventario {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	
+	public boolean crearCategoria2(String nombre, String nombreAV){
+		
+	Categoria cat = new Categoria(nombre);
+		
+		AV av = avDAO.traerAvPorNombre(nombreAV);
+		
+		
+		if( av != null) {
+			
+			cat.setAv(av);
+			invDAO.crearCategoria(cat);
+			av.addCategoria(cat);
+			avDAO.actualizarAV(av);
+		}
+		
+		return true;
+	}
+
+		
+		
+	
+	
+	
+	
 
 }

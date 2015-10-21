@@ -5,6 +5,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -69,6 +70,29 @@ public class AvDAO implements IAvDAO {
 			}
 			return seActualizo;
 		}
+		
+		
+		
+		//INVENTO MARIANELA
+		public AV traerAvPorNombre(String nombre){
+			AV av = null;
+			try {
+				
+				av = em.createNamedQuery("AV.buscarPorNombre", AV.class)
+				.setParameter("nombreAV", nombre)
+				.getSingleResult();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return av;
+			
+		}
+
+		
+		
+		
+		
+		
 
 
 }

@@ -10,6 +10,13 @@ import dominio.Categoria;
 public interface IControladorInventario {
 	
 	public boolean crearCategoria(String nombre, long idAV);
+	
+	
+	
+	public boolean crearCategoria2(String nombre, String nombreAV);
+	
+	
+	
 	public boolean existeCategoria(String nombre, long idAV);
 	public void modificarNombreCategoria(String nombre, long idAV, long idCategoria);
 	public void eliminarCategoria(String nombre, long idAV);
