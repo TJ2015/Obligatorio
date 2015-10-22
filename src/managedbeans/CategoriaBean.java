@@ -43,9 +43,6 @@ public class CategoriaBean implements Serializable {
 	public void setNombreAV(String nombreAV) {
 		this.nombreAV = nombreAV;
 	}
-
-	
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -67,7 +64,6 @@ public class CategoriaBean implements Serializable {
 	}
 	public CategoriaBean() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public void crearCategoria(){
@@ -84,7 +80,6 @@ public class CategoriaBean implements Serializable {
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

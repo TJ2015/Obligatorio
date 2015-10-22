@@ -88,7 +88,7 @@ public class InventarioDAO implements IInventarioDAO {
 	public void actualizarCategoria(Categoria cat, String tenant) {
 		try {
 			Session session = util.DBUtil.crearSession(tenant);
-			
+
 			session.beginTransaction();
 			session.merge(cat);
 			session.getTransaction().commit();
@@ -135,22 +135,34 @@ public class InventarioDAO implements IInventarioDAO {
 	public Categoria buscarCategoria(String nombreCat) {
 		return (Categoria) em.createNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat).getSingleResult();
 	}
-	
-	/*@Override
-	public Producto encontrarProducto(String nombreProd, long idAV) {
-		Producto prod = null;
-		try {
-			//Se busca el usuario en la base 
-			//usuario = em.find(Usuario.class, nick);
-			prod = em.createNamedQuery("Producto.buscarPorId", Producto.class)
-			.setParameter("nombreProd", nombreProd)
-			.setParameter("idAV", idAV)
-			.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return prod;
-	}*/
+
+	@Override
+	public void eliminarCategoria(Categoria cat) {
+		em.merge(cat);
+		em.remove(cat);
+	}
+
+	@Override
+	public void eliminarCategoria(Categoria cat, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		session.beginTransaction();
+		session.merge(cat);
+		session.delete(cat);
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public Producto buscarProducto(String nombreProd) {
+		return (Producto) em.createNamedQuery("Producto.buscarPorNombre").setParameter("nombre", nombreProd).getSingleResult();
+	}
+
+	@Override
+	public Producto buscarProducto(String nombreProd, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreProd);
+	    
+		return (Producto) q.uniqueResult();
+	}
 
 }
 

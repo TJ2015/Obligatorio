@@ -17,7 +17,12 @@ public interface IInventarioDAO {
 	public void actualizarCategoria(Categoria obj, String tenant);
 	public void actualizarProducto(Producto pd);
 	public void actualizarProducto(Producto pd, String tenant);
-	public Categoria buscarCategoria(String nombreCat, String tenant);
 	public Categoria buscarCategoria(String nombreCat);
+	public Categoria buscarCategoria(String nombreCat, String tenant);
+	public Producto buscarProducto(String nombreProd);
+	public Producto buscarProducto(String nombreProd, String tenant);
+	public void eliminarCategoria(Categoria cat);
+	public void eliminarCategoria(Categoria cat, String tenant);
+	
 	//public Producto encontrarProducto(String nombreProd, long idAV);
 }

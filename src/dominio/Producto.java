@@ -24,9 +24,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @Access(AccessType.FIELD)
-/*@NamedQueries({
-	@NamedQuery(name="Producto.buscarPorId", query="SELECT p FROM Producto p JOIN Categoria c join AV av WHERE av.idAV = :idAV AND p.nombre = :nombreProd")
-})*/
+@NamedQueries({
+	@NamedQuery(name="Producto.buscarPorNombre", query="SELECT p FROM Producto p WHERE p.nombre = :nombre")
+})
 public class Producto implements Serializable {
 
 	@Id

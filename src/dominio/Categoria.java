@@ -12,10 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+
+import javax.persistence.CascadeType;
 
 /**
  * Entity implementation class for Entity: Categoria
@@ -31,7 +32,7 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
 	private String nombre;
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
 	@ElementCollection
 	@JoinTable(name = "categoria_productos",
 	    joinColumns = @JoinColumn(name = "categoria"),
