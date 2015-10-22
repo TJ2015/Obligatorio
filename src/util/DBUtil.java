@@ -8,14 +8,24 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 public class DBUtil {
 
+	public static Session crearSession(String tenant) {
+		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+		Session session = factory.withOptions().tenantIdentifier( "sapo_" + tenant ).openSession();
+		return session;
+	}
+	
 	public static void crearBase(String nombre) {
 		ConnectionProvider conProv = new ConnectionProviderImpl("");
 		try {
 			conProv.getConnection().createStatement().execute( "CREATE DATABASE IF NOT EXISTS " + nombre );
+			conProv.getConnection().close();
 			try {
 				List<String> queries = getQueriesFromSQLFile("META-INF/tablas.sql");
 				
@@ -23,6 +33,7 @@ public class DBUtil {
 					System.out.println("Ejecutando Query: " + q);
 					conProv = new ConnectionProviderImpl(nombre);
 					conProv.getConnection().createStatement().execute(q);
+					conProv.getConnection().close();
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -35,6 +46,37 @@ public class DBUtil {
 		}
 	}
 	
+	public static void modificarBase(String nombre) {
+		try {
+
+			System.out.println("Modificando clave `av_usuarioscompartidos`...");
+			
+			ConnectionProvider conProv = new ConnectionProviderImpl(nombre);
+			conProv.getConnection().createStatement().execute("ALTER TABLE `av_usuarioscompartidos` ADD KEY `FK_usucomp` (`usuariosCompartidos_idUsuario`) USING BTREE;");
+			conProv.getConnection().close();
+			
+			conProv = new ConnectionProviderImpl(nombre);
+			conProv.getConnection().createStatement().execute("ALTER TABLE `av_usuarioscompartidos` DROP KEY `UK_6fs67215r98r91xul672y3a8k`;");
+			conProv.getConnection().close();
+			
+			conProv = new ConnectionProviderImpl(nombre);
+			conProv.getConnection().createStatement().execute("ALTER TABLE `usuario_avcompartidos` ADD KEY `FK_usucomp` (`AVcompartidos_idAV`) USING BTREE;");
+			conProv.getConnection().close();
+			
+			conProv = new ConnectionProviderImpl(nombre);
+			conProv.getConnection().createStatement().execute("ALTER TABLE `usuario_avcompartidos` DROP KEY `UK_31aoc7x2q3fbs7vhqawyw82sm`;");
+			conProv.getConnection().close();
+			
+			
+			
+			System.out.println("clave modificada con éxito");
+
+		}
+		catch ( SQLException e ) {
+			throw new HibernateException(
+					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre + "]",e);
+		}
+	}
 	public static List<String> getQueriesFromSQLFile(String url) throws FileNotFoundException {
 
 		InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(url);

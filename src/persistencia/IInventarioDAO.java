@@ -9,7 +9,8 @@ import dominio.Producto;
 @Local
 public interface IInventarioDAO {
 
-	public void crearCategoria(Categoria cat);
+	public void persistirCategoria(Categoria cat);
+	public void persistirCategoria(Categoria cat, String tenant);
 	public void persistirProductoDescripcion(Producto pd);
 	public void actualizarCategoria(Categoria obj);
 	public void actualizarProductoDescripcion(Producto pd);

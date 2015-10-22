@@ -6,10 +6,12 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import dominio.AV;
 import dominio.Usuario;
-import dominio.datatypes.DataAV;
-import dominio.datatypes.DataUsuario;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -25,12 +27,8 @@ public class ControladorAV implements IControladorAV {
 	@EJB
 	private IAvDAO avDAO;
 	
-
-	//TODO ARREGLAR JOIN
-	public boolean altaAV(String nombreAV, String usuarioCreador) {
+	public long altaAV(String nombreAV, String usuarioCreador) {
 		//String nombreUsu=usuarioCreador.getNombre();
-		
-		
 		String usuarioCreador1 = FacesContext.getCurrentInstance().
 				getExternalContext().getRequestParameterMap().get("hidden1");
 		usuarioCreador = usuarioCreador1;
@@ -45,36 +43,31 @@ public class ControladorAV implements IControladorAV {
 				av.setUsuarioCreador(usu);//usu
 				usu.setAVs(listaav);
 				avDAO.altaAV(av);
-				usuarioDAO.actualizarUsuario(usu);	
-			    return true;
-			    
+				usuarioDAO.actualizarUsuario(usu);
+				
+			    return av.getIdAV();
 			    
 			}
 		}
-		return false;
+		return -1;
 		
 	}
-	
-	
 	
 	//El usuario ya tiene un Av con ese nombre?
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador){
 		boolean existe = false;
 		
-			Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
-			if (usu!=null){
-				List <AV> listaav=usu.getAVs();
-				for(AV i:listaav){
-					if(i.getNombreAV()==nombreAV){
-						return true;
-					}
+		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
+		if (usu!=null){
+			List <AV> listaav=usu.getAVs();
+			for(AV i:listaav){
+				if(i.getNombreAV()==nombreAV){
+					return true;
 				}
-			}	
-			return false;
-	}		
-			
-		
-		
+			}
+		}	
+		return false;
+	}
 	
 	public boolean existeAV(long idAV){
 		boolean existe = false;
@@ -89,20 +82,16 @@ public class ControladorAV implements IControladorAV {
 	//datos de estilo si se modifican
 	public void modificarAV(String nombreAV, String nuevoNombreAV){
 		//TERMINARRRRR
-		
 	}
 	public void eliminarAV(long idAV){
 		AV av=null;
 		//av=this.avDAO.traerAV(nombreAV);
 		//TERMINARRRRRR
-		
 	}
-
 
 	public void mostrarAVxUsuario(String usuario, String AV){
-		
-		
 	}
+	
 	public void compartirAV(long idAV, String nickname){
 		Usuario usu=usuarioDAO.buscarUsuario(nickname);
 		AV av=avDAO.traerAV(idAV);
@@ -120,22 +109,11 @@ public class ControladorAV implements IControladorAV {
 		
 	}
 	
-	
-	
-	
-	
-
-
-
 	@Override
 	public AV traerAvPorNombre(String nombre) {
+		//TODO AREGLAR ESTA BURRADA
 		AV av = avDAO.traerAvPorNombre(nombre);
 		return av;
 	}
 	
-	
-	
-	
-
-
 }

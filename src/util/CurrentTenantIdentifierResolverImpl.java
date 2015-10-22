@@ -5,7 +5,7 @@ import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 public class CurrentTenantIdentifierResolverImpl implements CurrentTenantIdentifierResolver {
 
 	public static ThreadLocal<String> _tenantIdentifier = new ThreadLocal<String>();
-	public static String DEFAULT_TENANT_ID = "jpatest";
+	public static String DEFAULT_TENANT_ID = "sapo_master";
 
 	@Override
 	public String resolveCurrentTenantIdentifier() {

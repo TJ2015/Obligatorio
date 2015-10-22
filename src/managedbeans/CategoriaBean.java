@@ -28,6 +28,7 @@ public class CategoriaBean implements Serializable {
 	IControladorAV cAV;
 	
 	private String nombre;
+	
 	private long idAV;
 	
 	private static final long serialVersionUID = 1L;
@@ -71,6 +72,9 @@ public class CategoriaBean implements Serializable {
 
 	public void crearCategoria(){
 		try {
+			
+			HttpSession session = SesionBean.getSession();
+			idAV = (long) session.getAttribute("idAV");
 			
 			if( cinv.crearCategoria(nombre, idAV)) { 	
 				

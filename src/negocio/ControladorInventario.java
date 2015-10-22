@@ -24,19 +24,19 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean crearCategoria(String nombre, long idAV) {
-		/*
 		Categoria cat = new Categoria(nombre);
 		
-		AV av = avDAO.traerAV(idAV);
-		
-		if( av != null) {
+		if( idAV > 0) {
+			AV av = avDAO.traerAV(idAV);
+			if( av != null) {
+				invDAO.persistirCategoria(cat, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV() );
+			} else {
+				return false;
+			}
+		} else {
 			
-			cat.setAv(av);
-			invDAO.crearCategoria(cat);
-			av.addCategoria(cat);
-			avDAO.actualizarAV(av);
 		}
-		*/
+		
 		return true;
 	}
 
@@ -161,9 +161,9 @@ public class ControladorInventario implements IControladorInventario {
 		
 		if( av != null) {
 			
-			cat.setAv(av);
-			invDAO.crearCategoria(cat);
-			av.addCategoria(cat);
+			//cat.setAv(av);
+			invDAO.persistirCategoria(cat);
+			//av.addCategoria(cat);
 			avDAO.actualizarAV(av);
 		}
 		

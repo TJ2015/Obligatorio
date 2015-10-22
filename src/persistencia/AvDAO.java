@@ -10,6 +10,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import dominio.AV;
 import dominio.Usuario;
 import persistencia.AvDAO;
@@ -27,6 +31,9 @@ public class AvDAO implements IAvDAO {
 			boolean seRegistro = false;
 			try {
 				em.persist(av);
+				String idTenant = "SAPo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+				util.DBUtil.crearBase(idTenant);
+				
 				seRegistro = true;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -34,10 +41,11 @@ public class AvDAO implements IAvDAO {
 			return seRegistro;
 		}
 		
+		@Override
+		@TransactionAttribute(TransactionAttributeType.REQUIRED)
 		public AV traerAV(long id){
 			AV av = null;
 			try {
-				
 				av = em.createNamedQuery("AV.buscarPorId", AV.class)
 				.setParameter("idAV", id)
 				.getSingleResult();
@@ -87,12 +95,6 @@ public class AvDAO implements IAvDAO {
 			return av;
 			
 		}
-
-		
-		
-		
-		
-		
 
 
 }

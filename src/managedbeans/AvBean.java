@@ -78,12 +78,13 @@ public class AvBean implements Serializable{
 		    }
 		
 	public void agregarAV(){
-		boolean creo=false;
-		
-	
+
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))){
-			creo=cAV.altaAV(nombreAV, usuarioCreador);
-				 
+			idAV = cAV.altaAV(nombreAV, usuarioCreador);
+			
+			HttpSession session = SesionBean.getSession();
+			session.setAttribute("idAV", idAV);
+			
 			try {
 				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
@@ -114,9 +115,8 @@ public class AvBean implements Serializable{
 	
 	public long traerIdAV(){
 		AV av=cAV.traerAvPorNombre(nombreAV);
-		 idAV=av.getIdAV();
+		idAV=av.getIdAV();
 		return idAV;
-		
 		
 	}
 	

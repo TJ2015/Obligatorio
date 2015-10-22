@@ -6,11 +6,11 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
-import dominio.AV;
+import org.hibernate.Session;
+
 import dominio.Categoria;
 //import dominio.Usuario;
 import dominio.Producto;
-import dominio.Usuario;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -21,10 +21,26 @@ public class InventarioDAO implements IInventarioDAO {
 		
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void crearCategoria(Categoria cat){
+	public void persistirCategoria(Categoria cat){
 		try {
 			//Persiste un categoria a la base de datos
 			em.persist(cat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void persistirCategoria(Categoria cat, String tenant){
+		try {
+			Session session = util.DBUtil.crearSession(tenant);
+			
+			session.beginTransaction();
+			session.persist(cat);
+			session.getTransaction().commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,9 +80,6 @@ public class InventarioDAO implements IInventarioDAO {
 		}
 	}
 	
-
-	
-
 	/*@Override
 	public Producto encontrarProducto(String nombreProd, long idAV) {
 		Producto prod = null;

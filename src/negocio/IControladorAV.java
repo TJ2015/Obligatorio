@@ -11,7 +11,7 @@ import dominio.datatypes.DataAV;
 public interface IControladorAV {
 	
 
-	public boolean altaAV(String nombreAV, String usuarioCreador);
+	public long altaAV(String nombreAV, String usuarioCreador);
 	public boolean existeAV(long idAV);
 	//un usu no puede tener 2AV mismo nombre
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);

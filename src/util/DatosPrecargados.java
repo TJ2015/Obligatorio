@@ -27,6 +27,8 @@ public class DatosPrecargados {
 	@PostConstruct 
     void atStartup() { 
 		
+		util.DBUtil.modificarBase("sapo_master");
+		
 		Usuario usu = new Usuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
 		usuDAO.altaUsuario(usu);
 		usu = new Usuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());
