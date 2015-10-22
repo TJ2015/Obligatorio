@@ -96,6 +96,22 @@ public class AvDAO implements IAvDAO {
 			
 		}
 
+		
+		//falta implementar
+		public boolean bajaAV(AV av) {
+			boolean baja = false;
+			try {
+				//em.persist(av);
+				String idTenant = "SAPo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+				//util.DBUtil.crearBase(idTenant);
+				
+				baja = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return baja;
+		}
+		
 
 }
 	

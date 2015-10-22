@@ -79,31 +79,39 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock) throws Exception{
 		
-		AV av = avDAO.traerAV(idAV);
-		/*
-		List<Categoria> cats = av.getCategorias();
+		String tenant = "";
 		Categoria cat = null;
-		for(Categoria c : cats ) {
-			if( c.getNombre().equals(categoria)) {
-				cat = c;
-			}
-		}
-		
-		if(cat == null)
-			throw new Exception("No existe la categoria '" + categoria + "'");
 		
 		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-			
+		
 		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs,stock);
-		prod.setCategoria(cat);
-		
 		prod.setIdAV(idAV);
-			
-		invDAO.persistirProductoDescripcion(prod);
 		
-		cat.addProducto(prod);
-		invDAO.actualizarCategoria(cat);
-		*/
+		if( idAV > 0 ) {
+			AV av = avDAO.traerAV(idAV);
+			tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+			cat = invDAO.buscarCategoria(categoria, tenant);
+			
+			if(cat == null)
+				throw new Exception("No existe la categoria '" + categoria + "'");
+			
+			prod.setCategoria(cat);
+			invDAO.persistirProducto(prod, tenant);
+			cat.addProducto(prod);
+			invDAO.actualizarCategoria(cat, tenant);
+			
+		} else {
+			cat = invDAO.buscarCategoria(categoria);
+			
+			if(cat == null)
+				throw new Exception("No existe la categoria '" + categoria + "'");
+			
+			prod.setCategoria(cat);
+			invDAO.persistirProducto(prod);
+			cat.addProducto(prod);
+			invDAO.actualizarCategoria(cat);
+					
+		}
 	}
 
 	@Override

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -20,7 +22,9 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-
+@NamedQueries({
+	@NamedQuery(name="Categoria.buscarPorNombre", query="SELECT c FROM Categoria c WHERE c.nombre = :nombre")
+})
 public class Categoria implements Serializable {
 
 	@Id

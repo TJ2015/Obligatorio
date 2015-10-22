@@ -16,14 +16,7 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"
-			var usuario = document.getElementById('#{textoUsuario.clientId}');
-			$(usuario).focus();
-			
-		})
-	</script>
+	
 
 </h:head> 
 
@@ -54,20 +47,17 @@
 					<input type="hidden" name="hidden1" value="#{usuarioBean.nick}"  />
 					
 					
-				
+						<center><h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
+										action="#{avBean.agregarAV()}"/></center>
+																		
 										
-										
-				
-						
-
-						<h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
-										action="#{avBean.agregarAV()}"/>
 						</h:form>
+						<br></br>
+							<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></h:form></center>		
 						
 						
-						
-						
-					
+											
 				</div>
 			</div>
 		</div>

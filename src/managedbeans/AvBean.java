@@ -120,4 +120,24 @@ public class AvBean implements Serializable{
 		
 	}
 	
+	public void eliminarAV(){
+		
+		cAV.eliminarAV(idAV);
+		
+	}
+	
+	
+	
+	public void cancelarAccion(){
+		
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

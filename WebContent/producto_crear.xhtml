@@ -16,11 +16,6 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//Para obtener un elemento JSF desde JavaScript se le debe agregrar al elemento binding="#{textoUsuario}"			
-		})
-	</script>
 
 </h:head> 
 
@@ -29,11 +24,11 @@
  <ui:define name="contenido">
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
-		  <h1>Crear Producto Descripción</h1>
+		  <h1>Crear Descripción del Producto</h1>
 		</div>
 		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Crear Producto Descripción</div>
+				<div class="panel-heading">Crear Descripción del Producto</div>
 				<div class="panel-body">
 				
 			  		<h:form styleClass="form">
@@ -105,9 +100,12 @@
 						</div>
 	
 
-				<h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
-				action="#{productoBean.crearProductoDescripción()}"/>
+				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
+				action="#{productoBean.crearProductoDescripción()}"/></center>
 </h:form>
+<br></br>
+<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></h:form></center>	
 					
 				</div>
 			</div>

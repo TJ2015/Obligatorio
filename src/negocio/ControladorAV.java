@@ -28,7 +28,7 @@ public class ControladorAV implements IControladorAV {
 	private IAvDAO avDAO;
 	
 	public long altaAV(String nombreAV, String usuarioCreador) {
-		//String nombreUsu=usuarioCreador.getNombre();
+		
 		String usuarioCreador1 = FacesContext.getCurrentInstance().
 				getExternalContext().getRequestParameterMap().get("hidden1");
 		usuarioCreador = usuarioCreador1;
@@ -83,11 +83,9 @@ public class ControladorAV implements IControladorAV {
 	public void modificarAV(String nombreAV, String nuevoNombreAV){
 		//TERMINARRRRR
 	}
-	public void eliminarAV(long idAV){
-		AV av=null;
-		//av=this.avDAO.traerAV(nombreAV);
-		//TERMINARRRRRR
-	}
+	
+	
+	
 
 	public void mostrarAVxUsuario(String usuario, String AV){
 	}
@@ -115,5 +113,26 @@ public class ControladorAV implements IControladorAV {
 		AV av = avDAO.traerAvPorNombre(nombre);
 		return av;
 	}
+
+	
+	
+	
+	@Override
+	public void eliminarAV(long idAV) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	//para implementar???
+		public void eliminarAV(String nombreAvBorrar){
+			AV av=null;
+			String nombreAV = FacesContext.getCurrentInstance().
+					getExternalContext().getRequestParameterMap().get("hidden1");
+			nombreAV = nombreAvBorrar;
+			
+		
+		}
 	
 }

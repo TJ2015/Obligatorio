@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+
+
+
+
+<h:body>
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
+	<div class="container-fluid clearfix">
+		<div class="page-header text-center">
+		  <h1>Crear AV</h1>
+		</div>
+		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Crear AV</div>
+				<div class="panel-body">
+				
+			  		<h:form styleClass="form">
+						<div class="form-group">
+							<h:outputLabel value="nombreAV" styleClass="sr-only" for="nombreAV" />
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								</div>
+								Está seguro que desea eliminar el siguiente AV: #{avBean.nombre}
+							 
+							</div>
+						</div>
+						
+						
+					<input type="hidden" name="hidden1" value="#{avBean.nombre}"  />
+					
+					
+						<center><h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Eliminar AV" 
+										action="#{avBean.eliminarAV()}"/></center>
+						</h:form>
+						<br></br>
+						
+							<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></h:form></center>	
+											
+				</div>
+			</div>
+		</div>
+	</div>
+	</ui:define>
+</ui:composition>
+</h:body>
+
+
+
+</html>
