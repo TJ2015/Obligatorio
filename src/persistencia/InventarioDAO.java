@@ -164,6 +164,21 @@ public class InventarioDAO implements IInventarioDAO {
 		return (Producto) q.uniqueResult();
 	}
 
+	@Override
+	public void eliminarProducto(Producto prod) {
+		em.merge(prod);
+		em.remove(prod);
+	}
+
+	@Override
+	public void eliminarProducto(Producto prod, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		session.beginTransaction();
+		session.merge(prod);
+		session.delete(prod);
+		session.getTransaction().commit();
+	}
+
 }
 
 

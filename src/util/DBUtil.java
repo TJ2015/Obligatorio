@@ -116,5 +116,15 @@ public class DBUtil {
 		
 		return queries;
 	}
+
+	public static void eliminarTenant(String tenant) {
+		ConnectionProvider conProv = new ConnectionProviderImpl("");
+		try {
+			conProv.getConnection().createStatement().execute("DROP DATABASE sapo_" + tenant);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

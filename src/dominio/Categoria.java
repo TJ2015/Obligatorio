@@ -75,5 +75,9 @@ public class Categoria implements Serializable {
 	public void addProducto(Producto prod) {
 		this.productos.add(prod);
 	}
+	
+	public void removeProducto(Producto prod) { 
+		this.productos.remove(prod);
+	}
 
 }

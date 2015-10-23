@@ -52,7 +52,6 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
-		super();
 	}
 	
 	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) {
@@ -147,10 +146,11 @@ public class Usuario implements Serializable {
 	public void setAVcompartidos(List<AV> aVcompartidos) {
 		AVcompartidos = aVcompartidos;
 	}
-   public void addAV(AV av){
-	   AVs.add(av);
-   }
-   
-   
-     
+	public void addAV(AV av){
+		AVs.add(av);
+	}
+	public void removeAVCompartido(AV av) {
+		this.AVcompartidos.remove(av);
+	}
+	
 }

@@ -58,7 +58,6 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public void modificarInfoUsuario(String nombre, String apellido, String nick, String pasword, String email,
 			Date fechaNacimiento) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -86,6 +85,12 @@ public class ControladorUsuario implements IControladorUsuario {
 		
 			return usu.getDataUsuario().getAVs();	
 		
+	}
+
+	@Override
+	public boolean tienePermiso(String nickname, String idAV) {
+		// TODO Auto-generated method stub
+		return false;
 	}	
 
 }

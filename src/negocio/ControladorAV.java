@@ -79,14 +79,6 @@ public class ControladorAV implements IControladorAV {
 		return existe;
 	}
 
-	//datos de estilo si se modifican
-	public void modificarAV(String nombreAV, String nuevoNombreAV){
-		//TERMINARRRRR
-	}
-	
-	
-	
-
 	public void mostrarAVxUsuario(String usuario, String AV){
 	}
 	
@@ -114,25 +106,22 @@ public class ControladorAV implements IControladorAV {
 		return av;
 	}
 
-	
-	
-	
 	@Override
 	public void eliminarAV(long idAV) {
-		// TODO Auto-generated method stub
+		
+		AV av = avDAO.traerAV(idAV);
+		
+		String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		
+		List<Usuario> usuarios = av.getUsuariosCompartidos();
+		
+		for( Usuario usu : usuarios ) {
+			usu.removeAVCompartido(av);
+			usuarioDAO.actualizarUsuario(usu);
+		}
+		
+		avDAO.eliminarAV(tenant);
 		
 	}
-	
-	
-	
-	//para implementar???
-		public void eliminarAV(String nombreAvBorrar){
-			AV av=null;
-			String nombreAV = FacesContext.getCurrentInstance().
-					getExternalContext().getRequestParameterMap().get("hidden1");
-			nombreAV = nombreAvBorrar;
-			
-		
-		}
 	
 }

@@ -23,6 +23,8 @@ public interface IInventarioDAO {
 	public Producto buscarProducto(String nombreProd, String tenant);
 	public void eliminarCategoria(Categoria cat);
 	public void eliminarCategoria(Categoria cat, String tenant);
+	public void eliminarProducto(Producto cat);
+	public void eliminarProducto(Producto cat, String tenant);
 	
 	//public Producto encontrarProducto(String nombreProd, long idAV);
 }

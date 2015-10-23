@@ -11,7 +11,7 @@ public interface IAvDAO {
 	public boolean buscarAV(long id);
 	public boolean actualizarAV(AV av);
 	
-	
 	public AV traerAvPorNombre(String nombre);
+	public void eliminarAV(String tenant);
 
 }

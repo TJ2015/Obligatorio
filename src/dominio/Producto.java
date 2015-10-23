@@ -129,5 +129,54 @@ public class Producto implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + (int) (idAV ^ (idAV >>> 32));
+		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(precio);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + stock;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producto other = (Producto) obj;
+		if (descripcion == null) {
+			if (other.descripcion != null)
+				return false;
+		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (idAV != other.idAV)
+			return false;
+		if (idProducto == null) {
+			if (other.idProducto != null)
+				return false;
+		} else if (!idProducto.equals(other.idProducto))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (Double.doubleToLongBits(precio) != Double.doubleToLongBits(other.precio))
+			return false;
+		if (stock != other.stock)
+			return false;
+		return true;
+	}
+	
 	
 }

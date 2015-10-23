@@ -111,6 +111,11 @@ public class AvDAO implements IAvDAO {
 			}
 			return baja;
 		}
+
+		@Override
+		public void eliminarAV(String tenant) {
+			util.DBUtil.eliminarTenant(tenant);
+		}
 		
 
 }
