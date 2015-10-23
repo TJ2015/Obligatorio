@@ -11,5 +11,5 @@ public interface IUsuarioDAO {
 	public Usuario buscarUsuario(String nick);
 	public Usuario buscarUsuarioEmail(String email);
 	public boolean actualizarUsuario(Usuario user);
-	
+	public void eliminarUsuario(Usuario usu);
 }
