@@ -19,5 +19,6 @@ public interface IControladorUsuario {
 	public boolean login(String nickname, String password);
 	public void eliminarUsuario(String nickname);
 	public List <DataAV> mostrarListaAv(String nickname);
+	public String payment();
 	
 }

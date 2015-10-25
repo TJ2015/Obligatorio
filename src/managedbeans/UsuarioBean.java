@@ -31,6 +31,7 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	private String pay;
 	private  List<DataAV> AVs=new ArrayList<>();
 	private DataUsuario dusu;
 	
@@ -227,7 +228,25 @@ public class UsuarioBean<HttpSession, HttpServletRequest> implements Serializabl
 		
 	}
 	
-	
+	public void payment(){
+		try {
+			pay=cusu.payment();
+			 
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/success.xhtml");
+			
+		} catch (IOException e) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/fail.xhtml");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 		
 	public void logout() {

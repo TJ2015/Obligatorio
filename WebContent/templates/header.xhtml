@@ -26,7 +26,8 @@
 		                <ul class="nav navbar-nav navbar-right">
 		                    <li class="active"><a href="index.xhtml">Inicio</a></li>
 		                    <li><a href="#">Precios</a></li>
-		                    
+		                    <h:commandButton id="Payment" styleClass="btn btn-primary" value="Payment" 
+									action="#{usuarioBean.payment()}"/>
 		                   <c:if test="${usuarioBean.logueado != true}">
 		                  
 		                   <li ><a href="login.xhtml" >Ingresar</a></li>

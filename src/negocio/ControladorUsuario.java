@@ -88,4 +88,8 @@ public class ControladorUsuario implements IControladorUsuario {
 		
 	}	
 
+	@Override
+	public String payment() {
+		return "payment";	
+	}	
 }
