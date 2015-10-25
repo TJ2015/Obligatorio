@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory name="fabrica">
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.username">sapo_admin</property>
+        <property name="hibernate.connection.password">sapo_admin</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/</property>
-        <property name="hibernate.connection.username"></property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 		

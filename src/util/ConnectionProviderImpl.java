@@ -14,8 +14,8 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		//this should be read from properties file		
 		basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		basicDataSource.setUrl("jdbc:mysql://localhost:3306/"+database);
-		basicDataSource.setUsername("root");
-		basicDataSource.setPassword("");
+		basicDataSource.setUsername("sapo_admin");
+		basicDataSource.setPassword("sapo_admin");
 		basicDataSource.setInitialSize(2);
 		basicDataSource.setMaxTotal(10);
 	}

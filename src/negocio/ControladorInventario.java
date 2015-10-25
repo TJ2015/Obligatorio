@@ -26,7 +26,7 @@ public class ControladorInventario implements IControladorInventario {
 	public boolean crearCategoria(String nombre, long idAV) {
 		Categoria cat = new Categoria(nombre);
 		
-		if( existeCategoria(nombre, idAV)) {
+		if( !existeCategoria(nombre, idAV)) {
 			if( idAV > 0) {
 				AV av = avDAO.traerAV(idAV);
 				if( av != null) {
