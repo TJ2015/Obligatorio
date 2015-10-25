@@ -152,5 +152,8 @@ public class Usuario implements Serializable {
 	public void removeAVCompartido(AV av) {
 		this.AVcompartidos.remove(av);
 	}
+	public void removeAV(AV av) {
+		this.AVs.remove(av);
+	}
 	
 }

@@ -19,5 +19,5 @@ public interface IControladorUsuario {
 	public boolean login(String nickname, String password);
 	public void eliminarUsuario(String nickname);
 	public List <DataAV> mostrarListaAv(String nickname);
-	public boolean tienePermiso(String nickname, String idAV);
+	public boolean tienePermiso(String nickname, long idAV);
 }

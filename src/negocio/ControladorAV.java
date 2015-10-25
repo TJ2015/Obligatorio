@@ -120,6 +120,10 @@ public class ControladorAV implements IControladorAV {
 			usuarioDAO.actualizarUsuario(usu);
 		}
 		
+		Usuario usu = av.getUsuarioCreador();		
+		usu.removeAV(av);
+		
+		usuarioDAO.actualizarUsuario(usu);
 		avDAO.eliminarAV(tenant);
 		
 	}

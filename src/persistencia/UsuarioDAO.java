@@ -74,6 +74,16 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return usuario;
+	}
+
+	@Override
+	public void eliminarUsuario(Usuario usu) {
+		try {
+			em.merge(usu);
+			em.remove(usu);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}	
 
 }
