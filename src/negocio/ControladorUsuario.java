@@ -49,10 +49,12 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public boolean registrarUsuario(String nombre, String apellido, String nick, String pasword, String email,
 			Date fechaNacimiento) {
+		
 		if( existeUsuarioNick(nick)||existeUsuarioEmail(email)) {
 			return false;
 		} else {
-			Usuario usu = new Usuario(nombre, apellido, nick, pasword, email, fechaNacimiento);
+			String passEncriptado = seguridad.Encriptador.encriptar(pasword);
+			Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
 			return usuarioDAO.altaUsuario(usu);
 		}
 	}
@@ -76,7 +78,8 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
 		
 		if ( usu != null ) {
-			if( usu.getPassword().equals(password) ) {
+			
+			if( seguridad.Encriptador.sonIguales(password, usu.getPassword()) ) {
 				return true;
 			}
 		} 
