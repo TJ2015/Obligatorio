@@ -30,7 +30,7 @@ public class CategoriaBean implements Serializable {
 	private String nombre;
 	
 	private long idAV;
-	
+	private AV av;
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -83,6 +83,25 @@ public class CategoriaBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	public void mostrarListaCategoria(){
+		try {
+			
+			HttpSession session = SesionBean.getSession();
+			//idAV = (long) session.getAttribute("idAV");
+			
+			 
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
+			
+		} catch (IOException e) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 }
 	

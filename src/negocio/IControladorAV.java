@@ -18,7 +18,8 @@ public interface IControladorAV {
 	public void eliminarAV(long idAV);
 	public void compartirAV(long idAV, String nickUsuario);
 	
-	public AV traerAvPorNombre(String nombre); 
+	public AV traerAvPorNombre(String nombre);
+	AV traerAV(long idAV); 
 
 	
 }

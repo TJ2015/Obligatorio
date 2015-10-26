@@ -29,41 +29,26 @@
 		</div>
 		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Crear Categoria</div>
+				
 				<div class="panel-body">
 				
-			  		<h:form styleClass="form">
+			  		<h:form styleClass="form-horizontal">
 						<div class="form-group">
-							<h:outputLabel value="nombre" styleClass="sr-only" for="nombre" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
-							  <h:inputText id="nombre" value="#{categoriaBean.nombre}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre de Categoría" a:placeholder="NombreCategoria"/>
+							<label for="nombre" class="col-lg-2 control-label">Nombre</label>
+							<div class="col-lg-10">
+								<h:inputText id="nombre" value="#{categoriaBean.nombre}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre de Categoría" a:placeholder="NombreCategoria"/>
 							</div>
+							
 						</div>
 																	
-					
+			<center><h:commandButton id="botonCrearCategoria" styleClass="btn btn-primary" value="Crear categoría" 
+							action="#{categoriaBean.crearCategoria()}"/>
+			<h:outputText value="&#160;" />
+			<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+													action="#{avBean.cancelarAccion()}"/></center>
+						
+                    </h:form>
 
-<center><h:commandButton id="botonCrearCategoria" styleClass="btn btn-primary" value="Crear categoría" 
-				action="#{categoriaBean.crearCategoria()}"/></center>
-</h:form>
-<br></br>
-	<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
-										action="#{avBean.cancelarAccion()}"/></h:form></center>	
-
-
-
-
-
-
-
-
-
-
-
-
-					
 				</div>
 			</div>
 		</div>

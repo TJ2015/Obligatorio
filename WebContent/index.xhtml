@@ -25,20 +25,55 @@
 			</div>
 			
 				<c:if test="${usuarioBean.logueado == true}">
+					<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+				
 					<h:form styleClass="form">
-						<h:commandButton id="botonVerAv" styleClass="btn btn-primary" value="Ver lista de AV" 
+					
+						<h:commandButton id="botonVerAv" styleClass="btn btn-success" value="Ver lista de AV" 
 					action="#{usuarioBean.mostrarListaAV()}"/>
 					</h:form>
-					<ul class="nav btn btn-primary nav-pills nav-stacked" style="width:150px; ">
-						<li><a href="av_crear.xhtml" style="color: white;">Crear AV</a></li>
-						<li><a href="compartirAv.xhtml" style="color: white;">Compartir AV</a> <br /></li>
-						<li><a href="av_eliminar.xhtml" style="color: white;">Eliminar AV</a> <br /></li>
-						<br></br>
-						<li><a href="categoria_crear.xhtml" style="color: white;">Crear Categoria</a> <br /></li>
+				
+						<div class="btn-group" role="group" >
+					    <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					      Almacén Virtual
+					    </button>
+					    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+					      <a class="dropdown-item" href="av_crear.xhtml">Crear AV</a>
+					      <br></br>
+					      <a class="dropdown-item" href="compartirAv.xhtml">Compartir AV</a>
+					      <br></br>
+					      <a class="dropdown-item" href="av_eliminar.xhtml">Eliminar AV</a>
+					    </div>
+					    </div>
+					   
+					   <div class="btn-group" role="group" >
+					     <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					      Categoria
+					      
+					    </button>
+					    <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+					      <a class="dropdown-item" href="categoria_crear.xhtml">Crear Categoria</a>
+					      <br></br>
+					      </div>
+					   </div>
+					    
+					    <div class="btn-group" role="group" >
+					     <button id="btnGroupDrop3" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					      Producto
+					    </button>
+					    <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+					      <a class="dropdown-item" href="producto_crear.xhtml">Crear Producto</a>
+					      <br></br>
+					      <a class="dropdown-item" href="categoria_crear.xhtml">Eliminar Producto</a>
+					      <br></br>
+					    </div>
+					  </div>
+						<!-- <li><a href="categoria_crear.xhtml" style="color: white;">Crear Categoria</a> <br /></li>
 						<li><a href="producto_crear.xhtml" style="color: white;">Crear Producto</a> <br /></li>
-						
-						
-					</ul>
+						 -->
+					
+					<!--  </ul>-->
+					</div>	
 				</c:if>
 			
 			<center><h1>Bienvenido</h1></center>

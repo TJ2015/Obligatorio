@@ -32,42 +32,37 @@
 <ui:define name="contenido">
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
-		  <h1>Crear AV</h1>
+		  <h1>Compartir AV</h1>
 		</div>
 		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Compartir AV</div>
+				
 				<div class="panel-body">
 				
-			  		<h:form styleClass="form">
-						<div class="form-group">
-							<h:outputLabel value="idAV" styleClass="sr-only" for="idAv" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
+			  		<h:form styleClass="form-horizontal">
+						<div class="form-group">	
+						<label for="nombre" class="col-lg-2 control-label">idAV</label>
+							<div class="col-lg-10">
 							  <h:inputText id="idAv" value="#{avBean.idAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el id" a:placeholder="idAv"/>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<h:outputLabel value="Nick Usuario" styleClass="sr-only" for="nick" />
-							<div class="input-group">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-								</div>
+						<label for="nombre" class="col-lg-2 control-label">Nick</label>
+							<div class="col-lg-10">
 							  <h:inputText id="nick" value="#{avBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nick" a:placeholder="nick"/>
 							</div>
 						</div>
 						
 
-<center><h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Compartir" 
-				action="#{avBean.compartirAV()}"/></center>
-</h:form>
+				<center><h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Compartir" 
+								action="#{avBean.compartirAV()}"/>
+				<h:outputText value="&#160;" />
+				<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+														action="#{avBean.cancelarAccion()}"/>	</center>
+				</h:form>
 
-<br></br>
-							<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
-										action="#{avBean.cancelarAccion()}"/></h:form></center>		
+
 					
 				</div>
 			</div>
