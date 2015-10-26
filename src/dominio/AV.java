@@ -18,7 +18,12 @@ import javax.persistence.NamedQuery;
 import dominio.datatypes.DataAV;
 
 /**
- * Entity implementation class for Entity: AV
+ * 
+ * Santiago Callejas
+ * Marianela Rodriguez
+ * Lautaro Acosta
+ * Noelia Gonzalez
+ * Bryan Ferreira
  *
  */
 @Entity
@@ -39,23 +44,19 @@ public class AV implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "av_usuarioscompartidos")
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
-	@ElementCollection
-	private List<Nota> notas  = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
 	
+	public AV() {
+	}
 	
-	
-
 	public AV(String nombreAV, Usuario usuarioCreador) {
 		super();
 		this.nombreAV = nombreAV;
 		this.usuarioCreador = usuarioCreador;
 	}
 
-	public AV() {
-	}
-	public DataAV getDataAV(){
+	public DataAV getDataAV() {
 		String nombreUsu= usuarioCreador.getNombre();
 		DataAV dav=new DataAV(nombreAV, nombreUsu);
 		dav.setIdAV(idAV);
@@ -84,14 +85,6 @@ public class AV implements Serializable {
 
 	public void setUsuarioCreador(Usuario usuarioCreador) {
 		this.usuarioCreador = usuarioCreador;
-	}
-
-	public List<Nota> getNotas() {
-		return notas;
-	}
-
-	public void setNotas(List<Nota> notas) {
-		this.notas = notas;
 	}
 	
 	public List<Usuario> getUsuariosCompartidos() {

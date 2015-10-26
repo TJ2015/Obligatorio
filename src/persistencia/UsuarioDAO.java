@@ -20,7 +20,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public boolean altaUsuario(Usuario usuario) {
 		boolean seRegistro = false;
 		try {
-			//Persiste un usuario a la base de datos
 			em.persist(usuario);
 			seRegistro = true;
 		} catch (Exception e) {

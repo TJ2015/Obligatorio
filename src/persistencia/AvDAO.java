@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -15,6 +17,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import dominio.AV;
+import dominio.Categoria;
+import dominio.Nota;
+import dominio.Notificacion;
 import dominio.Usuario;
 import persistencia.AvDAO;
 
@@ -115,6 +120,98 @@ public class AvDAO implements IAvDAO {
 		@Override
 		public void eliminarAV(String tenant) {
 			util.DBUtil.eliminarTenant(tenant);
+		}
+
+		@Override
+		public void persistirNota(Nota nota, String tenant) {
+			try {
+				Session session = util.DBUtil.crearSession(tenant);
+				session.beginTransaction();
+				session.persist(nota);
+				session.getTransaction().commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public Nota buscarNota(long idNota, String tenant) {
+			Session session = util.DBUtil.crearSession(tenant);
+			org.hibernate.Query q = session.getNamedQuery("Nota.buscarPorId").setParameter("idNota", idNota);
+		    
+			return (Nota) q.uniqueResult();
+		}
+
+		@Override
+		public void eliminarNota(long idNota, String tenant) {
+			try {
+				Nota nota = buscarNota(idNota, tenant);
+				if( nota != null ) {
+					Session session = util.DBUtil.crearSession(tenant);
+					session.beginTransaction();
+					session.merge(nota);
+					session.delete(nota);
+					session.getTransaction().commit();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void persistirNotificacion(Notificacion noti, String tenant) {
+			try {
+				Session session = util.DBUtil.crearSession(tenant);
+				session.beginTransaction();
+				session.persist(noti);
+				session.getTransaction().commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public Notificacion buscarNotificacion(long idNoti, String tenant) {
+			Session session = util.DBUtil.crearSession(tenant);
+			org.hibernate.Query q = session.getNamedQuery("Notificacion.buscarPorId").setParameter("idNotificacion", idNoti);
+		    
+			return (Notificacion) q.uniqueResult();
+		}
+
+		@Override
+		public void actualizarNotificacion(Notificacion noti, String tenant) {
+			try {
+				Session session = util.DBUtil.crearSession(tenant);
+				session.beginTransaction();
+				session.merge(noti);
+				session.getTransaction().commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void eliminarNotificacion(long idNoti, String tenant) {
+			try {
+				Notificacion noti = buscarNotificacion(idNoti, tenant);
+				if( noti != null ) {
+					Session session = util.DBUtil.crearSession(tenant);
+					session.beginTransaction();
+					session.merge(noti);
+					session.delete(noti);
+					session.getTransaction().commit();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public List<Object> getAllNotas(String tenant) {
+			Session session = util.DBUtil.crearSession(tenant);
+			org.hibernate.Query q = session.getNamedQuery("Nota.getAll");
+		    
+			return q.list();
 		}
 		
 

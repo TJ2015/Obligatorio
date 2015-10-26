@@ -1,14 +1,24 @@
 package dominio;
 
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import dominio.datatypes.DataNotificacion;
 
 /**
  * Entity implementation class for Entity: Notificacion
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name="Notificacion.buscarPorId", query="SELECT n FROM Notificacion n WHERE n.idNotificacion =:idNotificacion")
+})
 public class Notificacion implements Serializable {
 
 	   
@@ -16,12 +26,18 @@ public class Notificacion implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idNotificacion;
 	private String texto;
-	private boolean leido;
+	private boolean leido = false;
 	private static final long serialVersionUID = 1L;
 
 	public Notificacion() {
-		super();
-	}   
+	}
+	
+	public Notificacion(String texto) {
+		this.texto = texto;
+		this.leido = false;
+	}
+
+
 	public long getIdNotificacion() {
 		return this.idNotificacion;
 	}
@@ -42,6 +58,10 @@ public class Notificacion implements Serializable {
 
 	public void setLeido(boolean leido) {
 		this.leido = leido;
+	}
+	
+	public DataNotificacion getDataNotificacion() {
+		return new DataNotificacion(idNotificacion, texto, leido);
 	}
    
 }

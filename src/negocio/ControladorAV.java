@@ -1,17 +1,18 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import dominio.AV;
+import dominio.Nota;
+import dominio.Notificacion;
 import dominio.Usuario;
+import dominio.datatypes.DataNota;
+import dominio.datatypes.DataNotificacion;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -29,24 +30,17 @@ public class ControladorAV implements IControladorAV {
 	
 	public long altaAV(String nombreAV, String usuarioCreador) {
 		
-		String usuarioCreador1 = FacesContext.getCurrentInstance().
-				getExternalContext().getRequestParameterMap().get("hidden1");
-		usuarioCreador = usuarioCreador1;
+		Usuario usu = usuarioDAO.buscarUsuario(usuarioCreador);
 		
-		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
-		if (usu!=null){
-			if (!(this.existeAVusuario(nombreAV, usuarioCreador))){
-				AV av= new AV(nombreAV,usu);
-				//Long idUsuario = usu.getIdUsuario();
-				List <AV> listaav=usu.getAVs();//nuevo
-				listaav.add(av);//nuevo
+		if ( usu != null ) {
+			if ( !(this.existeAVusuario(nombreAV, usuarioCreador)) ) {
+				AV av = new AV(nombreAV, usu);
 				av.setUsuarioCreador(usu);//usu
-				usu.setAVs(listaav);
 				avDAO.altaAV(av);
+				usu.addAV(av);
 				usuarioDAO.actualizarUsuario(usu);
 				
 			    return av.getIdAV();
-			    
 			}
 		}
 		return -1;
@@ -126,6 +120,117 @@ public class ControladorAV implements IControladorAV {
 		usuarioDAO.actualizarUsuario(usu);
 		avDAO.eliminarAV(tenant);
 		
+	}
+
+	@Override
+	public void crearNota(String texto, String usuario, long idAV) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {				
+				Nota nota =  new Nota(texto, usuario);
+				avDAO.persistirNota(nota, tenant);
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+
+	@Override
+	public void eliminarNota(long idAV, long idNota) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {	
+				avDAO.eliminarNota(idNota, tenant);
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+
+	@Override
+	public void crearNotificacion(String texto, long idAV) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {	
+				Notificacion noti = new Notificacion(texto);
+				avDAO.persistirNotificacion(noti, tenant);
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+
+	@Override
+	public void modificarNotificacion(long idAV, long idNoti, String texto, boolean leido) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {
+				Notificacion noti = avDAO.buscarNotificacion(idNoti, tenant);
+				noti.setTexto(texto);
+				noti.setLeido(leido);
+				avDAO.actualizarNotificacion(noti, tenant);
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+
+	@Override
+	public void eliminarNotificacion(long idAV, long idNoti) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {	
+				avDAO.eliminarNotificacion(idNoti, tenant);
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+	
+	private String getTenant(long idAV) {
+		AV av = avDAO.traerAV(idAV);
+		if( av != null) {
+			return av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<DataNota> getNotas(long idAV) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {	
+				List<Object> notas = avDAO.getAllNotas(tenant);
+				List<DataNota> datas = new ArrayList<>();
+				
+				for( Object o : notas ) {
+					datas.add((DataNota) o);
+				}
+				
+				return datas;
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+
+	@Override
+	public List<DataNotificacion> getNotificaciones(long idAV) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
