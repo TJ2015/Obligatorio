@@ -1,12 +1,16 @@
 package test;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import dominio.datatypes.DataNota;
+import dominio.datatypes.DataNotificacion;
 import negocio.IControladorAV;
+import negocio.IControladorInventario;
 import negocio.IControladorUsuario;
-import persistencia.IAvDAO;
 
 @Local
 @Stateless
@@ -17,20 +21,42 @@ public class TestControladores {
 	@EJB
 	IControladorUsuario cUsu;
 	@EJB
-	IAvDAO avDAO;
+	IControladorInventario cInv;
+	
 	
 	public boolean testCrearNota() {
-		boolean OK = true;
 		try {
-			cAV.crearNota("Nota de prueba", "test", 1);
+			String texto = "Nota de prueba";
+			cAV.crearNota(texto, "test", 1);
+			List<DataNota> notas = cAV.getNotas(1);
 			
+			for( DataNota dn : notas ) {
+				if( dn.getTexto().equals(texto) )
+					return true;
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			OK = false;
 		}
-		return OK;
+		return false;
+	}
+	
+	public boolean testCrearNotifiacion() {
+		String texto = "Notificacion de prueba";
+		try {
+			cAV.crearNotificacion(texto, 1);
+			List<DataNotificacion> notis = cAV.getNotificaciones(1);
+			
+			for( DataNotificacion dn : notis ) {
+				if( dn.getTexto().equals(texto) )
+					return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;		
 	}
 
 }

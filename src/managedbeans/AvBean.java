@@ -18,6 +18,7 @@ import negocio.IControladorUsuario;
 @ManagedBean
 @SessionScoped
 public class AvBean implements Serializable {
+	
 	@EJB
 	IControladorAV cAV;
 	@EJB

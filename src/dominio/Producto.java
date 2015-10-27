@@ -44,8 +44,6 @@ public class Producto implements Serializable {
 	
 	private long idAV;
 	
-	
-	
 	public long getIdAV() {
 		return idAV;
 	}

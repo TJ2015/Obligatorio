@@ -1,17 +1,16 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-
-
 import dominio.AV;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
-import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataMensaje;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -128,6 +127,52 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void enviarMensaje(String remitente, String destinatario, String mensaje) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void modificarMensaje(long idMensaje, boolean leido) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarMensaje(String usuario, long idMensaje) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) {
+		List<DataMensaje> mensajes = new ArrayList<>();
+		
+		return mensajes;
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesEnviados(String usuario) {
+		List<DataMensaje> mensajes = new ArrayList<>();
+		
+		return mensajes;
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) {
+		List<DataMensaje> mensajes = new ArrayList<>();
+		
+		return mensajes;
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesRecibidos(String usuario) {
+		List<DataMensaje> mensajes = new ArrayList<>();
+		
+		return mensajes;
 	}	
 
 }

@@ -22,7 +22,6 @@ import dominio.datatypes.DataNota;
 })
 public class Nota implements Serializable {
 
-	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idNota;
@@ -58,5 +57,13 @@ public class Nota implements Serializable {
 	public DataNota getDataNota() {
 		return new DataNota(texto, usuario, idNota);
 	}
-   
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
 }

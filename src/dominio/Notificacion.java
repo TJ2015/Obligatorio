@@ -17,7 +17,8 @@ import dominio.datatypes.DataNotificacion;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Notificacion.buscarPorId", query="SELECT n FROM Notificacion n WHERE n.idNotificacion =:idNotificacion")
+	@NamedQuery(name="Notificacion.buscarPorId", query="SELECT n FROM Notificacion n WHERE n.idNotificacion =:idNotificacion"),
+	@NamedQuery(name="Notificacion.getAll", query="SELECT n FROM Notificacion n")
 })
 public class Notificacion implements Serializable {
 

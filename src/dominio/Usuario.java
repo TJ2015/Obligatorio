@@ -49,6 +49,19 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "usuario_avcompartidos")
 	private List<AV> AVcompartidos;
 	
+	@OneToMany
+	@JoinTable(name = "us_msj_enviados",
+		joinColumns = @JoinColumn(name = "remitente") ,
+		inverseJoinColumns = @JoinColumn (name = "idUsuario"))
+	private List<Mensaje> mensajesEnviados;
+	
+	@OneToMany
+	@JoinTable(name = "us_msj_enviados",
+		joinColumns = @JoinColumn(name = "remitente") ,
+		inverseJoinColumns = @JoinColumn (name = "idUsuario"))
+	private List<Mensaje> mensajesRecibidos;
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {

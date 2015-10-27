@@ -26,6 +26,6 @@ public interface IControladorAV {
 	public void crearNotificacion(String texto, long idAV) throws Exception;
 	public void modificarNotificacion(long idAV, long idNoti, String texto, boolean leido) throws Exception;
 	public void eliminarNotificacion(long idAV, long idNoti) throws Exception;
-	public List<DataNotificacion> getNotificaciones(long idAV);
+	public List<DataNotificacion> getNotificaciones(long idAV) throws Exception;
 		
 }

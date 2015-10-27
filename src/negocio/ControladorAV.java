@@ -215,7 +215,8 @@ public class ControladorAV implements IControladorAV {
 				List<DataNota> datas = new ArrayList<>();
 				
 				for( Object o : notas ) {
-					datas.add((DataNota) o);
+					Nota n = (Nota) o;
+					datas.add(n.getDataNota());
 				}
 				
 				return datas;
@@ -228,9 +229,25 @@ public class ControladorAV implements IControladorAV {
 	}
 
 	@Override
-	public List<DataNotificacion> getNotificaciones(long idAV) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DataNotificacion> getNotificaciones(long idAV) throws Exception {
+		if( idAV > 0) {
+			String tenant = getTenant(idAV);
+			if( tenant != null) {	
+				List<Object> notis = avDAO.getAllNotificaciones(tenant);
+				List<DataNotificacion> datas = new ArrayList<>();
+				
+				for( Object o : notis ) {
+					Notificacion n = (Notificacion) o;
+					datas.add(n.getDataNotificacion());
+				}
+				
+				return datas;
+			} else {
+				throw new Exception("No existe un AV con id: " + idAV);
+			}
+		} else {
+			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
 	}
 	
 }

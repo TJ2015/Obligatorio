@@ -6,7 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dominio.datatypes.DataAV;
-import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataMensaje;
 
 
 @Local
@@ -20,4 +20,13 @@ public interface IControladorUsuario {
 	public void eliminarUsuario(String nickname);
 	public List <DataAV> mostrarListaAv(String nickname);
 	public boolean tienePermiso(String nickname, long idAV);
+	
+	public void enviarMensaje(String remitente, String destinatario, String mensaje );
+	public void modificarMensaje(long idMensaje, boolean leido);
+	public void eliminarMensaje(String usuario, long idMensaje);
+	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant);
+	public List<DataMensaje> getMensajesEnviados(String usuario);
+	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant);
+	public List<DataMensaje> getMensajesRecibidos(String usuario);
+	
 }

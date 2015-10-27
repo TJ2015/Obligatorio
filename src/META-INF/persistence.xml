@@ -6,6 +6,7 @@
 		<class>dominio.Producto</class>
 		<class>dominio.AV</class>
 		<class>dominio.Categoria</class>
+		<class>dominio.Mensaje</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>

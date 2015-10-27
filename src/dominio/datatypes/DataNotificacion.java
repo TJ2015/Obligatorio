@@ -1,6 +1,8 @@
 package dominio.datatypes;
 
-public class DataNotificacion {
+import java.io.Serializable;
+
+public class DataNotificacion implements Serializable {
 
 	private long idNotificacion;
 	private String texto;

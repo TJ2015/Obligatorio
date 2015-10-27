@@ -213,6 +213,14 @@ public class AvDAO implements IAvDAO {
 		    
 			return q.list();
 		}
+
+		@Override
+		public List<Object> getAllNotificaciones(String tenant) {
+			Session session = util.DBUtil.crearSession(tenant);
+			org.hibernate.Query q = session.getNamedQuery("Notificacion.getAll");
+		    
+			return q.list();
+		}
 		
 
 }
