@@ -1,13 +1,21 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+<html xmlns="http://www.w3c.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+     xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+
+ 
     <h:head>
-        <title>Bienvenido al chat de SAPo </title>
+        <title>Bienvenido al Chat</title>
     </h:head>
+    
+    
+    <h:body>
+  <ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
     <script type="text/javascript">
         setInterval("nextMessage()", 200); //update the chart every 200 ms               
          
@@ -17,28 +25,15 @@
         }
          
     </script>
-    
-    <h:body>
-    
-    <ui:composition template="/templates/layout.xhtml">
-	<ui:define name="contenido">
-    
-    
-    <meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
-	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-	
-	
-	
-	
-    
-        <h:form prependId="false">
+     
+   
+           <h:form prependId="false">
+        
             <h:panelGrid columns="2">
+           
                 Nombre de Usuario: <p:inputText value="#{messageBean.message.user}"/>
-                Mensaje: <p:inputText value="#{messageBean.message.message}"/>
+                <br></br>
+                Texto: <p:inputText value="#{messageBean.message.message}"/>
                 <p:commandButton type="reset" value="Limpiar"/>
                 <p:commandButton value="Enviar!" actionListener="#{messageBean.sendMessage}"/>
             </h:panelGrid>
@@ -47,11 +42,11 @@
                              oncomplete="updateMessages(xhr, status, args);"/>
         </h:form>
         <hr/>
-        <h3>Bienvenido al chat SAPo - Edición 2015</h3>
+        <h3>Bienvenido al chat de Sapo </h3>
+   
         <div id="chat"></div>
-        
         </ui:define>
 </ui:composition>
-        
+    
     </h:body>
 </html>
