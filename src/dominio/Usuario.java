@@ -169,4 +169,33 @@ public class Usuario implements Serializable {
 		this.AVs.remove(av);
 	}
 	
+	public List<Mensaje> getMensajesEnviados() {
+		return mensajesEnviados;
+	}
+
+	public void setMensajesEnviados(List<Mensaje> mensajesEnviados) {
+		this.mensajesEnviados = mensajesEnviados;
+	}
+
+	public List<Mensaje> getMensajesRecibidos() {
+		return mensajesRecibidos;
+	}
+
+	public void setMensajesRecibidos(List<Mensaje> mensajesRecibidos) {
+		this.mensajesRecibidos = mensajesRecibidos;
+	}
+
+	public void addEnviado(Mensaje msj) {
+		this.mensajesEnviados.add(msj);
+	}
+	public void removeEnviado(Mensaje msj) {
+		this.mensajesEnviados.remove(msj);
+	}
+	public void addRecibido(Mensaje msj) {
+		this.mensajesRecibidos.add(msj);
+	}
+	public void removeRecibido(Mensaje msj) {
+		this.mensajesRecibidos.remove(msj);
+	}
+	
 }

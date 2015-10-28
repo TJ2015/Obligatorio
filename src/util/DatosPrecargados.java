@@ -42,6 +42,7 @@ public class DatosPrecargados {
 		cUsu.registrarUsuario("Lucia", "Fernandez", "lucifer", "lucifer", "lucifer@gmail.com", new Date());
 
 		cUsu.registrarUsuario("Test", "Run", "test", "test", "test@example.org", new Date());
+		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date());
 
 		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date());
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date());

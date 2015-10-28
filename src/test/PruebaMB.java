@@ -1,4 +1,4 @@
-package managedbeans;
+package test;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-
-import test.TestControladores;
 
 @ManagedBean
 public class PruebaMB implements Serializable {
@@ -35,6 +33,10 @@ public class PruebaMB implements Serializable {
 		tests = new HashMap<>();
 		tests.put("Crear Nota", cTest.testCrearNota());
 		tests.put("Crear Notificacion" , cTest.testCrearNotifiacion());
+		tests.put("Enviar Mensaje" , cTest.testEnviarMensaje());
+		tests.put("Marcar Mensaje Como Leido" , cTest.testMarcarMensajeComoLeido());
+		tests.put("Eliminar Mensaje Recibido" , cTest.testEliminarMensajeRecibido());
+		tests.put("Eliminar Mensaje Enviado" , cTest.testEliminarMensajeEnviado());
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
 		} catch (IOException e) {

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import dominio.datatypes.DataMensaje;
+
 /**
  * Entity implementation class for Entity: Mensaje
  *
@@ -19,9 +21,7 @@ public class Mensaje implements Serializable {
 	private long id;
 	private String mensaje;
 	private Date fecha;
-	@ManyToOne
 	private Usuario remitente;
-	@ManyToOne
 	private Usuario destinatario;
 	private boolean leido;
 	
@@ -133,6 +133,10 @@ public class Mensaje implements Serializable {
 		} else if (!mensaje.equals(other.mensaje))
 			return false;
 		return true;
+	}
+
+	public DataMensaje getDataMensaje() {
+		return new DataMensaje(id, mensaje, fecha, remitente.getNick(), destinatario.getNick(), leido);
 	}
 
 }

@@ -8,9 +8,12 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import dominio.AV;
+import dominio.Mensaje;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
+import exceptions.MensajeNoEncotrado;
+import exceptions.UsuarioNoEncontrado;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -130,49 +133,145 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public void enviarMensaje(String remitente, String destinatario, String mensaje) {
-		// TODO Auto-generated method stub
-		
+	public boolean enviarMensaje(String remitente, String destinatario, String mensaje) {
+		if( existeUsuarioNick(remitente) && existeUsuarioNick(destinatario) ) {
+			Usuario rem = usuarioDAO.buscarUsuario(remitente);
+			Usuario dest = usuarioDAO.buscarUsuario(destinatario);
+			Mensaje msj = new Mensaje(mensaje, new Date());
+			
+			msj.setDestinatario(dest);
+			msj.setRemitente(rem);
+			
+			if( usuarioDAO.persistirMensaje(msj) ) {
+				rem.addEnviado(msj);
+				dest.addRecibido(msj);
+				
+				usuarioDAO.actualizarUsuario(rem);
+				usuarioDAO.actualizarUsuario(dest);
+				
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public void modificarMensaje(long idMensaje, boolean leido) {
-		// TODO Auto-generated method stub
-		
+	public void marcarMensajeComoLeido(long idMensaje) {
+		Mensaje msj = usuarioDAO.buscarMensaje(idMensaje);
+		msj.setLeido(true);
+		usuarioDAO.actualizarMensaje(msj);
 	}
 
 	@Override
-	public void eliminarMensaje(String usuario, long idMensaje) {
-		// TODO Auto-generated method stub
+	public void eliminarMensajeRecibido(String usuario, long idMensaje) throws MensajeNoEncotrado {
+		Usuario usu = usuarioDAO.buscarUsuario(usuario);
+		List<Mensaje> rec = usu.getMensajesRecibidos();
 		
+		Mensaje msj = null;
+		for( Mensaje m : rec ) {
+			if( m.getId() == idMensaje ) {
+				msj = m;
+				break;
+			}
+		}
+		if( msj != null ) {
+			usu.removeRecibido(msj);
+			usuarioDAO.actualizarUsuario(usu);
+		} else {
+			throw new exceptions.MensajeNoEncotrado();
+		}
+		
+	}
+	
+	
+	@Override
+	public void eliminarMensajeEnviado(String usuario, long idMensaje) throws MensajeNoEncotrado {
+		Usuario usu = usuarioDAO.buscarUsuario(usuario);
+		List<Mensaje> rec = usu.getMensajesEnviados();
+		
+		Mensaje msj = null;
+		for( Mensaje m : rec ) {
+			if( m.getId() == idMensaje ) {
+				msj = m;
+				break;
+			}
+		}
+		if( msj != null ) {
+			usu.removeEnviado(msj);
+			usuarioDAO.actualizarUsuario(usu);
+		} else {
+			throw new exceptions.MensajeNoEncotrado();
+		}
+	}
+	
+	@Override
+	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {		
+		Usuario usu = usuarioDAO.buscarUsuario(usuario);
+		
+		if( usu != null ) {
+			return getMensajes(usu.getMensajesEnviados(), offset, cant);
+		} else {
+			throw new exceptions.UsuarioNoEncontrado();
+		}		
 	}
 
 	@Override
-	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) {
+	public List<DataMensaje> getMensajesEnviados(String usuario) throws UsuarioNoEncontrado {
+			return getMensajesEnviados(usuario, 0, 0);
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
+		Usuario usu = usuarioDAO.buscarUsuario(usuario);
+		
+		if( usu != null ) {
+			return getMensajes(usu.getMensajesEnviados(), offset, cant);
+		} else {
+			throw new exceptions.UsuarioNoEncontrado();
+		}	
+	}
+
+	@Override
+	public List<DataMensaje> getMensajesRecibidos(String usuario) throws UsuarioNoEncontrado {
+		return getMensajesRecibidos(usuario, 0, 0);
+	}
+
+	private List<DataMensaje> getMensajes(List<Mensaje> msjs, int offset, int cant) {
 		List<DataMensaje> mensajes = new ArrayList<>();
+		int ini = 0, fin = msjs.size();
+		
+		if( (offset >= 0 && offset < msjs.size() - 2) ) {
+			ini = offset;
+		} else {
+			ini = 0;
+		}
+		
+		if( cant > 0 ) {
+			fin = cant;
+		} else {
+			fin = msjs.size() - 1;
+		}
+		
+		int i = ini;
+		while( (i <= fin)&&(i < msjs.size() - 1) ) {
+			mensajes.add(msjs.get(i).getDataMensaje());
+			i++;
+		}
 		
 		return mensajes;
 	}
-
 	@Override
-	public List<DataMensaje> getMensajesEnviados(String usuario) {
-		List<DataMensaje> mensajes = new ArrayList<>();
+	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado {
+		Mensaje msj = usuarioDAO.buscarMensaje(id);
 		
-		return mensajes;
-	}
-
-	@Override
-	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) {
-		List<DataMensaje> mensajes = new ArrayList<>();
-		
-		return mensajes;
-	}
-
-	@Override
-	public List<DataMensaje> getMensajesRecibidos(String usuario) {
-		List<DataMensaje> mensajes = new ArrayList<>();
-		
-		return mensajes;
+		if( msj != null ) {
+			return msj.getDataMensaje();
+		} else {
+			throw new exceptions.MensajeNoEncotrado();
+		}
 	}	
 
 }

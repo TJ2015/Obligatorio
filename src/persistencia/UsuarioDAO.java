@@ -6,6 +6,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import dominio.Mensaje;
 import dominio.Usuario;
 
 @Stateless
@@ -76,6 +77,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void eliminarUsuario(Usuario usu) {
 		try {
 			em.merge(usu);
@@ -83,6 +85,54 @@ public class UsuarioDAO implements IUsuarioDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean persistirMensaje(Mensaje msj) {
+		try {
+			em.persist(msj);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean actualizarMensaje(Mensaje msj) {
+		try {
+			em.merge(msj);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean eliminarMensaje(Mensaje msj) {
+		try {
+			em.merge(msj);
+			em.remove(msj);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Mensaje buscarMensaje(long idMensaje) {
+		try {
+			return em.find(Mensaje.class, idMensaje);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}	
 
 }
