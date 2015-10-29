@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      > 
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
 <h:head>
@@ -121,25 +122,20 @@
 											a:placeholder="stock" />
 									</div>
 								</div>
-
-
-								<center>
-									<h:commandButton id="crearProducto"
-										styleClass="btn btn-primary" value="Crear producto"
-										action="#{productoBean.crearProductoDescripción()}" />
-								</center>
-							</h:form>
-							<br></br>
-							<center>
-								<h:form>
-									<h:commandButton id="botonCancelar"
-										styleClass="btn btn-primary" value="Cancelar"
-										action="#{avBean.cancelarAccion()}" />
-								</h:form>
-							</center>
-
+								<h:inputText id="stock" value="#{productoBean.stock}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el stock" a:placeholder="stock"/>
+							</div>
 						</div>
-					</div>
+	
+	
+						
+	
+				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
+				action="#{productoBean.crearProductoDescripción()}"/></center>
+</h:form>
+<br></br>
+<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></h:form></center>	
+
 				</div>
 			</div>
 		</ui:define>
