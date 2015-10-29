@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,8 +101,14 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public List <DataAV> mostrarListaAv(String nickname) {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
-		
-		return usu.getDataUsuario().getAVs();	
+		List <AV>avs=usu.getAVs();
+		List <DataAV>davs=new ArrayList<>();
+		DataAV da;
+		for(AV av:avs){
+			da=av.getDataAV();
+			davs.add(da);
+		}
+		return davs;	
 		
 	}
 

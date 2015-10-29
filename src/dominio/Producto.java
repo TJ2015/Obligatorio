@@ -17,6 +17,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
+import dominio.datatypes.DataCategoria;
+import dominio.datatypes.DataProducto;
+
 
 
 /**
@@ -60,6 +63,11 @@ public class Producto implements Serializable {
 		super();
 		this.stock = -1;
 	}
+	
+	public DataProducto getDataProducto() {
+		return new DataProducto(nombre,descripcion, precio, stock, categoria.getNombre());
+	}
+		
 	
 	public Producto(String nombre, String descripcion, double precio, Categoria categoria,
 			List<Atributo> atributosList, int stock) {

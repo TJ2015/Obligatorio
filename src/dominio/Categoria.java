@@ -16,6 +16,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import dominio.datatypes.DataCategoria;
+import dominio.datatypes.DataProducto;
+
 import javax.persistence.CascadeType;
 
 /**
@@ -24,7 +27,8 @@ import javax.persistence.CascadeType;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Categoria.buscarPorNombre", query="SELECT c FROM Categoria c WHERE c.nombre = :nombre")
+	@NamedQuery(name="Categoria.buscarPorNombre", query="SELECT c FROM Categoria c WHERE c.nombre = :nombre"),
+	@NamedQuery(name="Categoria.traerTodasCats", query="SELECT c FROM Categoria c")
 })
 public class Categoria implements Serializable {
 
@@ -79,5 +83,18 @@ public class Categoria implements Serializable {
 	public void removeProducto(Producto prod) { 
 		this.productos.remove(prod);
 	}
-
+	public DataCategoria getDataCategoria(){
+				
+		 		List<DataProducto>listDprod=new ArrayList<>();
+				for(Producto prods:productos){
+					if (productos!=null){
+			 			listDprod.add(prods.getDataProducto());
+					}
+					
+		 		}
+				return new DataCategoria(nombre,listDprod);
+	
+		 		
+		 		
+		 	}
 }

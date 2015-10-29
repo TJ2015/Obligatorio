@@ -2,9 +2,14 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+
+import dominio.datatypes.DataProducto;
 import negocio.IControladorInventario;
 
 
@@ -14,11 +19,15 @@ public class ProductoBean implements Serializable {
 	IControladorInventario cinv;
 	
 	private String nombre;
+	private String nombreCat;
+	
 	private String descripcion;
 	private double precio;
 	private String categoria;
 	private String atributos;
 	private int stock;
+	private List<DataProducto> dprods=new ArrayList<>();
+	
 	private static final long serialVersionUID = 1L;
 	
 	//para descripcion producto
@@ -31,8 +40,22 @@ public class ProductoBean implements Serializable {
 
 
 	public ProductoBean(){}
-	
-	
+	public List<DataProducto> getDprods() {
+		return dprods;
+	}
+
+
+	public void setDprods(List<DataProducto> dprods) {
+		this.dprods = dprods;
+	}
+	public String getNombreCat() {
+		return nombreCat;
+	}
+
+
+	public void setNombreCat(String nombreCat) {
+		this.nombreCat = nombreCat;
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -118,5 +141,22 @@ public class ProductoBean implements Serializable {
 			}
 		}
 		
+	}
+	public void mostrarListaProducto(){
+			
+				try {
+					dprods=cinv.mostrarListaProducto(nombreCat);
+					FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaProducto.xhtml");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					try {
+						FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					e.printStackTrace();
+				}
+
 	}
 }

@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import dominio.AV;
@@ -25,6 +27,7 @@ public interface IInventarioDAO {
 	public void eliminarCategoria(Categoria cat, String tenant);
 	public void eliminarProducto(Producto cat);
 	public void eliminarProducto(Producto cat, String tenant);
+	public List <Categoria> buscarListaCategoriaspoAV(long idAV, String tenant);
 	
 	//public Producto encontrarProducto(String nombreProd, long idAV);
 }

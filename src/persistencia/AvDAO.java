@@ -1,6 +1,7 @@
 package persistencia;
 
 import javax.ejb.Stateless;
+
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
@@ -17,6 +18,7 @@ import org.hibernate.cfg.Configuration;
 import dominio.AV;
 import dominio.Usuario;
 import persistencia.AvDAO;
+import persistencia.UsuarioDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -39,6 +41,7 @@ public class AvDAO implements IAvDAO {
 				e.printStackTrace();
 			}
 			return seRegistro;
+			
 		}
 		
 		@Override
@@ -59,7 +62,6 @@ public class AvDAO implements IAvDAO {
 
 		@Override
 		public boolean buscarAV(long id) {//TODO existe
-			
 			boolean existe=false;
 			//AV av = null;
 			existe=(traerAV(id)!=null);
