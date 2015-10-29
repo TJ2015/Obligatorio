@@ -212,7 +212,12 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 		
 		if( usu != null ) {
-			return getMensajes(usu.getMensajesEnviados(), offset, cant);
+			List<Mensaje> mensajes = usu.getMensajesEnviados();
+			List<Mensaje> msjs = new ArrayList<>();
+			for( Mensaje m : mensajes ) {
+				msjs.add(m);
+			}
+			return getMensajes(msjs, offset, cant);
 		} else {
 			throw new exceptions.UsuarioNoEncontrado();
 		}		
@@ -228,7 +233,12 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 		
 		if( usu != null ) {
-			return getMensajes(usu.getMensajesEnviados(), offset, cant);
+			List<Mensaje> mensajes = usu.getMensajesRecibidos();
+			List<Mensaje> msjs = new ArrayList<>();
+			for( Mensaje m : mensajes ) {
+				msjs.add(m);
+			}
+			return getMensajes(msjs, offset, cant);
 		} else {
 			throw new exceptions.UsuarioNoEncontrado();
 		}	
@@ -256,7 +266,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		
 		int i = ini;
-		while( (i <= fin)&&(i < msjs.size() - 1) ) {
+		while( (i <= fin)&&(i <= msjs.size() - 1) ) {
 			mensajes.add(msjs.get(i).getDataMensaje());
 			i++;
 		}
@@ -272,6 +282,32 @@ public class ControladorUsuario implements IControladorUsuario {
 		} else {
 			throw new exceptions.MensajeNoEncotrado();
 		}
+	}
+
+	@Override
+	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado {
+		Usuario usu = usuarioDAO.buscarUsuario(nick);
+		DataMensaje res = null;
+		for( Mensaje m : usu.getMensajesEnviados() ) {
+			if( m.getId() == id ) {
+				res = m.getDataMensaje();
+				break;
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
+		Usuario usu = usuarioDAO.buscarUsuario(nick);
+		DataMensaje res = null;
+		for( Mensaje m : usu.getMensajesRecibidos() ) {
+			if( m.getId() == id ) {
+				res = m.getDataMensaje();
+				break;
+			}
+		}
+		return res;
 	}	
 
 }

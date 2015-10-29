@@ -50,15 +50,13 @@ public class Usuario implements Serializable {
 	private List<AV> AVcompartidos;
 	
 	@OneToMany
-	@JoinTable(name = "us_msj_enviados",
-		joinColumns = @JoinColumn(name = "remitente") ,
-		inverseJoinColumns = @JoinColumn (name = "idUsuario"))
+	@ElementCollection
+	@JoinTable(name = "us_msj_enviados")
 	private List<Mensaje> mensajesEnviados;
 	
 	@OneToMany
-	@JoinTable(name = "us_msj_enviados",
-		joinColumns = @JoinColumn(name = "remitente") ,
-		inverseJoinColumns = @JoinColumn (name = "idUsuario"))
+	@ElementCollection
+	@JoinTable(name = "us_msj_recibidos")
 	private List<Mensaje> mensajesRecibidos;
 	
 	

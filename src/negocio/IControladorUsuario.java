@@ -32,5 +32,7 @@ public interface IControladorUsuario {
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado;
 	public List<DataMensaje> getMensajesRecibidos(String usuario) throws UsuarioNoEncontrado;
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado;
+	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado;
+	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado;
 	
 }

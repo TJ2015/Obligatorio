@@ -21,7 +21,9 @@ public class Mensaje implements Serializable {
 	private long id;
 	private String mensaje;
 	private Date fecha;
+	@ManyToOne
 	private Usuario remitente;
+	@ManyToOne
 	private Usuario destinatario;
 	private boolean leido;
 	
