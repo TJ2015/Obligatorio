@@ -77,7 +77,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 	}
 
 	@Override
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+
 	public void eliminarUsuario(Usuario usu) {
 		try {
 			em.merge(usu);
@@ -85,6 +87,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	@Override
@@ -133,6 +136,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return null;
+
 	}	
 
 }

@@ -13,9 +13,11 @@ public interface IUsuarioDAO {
 	public Usuario buscarUsuarioEmail(String email);
 	public boolean actualizarUsuario(Usuario user);
 	public void eliminarUsuario(Usuario usu);
+
 	public boolean persistirMensaje(Mensaje msj);
 	public boolean actualizarMensaje(Mensaje msj);
 	public boolean eliminarMensaje(Mensaje msj);
 	public Mensaje buscarMensaje(long idMensaje);
 	
+
 }

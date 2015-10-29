@@ -166,6 +166,7 @@ public class Usuario implements Serializable {
 	public void removeAV(AV av) {
 		this.AVs.remove(av);
 	}
+
 	
 	public List<Mensaje> getMensajesEnviados() {
 		return mensajesEnviados;
@@ -195,5 +196,6 @@ public class Usuario implements Serializable {
 	public void removeRecibido(Mensaje msj) {
 		this.mensajesRecibidos.remove(msj);
 	}
+
 	
 }

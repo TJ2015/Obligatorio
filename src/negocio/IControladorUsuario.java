@@ -22,7 +22,7 @@ public interface IControladorUsuario {
 	public void eliminarUsuario(String nickname);
 	public List <DataAV> mostrarListaAv(String nickname);
 	public boolean tienePermiso(String nickname, long idAV);
-	
+
 	public boolean enviarMensaje(String remitente, String destinatario, String mensaje );
 	public void marcarMensajeComoLeido(long idMensaje);
 	public void eliminarMensajeRecibido(String usuario, long idMensaje) throws MensajeNoEncotrado;
@@ -35,4 +35,5 @@ public interface IControladorUsuario {
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado;
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado;
 	
+
 }
