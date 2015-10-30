@@ -7,6 +7,7 @@ import javax.ejb.Local;
 import dominio.AV;
 import dominio.Categoria;
 import dominio.Producto;
+import dominio.ProductoAComprar;
 
 @Local
 public interface IInventarioDAO {
@@ -28,6 +29,10 @@ public interface IInventarioDAO {
 	public void eliminarProducto(Producto cat);
 	public void eliminarProducto(Producto cat, String tenant);
 	public List <Categoria> buscarListaCategoriaspoAV(long idAV, String tenant);
+	public void persistirProductoAComprar(ProductoAComprar pac, String tenant);
+	public ProductoAComprar buscarProductoDeLista(long idProdComp, String tenant);
+	public void eliminarProductoAComprar(ProductoAComprar pac, String tenant);
+	public List<ProductoAComprar> getAllProductoAComprar(String tenant);
 	
 	//public Producto encontrarProducto(String nombreProd, long idAV);
 }

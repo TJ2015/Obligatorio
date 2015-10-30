@@ -10,8 +10,12 @@ import dominio.AV;
 import dominio.Atributo;
 import dominio.Categoria;
 import dominio.Producto;
+import dominio.ProductoAComprar;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataProductoAComprar;
+import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProductoAComprar;
 import persistencia.IAvDAO;
 import persistencia.IInventarioDAO;
 
@@ -357,4 +361,76 @@ public class ControladorInventario implements IControladorInventario {
 
 		return dprods;
 	}
+	
+	@Override
+	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad) throws NoExisteElAV {
+		String tenant = getTenant(idAV);
+		if( tenant != null) {
+			Producto prod = invDAO.buscarProducto(producto, tenant);
+			ProductoAComprar pac = new ProductoAComprar(prod, cantidad);
+			
+			invDAO.persistirProductoAComprar(pac, tenant);
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public void eliminarProductoDeListaDeCompra(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+		String tenant = getTenant(idAV);
+		if( tenant != null) {
+			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
+			
+			if( pac != null ) {
+				invDAO.eliminarProductoAComprar(pac, tenant);
+			} else {
+				throw new exceptions.NoExisteElProductoAComprar();
+			}
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public List<DataProductoAComprar> getListaDeCompra(long idAV) throws NoExisteElAV {
+		String tenant = getTenant(idAV);
+		if( tenant != null) {
+			List<ProductoAComprar> pacs = invDAO.getAllProductoAComprar(tenant);
+			List<DataProductoAComprar> dpacs = new ArrayList<>();
+			
+			for( ProductoAComprar pc : pacs ) {
+				dpacs.add(pc.getDataProductoAComprar());
+			}
+			
+			return dpacs;
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+		String tenant = getTenant(idAV);
+		if( tenant != null) {
+			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
+			
+			if( pac != null ) {
+				return pac.getDataProductoAComprar();
+			} else {
+				throw new exceptions.NoExisteElProductoAComprar();
+			}
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+	
+	private String getTenant(long idAV) {
+		AV av = avDAO.traerAV(idAV);
+		if( av != null) {
+			return av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		} else {
+			return null;
+		}
+	}
+	
 }

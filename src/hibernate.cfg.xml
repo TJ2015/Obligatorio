@@ -18,5 +18,6 @@
         <mapping class="dominio.Producto" />
         <mapping class="dominio.Nota" />
         <mapping class="dominio.Notificacion" />
+        <mapping class="dominio.ProductoAComprar" />
     </session-factory>
 </hibernate-configuration>

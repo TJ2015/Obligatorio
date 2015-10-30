@@ -13,7 +13,9 @@ import javax.faces.context.FacesContext;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import dominio.datatypes.DataProductoAComprar;
 import exceptions.MensajeNoEncotrado;
+import exceptions.NoExisteElAV;
 import exceptions.UsuarioNoEncontrado;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
@@ -234,8 +236,33 @@ public class PruebaMB implements Serializable {
 		
 		return dm == null;
 	}
+	
 	public boolean testEliminarMensaje() {
 		//TODO terminar
+		return false;
+	}
+	
+	public boolean testAgregarEnListaDeCompra() {
+		try {
+			cInv.agregarEnListaDeCompra(1, "testProd1", 5);
+		} catch (NoExisteElAV e1) {
+			e1.printStackTrace();
+			return false;
+		}
+		
+		List<DataProductoAComprar> lista = null;
+		try {
+			lista = cInv.getListaDeCompra(1);
+		} catch (NoExisteElAV e) {
+			return false;
+		}
+		
+		for( DataProductoAComprar dpac : lista ) {
+			if( dpac.getProducto().getNombre().equals("testProd1") && dpac.getCantidad() == 5 ) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
@@ -247,6 +274,7 @@ public class PruebaMB implements Serializable {
 		tests.put("Marcar Mensaje Como Leido" , testMarcarMensajeComoLeido());
 		tests.put("Eliminar Mensaje Recibido" , testEliminarMensajeRecibido());
 		tests.put("Eliminar Mensaje Enviado" , testEliminarMensajeEnviado());
+		tests.put("Agregar Producto A Lista De Compras", testAgregarEnListaDeCompra());
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");

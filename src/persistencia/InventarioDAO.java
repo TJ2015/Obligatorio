@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import dominio.Categoria;
 //import dominio.Usuario;
 import dominio.Producto;
+import dominio.ProductoAComprar;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -188,6 +189,38 @@ public class InventarioDAO implements IInventarioDAO {
 		session.merge(prod);
 		session.delete(prod);
 		session.getTransaction().commit();
+	}
+
+	@Override
+	public void persistirProductoAComprar(ProductoAComprar pac, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		session.beginTransaction();
+		session.persist(pac);
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public ProductoAComprar buscarProductoDeLista(long idProdComp, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		session.beginTransaction();
+		return session.get(ProductoAComprar.class, idProdComp);
+	}
+
+	@Override
+	public void eliminarProductoAComprar(ProductoAComprar pac, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		session.beginTransaction();
+		session.merge(pac);
+		session.delete(pac);
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public List<ProductoAComprar> getAllProductoAComprar(String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		Query q = session.getNamedQuery("ProductoAComprar.getAll");
+	    
+		return q.list();
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dominio.AV;
+import dominio.datatypes.DataProductoAComprar;
+import exceptions.NoExisteElAV;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 
@@ -27,5 +29,5 @@ public interface IControladorAV {
 	public void modificarNotificacion(long idAV, long idNoti, String texto, boolean leido) throws Exception;
 	public void eliminarNotificacion(long idAV, long idNoti) throws Exception;
 	public List<DataNotificacion> getNotificaciones(long idAV) throws Exception;
-		
+	
 }
