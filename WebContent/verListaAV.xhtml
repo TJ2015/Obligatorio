@@ -16,8 +16,14 @@
 
 		  <c:if test="${usuarioBean.logueado == true}">
 		 	<c:if test="${usuarioBean.AVs !=null}">
-			        <c:forEach var="av" items="${usuarioBean.AVs}"  >
-			         <a href="#" class="list-group-item">${av.nombreAV}</a>
+		 	<h:form styleClass="form">
+						<h:commandButton id="botonVerAv" styleClass="btn btn-success" value="Ver lista de cat" 
+					action="#{categoriaBean.mostrarListaCategoria()}"/>
+					</h:form>
+		 		<c:forEach var="av" items="${usuarioBean.AVs}"  >
+			        <h:form>
+					    <h:commandLink value="${av.nombreAV}" action="#{categoriaBean.mostrarListaCategoria()}" /> 
+					</h:form>
 	            </c:forEach>    
 		    </c:if>               
 		 </c:if>

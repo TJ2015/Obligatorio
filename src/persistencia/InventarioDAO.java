@@ -1,5 +1,8 @@
 package persistencia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -129,6 +132,14 @@ public class InventarioDAO implements IInventarioDAO {
 		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat);
 	    
 		return (Categoria) q.uniqueResult();
+	}
+	@Override
+	public List <Categoria> buscarListaCategoriaspoAV(long idAV,String tenant) {
+		List <Categoria> cats= new ArrayList<>();
+		Session session = util.DBUtil.crearSession(tenant);
+		Query q = session.getNamedQuery("Categoria.traerTodasCats");
+	   // cats=(List<Categoria>) q;//TODO 
+		return cats;
 	}
 	
 	@Override

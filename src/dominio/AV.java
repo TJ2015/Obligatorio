@@ -30,8 +30,8 @@ import dominio.datatypes.DataAV;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="AV.findAll", query="SELECT u FROM AV u"),
-	@NamedQuery(name="AV.buscarPorId", query="SELECT av FROM AV av WHERE av.idAV =:idAV"),
-	@NamedQuery(name="AV.buscarPorNombre", query="SELECT av FROM AV av WHERE av.nombreAV =:nombreAV")
+	@NamedQuery(name="AV.buscarPorId", query="SELECT a FROM AV a WHERE a.idAV =:idAV"),
+	@NamedQuery(name="AV.buscarPorNombre", query="SELECT a FROM AV a WHERE a.nombreAV =:nombreAV")
 })
 public class AV implements Serializable {
 
@@ -133,7 +133,7 @@ public class AV implements Serializable {
 	@Override
 	public String toString() {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador
-				+ ", usuariosCompartidos=" + usuariosCompartidos + ", notas=" + notas + "]";
+				+ ", usuariosCompartidos=" + usuariosCompartidos + "]";
 	}
 	
 }

@@ -2,8 +2,9 @@ package dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
+
+import dominio.datatypes.DataProducto;
 
 
 
@@ -40,7 +43,7 @@ public class Producto implements Serializable {
 	private Categoria categoria;
 	// TODO agregar imagen
 	@Transient
-	private List<Atributo> atributosList;
+	private List<Atributo> atributosList = new ArrayList<>();
 	
 	private long idAV;
 	
@@ -127,7 +130,17 @@ public class Producto implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-
+	
+	public DataProducto getDataProducto() {
+		Map<String, String> attr = new HashMap<>();
+		
+		for( Atributo a : atributosList ) {
+			attr.put(a.getNombre(), a.getValor());
+		}
+		
+		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

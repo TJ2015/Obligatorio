@@ -16,9 +16,9 @@ public interface IControladorAV {
 	public boolean existeAV(long idAV);
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);
 	public void eliminarAV(long idAV);
-	public void compartirAV(long idAV, String nickUsuario);
-	public AV traerAvPorNombre(String nombre); 
-	
+	public void compartirAV(long idAV, String nickUsuario);	
+	public AV traerAvPorNombre(String nombre);
+	public AV traerAV(long idAV); 
 	public void crearNota(String texto, String usuario, long idAV) throws Exception;
 	public void eliminarNota(long idAV, long idNota) throws Exception;
 	public List<DataNota> getNotas(long idAV) throws Exception;

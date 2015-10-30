@@ -9,7 +9,7 @@ public class DataCategoria implements Serializable {
 	private long idCategoria;
 	private String nombre;
 	private List<DataProducto> productos = new ArrayList<>();
-	
+
 	public DataCategoria() {
 		super();
 	}
@@ -44,5 +44,5 @@ public class DataCategoria implements Serializable {
 	public void setProductos(List<DataProducto> productos) {
 		this.productos = productos;
 	}
-	
+
 }

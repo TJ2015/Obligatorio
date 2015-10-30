@@ -8,17 +8,16 @@ import dominio.Categoria;
 
 public class DataProducto implements Serializable {
 
-	private Long idProducto;
+	private long idProducto;
 	private String nombre;
 	private String descripcion;
 	private double precio;
 	private int stock;
-	private Categoria categoria;
+	private String categoria;
 	private Map<String, String> atributosList = new HashMap<>();
-	private long idAV;
 	
-	public DataProducto(Long idProducto, String nombre, String descripcion, double precio, int stock,
-			Categoria categoria, Map<String, String> atributosList, long idAV) {
+	public DataProducto(long idProducto, String nombre, String descripcion, double precio, int stock,
+			String categoria, Map<String, String> atributosList) {
 		super();
 		this.idProducto = idProducto;
 		this.nombre = nombre;
@@ -27,18 +26,17 @@ public class DataProducto implements Serializable {
 		this.stock = stock;
 		this.categoria = categoria;
 		this.atributosList = atributosList;
-		this.idAV = idAV;
 	}
 
 	public DataProducto() {
 		super();
 	}
 
-	public Long getIdProducto() {
+	public long getIdProducto() {
 		return idProducto;
 	}
 
-	public void setIdProducto(Long idProducto) {
+	public void setIdProducto(long idProducto) {
 		this.idProducto = idProducto;
 	}
 
@@ -74,11 +72,11 @@ public class DataProducto implements Serializable {
 		this.stock = stock;
 	}
 
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
@@ -88,14 +86,6 @@ public class DataProducto implements Serializable {
 
 	public void setAtributosList(Map<String, String> atributosList) {
 		this.atributosList = atributosList;
-	}
-
-	public long getIdAV() {
-		return idAV;
-	}
-
-	public void setIdAV(long idAV) {
-		this.idAV = idAV;
 	}
 		
 }

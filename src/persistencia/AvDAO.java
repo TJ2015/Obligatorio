@@ -7,21 +7,12 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.management.Query;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import dominio.AV;
-import dominio.Categoria;
 import dominio.Nota;
 import dominio.Notificacion;
-import dominio.Usuario;
-import persistencia.AvDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -224,6 +215,3 @@ public class AvDAO implements IAvDAO {
 		
 
 }
-	
-	
-

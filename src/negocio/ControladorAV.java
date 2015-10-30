@@ -99,6 +99,12 @@ public class ControladorAV implements IControladorAV {
 		AV av = avDAO.traerAvPorNombre(nombre);
 		return av;
 	}
+	@Override
+	public AV traerAV(long idAV) {
+		//TODO AREGLAR ESTA BURRADA
+		AV av = avDAO.traerAV(idAV);
+		return av;
+	}
 
 	@Override
 	public void eliminarAV(long idAV) {

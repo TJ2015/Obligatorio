@@ -29,12 +29,13 @@ public class ControladorUsuario implements IControladorUsuario {
 	private IAvDAO avDAO;
 	@EJB
 	IControladorAV cAV;
-    /**
-     * Default constructor. 
-     */
-    public ControladorUsuario() {
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * Default constructor.
+	 */
+	public ControladorUsuario() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean existeUsuarioNick(String nickname) {
@@ -47,12 +48,12 @@ public class ControladorUsuario implements IControladorUsuario {
 		Usuario usu = usuarioDAO.buscarUsuarioEmail(email);
 		return (usu != null);
 	}
-	
+
 	@Override
 	public boolean registrarUsuario(String nombre, String apellido, String nick, String pasword, String email,
 			Date fechaNacimiento) {
-		
-		if( existeUsuarioNick(nick)||existeUsuarioEmail(email)) {
+
+		if (existeUsuarioNick(nick) || existeUsuarioEmail(email)) {
 			return false;
 		} else {
 			String passEncriptado = seguridad.Encriptador.encriptar(pasword);
@@ -64,91 +65,83 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public void modificarInfoUsuario(String nombre, String apellido, String nick, String password, String email,
 			Date fechaNacimiento) {
-		
+
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		usu.setApellido(apellido);
 		usu.setNombre(nombre);
 		usu.setEmail(email);
 		usu.setPassword(password);
 		usu.setFechaNacimiento(fechaNacimiento);
-		
+
 		usuarioDAO.actualizarUsuario(usu);
 	}
 
 	@Override
 	public boolean login(String nickname, String password) {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
-		
-		if ( usu != null ) {
-			
-			if( seguridad.Encriptador.sonIguales(password, usu.getPassword()) ) {
+
+		if (usu != null) {
+
+			if (seguridad.Encriptador.sonIguales(password, usu.getPassword())) {
 				return true;
 			}
-		} 
-		
+		}
+
 		return false;
 	}
 
 	@Override
 	public void eliminarUsuario(String nickname) {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
-		
+
 		List<AV> avs = usu.getAVs();
-		
-		for( AV av : avs ) {
+
+		for (AV av : avs) {
 			cAV.eliminarAV(av.getIdAV());
 		}
-		
+
 		usuarioDAO.eliminarUsuario(usu);
-	}
-	
-	@Override
-	public List <DataAV> mostrarListaAv(String nickname) {
-		Usuario usu = usuarioDAO.buscarUsuario(nickname);
-		
-		return usu.getDataUsuario().getAVs();	
-		
 	}
 
 	@Override
 	public boolean tienePermiso(String nickname, long idAV) {
-		
+
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
 		List<AV> avs = usu.getAVs();
 		List<AV> avComp = usu.getAVcompartidos();
-		
-		for( AV av : avs ) {
-			if( av.getIdAV() == idAV ) {
+
+		for (AV av : avs) {
+			if (av.getIdAV() == idAV) {
 				return true;
 			}
 		}
-		
-		for( AV av : avComp ) {
-			if( av.getIdAV() == idAV ) {
+
+		for (AV av : avComp) {
+			if (av.getIdAV() == idAV) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	@Override
 	public boolean enviarMensaje(String remitente, String destinatario, String mensaje) {
-		if( existeUsuarioNick(remitente) && existeUsuarioNick(destinatario) ) {
+		if (existeUsuarioNick(remitente) && existeUsuarioNick(destinatario)) {
 			Usuario rem = usuarioDAO.buscarUsuario(remitente);
 			Usuario dest = usuarioDAO.buscarUsuario(destinatario);
 			Mensaje msj = new Mensaje(mensaje, new Date());
-			
+
 			msj.setDestinatario(dest);
 			msj.setRemitente(rem);
-			
-			if( usuarioDAO.persistirMensaje(msj) ) {
+
+			if (usuarioDAO.persistirMensaje(msj)) {
 				rem.addEnviado(msj);
 				dest.addRecibido(msj);
-				
+
 				usuarioDAO.actualizarUsuario(rem);
 				usuarioDAO.actualizarUsuario(dest);
-				
+
 				return true;
 			} else {
 				return false;
@@ -169,79 +162,78 @@ public class ControladorUsuario implements IControladorUsuario {
 	public void eliminarMensajeRecibido(String usuario, long idMensaje) throws MensajeNoEncotrado {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 		List<Mensaje> rec = usu.getMensajesRecibidos();
-		
+
 		Mensaje msj = null;
-		for( Mensaje m : rec ) {
-			if( m.getId() == idMensaje ) {
+		for (Mensaje m : rec) {
+			if (m.getId() == idMensaje) {
 				msj = m;
 				break;
 			}
 		}
-		if( msj != null ) {
+		if (msj != null) {
 			usu.removeRecibido(msj);
 			usuarioDAO.actualizarUsuario(usu);
 		} else {
 			throw new exceptions.MensajeNoEncotrado();
 		}
-		
+
 	}
-	
-	
+
 	@Override
 	public void eliminarMensajeEnviado(String usuario, long idMensaje) throws MensajeNoEncotrado {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 		List<Mensaje> rec = usu.getMensajesEnviados();
-		
+
 		Mensaje msj = null;
-		for( Mensaje m : rec ) {
-			if( m.getId() == idMensaje ) {
+		for (Mensaje m : rec) {
+			if (m.getId() == idMensaje) {
 				msj = m;
 				break;
 			}
 		}
-		if( msj != null ) {
+		if (msj != null) {
 			usu.removeEnviado(msj);
 			usuarioDAO.actualizarUsuario(usu);
 		} else {
 			throw new exceptions.MensajeNoEncotrado();
 		}
 	}
-	
+
 	@Override
-	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {		
+	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
-		
-		if( usu != null ) {
+
+		if (usu != null) {
 			List<Mensaje> mensajes = usu.getMensajesEnviados();
 			List<Mensaje> msjs = new ArrayList<>();
-			for( Mensaje m : mensajes ) {
+			for (Mensaje m : mensajes) {
 				msjs.add(m);
 			}
 			return getMensajes(msjs, offset, cant);
 		} else {
 			throw new exceptions.UsuarioNoEncontrado();
-		}		
+		}
 	}
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario) throws UsuarioNoEncontrado {
-			return getMensajesEnviados(usuario, 0, 0);
+		return getMensajesEnviados(usuario, 0, 0);
 	}
 
 	@Override
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
-		
-		if( usu != null ) {
+
+		if (usu != null) {
 			List<Mensaje> mensajes = usu.getMensajesRecibidos();
 			List<Mensaje> msjs = new ArrayList<>();
-			for( Mensaje m : mensajes ) {
+			for (Mensaje m : mensajes) {
 				msjs.add(m);
 			}
 			return getMensajes(msjs, offset, cant);
 		} else {
 			throw new exceptions.UsuarioNoEncontrado();
-		}	
+		}
 	}
 
 	@Override
@@ -252,32 +244,33 @@ public class ControladorUsuario implements IControladorUsuario {
 	private List<DataMensaje> getMensajes(List<Mensaje> msjs, int offset, int cant) {
 		List<DataMensaje> mensajes = new ArrayList<>();
 		int ini = 0, fin = msjs.size();
-		
-		if( (offset >= 0 && offset < msjs.size() - 2) ) {
+
+		if ((offset >= 0 && offset < msjs.size() - 2)) {
 			ini = offset;
 		} else {
 			ini = 0;
 		}
-		
-		if( cant > 0 ) {
+
+		if (cant > 0) {
 			fin = cant;
 		} else {
 			fin = msjs.size() - 1;
 		}
-		
+
 		int i = ini;
-		while( (i <= fin)&&(i <= msjs.size() - 1) ) {
+		while ((i <= fin) && (i <= msjs.size() - 1)) {
 			mensajes.add(msjs.get(i).getDataMensaje());
 			i++;
 		}
-		
+
 		return mensajes;
 	}
+
 	@Override
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado {
 		Mensaje msj = usuarioDAO.buscarMensaje(id);
-		
-		if( msj != null ) {
+
+		if (msj != null) {
 			return msj.getDataMensaje();
 		} else {
 			throw new exceptions.MensajeNoEncotrado();
@@ -288,8 +281,8 @@ public class ControladorUsuario implements IControladorUsuario {
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado {
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
-		for( Mensaje m : usu.getMensajesEnviados() ) {
-			if( m.getId() == id ) {
+		for (Mensaje m : usu.getMensajesEnviados()) {
+			if (m.getId() == id) {
 				res = m.getDataMensaje();
 				break;
 			}
@@ -301,13 +294,26 @@ public class ControladorUsuario implements IControladorUsuario {
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
-		for( Mensaje m : usu.getMensajesRecibidos() ) {
-			if( m.getId() == id ) {
+		for (Mensaje m : usu.getMensajesRecibidos()) {
+			if (m.getId() == id) {
 				res = m.getDataMensaje();
 				break;
 			}
 		}
 		return res;
-	}	
+	}
 
+	@Override
+	public List<DataAV> mostrarListaAv(String nickname) {
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		List<AV> avs = usu.getAVs();
+		List<DataAV> davs = new ArrayList<>();
+		DataAV da;
+		for (AV av : avs) {
+			da = av.getDataAV();
+			davs.add(da);
+		}
+		return davs;
+
+	}
 }

@@ -2,6 +2,7 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,7 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.AV;
+import dominio.Categoria;
 import dominio.Producto;
+import dominio.datatypes.DataCategoria;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 
@@ -28,9 +31,9 @@ public class CategoriaBean implements Serializable {
 	IControladorAV cAV;
 	
 	private String nombre;
-	
 	private long idAV;
-	
+	private AV av;
+	private List <DataCategoria> cats=new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -66,15 +69,15 @@ public class CategoriaBean implements Serializable {
 		super();
 	}
 
-	public void crearCategoria(){
+	public void crearCategoria() throws Exception{
 		try {
 			
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
-			
+
 			if( cinv.crearCategoria(nombre, idAV)) { 	
 				
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
@@ -83,10 +86,33 @@ public class CategoriaBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+
+	public List<DataCategoria> getCats() {
+		return cats;
+	}
+	public void setCats(List<DataCategoria> cats) {
+		this.cats = cats;
+	}
+	public void mostrarListaCategoria() {
+		try {
+			DataCategoria cat1,cat2,cat3=null;
+			
+			HttpSession session = SesionBean.getSession();
+			idAV = (long) session.getAttribute("idAV");
+			cat1=new DataCategoria(1, "cat1",null);
+			cat2=new DataCategoria(2, "cat2",null);
+			cat3=new DataCategoria(3, "cat3",null);
+			cats.add(cat1);
+			cats.add(cat2);
+			cats.add(cat3);	
+					FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 	
-}
-	
-	
+}	
 	
 
 

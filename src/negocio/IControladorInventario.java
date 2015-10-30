@@ -5,6 +5,8 @@ import javax.ejb.Local;
 
 import dominio.Atributo;
 import dominio.Categoria;
+import dominio.datatypes.DataCategoria;
+import dominio.datatypes.DataProducto;
 
 @Local
 public interface IControladorInventario {
@@ -21,5 +23,7 @@ public interface IControladorInventario {
 	public void setStockProducto(String nombreProd, long idAV, int stock);
 	public void cambiarCategoriaProducto(String nuevaCategoria, String producto, long idAV);
 	public void eliminarProducto(String nombre, long idAV);
+	public List<DataCategoria> mostrarListaCategoria(long idAV) throws Exception;
+	public List<DataProducto> mostrarListaProducto(String nombreCat) throws Exception;
 	
 }
