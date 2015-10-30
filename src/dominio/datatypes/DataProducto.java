@@ -87,5 +87,5 @@ public class DataProducto implements Serializable {
 	public void setAtributosList(Map<String, String> atributosList) {
 		this.atributosList = atributosList;
 	}
-		
+
 }

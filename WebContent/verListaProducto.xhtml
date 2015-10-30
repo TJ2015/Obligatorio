@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head></h:head> 
+<body>
+
+	Hola #{usuarioBean.nick}!!
+<ui:composition template="/templates/layout.xhtml">
+		<ui:define name="contenido">
+		<div class="container-fluid clearfix">
+		<div class="list-group">
+			<table>
+			<thead>
+				<th>Nombre</th>
+				<th>Descrpicion</th><th>Precio</th><th>Categoria</th><th>Atributos</th><th>Stock</th>
+			</thead>
+			<tbody>
+			
+		 		<c:forEach var="prod" items="${productoBean.mostrarListaProducto()}"  >
+
+						<tr><td>${prod.nombre}</td>
+							<td>${prod.descripcion}</td>
+							<td>${prod.precio}</td>
+							<td>${prod.categoria}</td>
+							<td>${prod.atributos}</td>
+							<td>${prod.stock}</td>
+						</tr>
+
+	            </c:forEach>  
+	            </tbody>
+				</table>	  
+	
+		</div>
+		<a href="av_crear.xhtml"> Crear AV</a>
+		 </div>
+		</ui:define>
+</ui:composition>
+</body> 
+</html>
