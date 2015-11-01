@@ -23,17 +23,16 @@
 <h:body>
 	<ui:composition template="/templates/layout.xhtml">
 		<ui:define name="contenido">
-			<div class="container-fluid clearfix">
-				<div class="page-header text-center">
-					<h1>Crear Descripción del Producto</h1>
-				</div>
-				<div
-					class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-					<div class="panel panel-primary">
-						<div class="panel-heading">Crear Descripción del Producto</div>
-						<div class="panel-body">
-
-							<h:form styleClass="form">
+			<h:form styleClass="form">
+				<div class="container-fluid clearfix">
+					<div class="page-header text-center">
+						<h1>Crear Descripción del Producto</h1>
+					</div>
+					<div
+						class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">Crear Descripción del Producto</div>
+							<div class="panel-body">
 								<div class="form-group">
 									<h:outputLabel value="Nombre" styleClass="sr-only" for="nombre" />
 									<div class="input-group">
@@ -45,7 +44,6 @@
 											a:placeholder="Nombre del producto" />
 									</div>
 								</div>
-
 								<div class="form-group">
 									<h:outputLabel value="Descripción" styleClass="sr-only"
 										for="descripcion" />
@@ -59,7 +57,6 @@
 											a:placeholder="Descripción" />
 									</div>
 								</div>
-
 								<div class="form-group">
 									<h:outputLabel value="Precio" styleClass="sr-only" for="precio" />
 									<div class="input-group">
@@ -72,7 +69,6 @@
 											a:placeholder="Precio" />
 									</div>
 								</div>
-
 								<div class="form-group">
 									<h:outputLabel value="Categoria" styleClass="sr-only"
 										for="categoria" />
@@ -123,21 +119,18 @@
 									</div>
 								</div>
 								<h:inputText id="stock" value="#{productoBean.stock}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el stock" a:placeholder="stock"/>
+								
+								<center>
+									<h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" action="#{productoBean.crearProductoDescripción()}"/>
+								</center>
+								<center>
+									<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" action="#{avBean.cancelarAccion()}"/>
+								</center>
 							</div>
 						</div>
-	
-	
-						
-	
-				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
-				action="#{productoBean.crearProductoDescripción()}"/></center>
-</h:form>
-<br></br>
-<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
-										action="#{avBean.cancelarAccion()}"/></h:form></center>	
-
+					</div>
 				</div>
-			</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>
