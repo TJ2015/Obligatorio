@@ -27,6 +27,7 @@ public interface IControladorUsuario {
 	public void marcarMensajeComoLeido(long idMensaje);
 	public void eliminarMensajeRecibido(String usuario, long idMensaje) throws MensajeNoEncotrado;
 	public void eliminarMensajeEnviado(String usuario, long idMensaje) throws MensajeNoEncotrado;
+	public void eliminarMensaje(long id) throws MensajeNoEncotrado;
 	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado;
 	public List<DataMensaje> getMensajesEnviados(String usuario) throws UsuarioNoEncontrado;
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado;

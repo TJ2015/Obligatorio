@@ -44,16 +44,6 @@ public class Producto implements Serializable {
 	// TODO agregar imagen
 	@Transient
 	private List<Atributo> atributosList = new ArrayList<>();
-	
-	private long idAV;
-	
-	public long getIdAV() {
-		return idAV;
-	}
-
-	public void setIdAV(long idAV) {
-		this.idAV = idAV;
-	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -146,7 +136,6 @@ public class Producto implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
-		result = prime * result + (int) (idAV ^ (idAV >>> 32));
 		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		long temp;
@@ -169,8 +158,6 @@ public class Producto implements Serializable {
 			if (other.descripcion != null)
 				return false;
 		} else if (!descripcion.equals(other.descripcion))
-			return false;
-		if (idAV != other.idAV)
 			return false;
 		if (idProducto == null) {
 			if (other.idProducto != null)

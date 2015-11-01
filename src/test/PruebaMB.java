@@ -2,7 +2,7 @@ package test;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +13,14 @@ import javax.faces.context.FacesContext;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataProductoAComprar;
 import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
+import exceptions.NoExisteElProductoAComprar;
 import exceptions.UsuarioNoEncontrado;
+import exceptions.YaExisteElProductoAComprar;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 import negocio.IControladorUsuario;
@@ -238,14 +242,46 @@ public class PruebaMB implements Serializable {
 	}
 	
 	public boolean testEliminarMensaje() {
-		//TODO terminar
+		String mensaje = "Mensaje de prueba 5";
+		cUsu.enviarMensaje("test", "test2", mensaje);
+		
+		List<DataMensaje> enviados;
+		try {
+			enviados = cUsu.getMensajesEnviados("test");
+		} catch (UsuarioNoEncontrado e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
+		long id = 0;
+		for( DataMensaje dm : enviados ) {
+			if( dm.getMensaje().equals(mensaje) ) {
+				id = dm.getId();
+				break;
+			}
+		}
+		try {
+			cUsu.eliminarMensaje(id);
+		} catch (MensajeNoEncotrado e) {
+			return false;
+		}
+		DataMensaje dm = null;
+		try {
+			dm = cUsu.getMensaje(id);
+		} catch (MensajeNoEncotrado e) {
+			e.printStackTrace();
+			return true;
+		}
+		
 		return false;
 	}
 	
 	public boolean testAgregarEnListaDeCompra() {
+		boolean OK = false;
 		try {
 			cInv.agregarEnListaDeCompra(1, "testProd1", 5);
-		} catch (NoExisteElAV e1) {
+		} catch (NoExisteElAV | NoExisteElProducto | YaExisteElProductoAComprar e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return false;
 		}
@@ -259,27 +295,148 @@ public class PruebaMB implements Serializable {
 		
 		for( DataProductoAComprar dpac : lista ) {
 			if( dpac.getProducto().getNombre().equals("testProd1") && dpac.getCantidad() == 5 ) {
-				return true;
+				OK = true;
 			}
 		}
+		
+		try {
+			cInv.agregarEnListaDeCompra(1, "testProd1", 5);
+		} catch (NoExisteElAV | NoExisteElProducto | YaExisteElProductoAComprar e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return OK&&true;
+		}
+		return false;
+	}
+	
+	public boolean testEliminarProductoDeListaDeCompra() {
+
+		try {
+			cInv.agregarEnListaDeCompra(1, "testProd2", 5);
+		} catch (NoExisteElAV | NoExisteElProducto | YaExisteElProductoAComprar e1) {
+			e1.printStackTrace();
+			return false;
+		}
+		
+		List<DataProductoAComprar> lista = null;
+		try {
+			lista = cInv.getListaDeCompra(1);
+		} catch (NoExisteElAV e) {
+			return false;
+		}
+		long id = 0;
+		for( DataProductoAComprar dpac : lista ) {
+			if( dpac.getProducto().getNombre().equals("testProd2") && dpac.getCantidad() == 5 ) {
+				id = dpac.getId();
+				break;
+			}
+		}
+		if( id == 0 )
+			return false;
+		
+		try {
+			cInv.eliminarProductoDeListaDeCompra(1, id);
+		} catch (NoExisteElAV | NoExisteElProductoAComprar e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			lista = cInv.getListaDeCompra(1);
+		} catch (NoExisteElAV e) {
+			return false;
+		}
+		for( DataProductoAComprar dpac : lista ) {
+			if( dpac.getProducto().getNombre().equals("testProd2") && dpac.getCantidad() == 5 ) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean testProductoComprado() {
+		String nomProd = "testProd2";
+		int cant = 5;
+		DataProducto dp = null;
+		try {
+			dp = cInv.getProducto(nomProd, 1);
+		} catch (NoExisteElAV | NoExisteElProducto e2) {
+			e2.printStackTrace();
+			return false;
+		}
+		int stock = dp.getStock();
+		
+		try {
+			cInv.agregarEnListaDeCompra(1, nomProd, cant);
+		} catch (NoExisteElAV | NoExisteElProducto | YaExisteElProductoAComprar e1) {
+			e1.printStackTrace();
+			return false;
+		}
+		
+		List<DataProductoAComprar> lista = null;
+		try {
+			lista = cInv.getListaDeCompra(1);
+		} catch (NoExisteElAV e) {
+			return false;
+		}
+		long id = 0;
+		for( DataProductoAComprar dpac : lista ) {
+			if( dpac.getProducto().getNombre().equals(nomProd) && dpac.getCantidad() == cant ) {
+				id = dpac.getId();
+				break;
+			}
+		}
+		if( id == 0 )
+			return false;
+		
+		try {
+			cInv.productoComprado(1, id);
+		} catch (NoExisteElAV | NoExisteElProductoAComprar e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			lista = cInv.getListaDeCompra(1);
+		} catch (NoExisteElAV e) {
+			return false;
+		}
+		for( DataProductoAComprar dpac : lista ) {
+			if( dpac.getProducto().getNombre().equals(nomProd) && dpac.getCantidad() == cant ) {
+				return false;
+			}
+		}
+		try {
+			dp = cInv.getProducto(nomProd, 1);
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		if( dp.getStock() == stock+cant )
+			return true;
 		
 		return false;
 	}
 
 	public void testSuitTrucho() {
-		tests = new HashMap<>();
+		tests = new LinkedHashMap<>();
 		tests.put("Crear Nota", testCrearNota());
 		tests.put("Crear Notificacion" , testCrearNotifiacion());
 		tests.put("Enviar Mensaje" , testEnviarMensaje());
 		tests.put("Marcar Mensaje Como Leido" , testMarcarMensajeComoLeido());
 		tests.put("Eliminar Mensaje Recibido" , testEliminarMensajeRecibido());
 		tests.put("Eliminar Mensaje Enviado" , testEliminarMensajeEnviado());
+		tests.put("Eliminar Mensaje", testEliminarMensaje());
 		tests.put("Agregar Producto A Lista De Compras", testAgregarEnListaDeCompra());
+		tests.put("Eliminar Producto de Lista de Compras", testEliminarProductoDeListaDeCompra());
+		tests.put("Producto Comprado", testProductoComprado());
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

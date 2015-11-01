@@ -9,7 +9,9 @@ import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
+import exceptions.YaExisteElProductoAComprar;
 
 @Local
 public interface IControladorInventario {
@@ -29,8 +31,13 @@ public interface IControladorInventario {
 	public List<DataCategoria> mostrarListaCategoria(long idAV) throws Exception;
 	public List<DataProducto> mostrarListaProducto(String nombreCat) throws Exception;
 	
-	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad) throws NoExisteElAV;
+	public DataProducto getProducto(String nombre, long idAV) throws NoExisteElAV, NoExisteElProducto;
+	public DataProducto getProducto(String nombre) throws NoExisteElProducto;
+	
+	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar;
+	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad, boolean reemplazar) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar;
 	public void eliminarProductoDeListaDeCompra(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar;
+	public void productoComprado(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar;
 	public List<DataProductoAComprar> getListaDeCompra(long idAV) throws NoExisteElAV;
 	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar;
 	

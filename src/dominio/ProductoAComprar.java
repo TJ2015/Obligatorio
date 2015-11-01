@@ -95,7 +95,7 @@ public class ProductoAComprar implements Serializable {
 	}
 
 	public DataProductoAComprar getDataProductoAComprar() {
-		return new DataProductoAComprar(producto.getDataProducto(), cantidad);
+		return new DataProductoAComprar(id, producto.getDataProducto(), cantidad);
 	}
 	
 }

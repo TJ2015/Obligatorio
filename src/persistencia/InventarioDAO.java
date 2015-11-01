@@ -171,7 +171,7 @@ public class InventarioDAO implements IInventarioDAO {
 	@Override
 	public Producto buscarProducto(String nombreProd, String tenant) {
 		Session session = util.DBUtil.crearSession(tenant);
-		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreProd);
+		Query q = session.getNamedQuery("Producto.buscarPorNombre").setParameter("nombre", nombreProd);
 	    
 		return (Producto) q.uniqueResult();
 	}
@@ -210,7 +210,6 @@ public class InventarioDAO implements IInventarioDAO {
 	public void eliminarProductoAComprar(ProductoAComprar pac, String tenant) {
 		Session session = util.DBUtil.crearSession(tenant);
 		session.beginTransaction();
-		session.merge(pac);
 		session.delete(pac);
 		session.getTransaction().commit();
 	}
@@ -221,6 +220,13 @@ public class InventarioDAO implements IInventarioDAO {
 		Query q = session.getNamedQuery("ProductoAComprar.getAll");
 	    
 		return q.list();
+	}
+
+	@Override
+	public ProductoAComprar buscarProductoDeListaPorProducto(Long idProducto, String tenant) {
+		Session session = util.DBUtil.crearSession(tenant);
+		Query q = session.getNamedQuery("ProductoAComprar.buscarPorProductoId").setParameter("idProd", idProducto);
+		return (ProductoAComprar) q.uniqueResult();
 	}
 
 }

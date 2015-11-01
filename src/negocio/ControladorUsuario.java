@@ -198,6 +198,25 @@ public class ControladorUsuario implements IControladorUsuario {
 			throw new exceptions.MensajeNoEncotrado();
 		}
 	}
+	
+	@Override
+	public void eliminarMensaje(long idMensaje) throws MensajeNoEncotrado {
+		Mensaje msj = usuarioDAO.buscarMensaje(idMensaje);
+		
+		if( msj != null ) {
+			Usuario rem = msj.getRemitente();
+			Usuario dest =  msj.getDestinatario();
+			
+			rem.removeEnviado(msj);
+			dest.removeRecibido(msj);
+			
+			usuarioDAO.actualizarUsuario(rem);
+			usuarioDAO.actualizarUsuario(dest);
+			usuarioDAO.eliminarMensaje(msj);
+		} else {
+			throw new exceptions.MensajeNoEncotrado();
+		}
+	}
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
@@ -316,4 +335,5 @@ public class ControladorUsuario implements IControladorUsuario {
 		return davs;
 
 	}
+	
 }

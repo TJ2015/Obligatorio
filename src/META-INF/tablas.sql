@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `idProducto` bigint(20) NOT NULL AUTO_INCREMENT,
   `atributos` varchar(255) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `idAV` bigint(20) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `precio` double NOT NULL,
   `stock` int(11) NOT NULL,

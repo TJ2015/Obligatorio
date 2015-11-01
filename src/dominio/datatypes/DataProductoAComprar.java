@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class DataProductoAComprar implements Serializable {
 
+	private long id;
 	private DataProducto producto;
 	private int cantidad;
 
@@ -11,8 +12,9 @@ public class DataProductoAComprar implements Serializable {
 		super();
 	}
 
-	public DataProductoAComprar(DataProducto producto, int cantidad) {
+	public DataProductoAComprar(long id, DataProducto producto, int cantidad) {
 		super();
+		this.id = id;
 		this.producto = producto;
 		this.cantidad = cantidad;
 	}
@@ -33,4 +35,12 @@ public class DataProductoAComprar implements Serializable {
 		this.cantidad = cantidad;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 }

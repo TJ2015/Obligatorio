@@ -33,6 +33,7 @@ public interface IInventarioDAO {
 	public ProductoAComprar buscarProductoDeLista(long idProdComp, String tenant);
 	public void eliminarProductoAComprar(ProductoAComprar pac, String tenant);
 	public List<ProductoAComprar> getAllProductoAComprar(String tenant);
+	public ProductoAComprar buscarProductoDeListaPorProducto(Long idProducto, String tenant);
 	
 	//public Producto encontrarProducto(String nombreProd, long idAV);
 }
