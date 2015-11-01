@@ -1,11 +1,10 @@
-package negocio;
+package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
 
 import dominio.AV;
 import dominio.Nota;
@@ -13,8 +12,9 @@ import dominio.Notificacion;
 import dominio.Usuario;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
-import persistencia.IAvDAO;
-import persistencia.IUsuarioDAO;
+import negocio.interfases.IControladorAV;
+import persistencia.interfases.IAvDAO;
+import persistencia.interfases.IUsuarioDAO;
 
 
 /**
@@ -48,9 +48,8 @@ public class ControladorAV implements IControladorAV {
 	}
 	
 	//El usuario ya tiene un Av con ese nombre?
-	public boolean existeAVusuario(String nombreAV, String usuarioCreador){
-		boolean existe = false;
-		
+	public boolean existeAVusuario(String nombreAV, String usuarioCreador)
+	{
 		Usuario usu=usuarioDAO.buscarUsuario(usuarioCreador);
 		if (usu!=null){
 			List <AV> listaav=usu.getAVs();
@@ -63,7 +62,8 @@ public class ControladorAV implements IControladorAV {
 		return false;
 	}
 	
-	public boolean existeAV(long idAV){
+	public boolean existeAV(long idAV)
+	{
 		boolean existe = false;
 		try {
 			existe=(this.avDAO.buscarAV(idAV));

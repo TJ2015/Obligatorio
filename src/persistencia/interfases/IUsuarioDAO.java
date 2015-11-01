@@ -1,8 +1,9 @@
-package persistencia;
+package persistencia.interfases;
 
 import javax.ejb.Local;
 
 import dominio.Mensaje;
+import dominio.TipoUsuario;
 import dominio.Usuario;
 
 @Local
@@ -18,4 +19,6 @@ public interface IUsuarioDAO {
 	public boolean eliminarMensaje(Mensaje msj);
 	public Mensaje buscarMensaje(long idMensaje);
 	
+	public TipoUsuario altaTipoUsuario(TipoUsuario tipoUsuario);
+	public TipoUsuario obtenerTipoUsuarioComun();
 }

@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.implementacion;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -7,7 +7,9 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import dominio.Mensaje;
+import dominio.TipoUsuario;
 import dominio.Usuario;
+import persistencia.interfases.IUsuarioDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -31,7 +33,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Usuario buscarUsuario(String nick) {
+	public Usuario buscarUsuario(String nick) 
+	{
 		Usuario usuario = null;
 		try {
 			//Se busca el usuario en la base 
@@ -134,5 +137,25 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 		return null;
 	}	
+	
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public TipoUsuario altaTipoUsuario(TipoUsuario tipoUsuario) 
+	{
+		try {
+			em.persist(tipoUsuario);
+			System.out.println(tipoUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			tipoUsuario = null;
+		}
+		return tipoUsuario;
+	}
 
+	@Override
+	public TipoUsuario obtenerTipoUsuarioComun() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

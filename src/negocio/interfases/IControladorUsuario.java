@@ -1,4 +1,4 @@
-package negocio;
+package negocio.interfases;
 
 import java.util.Date;
 import java.util.List;
@@ -34,5 +34,7 @@ public interface IControladorUsuario {
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado;
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado;
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado;
+	
+	public boolean crearNuevoTipo(String descripcion);
 	
 }

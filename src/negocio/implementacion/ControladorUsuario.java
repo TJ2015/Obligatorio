@@ -1,4 +1,4 @@
-package negocio;
+package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,13 +9,18 @@ import javax.ejb.Stateless;
 
 import dominio.AV;
 import dominio.Mensaje;
+import dominio.TipoUsuario;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import exceptions.MensajeNoEncotrado;
 import exceptions.UsuarioNoEncontrado;
-import persistencia.IAvDAO;
-import persistencia.IUsuarioDAO;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorTipo;
+import negocio.interfases.IControladorUsuario;
+import persistencia.interfases.IAvDAO;
+import persistencia.interfases.ITipoDAO;
+import persistencia.interfases.IUsuarioDAO;
 
 /**
  * Session Bean implementation class ControladorUsuario
@@ -29,9 +34,11 @@ public class ControladorUsuario implements IControladorUsuario {
 	private IAvDAO avDAO;
 	@EJB
 	IControladorAV cAV;
-    /**
-     * Default constructor. 
-     */
+
+	@EJB
+	private ITipoDAO tipoDao;
+	
+	
     public ControladorUsuario() {
         // TODO Auto-generated constructor stub
     }
@@ -57,6 +64,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		} else {
 			String passEncriptado = seguridad.Encriptador.encriptar(pasword);
 			Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
+			usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
 			return usuarioDAO.altaUsuario(usu);
 		}
 	}
@@ -298,7 +306,8 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
+	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado 
+	{
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for( Mensaje m : usu.getMensajesRecibidos() ) {
@@ -309,5 +318,18 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		return res;
 	}	
-
+	
+	
+	@Override
+	public boolean crearNuevoTipo(String descripcion) 
+	{
+		boolean seCrea = false;
+		try {
+			TipoUsuario tipoUsuario = tipoDao.altaTipoUsuario(new TipoUsuario(descripcion));
+			System.out.println(tipoUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return seCrea;
+	}
 }

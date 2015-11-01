@@ -133,7 +133,7 @@ public class AV implements Serializable {
 	@Override
 	public String toString() {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador
-				+ ", usuariosCompartidos=" + usuariosCompartidos + ", notas=" + notas + "]";
+				+ ", usuariosCompartidos=" + usuariosCompartidos + ", notas=" + "notas" + "]";
 	}
 	
 }

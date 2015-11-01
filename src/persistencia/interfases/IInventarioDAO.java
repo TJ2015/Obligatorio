@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.interfases;
 
 import javax.ejb.Local;
 

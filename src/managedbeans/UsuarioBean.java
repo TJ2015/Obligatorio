@@ -7,21 +7,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.SessionBean;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorUsuario;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean implements Serializable 
+{
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	IControladorUsuario cusu;

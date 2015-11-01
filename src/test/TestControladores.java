@@ -11,9 +11,9 @@ import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 import exceptions.MensajeNoEncotrado;
 import exceptions.UsuarioNoEncontrado;
-import negocio.IControladorAV;
-import negocio.IControladorInventario;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
+import negocio.interfases.IControladorUsuario;
 
 @Local
 @Stateless

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,11 +40,16 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date fechaNacimiento;
 	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private TipoUsuario tipoUsuario;
+	
 	@OneToMany
+	@ElementCollection
 	@JoinTable(name = "av_usuarioCreador",
 		joinColumns = @JoinColumn(name = "usuarioCreador") ,
 		inverseJoinColumns = @JoinColumn (name = "idUsuario", referencedColumnName ="idAV"))//REVISAR
 	private List<AV> AVs = new ArrayList<>();
+	
 	
 	@ManyToMany
 	@ElementCollection
@@ -140,6 +147,14 @@ public class Usuario implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	public List<AV> getAVs() {

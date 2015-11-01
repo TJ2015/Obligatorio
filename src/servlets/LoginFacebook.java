@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataUsuario;
 import managedbeans.FacebookBean;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorUsuario;
 
 
 @WebServlet("/LoginFacebook")

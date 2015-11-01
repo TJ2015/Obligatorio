@@ -1,4 +1,4 @@
-package negocio;
+package negocio.implementacion;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ import dominio.AV;
 import dominio.Atributo;
 import dominio.Categoria;
 import dominio.Producto;
-import persistencia.IAvDAO;
-import persistencia.IInventarioDAO;
+import negocio.interfases.IControladorInventario;
+import persistencia.interfases.IAvDAO;
+import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {

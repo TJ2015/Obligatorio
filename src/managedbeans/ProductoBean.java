@@ -5,7 +5,8 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import negocio.IControladorInventario;
+
+import negocio.interfases.IControladorInventario;
 
 
 @ManagedBean

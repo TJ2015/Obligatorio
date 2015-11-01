@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.implementacion;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import dominio.Categoria;
 //import dominio.Usuario;
 import dominio.Producto;
+import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)

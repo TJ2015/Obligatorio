@@ -11,7 +11,8 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="TipoUsuario.findAll", query="SELECT u FROM TipoUsuario u")
+	@NamedQuery(name="TipoUsuario.findAll", query="SELECT u FROM TipoUsuario u"),
+	@NamedQuery(name="TipoUsuario.obtenerTipoUsuarioParaLogin", query="SELECT u FROM TipoUsuario u WHERE u.idTipoUsuario = :idTipoUsuario")
 })
 public class TipoUsuario implements Serializable 
 {
@@ -23,6 +24,11 @@ public class TipoUsuario implements Serializable
 	private String descripcion;
 	
 	public TipoUsuario(){}
+	
+	public TipoUsuario(String descripcion)
+	{
+		this.descripcion = descripcion;
+	}
 	
 	public TipoUsuario(long idTipoUsuario, String descripcion)
 	{
@@ -41,6 +47,11 @@ public class TipoUsuario implements Serializable
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	@Override
+	public String toString() {
+		return "TipoUsuario [idTipoUsuario=" + idTipoUsuario + ", descripcion=" + descripcion + "]";
 	}
 	
 	

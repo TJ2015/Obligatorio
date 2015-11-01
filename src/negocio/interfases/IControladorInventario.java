@@ -1,4 +1,4 @@
-package negocio;
+package negocio.interfases;
 import java.util.List;
 
 import javax.ejb.Local;

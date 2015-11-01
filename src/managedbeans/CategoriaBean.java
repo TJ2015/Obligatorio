@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.Producto;
-import negocio.IControladorAV;
-import negocio.IControladorInventario;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
 
 @ManagedBean
 @ViewScoped

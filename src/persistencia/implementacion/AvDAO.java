@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.implementacion;
 
 import java.util.List;
 
@@ -21,7 +21,8 @@ import dominio.Categoria;
 import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Usuario;
-import persistencia.AvDAO;
+import persistencia.implementacion.AvDAO;
+import persistencia.interfases.IAvDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
