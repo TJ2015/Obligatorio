@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import dominio.AV;
+import dominio.datatypes.DataAV;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
+import exceptions.UsuarioNoEncontrado;
 
 @Local
 public interface IControladorAV {
@@ -18,8 +20,8 @@ public interface IControladorAV {
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);
 	public void eliminarAV(long idAV);
 	public void compartirAV(long idAV, String nickUsuario);	
-	public AV traerAvPorNombre(String nombre);
-	public AV traerAV(long idAV); 
+	public DataAV traerAVPorNombre(String nombre, String nick) throws UsuarioNoEncontrado;
+	public DataAV traerAV(long idAV) throws NoExisteElAV; 
 	public void crearNota(String texto, String usuario, long idAV) throws Exception;
 	public void eliminarNota(long idAV, long idNota) throws Exception;
 	public List<DataNota> getNotas(long idAV) throws Exception;

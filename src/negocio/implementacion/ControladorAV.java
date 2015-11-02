@@ -10,9 +10,12 @@ import dominio.AV;
 import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Usuario;
+import dominio.datatypes.DataAV;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
+import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IUsuarioDAO;
@@ -93,19 +96,6 @@ public class ControladorAV implements IControladorAV {
 		usuarioDAO.actualizarUsuario(usu);
 		avDAO.actualizarAV(av);
 		
-	}
-	
-	@Override
-	public AV traerAvPorNombre(String nombre) {
-		//TODO AREGLAR ESTA BURRADA
-		AV av = avDAO.traerAvPorNombre(nombre);
-		return av;
-	}
-	@Override
-	public AV traerAV(long idAV) {
-		//TODO AREGLAR ESTA BURRADA
-		AV av = avDAO.traerAV(idAV);
-		return av;
 	}
 
 	@Override
@@ -268,6 +258,32 @@ public class ControladorAV implements IControladorAV {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public DataAV traerAVPorNombre(String nombre, String nick) throws UsuarioNoEncontrado {
+		Usuario usu = usuarioDAO.buscarUsuario(nick);
+
+		if( usu == null )
+			throw new exceptions.UsuarioNoEncontrado();
+		
+		for( AV av : usu.getAVs() ) {
+			if( av.getNombreAV().equals(nombre) ) {
+				return av.getDataAV();
+			}
+		}
+		
+		return null;
+	}
+
+	@Override
+	public DataAV traerAV(long idAV) throws NoExisteElAV {
+		AV av = avDAO.traerAV(idAV);
+		
+		if( av == null )
+			throw new exceptions.NoExisteElAV();
+		
+		return av.getDataAV();
 	}
 
 }

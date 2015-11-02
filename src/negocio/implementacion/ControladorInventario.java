@@ -337,7 +337,7 @@ public class ControladorInventario implements IControladorInventario {
 		AV av = avDAO.traerAV(idAV);
 		if (av != null) {
 			String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-			// cats = invDAO.buscarListaCategoriaspoAV(idAV, tenant);
+			cats = invDAO.buscarListaCategoriaspoAV(idAV, tenant);
 			for (Categoria cat : cats) {
 				dc = cat.getDataCategoria();
 				dcats.add(dc);
@@ -349,19 +349,16 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public List<DataProducto> mostrarListaProducto(String nombreCat) throws Exception {
-		// TODO hay q trear la categoria
-		List<DataProducto> dprods = new ArrayList<>();
-		/*
-		 * if( cat != null) { String tenant = av.getUsuarioCreador().getNick() +
-		 * "_" + av.getNombreAV(); //cats =
-		 * invDAO.buscarListaProducto(nombreCat, tenant); for(Producto
-		 * prod:prods){ dp=cat.getDataProducto(); dcats.add(dp); }
-		 * 
-		 * }
-		 */
-
-		return dprods;
+	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElProducto {
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			List<DataProducto> dprods = new ArrayList<>();
+			
+			Categoria cat = invDAO.buscarCategoria(nombreCat, tenant);
+			return cat.getDataCategoria();
+		} else {
+			throw new exceptions.NoExisteElProducto();
+		}
 	}
 
 	@Override

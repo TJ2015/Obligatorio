@@ -115,13 +115,6 @@ public class AvBean implements Serializable {
 
 	}
 
-	public long traerIdAV() {
-		AV av = cAV.traerAvPorNombre(nombreAV);
-		idAV = av.getIdAV();
-		return idAV;
-
-	}
-
 	public void eliminarAV() {
 
 		cAV.eliminarAV(idAV);
