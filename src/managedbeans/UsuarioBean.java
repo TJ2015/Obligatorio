@@ -167,6 +167,8 @@ public class UsuarioBean implements Serializable {
 
 	public void mostrarListaAV() {
 		try {
+			HttpSession session = SesionBean.getSession();
+			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 			AVs = cusu.mostrarListaAv(nick);
 
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaAV.xhtml");

@@ -84,7 +84,9 @@ public class AvBean implements Serializable {
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
 			idAV = cAV.altaAV(nombreAV, nick);
 			session.setAttribute("idAV", idAV);
-
+			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+			
+			
 			try {
 				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");

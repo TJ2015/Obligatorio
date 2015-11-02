@@ -6,6 +6,46 @@
 
 <h:head></h:head> 
 <body> 
-
+<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+		<div class="container-fluid clearfix">
+		<div class="list-group">
+		 <div class="row">
+		<section class="content">
+		
+			<div class="col-md-6">
+                     <img src="resources/adminlte/img/cebollaverdeo.jpg" class="img-responsive" ></img>   
+            </div><!-- /.col -->
+                       
+         </section>
+           <section class="content">
+              <div class="col-md-6">
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-text-width"></i>
+                                    <h3 class="box-title">Nombre del producto</h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <dl class="dl-horizontal">
+                                        <dt>Descripcion</dt>
+                                        <dd>A description list is perfect for defining terms.</dd>
+                                        <dt>Precio</dt>
+                                        <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+                                        <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+                                        <dt>Atributos</dt>
+                                        <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                                        <dt>Stock</dt>
+                                        <dd>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
+                                    </dl>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- ./col -->
+               				
+           </section>
+            </div>
+           </div>
+           </div>
+	</ui:define>
+</ui:composition>
 </body> 
 </html>

@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      > 
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
       
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
@@ -20,13 +20,14 @@
 </h:head> 
 
 <h:body>
-<ui:composition template="/templates/layout.xhtml">
+<ui:composition template="/templates/layout_user.xhtml">
  <ui:define name="contenido">
 	<div class="container-fluid clearfix">
+	<section class="content">
 		<div class="page-header text-center">
 		  <h1>Crear Descripción del Producto</h1>
 		</div>
-		<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+		<div class="col-lg-10">
 			<div class="panel panel-primary">
 				<div class="panel-body">
 				
@@ -47,6 +48,7 @@
 							</div>
 						</div>
 						
+						
 						<div class="form-group">
 							<label for="precio" class="col-lg-2 control-label">Precio</label>
 							<div class="col-lg-10">
@@ -57,7 +59,13 @@
 						<div class="form-group">
 							<label for="categoria" class="col-lg-2 control-label">Categoria</label>
 							<div class="col-lg-10">
-								<h:inputText id="categoria" value="#{productoBean.categoria}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar la categoria" a:placeholder="Categoria"/>
+								<select class="form-control" value="#{productoBean.categoria}">
+								<!-- <c:if test="categoriaBean.cats !=null}"> -->
+							 	 <c:forEach var="cat" items="${categoriaBean.cats}"  >
+								         <option value="uno">${cat.nombre}</option>
+						          </c:forEach>    
+							     <!-- </c:if>  -->
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -79,11 +87,14 @@
 								<h:inputText id="stock" value="#{productoBean.stock}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el stock" a:placeholder="stock"/>
 							</div>
 						</div>
-				         <a href="verProducto.xhtml" class="list-group-item">${productoBean.nombre}</a>
-	
-
+					<div class="form-group">
+				        <label for="imagen" class="col-lg-2 control-label">Imagen</label> 
+				        <div class="col-lg-10">
+							<input type="file" class="filestyle" ></input>
+						</div>
+					</div>
 				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
-				action="#{productoBean.crearProductoDescripción()}"/>
+				action="#{productoBean.crearProductoDescripción()}" />
 				<h:outputText value="&#160;" />
 				<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
 										action="#{avBean.cancelarAccion()}"/></center>	
@@ -91,6 +102,8 @@
 				</div>
 			</div>
 		</div>
+		
+		</section>
 	</div>
 </ui:define>
 </ui:composition>

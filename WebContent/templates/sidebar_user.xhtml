@@ -21,7 +21,7 @@
                             <img src="resources/adminlte/img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Hola, ${usuarioBean.nick}</p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -45,20 +45,23 @@
                                 <span>Almacenes Virtuales</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu">
-                                <li class="active">
-                                	<a href="#">
-                                		<i class="fa fa-angle-double-right"></i>
-                                		Heladera
-                                	</a>
-                                </li>
-                                <li>
-                                	<a href="#">
-                                		<i class="fa fa-angle-double-right"></i>
-                                		Garage
-                                	</a>
-                                </li>
-                            </ul>
+                          		 	<c:if test="${usuarioBean.AVs !=null}">
+		 							
+							          <ul class="treeview-menu">
+							          	<c:forEach var="av" items="${sessionScope.AVs}"  >
+				                                <li class="active">
+				                                	<a href="mostrarAV.xhtml">
+				                                		<i class="fa fa-angle-double-right"></i>
+				                                		${av.nombreAV}
+				                                	</a>
+				                                </li>
+				                               
+				                        </c:forEach>    
+									 </ul>
+  
+		    </c:if>               
+		
+                          
                         </li>
 
                         <li class="treeview">
