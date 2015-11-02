@@ -1,58 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      > 
-      
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
 <h:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	
-</h:head> 
+
+
+</h:head>
 
 <h:body>
 	<ui:composition template="/templates/layout.xhtml">
 		<ui:define name="contenido">
 			<h:form styleClass="form">
-				<div class="container-fluid clearfix" >
+				<div class="container-fluid clearfix">
 					<div class="page-header text-center">
-					  <h1>SAPo</h1>
+						<h1>SAPo</h1>
 					</div>
-					<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+					<div
+						class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 						<div class="panel panel-primary">
 							<div class="panel-heading">Ingresar</div>
 							<div class="panel-body">
 								<div class="form-group">
-									<h:outputLabel value="Nickname" styleClass="sr-only" for="nickUsuario" />
+									<h:outputLabel value="Nickname" styleClass="sr-only"
+										for="nickUsuario" />
 									<div class="input-group">
 										<div class="input-group-addon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 										</div>
-									  <h:inputText id="nickUsuario" value="#{usuarioBean.nick}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nickname" a:placeholder="Nickname"/>
+										<h:inputText id="nickUsuario" value="#{usuarioBean.nick}"
+											styleClass="form-control" required="true"
+											requiredMessage="Debe ingresar un nickname"
+											a:placeholder="Nickname" />
 									</div>
 								</div>
-										
+
 								<div class="form-group">
-									<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
+									<h:outputLabel value="Contraseña:" styleClass="sr-only"
+										for="textoContrasenia" />
 									<div class="input-group">
 										<div class="input-group-addon">
 											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 										</div>
-										<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.password}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
+										<h:inputSecret id="textoContrasenia"
+											value="#{usuarioBean.password}" styleClass="form-control"
+											required="true" requiredMessage="Debe ingresar la contraseña"
+											a:placeholder="Contraseña" />
 									</div>
 								</div>
+
+								<h:commandButton id="login" styleClass="btn btn-primary"
+									value="Ingresar" action="#{usuarioBean.login()}" />
+								<a href="index.xhtml"></a>
+								<a href="#{facebookBean.obtenerUrlLogin()}" class="btn btn-primary">Login
+						con Facebook</a>
 								
-								<h:commandButton id="login" styleClass="btn btn-primary" value="Ingresar" action="#{usuarioBean.login()}"/>
-							 	<a href="index.xhtml"></a>
 							</div>
 						</div>
+
 					</div>
-					<a href="#{facebookBean.obtenerUrlLogin()}" class="btn btn-primary">Login con Facebook</a>
+					
 				</div>
 			</h:form>
 		</ui:define>
