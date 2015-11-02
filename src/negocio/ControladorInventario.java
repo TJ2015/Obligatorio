@@ -426,9 +426,9 @@ public class ControladorInventario implements IControladorInventario {
 	
 	@Override
 	public void productoComprado(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
-		eliminarProductoDeListaDeCompra(idAV, idProdComp);
 		String tenant = getTenant(idAV);
 		ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
+		eliminarProductoDeListaDeCompra(idAV, idProdComp);
 		Producto prod = pac.getProducto();
 		setStockProducto(prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
 	}
@@ -492,7 +492,7 @@ public class ControladorInventario implements IControladorInventario {
 	
 	private DataProducto getProducto(String nombre, String tenant) throws NoExisteElProducto {
 		Producto prod = invDAO.buscarProducto(nombre, tenant);
-		
+
 		if( prod != null ) {
 			return prod.getDataProducto();
 		} else {

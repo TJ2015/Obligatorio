@@ -5,17 +5,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
 
 import dominio.AV;
 import dominio.Nota;
 import dominio.Notificacion;
-import dominio.ProductoAComprar;
 import dominio.Usuario;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
-import dominio.datatypes.DataProductoAComprar;
-import exceptions.NoExisteElAV;
+import exceptions.NombreDeAVInvalido;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
 
@@ -32,8 +29,11 @@ public class ControladorAV implements IControladorAV {
 	private IAvDAO avDAO;
 
 	
-	public long altaAV(String nombreAV, String usuarioCreador) {
+	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido {
 		
+		if( !esAlfaNumerico(nombreAV) )
+			throw new exceptions.NombreDeAVInvalido();
+			
 		Usuario usu = usuarioDAO.buscarUsuario(usuarioCreador);
 		
 		if ( usu != null ) {
@@ -51,7 +51,6 @@ public class ControladorAV implements IControladorAV {
 		
 	}
 	
-	//El usuario ya tiene un Av con ese nombre?
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador){
 		boolean existe = false;
 		
@@ -258,6 +257,18 @@ public class ControladorAV implements IControladorAV {
 		} else {
 			throw new Exception("Valor de idAV invalido: " + idAV);
 		}
+	}
+	
+	public boolean esAlfaNumerico(String texto) {
+		char textArr[] = texto.toLowerCase().toCharArray();
+		
+		for( char c : textArr ) {
+			if( !((c >= 48 && c <= 57) || (c >= 97 && c <= 122  )) ) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 }

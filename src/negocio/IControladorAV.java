@@ -7,6 +7,7 @@ import javax.ejb.Local;
 import dominio.AV;
 import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
+import exceptions.NombreDeAVInvalido;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 
@@ -14,7 +15,7 @@ import dominio.datatypes.DataNotificacion;
 public interface IControladorAV {
 	
 
-	public long altaAV(String nombreAV, String usuarioCreador);
+	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido;
 	public boolean existeAV(long idAV);
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);
 	public void eliminarAV(long idAV);

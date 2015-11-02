@@ -9,6 +9,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import dominio.Usuario;
+import exceptions.NombreDeAVInvalido;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 import negocio.IControladorUsuario;
@@ -47,7 +48,12 @@ public class DatosPrecargados {
 		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date());
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date());
 
-		cAV.altaAV("testAV", "test");
+		try {
+			cAV.altaAV("testAV", "test");
+		} catch (NombreDeAVInvalido e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		cInv.crearCategoria("testCat", 1);
 		try {

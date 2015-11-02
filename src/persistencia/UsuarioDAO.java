@@ -6,6 +6,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.Usuario;
 
@@ -40,7 +41,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 			.setParameter("nick", nick)
 			.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return usuario;
 	}
@@ -71,7 +72,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 			.setParameter("email", email)
 			.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return usuario;
 	}
@@ -133,10 +134,66 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try {
 			return em.find(Mensaje.class, idMensaje);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return null;
 
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Administrador buscarAdmin(long nick) {
+		try {
+			return em.find(Administrador.class, nick);
+		} catch (Exception e) {
+			//e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Administrador buscarAdmin(String nick) {
+		Administrador usuario = null;
+		try {
+			usuario = em.createNamedQuery("Administrador.buscarPorNick", Administrador.class)
+			.setParameter("nick", nick)
+			.getSingleResult();
+		} catch (Exception e) {
+			//e.printStackTrace();
+		}
+		return usuario;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void persistirAdmin(Administrador admin) {
+		try {
+			em.persist(admin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void eliminarAdmin(Administrador admin) {
+		try {
+			em.merge(admin);
+			em.remove(admin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void actualizarAdmin(Administrador admin) {
+		try {
+			em.merge(admin);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}	
 
 }

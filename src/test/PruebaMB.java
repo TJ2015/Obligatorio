@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
@@ -19,8 +20,10 @@ import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
+import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import exceptions.YaExisteElProductoAComprar;
+import exceptions.YaExisteElUsuario;
 import negocio.IControladorAV;
 import negocio.IControladorInventario;
 import negocio.IControladorUsuario;
@@ -420,7 +423,122 @@ public class PruebaMB implements Serializable {
 		
 		return false;
 	}
+	
+	public boolean testRegistrarAdmin() {
 
+		String nick = "adminTest";
+		String pass = "adminTest";
+		
+		try {
+			cUsu.registrarAdmin(nick, pass, "admintest@example.org");
+		} catch ( YaExisteElUsuario e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
+		
+		try {
+			cUsu.getAdmin(nick);
+		} catch (NoExisteElUsuario e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean testEliminarAdmin() {
+		String nick = "adminTest";
+		String pass = "adminTest";
+		
+		try {
+			cUsu.registrarAdmin(nick, pass, "admintest@example.org");
+		} catch (YaExisteElUsuario e) {
+			//e.printStackTrace();
+		}
+		
+		try {
+			cUsu.eliminarAdmin(nick);
+		} catch (NoExisteElUsuario e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
+		
+		try {
+			cUsu.getAdmin(nick);
+		} catch (NoExisteElUsuario e) {
+			//e.printStackTrace();
+			return true;
+		}
+				
+		return false;
+	}
+	
+	public boolean testLoginAdmin() {
+		String nick = "adminTest";
+		String pass = "adminTest";
+		
+		try {
+			cUsu.registrarAdmin(nick, pass, "admintest@example.org");
+		} catch (YaExisteElUsuario e) {
+			//e.printStackTrace();
+		}
+		
+		try {
+			return cUsu.loginAdmin(nick, pass);
+		} catch (NoExisteElUsuario e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean testModificarAdmin() {
+		String email = "admintest@example.org";
+		String pass = "adminTest";
+		String nick = "adminTest";
+		
+		String passNuevo = "admintest2";
+		String emailNuevo = "admintest_nuevo@example.org";
+		
+		try {
+			cUsu.registrarAdmin(nick, pass, email);
+		} catch (YaExisteElUsuario e) {
+			//e.printStackTrace();
+		}
+		
+		try {
+			cUsu.modificarAdmin(nick, passNuevo, emailNuevo);
+		} catch (NoExisteElUsuario e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
+		boolean OK = false;
+		DataAdministrador admin = null;
+		
+		try {
+			admin = cUsu.getAdmin("adminTest");
+			if( admin.getEmail().equals(emailNuevo) )
+				OK = true;
+		} catch (NoExisteElUsuario e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			return OK&&cUsu.loginAdmin(nick, passNuevo);
+		} catch (NoExisteElUsuario e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
 	public void testSuitTrucho() {
 		tests = new LinkedHashMap<>();
 		tests.put("Crear Nota", testCrearNota());
@@ -433,6 +551,10 @@ public class PruebaMB implements Serializable {
 		tests.put("Agregar Producto A Lista De Compras", testAgregarEnListaDeCompra());
 		tests.put("Eliminar Producto de Lista de Compras", testEliminarProductoDeListaDeCompra());
 		tests.put("Producto Comprado", testProductoComprado());
+		tests.put("Registrar Administrador", testRegistrarAdmin());
+		tests.put("Eliminar Administrador", testEliminarAdmin());
+		tests.put("Login Administrador", testLoginAdmin());
+		tests.put("Modificar Administrador", testModificarAdmin());
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");

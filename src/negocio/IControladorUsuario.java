@@ -6,9 +6,12 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataMensaje;
 import exceptions.MensajeNoEncotrado;
+import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
+import exceptions.YaExisteElUsuario;
 
 
 @Local
@@ -36,5 +39,10 @@ public interface IControladorUsuario {
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado;
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado;
 	
+	public boolean loginAdmin(String nick, String pass) throws NoExisteElUsuario;
+	public void registrarAdmin(String nick, String pass, String email) throws YaExisteElUsuario;
+	public void eliminarAdmin(String nick) throws NoExisteElUsuario;
+	public void modificarAdmin(String nick, String pass, String email) throws NoExisteElUsuario;
+	public DataAdministrador getAdmin(String nick) throws NoExisteElUsuario;
 
 }

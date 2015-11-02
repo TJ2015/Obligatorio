@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
+import exceptions.NombreDeAVInvalido;
 import negocio.IControladorAV;
 import negocio.IControladorUsuario;
 
@@ -82,7 +83,12 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
-			idAV = cAV.altaAV(nombreAV, nick);
+			try {
+				idAV = cAV.altaAV(nombreAV, nick);
+			} catch (NombreDeAVInvalido e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			session.setAttribute("idAV", idAV);
 
 			try {

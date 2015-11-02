@@ -8,11 +8,14 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import dominio.AV;
+import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataMensaje;
 import exceptions.MensajeNoEncotrado;
+import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import persistencia.IAvDAO;
 import persistencia.IUsuarioDAO;
@@ -198,18 +201,18 @@ public class ControladorUsuario implements IControladorUsuario {
 			throw new exceptions.MensajeNoEncotrado();
 		}
 	}
-	
+
 	@Override
 	public void eliminarMensaje(long idMensaje) throws MensajeNoEncotrado {
 		Mensaje msj = usuarioDAO.buscarMensaje(idMensaje);
-		
-		if( msj != null ) {
+
+		if (msj != null) {
 			Usuario rem = msj.getRemitente();
-			Usuario dest =  msj.getDestinatario();
-			
+			Usuario dest = msj.getDestinatario();
+
 			rem.removeEnviado(msj);
 			dest.removeRecibido(msj);
-			
+
 			usuarioDAO.actualizarUsuario(rem);
 			usuarioDAO.actualizarUsuario(dest);
 			usuarioDAO.eliminarMensaje(msj);
@@ -335,5 +338,62 @@ public class ControladorUsuario implements IControladorUsuario {
 		return davs;
 
 	}
-	
+
+	@Override
+	public boolean loginAdmin(String nick, String pass) throws NoExisteElUsuario {
+		Administrador admin = usuarioDAO.buscarAdmin(nick);
+
+		if (admin != null) {
+			if (seguridad.Encriptador.sonIguales(pass, admin.getPassword())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void registrarAdmin(String nick, String pass, String email) throws exceptions.YaExisteElUsuario {
+		Administrador admin = usuarioDAO.buscarAdmin(nick);
+
+		if (admin == null) {
+			admin = new Administrador(nick, seguridad.Encriptador.encriptar(pass), email);
+			usuarioDAO.persistirAdmin(admin);
+		} else {
+			throw new exceptions.YaExisteElUsuario();
+		}
+	}
+
+	@Override
+	public void eliminarAdmin(String nick) throws NoExisteElUsuario {
+		Administrador admin = usuarioDAO.buscarAdmin(nick);
+		if (admin != null) {
+			usuarioDAO.eliminarAdmin(admin);
+		} else {
+			throw new exceptions.NoExisteElUsuario();
+		}
+	}
+
+	@Override
+	public void modificarAdmin(String nick, String pass, String email) throws NoExisteElUsuario {
+		Administrador admin = usuarioDAO.buscarAdmin(nick);
+		if (admin != null) {
+			admin.setPassword(seguridad.Encriptador.encriptar(pass));
+			admin.setEmail(email);
+			usuarioDAO.actualizarAdmin(admin);
+		} else {
+			throw new exceptions.NoExisteElUsuario();
+		}
+	}
+
+	@Override
+	public DataAdministrador getAdmin(String nick) throws NoExisteElUsuario {
+		Administrador admin = usuarioDAO.buscarAdmin(nick);
+
+		if (admin == null) {
+			throw new exceptions.NoExisteElUsuario();
+		}
+
+		return admin.getDataAdministrador();
+	}
+
 }

@@ -2,6 +2,7 @@ package persistencia;
 
 import javax.ejb.Local;
 
+import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.Usuario;
 
@@ -19,5 +20,10 @@ public interface IUsuarioDAO {
 	public boolean eliminarMensaje(Mensaje msj);
 	public Mensaje buscarMensaje(long idMensaje);
 	
-
+	public Administrador buscarAdmin(String nick);
+	public Administrador buscarAdmin(long nick);
+	public void persistirAdmin(Administrador admin);
+	public void eliminarAdmin(Administrador admin);
+	public void actualizarAdmin(Administrador admin);
+	
 }
