@@ -3,7 +3,6 @@ package servlets;
 import java.io.IOException;
 
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +38,18 @@ public class LoginFacebook extends HttpServlet {
 		facebook.setAccessToken(accessToken);
 		String datos = facebook.obtenerDatosUsuario();
 		
-		//DataUsuario usuario = controlUsuario.loginFacebook(datos);
-		//response.sendRedirect(usuario != null ? "index.xhtml" : "error.xhtml");
+		DataUsuario dataUsuario = controlUsuario.loginSocial(datos, "facebook");
+		try {
+			if (dataUsuario != null) 
+			{
+				HttpSession session = request.getSession();
+				session.setAttribute("dataUsuario", dataUsuario);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+		response.sendRedirect(dataUsuario != null ? "index.xhtml" : "login.xhtml");
 		//(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)
 	}
 

@@ -33,11 +33,8 @@ public class DatosPrecargados {
 		System.out.println("Cargando datos...");
 		util.DBUtil.eliminarTenant("test_testAV");
 		
-		/*cTipo.crearNuevoTipo("Comun");
-		cTipo.crearNuevoTipo("Facebook");*/
-		
-		cUsu.crearNuevoTipo("Comun");
-		cUsu.crearNuevoTipo("Facebook");
+		cUsu.crearNuevoTipo("comun");
+		cUsu.crearNuevoTipo("facebook");
 		
 		cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
 		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());

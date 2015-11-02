@@ -21,12 +21,14 @@ import javax.persistence.OneToMany;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataUsuarioSocial;
 
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
 	@NamedQuery(name="Usuario.buscarPorNick", query="SELECT u FROM Usuario u WHERE u.nick = :nick"),
-	@NamedQuery(name="Usuario.buscarPorEmail", query="SELECT u FROM Usuario u WHERE u.email = :email")
+	@NamedQuery(name="Usuario.buscarPorEmail", query="SELECT u FROM Usuario u WHERE u.email = :email"),
+	@NamedQuery(name="Usuario.buscarPorIdSocial", query="SELECT u FROM Usuario u WHERE u.idSocial = :idSocial")
 })
 public class Usuario implements Serializable {
 
@@ -39,6 +41,8 @@ public class Usuario implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	
+	private String idSocial;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private TipoUsuario tipoUsuario;
@@ -69,7 +73,9 @@ public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Usuario() {
+	public Usuario() 
+	{
+		super();
 	}
 	
 	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) {
@@ -82,17 +88,38 @@ public class Usuario implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
-	public DataUsuario getDataUsuario() {
-		
-		List<DataAV>listDav=new ArrayList<>();
-		for(AV avs:AVs){
-			listDav.add(avs.getDataAV());
+	public Usuario(DataUsuarioSocial usuarioSocial) {
+		super();
+		this.nombre = usuarioSocial.first_name;
+		this.apellido = usuarioSocial.last_name;
+		this.email = usuarioSocial.email;
+		this.fechaNacimiento = new Date();
+		this.idSocial = usuarioSocial.id;
+	}
+
+	public DataUsuario getDataUsuario() 
+	{
+		DataUsuario dataUsuario = null;
+		List<DataAV> lDataAlmacen = null;
+		List<DataAV>lDataCompartidos = null;
+		try {
+			if (AVs != null) {
+				lDataAlmacen = new ArrayList<>();
+				for(AV almacen:AVs){
+					lDataAlmacen.add(almacen.getDataAV());
+				}
+			}
+			if (AVcompartidos != null) {
+				lDataCompartidos = new ArrayList<>();
+				for(AV avs:AVcompartidos){
+					lDataCompartidos.add(avs.getDataAV());
+				}
+			}
+			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, lDataCompartidos);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		List<DataAV>listDavcomp=new ArrayList<>();
-		for(AV avs:AVcompartidos){
-			listDavcomp.add(avs.getDataAV());
-		}
-		return new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, listDav,listDavcomp);
+		return dataUsuario;
 	}
 
 	public long getIdUsuario() {
@@ -209,6 +236,14 @@ public class Usuario implements Serializable {
 	}
 	public void removeRecibido(Mensaje msj) {
 		this.mensajesRecibidos.remove(msj);
+	}
+
+	public String getIdSocial() {
+		return idSocial;
+	}
+
+	public void setIdSocial(String idSocial) {
+		this.idSocial = idSocial;
 	}
 	
 }

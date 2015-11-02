@@ -68,9 +68,16 @@ public class TipoDAO implements ITipoDAO {
 	}
 
 	@Override
-	public TipoUsuario obtenerTipoUsuarioFacbook() {
-		// TODO Auto-generated method stub
-		return null;
+	public TipoUsuario obtenerTipoUsuarioSocial(String redSocial) {
+		TipoUsuario tipoUsuario = null;
+		try {
+			tipoUsuario = em.createNamedQuery("TipoUsuario.obtenerTipoUsuarioParaLoginSocial", TipoUsuario.class)
+			.setParameter("descripcion", redSocial)
+			.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tipoUsuario;
 	}
 
 }

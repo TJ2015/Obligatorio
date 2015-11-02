@@ -12,6 +12,6 @@ public interface ITipoDAO {
 	public boolean eliminarTipoUsuario(TipoUsuario tipoUsuario);
 	public boolean eliminarTipoUsuario(long idTipoUsuario);
 	public TipoUsuario obtenerTipoUsuarioParaLogin();
-	public TipoUsuario obtenerTipoUsuarioFacbook();
+	public TipoUsuario obtenerTipoUsuarioSocial(String redSocial);
 	
 }

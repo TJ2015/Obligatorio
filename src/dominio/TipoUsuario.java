@@ -12,7 +12,8 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="TipoUsuario.findAll", query="SELECT u FROM TipoUsuario u"),
-	@NamedQuery(name="TipoUsuario.obtenerTipoUsuarioParaLogin", query="SELECT u FROM TipoUsuario u WHERE u.idTipoUsuario = :idTipoUsuario")
+	@NamedQuery(name="TipoUsuario.obtenerTipoUsuarioParaLogin", query="SELECT u FROM TipoUsuario u WHERE u.idTipoUsuario = :idTipoUsuario"),
+	@NamedQuery(name="TipoUsuario.obtenerTipoUsuarioParaLoginSocial", query="SELECT u FROM TipoUsuario u WHERE u.descripcion = :descripcion")
 })
 public class TipoUsuario implements Serializable 
 {

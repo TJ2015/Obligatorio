@@ -7,7 +7,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import dominio.Mensaje;
-import dominio.TipoUsuario;
 import dominio.Usuario;
 import persistencia.interfases.IUsuarioDAO;
 
@@ -20,15 +19,16 @@ public class UsuarioDAO implements IUsuarioDAO {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean altaUsuario(Usuario usuario) {
+	public Usuario altaUsuario(Usuario usuario) {
 		boolean seRegistro = false;
 		try {
 			em.persist(usuario);
 			seRegistro = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			usuario = null;
 		}
-		return seRegistro;
+		return usuario;
 	}
 
 	@Override
@@ -136,26 +136,19 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return null;
-	}	
-	
-	
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public TipoUsuario altaTipoUsuario(TipoUsuario tipoUsuario) 
-	{
-		try {
-			em.persist(tipoUsuario);
-			System.out.println(tipoUsuario);
-		} catch (Exception e) {
-			e.printStackTrace();
-			tipoUsuario = null;
-		}
-		return tipoUsuario;
 	}
 
 	@Override
-	public TipoUsuario obtenerTipoUsuarioComun() {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario buscarUsuarioSocial(String idSocial) 
+	{
+		Usuario usuario = null;
+		try {
+			usuario = em.createNamedQuery("Usuario.buscarPorIdSocial", Usuario.class)
+			.setParameter("idSocial", idSocial)
+			.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usuario;
 	}
 }
