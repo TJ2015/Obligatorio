@@ -31,6 +31,13 @@ public class CategoriaBean implements Serializable {
 	private long idAV;
 	private AV av;
 	private List <DataCategoria> cats=new ArrayList<>();
+	private String[] str={"hola","noe"};
+	public String[] getStr() {
+		return str;
+	}
+	public void setStr(String[] str) {
+		this.str = str;
+	}
 	private static final long serialVersionUID = 1L;
 	
 	

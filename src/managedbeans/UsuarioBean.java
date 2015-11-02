@@ -23,7 +23,7 @@ public class UsuarioBean implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	IControladorUsuario controlUsuario;
+	IControladorUsuario cusu;
 
 	private String nombre;
 	private String apellido;
@@ -115,7 +115,7 @@ public class UsuarioBean implements Serializable
 	public void login() throws IOException 
 	{
 		try {
-			DataUsuario dataUsuario = controlUsuario.login(nick, password);
+			DataUsuario dataUsuario = cusu.login(nick, password);
 			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
@@ -139,7 +139,7 @@ public class UsuarioBean implements Serializable
 
 	public void registroUsuario() {
 		try {
-			DataUsuario dataUsuario = controlUsuario.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
+			DataUsuario dataUsuario = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
 			if (dataUsuario != null) {
 				logueado = true;
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
@@ -156,7 +156,10 @@ public class UsuarioBean implements Serializable
 	public void mostrarListaAV() 
 	{
 		try {
-			AVs = controlUsuario.mostrarListaAv(nick);
+			HttpSession session = SesionBean.getSession();
+			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+			AVs = cusu.mostrarListaAv(nick);
+
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaAV.xhtml");
 
 		} catch (IOException e) {

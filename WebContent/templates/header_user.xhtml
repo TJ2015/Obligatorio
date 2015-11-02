@@ -13,9 +13,7 @@
 			
 			<header class="header">
             
-            <a href="index.html" class="logo">
-                <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                Heladera
+            <a href="index.html" class="logo">${avBean.nombreAV} 
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -111,7 +109,7 @@
                                 <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
+                                <li class="header">Tienes 10 notificaciones</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
@@ -143,7 +141,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">View all</a></li>
+                                <li class="footer"><a href="#">Ver todo</a></li>
                             </ul>
                         </li>
                         <!-- Tasks: style can be found in dropdown.less -->
@@ -203,7 +201,7 @@
                                 <li class="user-header bg-light-blue">
                                     <img src="resources/adminlte/img/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
+                                        ${usuarioBean.nick} - Web Developer
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>
@@ -222,10 +220,13 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                     <!--   <a href="" class="btn btn-default btn-flat">Cerrar sesion </a> -->
+                                       <h:form>
+                                    <h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />    	
+                                    </h:form>
                                     </div>
                                 </li>
                             </ul>

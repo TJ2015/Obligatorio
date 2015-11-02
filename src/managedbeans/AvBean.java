@@ -90,7 +90,9 @@ public class AvBean implements Serializable {
 				e1.printStackTrace();
 			}
 			session.setAttribute("idAV", idAV);
-
+			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+			
+			
 			try {
 				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
