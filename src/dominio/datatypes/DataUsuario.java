@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import dominio.AV;
+import dominio.Usuario;
 
 public class DataUsuario implements Serializable {
 	
@@ -34,7 +35,6 @@ public class DataUsuario implements Serializable {
 	}
 	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
 			Date fechaNacimiento,List <DataAV> avs,List <DataAV> avsComp) {
-		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
@@ -44,6 +44,7 @@ public class DataUsuario implements Serializable {
 		this.AVs=avs;
 		this.AVsCompar=avsComp;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}

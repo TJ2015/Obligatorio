@@ -1,10 +1,9 @@
-package persistencia;
+package persistencia.interfases;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
-import dominio.AV;
 import dominio.Categoria;
 import dominio.Producto;
 import dominio.ProductoAComprar;

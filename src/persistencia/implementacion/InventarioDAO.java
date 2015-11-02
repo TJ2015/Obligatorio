@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.implementacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import dominio.Categoria;
 //import dominio.Usuario;
 import dominio.Producto;
 import dominio.ProductoAComprar;
+import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -230,5 +231,4 @@ public class InventarioDAO implements IInventarioDAO {
 	}
 
 }
-
 

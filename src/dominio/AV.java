@@ -19,20 +19,14 @@ import dominio.datatypes.DataAV;
 
 /**
  * 
- * TSI-JEE - Grupo 04
- * Santiago Callejas
- * Marianela Rodriguez
- * Lautaro Acosta
- * Noelia Gonzalez
- * Bryan Ferreira
+ * TSI-JEE - Grupo 04 Santiago Callejas Marianela Rodriguez Lautaro Acosta
+ * Noelia Gonzalez Bryan Ferreira
  *
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name="AV.findAll", query="SELECT u FROM AV u"),
-	@NamedQuery(name="AV.buscarPorId", query="SELECT a FROM AV a WHERE a.idAV =:idAV"),
-	@NamedQuery(name="AV.buscarPorNombre", query="SELECT a FROM AV a WHERE a.nombreAV =:nombreAV")
-})
+@NamedQueries({ @NamedQuery(name = "AV.findAll", query = "SELECT u FROM AV u"),
+		@NamedQuery(name = "AV.buscarPorId", query = "SELECT a FROM AV a WHERE a.idAV =:idAV"),
+		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV") })
 public class AV implements Serializable {
 
 	@Id
@@ -45,12 +39,12 @@ public class AV implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "av_usuarioscompartidos")
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public AV() {
 	}
-	
+
 	public AV(String nombreAV, Usuario usuarioCreador) {
 		super();
 		this.nombreAV = nombreAV;
@@ -58,8 +52,8 @@ public class AV implements Serializable {
 	}
 
 	public DataAV getDataAV() {
-		String nombreUsu= usuarioCreador.getNombre();
-		DataAV dav=new DataAV(nombreAV, nombreUsu);
+		String nombreUsu = usuarioCreador.getNombre();
+		DataAV dav = new DataAV(nombreAV, nombreUsu);
 		dav.setIdAV(idAV);
 		return dav;
 	}
@@ -87,7 +81,7 @@ public class AV implements Serializable {
 	public void setUsuarioCreador(Usuario usuarioCreador) {
 		this.usuarioCreador = usuarioCreador;
 	}
-	
+
 	public List<Usuario> getUsuariosCompartidos() {
 		return usuariosCompartidos;
 	}
@@ -105,7 +99,7 @@ public class AV implements Serializable {
 		result = prime * result + ((usuarioCreador == null) ? 0 : usuarioCreador.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -135,5 +129,5 @@ public class AV implements Serializable {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador
 				+ ", usuariosCompartidos=" + usuariosCompartidos + "]";
 	}
-	
+
 }

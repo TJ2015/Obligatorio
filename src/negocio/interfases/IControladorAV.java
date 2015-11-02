@@ -1,15 +1,13 @@
-package negocio;
+package negocio.interfases;
 
 import java.util.List;
 
 import javax.ejb.Local;
 
 import dominio.AV;
-import dominio.datatypes.DataProductoAComprar;
-import exceptions.NoExisteElAV;
-import exceptions.NombreDeAVInvalido;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import exceptions.NombreDeAVInvalido;
 
 @Local
 public interface IControladorAV {

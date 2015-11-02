@@ -1,4 +1,4 @@
-package negocio;
+package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,18 +7,27 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.google.gson.Gson;
+
 import dominio.AV;
 import dominio.Administrador;
 import dominio.Mensaje;
+import dominio.TipoUsuario;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataMensaje;
+import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataUsuarioSocial;
 import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
-import persistencia.IAvDAO;
-import persistencia.IUsuarioDAO;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorUsuario;
+import persistencia.interfases.IAvDAO;
+import persistencia.interfases.ITipoDAO;
+import persistencia.interfases.IUsuarioDAO;
+import util.Mensajeria;
 
 /**
  * Session Bean implementation class ControladorUsuario
@@ -32,13 +41,11 @@ public class ControladorUsuario implements IControladorUsuario {
 	private IAvDAO avDAO;
 	@EJB
 	IControladorAV cAV;
-
-	/**
-	 * Default constructor.
-	 */
-	public ControladorUsuario() {
-		// TODO Auto-generated constructor stub
-	}
+	@EJB
+	private ITipoDAO tipoDao;
+	
+	
+    public ControladorUsuario() { }
 
 	@Override
 	public boolean existeUsuarioNick(String nickname) {
@@ -53,16 +60,20 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public boolean registrarUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento) {
-
-		if (existeUsuarioNick(nick) || existeUsuarioEmail(email)) {
-			return false;
-		} else {
-			String passEncriptado = seguridad.Encriptador.encriptar(pasword);
-			Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
-			return usuarioDAO.altaUsuario(usu);
+	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) 
+	{
+		DataUsuario dataUsuario = null;
+		try {
+			if(!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
+				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
+				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
+				usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
+				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
+			}
+		} catch (Exception e) {
+			e.fillInStackTrace();
 		}
+		return dataUsuario;
 	}
 
 	@Override
@@ -80,17 +91,47 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public boolean login(String nickname, String password) {
-		Usuario usu = usuarioDAO.buscarUsuario(nickname);
-
-		if (usu != null) {
-
-			if (seguridad.Encriptador.sonIguales(password, usu.getPassword())) {
-				return true;
+	public DataUsuario login(String nickname, String password) 
+	{
+		DataUsuario dataUsuario = null;
+		try {
+			Usuario usuario = usuarioDAO.buscarUsuario(nickname);
+			if(usuario != null && seguridad.Encriptador.sonIguales(password, usuario.getPassword()) ) {
+				dataUsuario = usuario.getDataUsuario();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		return false;
+		return dataUsuario;
+	}
+	
+	@Override
+	public DataUsuario loginSocial(String datos, String redSocial) 
+	{
+		DataUsuario usuarioLogueado = null;
+		try {
+			Gson gson = new Gson();
+			DataUsuarioSocial usuarioSocial = gson.fromJson(datos, DataUsuarioSocial.class);
+			Usuario usuario = usuarioDAO.buscarUsuarioSocial(usuarioSocial.id);
+			if (usuario == null) {
+				usuario = new Usuario(usuarioSocial);
+				usuario.setTipoUsuario(tipoDao.obtenerTipoUsuarioSocial(redSocial));
+				usuario = usuarioDAO.altaUsuario(usuario);
+		        if (usuario != null) {
+		        	StringBuilder mensaje = new StringBuilder();
+		        	mensaje.append(String.format("<h2>Bienvenid@ a SAPo %s</h2>", usuario.getNombre()));
+		        	mensaje.append(String.format("<p>Ingrese a %s</p>", "Cambiar esto por la URL Verdadera"));
+		        	mensaje.append("<br/><br/>Saludos<br/>El Equipo de SAPo");
+					new Mensajeria().enviarCorreo(usuario.getEmail(), "SAPo - Bienvenido", mensaje.toString());
+				}	
+			}
+			if (usuario != null) {
+				usuarioLogueado = usuario.getDataUsuario();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usuarioLogueado;
 	}
 
 	@Override
@@ -313,7 +354,8 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
+	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado 
+	{
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for (Mensaje m : usu.getMensajesRecibidos()) {
@@ -394,6 +436,19 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 
 		return admin.getDataAdministrador();
+	}	
+	
+	
+	@Override
+	public boolean crearNuevoTipo(String descripcion) 
+	{
+		boolean seCrea = false;
+		try {
+			TipoUsuario tipoUsuario = tipoDao.altaTipoUsuario(new TipoUsuario(descripcion));
+			System.out.println(tipoUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return seCrea;
 	}
-
 }

@@ -8,14 +8,10 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import dominio.Usuario;
 import exceptions.NombreDeAVInvalido;
-import negocio.IControladorAV;
-import negocio.IControladorInventario;
-import negocio.IControladorUsuario;
-import persistencia.IAvDAO;
-import persistencia.IInventarioDAO;
-import persistencia.IUsuarioDAO;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
+import negocio.interfases.IControladorUsuario;
 
 @Startup
 @Singleton
@@ -27,6 +23,7 @@ public class DatosPrecargados {
 	IControladorAV cAV;
 	@EJB
 	IControladorInventario cInv;
+	
 
 	@PostConstruct
 	void atStartup() {
@@ -36,6 +33,9 @@ public class DatosPrecargados {
 		// CARGAR DATOS
 		System.out.println("Cargando datos...");
 		util.DBUtil.eliminarTenant("test_testAV");
+		
+		cUsu.crearNuevoTipo("comun");
+		cUsu.crearNuevoTipo("facebook");
 		
 		cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
 		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());
@@ -64,7 +64,7 @@ public class DatosPrecargados {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		System.out.println("...Datos cargados con éxito!");
 		
 	}

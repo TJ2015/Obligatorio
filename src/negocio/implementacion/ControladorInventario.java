@@ -1,4 +1,4 @@
-package negocio;
+package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,9 @@ import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
 import exceptions.YaExisteElProductoAComprar;
-import persistencia.IAvDAO;
-import persistencia.IInventarioDAO;
+import negocio.interfases.IControladorInventario;
+import persistencia.interfases.IAvDAO;
+import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
@@ -362,59 +363,62 @@ public class ControladorInventario implements IControladorInventario {
 
 		return dprods;
 	}
-	
+
 	@Override
-	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
+	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad)
+			throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
 		agregarEnListaDeCompra(idAV, producto, cantidad, false);
 	}
-	
+
 	@Override
-	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad, boolean reemplazar) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
-		
+	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad, boolean reemplazar)
+			throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
+
 		String tenant = getTenant(idAV);
-		if( tenant != null) {
+		if (tenant != null) {
 			Producto prod = invDAO.buscarProducto(producto, tenant);
-			
-			if( prod != null ) {
-				
+
+			if (prod != null) {
+
 				List<ProductoAComprar> pacs = invDAO.getAllProductoAComprar(tenant);
 				ProductoAComprar pacAux = null;
-				
-				for( ProductoAComprar p : pacs ) {
-					if( p.getProducto().getIdProducto() == prod.getIdProducto() ) {
+
+				for (ProductoAComprar p : pacs) {
+					if (p.getProducto().getIdProducto() == prod.getIdProducto()) {
 						pacAux = p;
 						break;
 					}
 				}
-				
-				if( pacAux != null ) {
-					if( reemplazar ) {
+
+				if (pacAux != null) {
+					if (reemplazar) {
 						invDAO.eliminarProductoAComprar(pacAux, tenant);
 					} else {
 						throw new exceptions.YaExisteElProductoAComprar();
 					}
-				} 
-				
+				}
+
 				ProductoAComprar pac = new ProductoAComprar(prod, cantidad);
-				
+
 				invDAO.persistirProductoAComprar(pac, tenant);
 			} else {
 				throw new exceptions.NoExisteElProducto();
 			}
-			
+
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
-		
+
 	}
 
 	@Override
-	public void eliminarProductoDeListaDeCompra(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+	public void eliminarProductoDeListaDeCompra(long idAV, long idProdComp)
+			throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
-		if( tenant != null) {
+		if (tenant != null) {
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-			
-			if( pac != null ) {
+
+			if (pac != null) {
 				invDAO.eliminarProductoAComprar(pac, tenant);
 			} else {
 				throw new exceptions.NoExisteElProductoAComprar();
@@ -423,7 +427,7 @@ public class ControladorInventario implements IControladorInventario {
 			throw new exceptions.NoExisteElAV();
 		}
 	}
-	
+
 	@Override
 	public void productoComprado(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
@@ -436,14 +440,14 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public List<DataProductoAComprar> getListaDeCompra(long idAV) throws NoExisteElAV {
 		String tenant = getTenant(idAV);
-		if( tenant != null) {
+		if (tenant != null) {
 			List<ProductoAComprar> pacs = invDAO.getAllProductoAComprar(tenant);
 			List<DataProductoAComprar> dpacs = new ArrayList<>();
-			
-			for( ProductoAComprar pc : pacs ) {
+
+			for (ProductoAComprar pc : pacs) {
 				dpacs.add(pc.getDataProductoAComprar());
 			}
-			
+
 			return dpacs;
 		} else {
 			throw new exceptions.NoExisteElAV();
@@ -451,12 +455,13 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp)
+			throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
-		if( tenant != null) {
+		if (tenant != null) {
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-			
-			if( pac != null ) {
+
+			if (pac != null) {
 				return pac.getDataProductoAComprar();
 			} else {
 				throw new exceptions.NoExisteElProductoAComprar();
@@ -465,39 +470,39 @@ public class ControladorInventario implements IControladorInventario {
 			throw new exceptions.NoExisteElAV();
 		}
 	}
-	
+
 	private String getTenant(long idAV) {
 		AV av = avDAO.traerAV(idAV);
-		if( av != null) {
+		if (av != null) {
 			return av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
 		} else {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public DataProducto getProducto(String nombre) throws NoExisteElProducto {
 		return getProducto(nombre, "sapo_master");
 	}
-	
+
 	@Override
 	public DataProducto getProducto(String nombre, long idAV) throws NoExisteElAV, NoExisteElProducto {
 		String tenant = getTenant(idAV);
-		if( tenant != null) {
+		if (tenant != null) {
 			return getProducto(nombre, tenant);
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
 	}
-	
+
 	private DataProducto getProducto(String nombre, String tenant) throws NoExisteElProducto {
 		Producto prod = invDAO.buscarProducto(nombre, tenant);
 
-		if( prod != null ) {
+		if (prod != null) {
 			return prod.getDataProducto();
 		} else {
 			throw new exceptions.NoExisteElProducto();
 		}
-		
+
 	}
 }

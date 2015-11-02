@@ -7,24 +7,23 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.SessionBean;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorUsuario;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean implements Serializable 
+{
+	private static final long serialVersionUID = 1L;
 
 	@EJB
-	IControladorUsuario cusu;
+	IControladorUsuario controlUsuario;
 
 	private String nombre;
 	private String apellido;
@@ -113,75 +112,74 @@ public class UsuarioBean implements Serializable {
 		this.logueado = logueado;
 	}
 
-	public void login() throws IOException {
+	public void login() throws IOException 
+	{
 		try {
-			if (cusu.login(nick, password)) {
+			DataUsuario dataUsuario = controlUsuario.login(nick, password);
+			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
-
+				session.setAttribute("dataUsuario", dataUsuario);
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
 		}
-
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	public void logout() {
-
+	public void logout() 
+	{
 		HttpSession session = SesionBean.getSession();
 		session.invalidate();
-
-		// logueado=false;
-
 	}
 
 	public void registroUsuario() {
 		try {
-			if (cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento)) {
+			DataUsuario dataUsuario = controlUsuario.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
+			if (dataUsuario != null) {
 				logueado = true;
-
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/datosSesionUsuario.xhtml");
-
-				// dusu=cusu.mostraListaAv(nick);
-				// AVs=dusu.getAVs();
-
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/login.xhtml");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-
-			} else {
+			} 
+			else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void mostrarListaAV() {
+	public void mostrarListaAV() 
+	{
 		try {
-			AVs = cusu.mostrarListaAv(nick);
-
+			AVs = controlUsuario.mostrarListaAv(nick);
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaAV.xhtml");
 
 		} catch (IOException e) {
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	public boolean existeUsuarioLogeado()
+	{
+		boolean existeUsuario = false;
+		try {
+			HttpSession session = SesionBean.getSession();
+			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
+			existeUsuario = dataUsuario != null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return existeUsuario;
 	}
 
 }

@@ -24,9 +24,9 @@ import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import exceptions.YaExisteElProductoAComprar;
 import exceptions.YaExisteElUsuario;
-import negocio.IControladorAV;
-import negocio.IControladorInventario;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
+import negocio.interfases.IControladorUsuario;
 
 @ManagedBean
 public class PruebaMB implements Serializable {

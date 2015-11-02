@@ -1,10 +1,8 @@
-package negocio;
+package negocio.interfases;
 import java.util.List;
 
 import javax.ejb.Local;
 
-import dominio.Atributo;
-import dominio.Categoria;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataProductoAComprar;

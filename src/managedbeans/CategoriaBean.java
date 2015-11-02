@@ -7,17 +7,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.AV;
-import dominio.Categoria;
-import dominio.Producto;
 import dominio.datatypes.DataCategoria;
-import negocio.IControladorAV;
-import negocio.IControladorInventario;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
 
 @ManagedBean
 @ViewScoped
@@ -112,7 +109,4 @@ public class CategoriaBean implements Serializable {
 				}
 			}
 	
-}	
-	
-
-
+}

@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import dominio.datatypes.DataProducto;
-import negocio.IControladorInventario;
+import negocio.interfases.IControladorInventario;
 
 
 @ManagedBean

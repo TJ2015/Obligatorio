@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import dominio.AV;
 import dominio.datatypes.DataAV;
 import exceptions.NombreDeAVInvalido;
-import negocio.IControladorAV;
-import negocio.IControladorUsuario;
+import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorUsuario;
 
 @ManagedBean
 @SessionScoped

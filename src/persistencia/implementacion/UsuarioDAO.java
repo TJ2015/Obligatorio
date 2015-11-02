@@ -1,4 +1,4 @@
-package persistencia;
+package persistencia.implementacion;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -9,25 +9,27 @@ import javax.ejb.TransactionManagementType;
 import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.Usuario;
+import persistencia.interfases.IUsuarioDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class UsuarioDAO implements IUsuarioDAO {
-	
-	@javax.persistence.PersistenceContext(unitName="Obligatorio")
+
+	@javax.persistence.PersistenceContext(unitName = "Obligatorio")
 	private javax.persistence.EntityManager em;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean altaUsuario(Usuario usuario) {
+	public Usuario altaUsuario(Usuario usuario) {
 		boolean seRegistro = false;
 		try {
 			em.persist(usuario);
 			seRegistro = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			usuario = null;
 		}
-		return seRegistro;
+		return usuario;
 	}
 
 	@Override
@@ -35,13 +37,12 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public Usuario buscarUsuario(String nick) {
 		Usuario usuario = null;
 		try {
-			//Se busca el usuario en la base 
-			//usuario = em.find(Usuario.class, nick);
-			usuario = em.createNamedQuery("Usuario.buscarPorNick", Usuario.class)
-			.setParameter("nick", nick)
-			.getSingleResult();
+			// Se busca el usuario en la base
+			// usuario = em.find(Usuario.class, nick);
+			usuario = em.createNamedQuery("Usuario.buscarPorNick", Usuario.class).setParameter("nick", nick)
+					.getSingleResult();
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return usuario;
 	}
@@ -51,9 +52,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public boolean actualizarUsuario(Usuario usuario) {
 		boolean seActualizo = false;
 		try {
-			//Actualiza el en la base de datos.
+			// Actualiza el en la base de datos.
 			em.merge(usuario);
-			
+
 			seActualizo = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,13 +67,12 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public Usuario buscarUsuarioEmail(String email) {
 		Usuario usuario = null;
 		try {
-			//Se busca el usuario en la base 
-			//usuario = em.find(Usuario.class, nick);
-			usuario = em.createNamedQuery("Usuario.buscarPorEmail", Usuario.class)
-			.setParameter("email", email)
-			.getSingleResult();
+			// Se busca el usuario en la base
+			// usuario = em.find(Usuario.class, nick);
+			usuario = em.createNamedQuery("Usuario.buscarPorEmail", Usuario.class).setParameter("email", email)
+					.getSingleResult();
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return usuario;
 	}
@@ -134,10 +134,9 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try {
 			return em.find(Mensaje.class, idMensaje);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	@Override
@@ -146,21 +145,20 @@ public class UsuarioDAO implements IUsuarioDAO {
 		try {
 			return em.find(Administrador.class, nick);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Administrador buscarAdmin(String nick) {
 		Administrador usuario = null;
 		try {
-			usuario = em.createNamedQuery("Administrador.buscarPorNick", Administrador.class)
-			.setParameter("nick", nick)
-			.getSingleResult();
+			usuario = em.createNamedQuery("Administrador.buscarPorNick", Administrador.class).setParameter("nick", nick)
+					.getSingleResult();
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return usuario;
 	}
@@ -194,6 +192,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 
+	@Override
+	public Usuario buscarUsuarioSocial(String idSocial) {
+		Usuario usuario = null;
+		try {
+			usuario = em.createNamedQuery("Usuario.buscarPorIdSocial", Usuario.class).setParameter("idSocial", idSocial)
+					.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
 }
