@@ -36,18 +36,18 @@ public class DatosPrecargados {
 		cUsu.crearNuevoTipo("comun");
 		cUsu.crearNuevoTipo("facebook");
 		
-		cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
-		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());
-		cUsu.registrarUsuario("Maria", "Lopez", "marlo", "marlo", "marlo@gmail.com", new Date());
-		cUsu.registrarUsuario("Lucia", "Fernandez", "lucifer", "lucifer", "lucifer@gmail.com", new Date());
+		/*cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date(), null);
+		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date(), null);
+		cUsu.registrarUsuario("Maria", "Lopez", "marlo", "marlo", "marlo@gmail.com", new Date(), null);
+		cUsu.registrarUsuario("Lucia", "Fernandez", "lucifer", "lucifer", "lucifer@gmail.com", new Date(), null);
 
-		cUsu.registrarUsuario("Test", "Run", "test", "test", "test@example.org", new Date());
-		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date());
+		cUsu.registrarUsuario("Test", "Run", "test", "test", "test@example.org", new Date(), null);
+		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date(), null);
+*/
+		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date(), null);
+		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date(), null);
 
-		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date());
-		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date());
-
-		cAV.altaAV("testAV", "test");
+		/*cAV.altaAV("testAV", "test");
 
 		cInv.crearCategoria("testCat", 1);
 		try {
@@ -57,7 +57,7 @@ public class DatosPrecargados {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		System.out.println("...Datos cargados con éxito!");
 	}

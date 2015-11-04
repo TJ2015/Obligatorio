@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      
+      xmlns:p="http://primefaces.org/ui"
       > 
       
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
@@ -93,7 +93,7 @@
 											<div class="input-group-addon">
 												<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 											</div>
-											<h:inputFile id="file" value="#{usuarioBean.imagen}"/>
+											<p:fileUpload value="#{usuarioBean.file}" styleClass="form-control" required="true" mode="simple" update="growl" />
 										</div>
 									</div>
 									<h:commandButton id="botonRegistrar" styleClass="btn btn-primary" value="Registrarse" action="#{usuarioBean.registroUsuario()}"/>
@@ -101,6 +101,11 @@
 						</div>
 					</div>
 				</div>
+					<p:graphicImage value="#{usuarioBean.imagen}"/>
+				<div>
+					
+				</div>
+			
 			</h:form>
 		</ui:define>
 	</ui:composition>

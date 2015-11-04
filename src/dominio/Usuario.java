@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,10 @@ public class Usuario implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	
+	@Column(length=1294967295)
+	private byte[] bytesImagen;
+	private String nombreImagen;
 	
 	private String idSocial;
 	
@@ -78,7 +83,7 @@ public class Usuario implements Serializable {
 		super();
 	}
 	
-	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) {
+	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, byte[] bytesImagen, String nombreImagen) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -86,6 +91,8 @@ public class Usuario implements Serializable {
 		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
 	}
 	
 	public Usuario(DataUsuarioSocial usuarioSocial) {
@@ -244,6 +251,22 @@ public class Usuario implements Serializable {
 
 	public void setIdSocial(String idSocial) {
 		this.idSocial = idSocial;
+	}
+
+	public byte[] getBytesImagen() {
+		return bytesImagen;
+	}
+
+	public void setBytesImagen(byte[] bytesImagen) {
+		this.bytesImagen = bytesImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
 	}
 	
 }

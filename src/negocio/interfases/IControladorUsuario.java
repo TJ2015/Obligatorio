@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
@@ -17,7 +19,7 @@ public interface IControladorUsuario {
 	
 	public boolean existeUsuarioNick(String nickname);
 	public boolean existeUsuarioEmail(String nickname);
-	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String password, String email, Date fechaNacimiento);
+	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String password, String email, Date fechaNacimiento, UploadedFile file);
 	public void modificarInfoUsuario(String nombre, String apellido, String nick, String password, String email, Date fechaNacimiento);
 	public DataUsuario login(String nickname, String password);
 	public void eliminarUsuario(String nickname);

@@ -1,11 +1,17 @@
 package negocio.implementacion;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
+import org.primefaces.model.UploadedFile;
 
 import com.google.gson.Gson;
 
@@ -58,13 +64,13 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 	
 	@Override
-	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) 
+	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, UploadedFile file) 
 	{
 		DataUsuario dataUsuario = null;
 		try {
 			if(!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
-				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
+				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento, convertirInputStreamToArrayByte(file), obtenerNombreImagen(file));
 				usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
 			}
@@ -72,6 +78,30 @@ public class ControladorUsuario implements IControladorUsuario {
 			e.fillInStackTrace();
 		}
 		return dataUsuario;
+	}
+	
+	private String obtenerNombreImagen(UploadedFile file)
+	{
+		return (file != null ? file.getFileName() : null);
+	}
+	
+	private byte[] convertirInputStreamToArrayByte(UploadedFile file)
+	{
+		byte[] bytes = null;
+		try {
+			if (file != null) {
+				bytes = new byte[(int)file.getSize()];
+				InputStream in = file.getInputstream();
+				OutputStream out = new FileOutputStream(new File(file.getFileName()));
+				int lector = 0;
+				while ((lector = in.read(bytes)) != -1) {
+					out.write(bytes, 0, lector);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bytes;
 	}
 
 	@Override
