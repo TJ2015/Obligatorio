@@ -3,11 +3,13 @@ package dominio.datatypes;
 import java.io.Serializable;
 
 public class DataNota implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private String texto;
 	private String usuario;
 	private long idNota;
-	
+
 	public DataNota() {
 	}
 
@@ -41,5 +43,5 @@ public class DataNota implements Serializable {
 	public void setIdNota(long idNota) {
 		this.idNota = idNota;
 	}
-		
+
 }

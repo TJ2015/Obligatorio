@@ -64,5 +64,36 @@ public class Notificacion implements Serializable {
 	public DataNotificacion getDataNotificacion() {
 		return new DataNotificacion(idNotificacion, texto, leido);
 	}
-   
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (idNotificacion ^ (idNotificacion >>> 32));
+		result = prime * result + (leido ? 1231 : 1237);
+		result = prime * result + ((texto == null) ? 0 : texto.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Notificacion other = (Notificacion) obj;
+		if (idNotificacion != other.idNotificacion)
+			return false;
+		if (leido != other.leido)
+			return false;
+		if (texto == null) {
+			if (other.texto != null)
+				return false;
+		} else if (!texto.equals(other.texto))
+			return false;
+		return true;
+	}
+	   
 }

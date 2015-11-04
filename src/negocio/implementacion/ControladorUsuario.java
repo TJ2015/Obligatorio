@@ -69,6 +69,8 @@ public class ControladorUsuario implements IControladorUsuario {
 				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
 				usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
+			} else {
+				throw new exceptions.YaExisteElUsuario();
 			}
 		} catch (Exception e) {
 			e.fillInStackTrace();
@@ -450,5 +452,19 @@ public class ControladorUsuario implements IControladorUsuario {
 			e.printStackTrace();
 		}
 		return seCrea;
+	}
+
+	@Override
+	public DataUsuario getUsuario(String nickname) {
+		
+		DataUsuario du = null;
+		
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		
+		if( usu != null ) {
+			du = usu.getDataUsuario();
+		}
+		
+		return du;
 	}
 }

@@ -11,6 +11,7 @@ import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataLogEntry;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 import exceptions.NoExisteElAV;
@@ -284,6 +285,18 @@ public class ControladorAV implements IControladorAV {
 			throw new exceptions.NoExisteElAV();
 		
 		return av.getDataAV();
+	}
+
+	@Override
+	public List<DataLogEntry> getLogStock(long idAV) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DataLogEntry> getLogStock(long idAV, int offset, int cant) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

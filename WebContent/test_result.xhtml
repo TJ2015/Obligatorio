@@ -11,24 +11,47 @@
 <h:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+	<script src="resources/flattheme/js/jquery.js"></script>
 </h:head>
 
 <h:body>
 	<style>
 		.true {
-			background-color:green;
+			background-color:#A4FFA4;
 		}
 		.false {
-			background-color:red;
+			background-color:#FFA4A4;
+		}
+		.false, .true {
+			margin-bottom: 5px;
+		}
+		.ok {
+			width: 100%;
+			background-color: #008000;
+			background-image: url("https://www.wordans.com.au/wvc-1317810557/wordansfiles/images/2011/10/5/101092/101092_340.jpg");
+			background-blend-mode: color-dodge;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	</style>
+	<script>
+		$(document).ready(function(){
+			$(".ok").height($(document).height());
+		});
+	</script>
+	
+	
 	<c:forEach items="#{pruebaMB.tests}" var="entry">
 		<div class="#{entry.value}">
 			<h:outputText value="#{entry.key}" />
 		</div>
-		<br />
 	</c:forEach>
+	
+	<c:if test="${pruebaMB.AllOk}">
+		<div class="ok">
+		</div>
+	</c:if>
 
 </h:body>
 </html>

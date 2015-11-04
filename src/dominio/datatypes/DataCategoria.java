@@ -6,6 +6,8 @@ import java.util.List;
 
 public class DataCategoria implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private long idCategoria;
 	private String nombre;
 	private List<DataProducto> productos = new ArrayList<>();

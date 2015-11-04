@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dominio.AV;
-import dominio.Usuario;
-
 public class DataUsuario implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private String nombre;
 	private String apellido;
 	private String nick;
@@ -18,69 +17,86 @@ public class DataUsuario implements Serializable {
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsCompar = new ArrayList<>();
-	
+
 	public List<DataAV> getAVs() {
 		return AVs;
 	}
+
 	public List<DataAV> getAVsCompar() {
 		return AVsCompar;
 	}
+
 	public void setAVsCompar(List<DataAV> aVsCompar) {
 		AVsCompar = aVsCompar;
 	}
+
 	public void setAVs(List<DataAV> aVs) {
 		AVs = aVs;
 	}
+
 	public DataUsuario() {
 	}
-	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento,List <DataAV> avs,List <DataAV> avsComp) {
+
+	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento,
+			List<DataAV> avs, List<DataAV> avsComp) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
 		this.pasword = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
-		this.AVs=avs;
-		this.AVsCompar=avsComp;
+		this.AVs = avs;
+		this.AVsCompar = avsComp;
 	}
 
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
 	public String getNick() {
 		return nick;
 	}
+
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
+
 	public String getPasword() {
 		return pasword;
 	}
+
 	public void setPasword(String pasword) {
 		this.pasword = pasword;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
+
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,6 +109,7 @@ public class DataUsuario implements Serializable {
 		result = prime * result + ((pasword == null) ? 0 : pasword.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -134,7 +151,5 @@ public class DataUsuario implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
