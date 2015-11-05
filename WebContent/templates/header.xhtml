@@ -25,17 +25,22 @@
 		            <div class="collapse navbar-collapse">
 		                <ul class="nav navbar-nav navbar-right">
 		                    <li class="active"><a href="index.xhtml">Inicio</a></li>
-		                    <li><a href="#">Precios</a></li>
+		                   
 		                    
-		                   <c:if test="${!usuarioBean.existeUsuarioLogeado()}">
+		                   <c:if test="${ usuarioBean.logueado !=true}">
 		                  
 		                   <li ><a href="login.xhtml" >Ingresar</a></li>
 		                   <li ><a href="registro.xhtml" >Registrarse</a></li>
 		                   </c:if>
-		                    <c:if test="${usuarioBean.existeUsuarioLogeado()}">
-		                    
-		                	<h:form styleClass="form">
+		                    <c:if test="${usuarioBean.logueado ==true}">
+		                    <li>
+  								<h:form>
+                                  <h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" />   	
+                                 </h:form>	
+                             </li>	                
+                             	<h:form styleClass="form">
 		                	   	 <li ><a href="chat.xhtml" target="_blank" >Ingresar al chat</a></li>
+		                	   	  <li><a href="#">Membresía</a></li>
 		                	 	                	   	
 		                   </h:form>
 		                   </c:if>

@@ -153,7 +153,12 @@ public class ControladorUsuario implements IControladorUsuario {
 			int l = avs.size();
 			
 			for( int i = l-1; i >= 0; i--) {
-				cAV.eliminarAV(avs.get(i).getIdAV());
+				try {
+					cAV.eliminarAV(avs.get(i).getIdAV());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			TipoUsuario tipo = usu.getTipoUsuario();

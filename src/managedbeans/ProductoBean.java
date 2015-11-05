@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataProducto;
+import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorInventario;
 
 @ManagedBean
@@ -33,6 +35,8 @@ public class ProductoBean implements Serializable {
 
 	// para descripcion producto
 	private long idAV;
+
+	private DataProducto dataProducto;
 
 	public ProductoBean(long idAV) {
 		super();
@@ -115,6 +119,8 @@ public class ProductoBean implements Serializable {
 	}
 
 	public void crearProductoDescripción() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
 
 		try {
 			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
@@ -147,6 +153,25 @@ public class ProductoBean implements Serializable {
 			}
 			e.printStackTrace();
 		}
-
+	}
+	
+	public void cargarProducto() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		/*String nombre = FacesContext.getCurrentInstance().
+				getExternalContext().getRequestParameterMap().get("hidden1");*/
+		
+		try {
+			DataProducto dprod = cinv.getProducto(nombre, idAV);
+			
+			this.dataProducto = dprod;
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/ver_producto.xhtml");
+			
+		} catch (NoExisteElAV | NoExisteElProducto | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

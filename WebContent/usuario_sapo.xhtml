@@ -17,7 +17,14 @@
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	
-	
+	<style>
+	#ListaAVsCreados li{
+	width:100%;
+	}
+	li i{
+	float:right;
+	}
+	</style>
 
 </h:head> 
 
@@ -62,13 +69,16 @@
 		<section class="content">
 			 <div class="col-lg-3 col-xs-6">
 			 <h3 class="box-title">Lista de Avs</h3>
-				<ul class="list-group">
+				<ul class="list-group" id="ListaAVsCreados">
 				
 				   <c:forEach var="av" items="${sessionScope.AVs}"  >
 				      <li class="list-group-item">
 				       <a href="mostrarAV.xhtml">
 				       <i class="fa fa-angle-double-right"></i>
-				          ${av.nombreAV}
+				          ${av.nombreAV} 
+				        </a>
+				        <a href="#" data-toggle="modal" data-target="#myModal">
+				        <i class="fa fa-trash-o" style="float:right" ></i>
 				        </a>
 				     </li>
 				                               
@@ -84,7 +94,7 @@
 				   <c:forEach var="av" items="${sessionScope.AVs}"  >
 				      <li class="list-group-item">
 				       <a href="mostrarAV.xhtml">
-				       <i class="fa fa-angle-double-right"></i>
+				       <i class="fa fa-angle-double-right" ></i>
 				          ${av.nombreAV}
 				        </a>
 				     </li>
@@ -94,8 +104,34 @@
 			</div>
 		</section>
 	</div>
+	 <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Eliminar AV</h4>
+        </div>
+        <div class="modal-body">
+          <p>¿Esta seguro que desea eliminar este AV?.</p>
+        </div>
+        <div class="modal-footer">
+        <h:form>
+        	  <h:commandButton  action="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
+        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+        </h:form>
+        
+         
+        </div>
+      </div>
+      
+    </div>
+  </div>
 	</ui:define>
 	</ui:composition>
+	
 </h:body>
 
 </html>

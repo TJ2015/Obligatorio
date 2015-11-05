@@ -37,7 +37,16 @@ public class UsuarioBean implements Serializable
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private DataUsuario dusu;
+	private boolean logueado;
 		
+	public boolean isLogueado() {
+		return logueado;
+	}
+
+	public void setLogueado(boolean logueado) {
+		this.logueado = logueado;
+	}
+
 	private UploadedFile file;
 	
 	private StreamedContent imagen;
@@ -115,6 +124,7 @@ public class UsuarioBean implements Serializable
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
 			if (dataUsuario != null) {
+				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
@@ -131,6 +141,7 @@ public class UsuarioBean implements Serializable
 	public void logout() throws IOException 
 	{
 		HttpSession session = SesionBean.getSession();
+		logueado=false;
 		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		session.invalidate();
 	}

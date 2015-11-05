@@ -100,22 +100,27 @@ public class ControladorAV implements IControladorAV {
 	}
 
 	@Override
-	public void eliminarAV(long idAV) {
+	public void eliminarAV(long idAV) throws Exception {
 		
 		AV av = avDAO.traerAV(idAV);
-		String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		List<Usuario> usuarios = av.getUsuariosCompartidos();
-		
-		for( Usuario usu : usuarios ) {
-			usu.removeAVCompartido(av);
+		String tenant = getTenant(idAV);
+		if( tenant != null) {				
+			List<Usuario> usuarios = av.getUsuariosCompartidos();
+			
+			for( Usuario usu : usuarios ) {
+				usu.removeAVCompartido(av);
+				usuarioDAO.actualizarUsuario(usu);
+			}
+			
+			Usuario usu = av.getUsuarioCreador();		
+			usu.removeAV(av);
+			
 			usuarioDAO.actualizarUsuario(usu);
+			avDAO.eliminarAV(tenant, av);
+		} else {
+			throw new Exception("No existe un AV con id: " + idAV);
 		}
 		
-		Usuario usu = av.getUsuarioCreador();		
-		usu.removeAV(av);
-		
-		usuarioDAO.actualizarUsuario(usu);
-		avDAO.eliminarAV(tenant, av);
 		
 	}
 

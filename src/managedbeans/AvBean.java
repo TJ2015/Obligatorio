@@ -116,11 +116,26 @@ public class AvBean implements Serializable {
 
 	}
 
-	public void eliminarAV() {
+	public void eliminarAV() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
+		String nickname= (String) session.getAttribute("nickname");
+		
+			cAV.eliminarAV(idAV);
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		cAV.eliminarAV(idAV);
-
-	}
+		
+			
+				System.out.println(nickname + " " + idAV);
+			
+		}
+		
+	
 
 	public void cancelarAccion() {
 

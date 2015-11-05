@@ -18,7 +18,7 @@ public interface IControladorAV {
 	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido;
 	public boolean existeAV(long idAV);
 	public boolean existeAVusuario(String nombreAV, String usuarioCreador);
-	public void eliminarAV(long idAV);
+	public void eliminarAV(long idAV) throws Exception;
 	public void compartirAV(long idAV, String nickUsuario);	
 	public DataAV traerAVPorNombre(String nombre, String nick) throws UsuarioNoEncontrado;
 	public DataAV traerAV(long idAV) throws NoExisteElAV; 

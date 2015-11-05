@@ -89,7 +89,7 @@ public class CategoriaBean implements Serializable {
 
 			if (cinv.crearCategoria(nombre, idAV)) {
 
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
