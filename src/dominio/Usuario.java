@@ -1,5 +1,6 @@
 package dominio;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +22,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataPictureSocial;
 import dominio.datatypes.DataUsuario;
 import dominio.datatypes.DataUsuarioSocial;
+import util.Imagenes;
 
 @Entity
 @NamedQueries({
@@ -102,6 +105,12 @@ public class Usuario implements Serializable {
 		this.email = usuarioSocial.email;
 		this.fechaNacimiento = new Date();
 		this.idSocial = usuarioSocial.id;
+		this.nombreImagen = "imagenSocial.jpg";
+		if (usuarioSocial.getPicture() != null && usuarioSocial.getPicture().getData() != null) 
+		{
+			this.bytesImagen = Imagenes.convertirUrlToArrayByte(usuarioSocial.getPicture().getData().getUrl());
+		}
+		
 	}
 
 	public DataUsuario getDataUsuario() 
@@ -122,7 +131,8 @@ public class Usuario implements Serializable {
 					lDataCompartidos.add(avs.getDataAV());
 				}
 			}
-			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, lDataCompartidos);
+			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

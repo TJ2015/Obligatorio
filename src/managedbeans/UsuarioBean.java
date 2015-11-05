@@ -16,8 +16,6 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
-
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorUsuario;
@@ -39,8 +37,6 @@ public class UsuarioBean implements Serializable
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private DataUsuario dusu;
-
-	private boolean logueado = false;
 		
 	private UploadedFile file;
 	
@@ -114,20 +110,11 @@ public class UsuarioBean implements Serializable
 		this.dusu = dusu;
 	}
 
-	public boolean isLogueado() {
-		return logueado;
-	}
-
-	public void setLogueado(boolean logueado) {
-		this.logueado = logueado;
-	}
-
 	public void login() throws IOException 
 	{
 		try {
 			DataUsuario dataUsuario = controlUsuario.login(nick, password);
 			if (dataUsuario != null) {
-				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
@@ -146,25 +133,29 @@ public class UsuarioBean implements Serializable
 		HttpSession session = SesionBean.getSession();
 		session.invalidate();
 	}
-
+		
+	
 	public void registroUsuario() 
 	{
 		try {
-			DataUsuario dataUsuario = controlUsuario.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
-			imagen = new DefaultStreamedContent(file.getInputstream(), "image/jpg");
-			
-			if (dataUsuario != null) {
-				logueado = true;
+			dusu = controlUsuario.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
+			if (dusu != null) {
+				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 			} 
 			else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
-			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void limpiarBean()
+	{
+		this.file = null;
+		this.imagen = null;
 	}
 	
 

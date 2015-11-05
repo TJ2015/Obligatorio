@@ -7,6 +7,17 @@ public class DataUsuarioSocial
 	public String first_name;
 	public String last_name;
 	public String email;
+	
+	private DataPictureSocial picture;
+	
+	public DataPictureSocial getPicture() {
+		return picture;
+	}
+
+	public void setPicture(DataPictureSocial picture) {
+		this.picture = picture;
+	}
+
 	public String getFirst_name() {
 		return first_name;
 	}

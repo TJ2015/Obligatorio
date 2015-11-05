@@ -30,6 +30,7 @@ import negocio.interfases.IControladorUsuario;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.ITipoDAO;
 import persistencia.interfases.IUsuarioDAO;
+import util.Imagenes;
 import util.Mensajeria;
 
 /**
@@ -70,7 +71,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		try {
 			if(!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
-				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento, convertirInputStreamToArrayByte(file), obtenerNombreImagen(file));
+				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento, Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
 				usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
 			}
@@ -80,29 +81,6 @@ public class ControladorUsuario implements IControladorUsuario {
 		return dataUsuario;
 	}
 	
-	private String obtenerNombreImagen(UploadedFile file)
-	{
-		return (file != null ? file.getFileName() : null);
-	}
-	
-	private byte[] convertirInputStreamToArrayByte(UploadedFile file)
-	{
-		byte[] bytes = null;
-		try {
-			if (file != null) {
-				bytes = new byte[(int)file.getSize()];
-				InputStream in = file.getInputstream();
-				OutputStream out = new FileOutputStream(new File(file.getFileName()));
-				int lector = 0;
-				while ((lector = in.read(bytes)) != -1) {
-					out.write(bytes, 0, lector);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return bytes;
-	}
 
 	@Override
 	public void modificarInfoUsuario(String nombre, String apellido, String nick, String password, String email,
