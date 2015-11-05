@@ -27,12 +27,12 @@
 		                    <li class="active"><a href="index.xhtml">Inicio</a></li>
 		                    <li><a href="#">Precios</a></li>
 		                    
-		                   <c:if test="${usuarioBean.logueado != true}">
+		                   <c:if test="${!usuarioBean.existeUsuarioLogeado()}">
 		                  
 		                   <li ><a href="login.xhtml" >Ingresar</a></li>
 		                   <li ><a href="registro.xhtml" >Registrarse</a></li>
 		                   </c:if>
-		                    <c:if test="${usuarioBean.logueado == true}">
+		                    <c:if test="${usuarioBean.existeUsuarioLogeado()}">
 		                    
 		                	<h:form styleClass="form">
 		                	   	 <li ><a href="chat.xhtml" target="_blank" >Ingresar al chat</a></li>

@@ -35,14 +35,9 @@ public class DatosPrecargados {
 		
 		cUsu.crearNuevoTipo("comun");
 		cUsu.crearNuevoTipo("facebook");
-		
-		cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
-		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());
-		cUsu.registrarUsuario("Maria", "Lopez", "marlo", "marlo", "marlo@gmail.com", new Date());
-		cUsu.registrarUsuario("Lucia", "Fernandez", "lucifer", "lucifer", "lucifer@gmail.com", new Date());
 
-		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date());
-		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date());
+		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date(), null);
+		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date(), null);
 		
 		System.out.println("...Datos cargados con éxito!");
 		

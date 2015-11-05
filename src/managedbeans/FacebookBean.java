@@ -28,7 +28,7 @@ public class FacebookBean implements Serializable
 	
 	public static final String PERMISOS_DE_SCOPE = "&scope=public_profile,user_friends,email";
 
-	public static final String DATOS_DE_FIELDS = "fields=first_name%2Clast_name%2Cemail";
+	public static final String DATOS_DE_FIELDS = "fields=first_name%2Clast_name%2Cemail%2Cpicture";
 	
 	public static final String Y_DATOS_DE_FIELDS = "&" + DATOS_DE_FIELDS;
 	public static final String DATOS_DE_FIELDS_Y = DATOS_DE_FIELDS + "&";

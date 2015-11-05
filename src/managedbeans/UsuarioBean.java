@@ -12,6 +12,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorUsuario;
@@ -33,9 +37,11 @@ public class UsuarioBean implements Serializable
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private DataUsuario dusu;
-
-	private boolean logueado = false;
-
+		
+	private UploadedFile file;
+	
+	private StreamedContent imagen;
+	
 	public UsuarioBean() {
 
 	}
@@ -104,20 +110,11 @@ public class UsuarioBean implements Serializable
 		this.dusu = dusu;
 	}
 
-	public boolean isLogueado() {
-		return logueado;
-	}
-
-	public void setLogueado(boolean logueado) {
-		this.logueado = logueado;
-	}
-
 	public void login() throws IOException 
 	{
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
 			if (dataUsuario != null) {
-				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
@@ -134,26 +131,34 @@ public class UsuarioBean implements Serializable
 	public void logout() throws IOException 
 	{
 		HttpSession session = SesionBean.getSession();
-		logueado=false;
 		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		session.invalidate();
 	}
-
-	public void registroUsuario() {
+		
+	
+	public void registroUsuario() 
+	{
 		try {
-			DataUsuario dataUsuario = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
-			if (dataUsuario != null) {
-				logueado = true;
+			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
+			if (dusu != null) {
+				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 			} 
 			else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
-
-		} catch (IOException e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void limpiarBean()
+	{
+		this.file = null;
+		this.imagen = null;
+	}
+	
 
 	public void mostrarListaAV() 
 	{
@@ -185,6 +190,22 @@ public class UsuarioBean implements Serializable
 			e.printStackTrace();
 		}
 		return existeUsuario;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+	public StreamedContent  getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(StreamedContent  imagen) {
+		this.imagen = imagen;
 	}
 
 }

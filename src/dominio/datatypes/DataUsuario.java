@@ -1,5 +1,6 @@
 package dominio.datatypes;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +18,8 @@ public class DataUsuario implements Serializable {
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsCompar = new ArrayList<>();
+	private String nombreImagen;
+	private InputStream imagen;
 
 	public List<DataAV> getAVs() {
 		return AVs;
@@ -37,16 +40,19 @@ public class DataUsuario implements Serializable {
 	public DataUsuario() {
 	}
 
-	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento,
-			List<DataAV> avs, List<DataAV> avsComp) {
+	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
+			Date fechaNacimiento,List <DataAV> avs,List <DataAV> avsComp, String nombreImagen, InputStream imagen) 
+	{
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
 		this.pasword = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
-		this.AVs = avs;
-		this.AVsCompar = avsComp;
+		this.AVs=avs;
+		this.AVsCompar=avsComp;
+		this.nombreImagen = nombreImagen;
+		this.imagen = imagen;
 	}
 
 	public String getNombre() {
@@ -152,4 +158,17 @@ public class DataUsuario implements Serializable {
 		return true;
 	}
 
+	public InputStream getImagen() {
+		return imagen;
+	}
+	public void setImagen(InputStream imagen) {
+		this.imagen = imagen;
+	}
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+	
 }

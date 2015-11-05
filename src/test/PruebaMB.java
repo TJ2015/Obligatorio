@@ -69,8 +69,8 @@ public class PruebaMB implements Serializable {
 	}
 
 	public void setTests() {
-		cUsu.registrarUsuario("Test", "Run", "test", "test", "test@example.org", new Date());
-		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date());
+		cUsu.registrarUsuario("Test", "Run", "test", "test", "test@example.org", new Date(), null);
+		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date(), null);
 		try {
 			ID_AV = cAV.altaAV("testAV", "test");
 		} catch (NombreDeAVInvalido e1) {
@@ -96,7 +96,7 @@ public class PruebaMB implements Serializable {
 	}
 
 	public boolean testRegistrarUsuario() {
-		DataUsuario du = cUsu.registrarUsuario("Test", "Run 4", "test4", "test4", "test4@example.org", new Date());
+		DataUsuario du = cUsu.registrarUsuario("Test", "Run 4", "test4", "test4", "test4@example.org", new Date(), null);
 
 		if (du == null)
 			return false;
@@ -134,7 +134,7 @@ public class PruebaMB implements Serializable {
 
 	public boolean testEliminarUsuario() {
 
-		cUsu.registrarUsuario("Test", "Run 3", "test3", "test3", "test3@example.org", new Date());
+		cUsu.registrarUsuario("Test", "Run 3", "test3", "test3", "test3@example.org", new Date(), null);
 		long idAV = 0;
 		try {
 			idAV = cAV.altaAV("testAV2", "test3");
@@ -187,7 +187,7 @@ public class PruebaMB implements Serializable {
 	}
 
 	public boolean testEnviarMensaje() {
-		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date());
+		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date(), null);
 		String mensaje = "Mensaje de prueba";
 		cUsu.enviarMensaje("test", "test2", mensaje);
 

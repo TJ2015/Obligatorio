@@ -1,11 +1,17 @@
 package negocio.implementacion;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
+import org.primefaces.model.UploadedFile;
 
 import com.google.gson.Gson;
 
@@ -27,6 +33,7 @@ import negocio.interfases.IControladorUsuario;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.ITipoDAO;
 import persistencia.interfases.IUsuarioDAO;
+import util.Imagenes;
 import util.Mensajeria;
 
 /**
@@ -60,13 +67,13 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) 
+	public DataUsuario registrarUsuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, UploadedFile file) 
 	{
 		DataUsuario dataUsuario = null;
 		try {
 			if(!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
-				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
+				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento, Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
 				usu.setTipoUsuario(tipoDAO.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
 			} else {
@@ -77,6 +84,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		return dataUsuario;
 	}
+	
 
 	@Override
 	public void modificarInfoUsuario(String nombre, String apellido, String nick, String password, String email,

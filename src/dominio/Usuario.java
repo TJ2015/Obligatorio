@@ -1,11 +1,13 @@
 package dominio;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +22,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataPictureSocial;
 import dominio.datatypes.DataUsuario;
 import dominio.datatypes.DataUsuarioSocial;
+import util.Imagenes;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -39,7 +43,10 @@ public class Usuario implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
-
+	
+	@Column(length=1294967295)
+	private byte[] bytesImagen;
+	private String nombreImagen;
 	private String idSocial;
 
 	@ManyToOne
@@ -70,8 +77,8 @@ public class Usuario implements Serializable {
 	public Usuario() {
 		super();
 	}
-
-	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento) {
+	
+	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, byte[] bytesImagen, String nombreImagen) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -79,6 +86,8 @@ public class Usuario implements Serializable {
 		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
 	}
 
 	public Usuario(DataUsuarioSocial usuarioSocial) {
@@ -88,6 +97,12 @@ public class Usuario implements Serializable {
 		this.email = usuarioSocial.email;
 		this.fechaNacimiento = new Date();
 		this.idSocial = usuarioSocial.id;
+		this.nombreImagen = "imagenSocial.jpg";
+		if (usuarioSocial.getPicture() != null && usuarioSocial.getPicture().getData() != null) 
+		{
+			this.bytesImagen = Imagenes.convertirUrlToArrayByte(usuarioSocial.getPicture().getData().getUrl());
+		}
+		
 	}
 
 	public DataUsuario getDataUsuario() {
@@ -107,8 +122,9 @@ public class Usuario implements Serializable {
 					lDataCompartidos.add(avs.getDataAV());
 				}
 			}
-			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen,
-					lDataCompartidos);
+			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -294,6 +310,22 @@ public class Usuario implements Serializable {
 		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
+	}
+	
+	public byte[] getBytesImagen() {
+		return bytesImagen;
+	}
+
+	public void setBytesImagen(byte[] bytesImagen) {
+		this.bytesImagen = bytesImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
 	}
 	
 }

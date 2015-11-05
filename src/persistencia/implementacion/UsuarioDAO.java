@@ -21,10 +21,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Usuario altaUsuario(Usuario usuario) {
-		boolean seRegistro = false;
 		try {
 			em.persist(usuario);
-			seRegistro = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			usuario = null;
