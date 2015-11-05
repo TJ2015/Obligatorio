@@ -32,7 +32,6 @@ public class DatosPrecargados {
 		
 		// CARGAR DATOS
 		System.out.println("Cargando datos...");
-		util.DBUtil.eliminarTenant("test_testAV");
 		
 		cUsu.crearNuevoTipo("comun");
 		cUsu.crearNuevoTipo("facebook");

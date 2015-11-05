@@ -103,9 +103,7 @@ public class ControladorAV implements IControladorAV {
 	public void eliminarAV(long idAV) {
 		
 		AV av = avDAO.traerAV(idAV);
-		
 		String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		
 		List<Usuario> usuarios = av.getUsuariosCompartidos();
 		
 		for( Usuario usu : usuarios ) {
@@ -117,7 +115,7 @@ public class ControladorAV implements IControladorAV {
 		usu.removeAV(av);
 		
 		usuarioDAO.actualizarUsuario(usu);
-		avDAO.eliminarAV(tenant);
+		avDAO.eliminarAV(tenant, av);
 		
 	}
 

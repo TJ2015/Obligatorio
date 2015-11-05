@@ -17,8 +17,10 @@ import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
+import exceptions.NoExisteLaCategoria;
 import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorInventario;
+import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
 
@@ -36,18 +38,14 @@ public class ControladorInventario implements IControladorInventario {
 	public boolean crearCategoria(String nombre, long idAV) {
 		Categoria cat = new Categoria(nombre);
 
-		if (!existeCategoria(nombre, idAV)) {
-			if (idAV > 0) {
-				AV av = avDAO.traerAV(idAV);
-				if (av != null) {
+		String tenant = getTenant(idAV);
 
-					invDAO.persistirCategoria(cat, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV());
-				} else {
-					return false;
-				}
-			} else {
-				invDAO.persistirCategoria(cat);
-			}
+		if( tenant != null ) {
+			Categoria cate = invDAO.buscarCategoria(nombre, tenant);
+			if( cate != null )
+				return false;
+			
+			invDAO.persistirCategoria(cat, tenant);
 		} else {
 			return false;
 		}
@@ -349,16 +347,19 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElProducto {
+	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElAV {
 		String tenant = getTenant(idAV);
-		if (tenant != null) {
-			List<DataProducto> dprods = new ArrayList<>();
-			
+		DataCategoria dataCat = null;
+		if (tenant != null) {			
 			Categoria cat = invDAO.buscarCategoria(nombreCat, tenant);
-			return cat.getDataCategoria();
+			
+			if( cat != null )
+				dataCat = cat.getDataCategoria();
 		} else {
-			throw new exceptions.NoExisteElProducto();
+			throw new exceptions.NoExisteElAV();
 		}
+		
+		return dataCat;
 	}
 
 	@Override
@@ -469,11 +470,15 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	private String getTenant(long idAV) {
-		AV av = avDAO.traerAV(idAV);
-		if (av != null) {
-			return av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		if( idAV > 0 ) { 
+			AV av = avDAO.traerAV(idAV);
+			if (av != null) {
+				return av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+			} else {
+				return null;
+			}
 		} else {
-			return null;
+			return "master";
 		}
 	}
 

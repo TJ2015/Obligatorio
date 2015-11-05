@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 
 	private String idSocial;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private TipoUsuario tipoUsuario;
 
 	@OneToMany
