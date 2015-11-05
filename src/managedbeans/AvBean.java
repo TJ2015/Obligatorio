@@ -94,7 +94,7 @@ public class AvBean implements Serializable {
 			
 			
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

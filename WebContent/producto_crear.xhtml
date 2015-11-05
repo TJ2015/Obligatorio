@@ -60,11 +60,9 @@
 							<label for="categoria" class="col-lg-2 control-label">Categoria</label>
 							<div class="col-lg-10">
 								<select class="form-control" value="#{productoBean.categoria}">
-								<!-- <c:if test="categoriaBean.cats !=null}"> -->
-							 	 <c:forEach var="cat" items="${categoriaBean.cats}"  >
+							 	 <c:forEach var="cat" items="${categoriaBean.mostrarListaCategoria()}"  >
 								         <option value="uno">${cat.nombre}</option>
 						          </c:forEach>    
-							     <!-- </c:if>  -->
 								</select>
 							</div>
 						</div>
@@ -85,13 +83,6 @@
 							<label for="stock" class="col-lg-2 control-label">Stock</label>
 							<div class="col-lg-10">						
 								<h:inputText id="stock" value="#{productoBean.stock}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar el stock" a:placeholder="stock"/>
-								
-								<center>
-									<h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" action="#{productoBean.crearProductoDescripción()}"/>
-								</center>
-								<center>
-									<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" action="#{avBean.cancelarAccion()}"/>
-								</center>
 							</div>
 						</div>
 					<div class="form-group">
@@ -103,7 +94,7 @@
 				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
 				action="#{productoBean.crearProductoDescripción()}" />
 				<h:outputText value="&#160;" />
-				<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+				<h:commandButton id="botonCancelar1" styleClass="btn btn-primary" value="Cancelar" 
 										action="#{avBean.cancelarAccion()}"/></center>	
 					</h:form>
 				</div>

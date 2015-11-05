@@ -27,7 +27,7 @@ public interface IInventarioDAO {
 	public void eliminarCategoria(Categoria cat, String tenant);
 	public void eliminarProducto(Producto cat);
 	public void eliminarProducto(Producto cat, String tenant);
-	public List <Categoria> buscarListaCategoriaspoAV(long idAV, String tenant);
+	public List <Categoria> buscarListaCategoriasPorAV(long idAV, String tenant);
 	public void persistirProductoAComprar(ProductoAComprar pac, String tenant);
 	public ProductoAComprar buscarProductoDeLista(long idProdComp, String tenant);
 	public void eliminarProductoAComprar(ProductoAComprar pac, String tenant);

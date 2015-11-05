@@ -808,7 +808,7 @@ public class PruebaMB implements Serializable {
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-		/*
+		
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
@@ -827,7 +827,7 @@ public class PruebaMB implements Serializable {
 		tests.put("Login Administrador", testLoginAdmin()); 
 		tests.put("Modificar Administrador", testModificarAdmin());
 		tests.put("Crear Categoria", testCrearCategoria());
-		*/
+		
 		tests.put("Modificar Categoria", modificarNombreCategoria());
 		tests.put("Eliminar Categoria", testEliminarCategoria());
 		

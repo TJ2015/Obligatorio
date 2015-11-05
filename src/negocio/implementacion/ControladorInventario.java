@@ -335,12 +335,13 @@ public class ControladorInventario implements IControladorInventario {
 		AV av = avDAO.traerAV(idAV);
 		if (av != null) {
 			String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-			cats = invDAO.buscarListaCategoriaspoAV(idAV, tenant);
-			for (Categoria cat : cats) {
-				dc = cat.getDataCategoria();
-				dcats.add(dc);
+			cats = invDAO.buscarListaCategoriasPorAV(idAV, tenant);
+			if( cats != null ) {
+				for (Categoria cat : cats) {
+					dc = cat.getDataCategoria();
+					dcats.add(dc);
+				}
 			}
-
 		}
 
 		return dcats;

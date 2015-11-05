@@ -1,231 +1,240 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-            xmlns:c="http://java.sun.com/jsp/jstl/core"> 
-      
-<h:head></h:head> 
-<body>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head></h:head>
+<h:body>
 
 	Hola #{usuarioBean.nick}!!
 <ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
-		<div class="container-fluid clearfix">
-		<div class="list-group">
-		<section class="content">
-		 <div class="row">
-			<div class="col-lg-3 col-xs-6">
-	           <!-- small box -->
-	           <div class="small-box bg-yellow">
-	                <div class="inner">
-	                   <h3>
-	                     44
-	                   </h3>
-	                   <p>
-	                     Usuarios Compartidos
-	                   </p>
-	                 </div>
-		            <div class="icon">
-		            <i class="ion ion-person-add"></i>
-		          </div>
-	                <a href="#" class="small-box-footer">
-	                   More info <i class="fa fa-arrow-circle-right"></i>
-	                </a>
-               </div>
-             </div><!-- ./col -->
-              <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-teal">
-                                <div class="inner">
-                                    <h3>
-                                        14
-                                    </h3>
-                                    <p>
-                                        Notofications
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-ios7-alarm-outline"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div><!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-maroon">
-                                <div class="inner">
-                                    <h3>
-                                        160
-                                    </h3>
-                                    <p>
-                                        Products
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-ios7-pricetag-outline"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div><!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-aqua">
-                                <div class="inner">
-                                    <h3>
-                                        150
-                                    </h3>
-                                    <p>
-                                       Movimientos de Stock
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div><!-- ./col -->
-           </div>
-           </section>
-           <section class="content">
-			 <div class="row">
-			<div class="col-md-6">
-                            <div class="box box-solid">
-                                <div class="box-header">
-                                    <h3 class="box-title">Producto sugerido</h3>
-                                </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                        <ol class="carousel-indicators">
-                                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                            <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
-                                            <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
-                                        </ol>
-                                        <div class="carousel-inner">
-                                           <div class="item active">
-                                                <img src="resources/adminlte/img/cebollaverdeo.jpg " alt="First slide"></img>
-                                                <div class="carousel-caption">
-                                                    Cebolla de verdeo
-                                                </div>
-                                              </div>
-                                              <div class="item">
-                                                <img src="resources/adminlte/img/leche.jpg" alt="Second slide"></img>
-                                                <div class="carousel-caption">
-                                                    Leche
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <img src="resources/adminlte/img/hamburguesa.jpg" alt="Third slide"></img>
-                                                <div class="carousel-caption">
-                                                   Hamburguea
-                                                </div>
-                                            </div>
-                                           
-                                        </div>
-                                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                            <span class="glyphicon glyphicon-chevron-left"></span>
-                                        </a>
-                                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                            <span class="glyphicon glyphicon-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-                        </div><!-- /.col -->
-                        
-                       
-		  <!-- <section class="col-lg-6 connectedSortable"> -->
-			<!-- Chat box -->
+			<div class="container-fluid clearfix">
+				<div class="list-group">
+					<section class="content">
+					<div class="row">
+						<div class="col-lg-3 col-xs-6">
+							<!-- small box -->
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>44</h3>
+									<p>Usuarios Compartidos</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-person-add"></i>
+								</div>
+								<a href="#" class="small-box-footer"> More info <i
+									class="fa fa-arrow-circle-right"></i>
+								</a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-xs-6">
+							<!-- small box -->
+							<div class="small-box bg-teal">
+								<div class="inner">
+									<h3>14</h3>
+									<p>Notofications</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-ios7-alarm-outline"></i>
+								</div>
+								<a href="#" class="small-box-footer"> More info <i
+									class="fa fa-arrow-circle-right"></i>
+								</a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-xs-6">
+							<!-- small box -->
+							<div class="small-box bg-maroon">
+								<div class="inner">
+									<h3>160</h3>
+									<p>Products</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-ios7-pricetag-outline"></i>
+								</div>
+								<a href="#" class="small-box-footer"> More info <i
+									class="fa fa-arrow-circle-right"></i>
+								</a>
+							</div>
+						</div>
+						<!-- ./col -->
+						<div class="col-lg-3 col-xs-6">
+							<!-- small box -->
+							<div class="small-box bg-aqua">
+								<div class="inner">
+									<h3>150</h3>
+									<p>Movimientos de Stock</p>
+								</div>
+								<div class="icon">
+									<i class="ion ion-bag"></i>
+								</div>
+								<a href="#" class="small-box-footer"> More info <i
+									class="fa fa-arrow-circle-right"></i>
+								</a>
+							</div>
+						</div>
+						<!-- ./col -->
+					</div>
+					</section>
+					<section class="content">
+					<div class="row">
 						<div class="col-md-6">
-                            <div class="box box-success">
-                                <div class="box-header">
-                                    <h3 class="box-title"><i class="fa fa-comments-o"></i> Chat</h3>
-                                    <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
-                                        <div class="btn-group" data-toggle="btn-toggle" >
-                                            <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>                                            
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="box-body chat" id="chat-box">
-                                    <!-- chat item -->
-                                    <div class="item">
-                                        <img src="resources/adminlte/img/avatar.png" alt="user image" class="online"/>
-                                        <p class="message">
-                                            <a href="#" class="name">
-                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                                Mike Doe
-                                            </a>
-                                            I would like to meet you to discuss the latest news about
-                                            the arrival of the new theme. They say it is going to be one the
-                                            best themes on the market
-                                        </p>
-                                       
-                                    </div><!-- /.item -->
-                                    <!-- chat item -->
-                                    <div class="item">
-                                        <img src="resources/adminlte/img/avatar2.png" alt="user image" class="offline"/>
-                                        <p class="message">
-                                            <a href="#" class="name">
-                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                                                Jane Doe
-                                            </a>
-                                            I would like to meet you to discuss the latest news about
-                                            the arrival of the new theme. They say it is going to be one the
-                                            best themes on the market
-                                        </p>
-                                    </div><!-- /.item -->
-                                    <!-- chat item -->
-                                    <div class="item">
-                                        <img src="resources/adminlte/img/avatar3.png" alt="user image" class="offline"/>
-                                        <p class="message">
-                                            <a href="#" class="name">
-                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                                Susan Doe
-                                            </a>
-                                            I would like to meet you to discuss the latest news about
-                                            the arrival of the new theme. They say it is going to be one the
-                                            best themes on the market
-                                        </p>
-                                    </div><!-- /.item -->
-                                </div><!-- /.chat -->
-                                <div class="box-footer">
-                                    <div class="input-group">
-                                        <input class="form-control" placeholder="Type message..."/>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- /.box (chat box) -->
-                            </div>
-                            </div>
-                      </section>
-		  <c:if test="${usuarioBean.logueado == true}">
-		 	<c:if test="${usuarioBean.AVs !=null}">
-		 	<h:form styleClass="form">
-						<h:commandButton id="botonVerAv" styleClass="btn btn-success" value="Ver lista de cat" 
-					action="#{categoriaBean.mostrarListaCategoria()}"/>
-					</h:form>
-		 		<c:forEach var="av" items="${usuarioBean.AVs}"  >
-			        <h:form>
-					    <h:commandLink value="${av.nombreAV}" action="#{categoriaBean.mostrarListaCategoria()}" /> 
-					</h:form>
-	            </c:forEach>    
-		    </c:if>               
-		 </c:if>
-		</div>
-		<a href="av_crear.xhtml"> Crear AV</a>
-		 </div>
+							<div class="box box-solid">
+								<div class="box-header">
+									<h3 class="box-title">Producto sugerido</h3>
+								</div>
+								<!-- /.box-header -->
+								<div class="box-body">
+									<div id="carousel-example-generic" class="carousel slide"
+										data-ride="carousel">
+										<ol class="carousel-indicators">
+											<li data-target="#carousel-example-generic" data-slide-to="0"
+												class="active"></li>
+											<li data-target="#carousel-example-generic" data-slide-to="1"
+												class=""></li>
+											<li data-target="#carousel-example-generic" data-slide-to="2"
+												class=""></li>
+										</ol>
+										<div class="carousel-inner">
+											<div class="item active">
+												<img src="resources/adminlte/img/cebollaverdeo.jpg "
+													alt="First slide"></img>
+												<div class="carousel-caption">Cebolla de verdeo</div>
+											</div>
+											<div class="item">
+												<img src="resources/adminlte/img/leche.jpg"
+													alt="Second slide"></img>
+												<div class="carousel-caption">Leche</div>
+											</div>
+											<div class="item">
+												<img src="resources/adminlte/img/hamburguesa.jpg"
+													alt="Third slide"></img>
+												<div class="carousel-caption">Hamburguea</div>
+											</div>
+
+										</div>
+										<a class="left carousel-control"
+											href="#carousel-example-generic" data-slide="prev"> <span
+											class="glyphicon glyphicon-chevron-left"></span>
+										</a> <a class="right carousel-control"
+											href="#carousel-example-generic" data-slide="next"> <span
+											class="glyphicon glyphicon-chevron-right"></span>
+										</a>
+									</div>
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+						</div>
+						<!-- /.col -->
+
+
+						<!-- <section class="col-lg-6 connectedSortable"> -->
+						<!-- Chat box -->
+						<div class="col-md-6">
+							<div class="box box-success">
+								<div class="box-header">
+									<h3 class="box-title">
+										<i class="fa fa-comments-o"></i> Chat
+									</h3>
+									<div class="box-tools pull-right" data-toggle="tooltip"
+										title="Status">
+										<div class="btn-group" data-toggle="btn-toggle">
+											<button type="button" class="btn btn-default btn-sm active">
+												<i class="fa fa-square text-green"></i>
+											</button>
+											<button type="button" class="btn btn-default btn-sm">
+												<i class="fa fa-square text-red"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="box-body chat" id="chat-box">
+									<!-- chat item -->
+									<div class="item">
+										<img src="resources/adminlte/img/avatar.png" alt="user image"
+											class="online" />
+										<p class="message">
+											<a href="#" class="name"> <small
+												class="text-muted pull-right"><i
+													class="fa fa-clock-o"></i> 2:15</small> Mike Doe
+											</a> I would like to meet you to discuss the latest news about
+											the arrival of the new theme. They say it is going to be one
+											the best themes on the market
+										</p>
+
+									</div>
+									<!-- /.item -->
+									<!-- chat item -->
+									<div class="item">
+										<img src="resources/adminlte/img/avatar2.png" alt="user image"
+											class="offline" />
+										<p class="message">
+											<a href="#" class="name"> <small
+												class="text-muted pull-right"><i
+													class="fa fa-clock-o"></i> 5:15</small> Jane Doe
+											</a> I would like to meet you to discuss the latest news about
+											the arrival of the new theme. They say it is going to be one
+											the best themes on the market
+										</p>
+									</div>
+									<!-- /.item -->
+									<!-- chat item -->
+									<div class="item">
+										<img src="resources/adminlte/img/avatar3.png" alt="user image"
+											class="offline" />
+										<p class="message">
+											<a href="#" class="name"> <small
+												class="text-muted pull-right"><i
+													class="fa fa-clock-o"></i> 5:30</small> Susan Doe
+											</a> I would like to meet you to discuss the latest news about
+											the arrival of the new theme. They say it is going to be one
+											the best themes on the market
+										</p>
+									</div>
+									<!-- /.item -->
+								</div>
+								<!-- /.chat -->
+								<div class="box-footer">
+									<div class="input-group">
+										<input class="form-control" placeholder="Type message..." />
+										<div class="input-group-btn">
+											<button class="btn btn-success">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.box (chat box) -->
+						</div>
+					</div>
+					</section>
+					<c:if test="${usuarioBean.logueado == true}">
+						<c:if test="${usuarioBean.AVs !=null}">
+							<h:form styleClass="form">
+								<h:commandButton id="botonVerAv" styleClass="btn btn-success"
+									value="Ver lista de cat"
+									action="#{categoriaBean.mostrarListaCategoria()}" />
+							</h:form>
+							<c:forEach var="av" items="${usuarioBean.AVs}">
+								<h:form>
+									<h:commandLink value="${av.nombreAV}"
+										action="#{categoriaBean.mostrarListaCategoria()}" />
+								</h:form>
+							</c:forEach>
+						</c:if>
+					</c:if>
+				</div>
+				<a href="av_crear.xhtml"> Crear AV</a>
+			</div>
 		</ui:define>
-</ui:composition>
-</body> 
+	</ui:composition>
+</h:body>
 </html>

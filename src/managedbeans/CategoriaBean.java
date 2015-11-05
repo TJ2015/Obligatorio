@@ -18,74 +18,82 @@ import negocio.interfases.IControladorInventario;
 
 @ManagedBean
 @ViewScoped
-//@SessionScoped
+// @SessionScoped
 public class CategoriaBean implements Serializable {
-	
+
 	@EJB
 	IControladorInventario cinv;
-	
+
 	@EJB
 	IControladorAV cAV;
-	
+
 	private String nombre;
 	private long idAV;
 	private AV av;
-	private List <DataCategoria> cats=new ArrayList<>();
-	private String[] str={"hola","noe"};
+	private List<DataCategoria> cats = new ArrayList<>();
+	private String[] str = { "hola", "noe" };
+
 	public String[] getStr() {
 		return str;
 	}
+
 	public void setStr(String[] str) {
 		this.str = str;
 	}
+
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private String nombreAV;
-	
-	
+
 	public String getNombreAV() {
 		return nombreAV;
 	}
+
 	public void setNombreAV(String nombreAV) {
 		this.nombreAV = nombreAV;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-		
+
 	public IControladorInventario getCinv() {
 		return cinv;
 	}
+
 	public void setCinv(IControladorInventario cinv) {
 		this.cinv = cinv;
 	}
+
 	public long getIdAV() {
 		return idAV;
 	}
+
 	public void setIdAV(long idAV) {
 		this.idAV = idAV;
 	}
+
 	public CategoriaBean() {
 		super();
 	}
 
-	public void crearCategoria() throws Exception{
+	public void crearCategoria() throws Exception {
 		try {
-			
+
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
 
-			if( cinv.crearCategoria(nombre, idAV)) { 	
-				
+			if (cinv.crearCategoria(nombre, idAV)) {
+
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -94,22 +102,22 @@ public class CategoriaBean implements Serializable {
 	public List<DataCategoria> getCats() {
 		return cats;
 	}
+
 	public void setCats(List<DataCategoria> cats) {
 		this.cats = cats;
 	}
-	public List <DataCategoria> mostrarListaCategoria() throws Exception {
+
+	public List<DataCategoria> mostrarListaCategoria() throws Exception {
 		try {
 
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
-			cats=cinv.mostrarListaCategoria(idAV);
-			
-					FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			cats = cinv.mostrarListaCategoria(idAV);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return cats;
-			}
-	
+	}
+
 }
