@@ -42,7 +42,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	@EJB
 	IControladorAV cAV;
 	@EJB
-	private ITipoDAO tipoDao;
+	private ITipoDAO tipoDAO;
 	
 	
     public ControladorUsuario() { }
@@ -67,8 +67,10 @@ public class ControladorUsuario implements IControladorUsuario {
 			if(!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
 				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento);
-				usu.setTipoUsuario(tipoDao.obtenerTipoUsuarioParaLogin());
+				usu.setTipoUsuario(tipoDAO.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
+			} else {
+				throw new exceptions.YaExisteElUsuario();
 			}
 		} catch (Exception e) {
 			e.fillInStackTrace();
@@ -84,7 +86,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		usu.setApellido(apellido);
 		usu.setNombre(nombre);
 		usu.setEmail(email);
-		usu.setPassword(password);
+		usu.setPassword(seguridad.Encriptador.encriptar(password));
 		usu.setFechaNacimiento(fechaNacimiento);
 
 		usuarioDAO.actualizarUsuario(usu);
@@ -115,7 +117,7 @@ public class ControladorUsuario implements IControladorUsuario {
 			Usuario usuario = usuarioDAO.buscarUsuarioSocial(usuarioSocial.id);
 			if (usuario == null) {
 				usuario = new Usuario(usuarioSocial);
-				usuario.setTipoUsuario(tipoDao.obtenerTipoUsuarioSocial(redSocial));
+				usuario.setTipoUsuario(tipoDAO.obtenerTipoUsuarioSocial(redSocial));
 				usuario = usuarioDAO.altaUsuario(usuario);
 		        if (usuario != null) {
 		        	StringBuilder mensaje = new StringBuilder();
@@ -138,13 +140,20 @@ public class ControladorUsuario implements IControladorUsuario {
 	public void eliminarUsuario(String nickname) {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
 
-		List<AV> avs = usu.getAVs();
-
-		for (AV av : avs) {
-			cAV.eliminarAV(av.getIdAV());
+		if( usu != null ) {
+			List<AV> avs = usu.getAVs();
+			int l = avs.size();
+			
+			for( int i = l-1; i >= 0; i--) {
+				cAV.eliminarAV(avs.get(i).getIdAV());
+			}
+			
+			TipoUsuario tipo = usu.getTipoUsuario();
+			usu.setTipoUsuario(null);
+			
+			tipoDAO.eliminarTipoUsuario(tipo);
+			usuarioDAO.eliminarUsuario(usu);
 		}
-
-		usuarioDAO.eliminarUsuario(usu);
 	}
 
 	@Override
@@ -444,11 +453,25 @@ public class ControladorUsuario implements IControladorUsuario {
 	{
 		boolean seCrea = false;
 		try {
-			TipoUsuario tipoUsuario = tipoDao.altaTipoUsuario(new TipoUsuario(descripcion));
+			TipoUsuario tipoUsuario = tipoDAO.altaTipoUsuario(new TipoUsuario(descripcion));
 			System.out.println(tipoUsuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return seCrea;
+	}
+
+	@Override
+	public DataUsuario getUsuario(String nickname) {
+		
+		DataUsuario du = null;
+		
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		
+		if( usu != null ) {
+			du = usu.getDataUsuario();
+		}
+		
+		return du;
 	}
 }

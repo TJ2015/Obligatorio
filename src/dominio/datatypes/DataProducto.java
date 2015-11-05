@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import dominio.Categoria;
-
 public class DataProducto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private long idProducto;
 	private String nombre;
@@ -15,9 +15,9 @@ public class DataProducto implements Serializable {
 	private int stock;
 	private String categoria;
 	private Map<String, String> atributosList = new HashMap<>();
-	
-	public DataProducto(long idProducto, String nombre, String descripcion, double precio, int stock,
-			String categoria, Map<String, String> atributosList) {
+
+	public DataProducto(long idProducto, String nombre, String descripcion, double precio, int stock, String categoria,
+			Map<String, String> atributosList) {
 		super();
 		this.idProducto = idProducto;
 		this.nombre = nombre;

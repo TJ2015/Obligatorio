@@ -48,4 +48,6 @@ public interface IControladorUsuario {
 	public boolean crearNuevoTipo(String descripcion);
 	public DataUsuario loginSocial(String datos, String redSocial);
 	
+	public DataUsuario getUsuario(String nickname);
+	
 }

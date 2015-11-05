@@ -1,6 +1,6 @@
 LOGICA:
 
-Notificaciones Parametrizables
+Notificaciones Parametrizables (Que atributos??)
 
 Chequear que el usuario pueda ejecutar los metodos (PRESENTACION => BEANS)
 

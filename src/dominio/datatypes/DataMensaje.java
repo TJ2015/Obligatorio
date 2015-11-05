@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class DataMensaje implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private long id;
 	private String mensaje;
 	private Date fecha;

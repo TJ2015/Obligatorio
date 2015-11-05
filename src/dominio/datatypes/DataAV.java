@@ -6,6 +6,8 @@ import java.util.List;
 
 public class DataAV implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private long idAV;
 	private String nombreAV;
 	private String nickname;
@@ -19,14 +21,12 @@ public class DataAV implements Serializable {
 	}
 
 	private List<DataUsuario> usuariosCompartidos;
-	// private List<DataNota> notas;
 	private List<DataCategoria> categorias;
-	private static final long serialVersionUID = 1L;
 
 	public DataAV(String nombreAV, String nickname) {
 		this.nombreAV = nombreAV;
 		this.nickname = nickname;
-		this.categorias = new ArrayList<>();
+		this.setCategorias(new ArrayList<>());
 
 	}
 
@@ -46,10 +46,20 @@ public class DataAV implements Serializable {
 		this.nombreAV = nombreAV;
 	}
 
-	/*
-	 * public List<DataNota> getNotas() { return notas; }
-	 * 
-	 * public void setNotas(List<DataNota> notas) { this.notas = notas; }
-	 */
+	public List<DataCategoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<DataCategoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public List<DataUsuario> getUsuariosCompartidos() {
+		return usuariosCompartidos;
+	}
+
+	public void setUsuariosCompartidos(List<DataUsuario> usuariosCompartidos) {
+		this.usuariosCompartidos = usuariosCompartidos;
+	}
 
 }

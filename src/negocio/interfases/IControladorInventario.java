@@ -9,6 +9,7 @@ import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
+import exceptions.NoExisteLaCategoria;
 import exceptions.YaExisteElProductoAComprar;
 
 @Local
@@ -27,7 +28,7 @@ public interface IControladorInventario {
 	public void cambiarCategoriaProducto(String nuevaCategoria, String producto, long idAV);
 	public void eliminarProducto(String nombre, long idAV);
 	public List<DataCategoria> mostrarListaCategoria(long idAV) throws Exception;
-	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElProducto;
+	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElAV;
 	
 	public DataProducto getProducto(String nombre, long idAV) throws NoExisteElAV, NoExisteElProducto;
 	public DataProducto getProducto(String nombre) throws NoExisteElProducto;

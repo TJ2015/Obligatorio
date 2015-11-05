@@ -11,24 +11,48 @@
 <h:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+	<script src="resources/flattheme/js/jquery.js"></script>
 </h:head>
 
 <h:body>
 	<style>
 		.true {
-			background-color:green;
+			background-color:#A4FFA4;
 		}
 		.false {
-			background-color:red;
+			background-color:#FFA4A4;
+		}
+		.false, .true {
+			margin-bottom: 5px;
+		}
+		.ok {
+			width: 100%;
+			background-color: #008000;
+			background-blend-mode: color-dodge;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	</style>
+	<script>
+		$(document).ready(function(){
+			$(".ok").height($(document).height());
+		});
+	</script>
+	<ui:param name="clase" value="notok" />
+	
+	<c:if test="${pruebaMB.allok}">
+		<ui:param name="clase" value="ok" />
+	</c:if>
+	
+	<div class="">
 	<c:forEach items="#{pruebaMB.tests}" var="entry">
 		<div class="#{entry.value}">
 			<h:outputText value="#{entry.key}" />
 		</div>
-		<br />
 	</c:forEach>
+	</div>
+	
 
 </h:body>
 </html>

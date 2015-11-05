@@ -20,7 +20,7 @@ public interface IAvDAO {
 
 	public AV traerAvPorNombre(String nombre);
 
-	public void eliminarAV(String tenant);
+	public void eliminarAV(String tenant, AV av);
 
 	public void persistirNota(Nota nota, String tenant);
 

@@ -66,6 +66,7 @@ public class AvDAO implements IAvDAO {
 		}
 
 		@Override
+		@TransactionAttribute(TransactionAttributeType.REQUIRED)
 		public boolean actualizarAV(AV av) {
 			boolean seActualizo = false;
 			try {
@@ -81,6 +82,7 @@ public class AvDAO implements IAvDAO {
 		
 		
 		//INVENTO MARIANELA
+		@TransactionAttribute(TransactionAttributeType.REQUIRED)
 		public AV traerAvPorNombre(String nombre){
 			AV av = null;
 			try {
@@ -97,6 +99,7 @@ public class AvDAO implements IAvDAO {
 
 		
 		//falta implementar
+		@TransactionAttribute(TransactionAttributeType.REQUIRED)
 		public boolean bajaAV(AV av) {
 			boolean baja = false;
 			try {
@@ -112,8 +115,15 @@ public class AvDAO implements IAvDAO {
 		}
 
 		@Override
-		public void eliminarAV(String tenant) {
+		@TransactionAttribute(TransactionAttributeType.REQUIRED)
+		public void eliminarAV(String tenant, AV av) {
 			util.DBUtil.eliminarTenant(tenant);
+			try {
+				em.merge(av);
+				em.remove(av);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override

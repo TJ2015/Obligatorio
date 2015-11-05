@@ -1,6 +1,10 @@
 package dominio.datatypes;
 
-public class DataAdministrador {
+import java.io.Serializable;
+
+public class DataAdministrador implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private long id;
 	private String nick;

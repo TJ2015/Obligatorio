@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 public class DataNotificacion implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private long idNotificacion;
 	private String texto;
 	private boolean leido;
-	
+
 	public DataNotificacion() {
 		super();
 	}
@@ -42,5 +44,5 @@ public class DataNotificacion implements Serializable {
 	public void setLeido(boolean leido) {
 		this.leido = leido;
 	}
-		
+
 }
