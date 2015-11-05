@@ -138,7 +138,7 @@ public class InventarioDAO implements IInventarioDAO {
 	@Override
 	public List <Categoria> buscarListaCategoriaspoAV(long idAV,String tenant) {
 		Session session = util.DBUtil.crearSession(tenant);
-		Query q = session.getNamedQuery("Categoria.getAll");
+		Query q = session.getNamedQuery("Categoria.findAll");
 		return q.list();
 	}
 	

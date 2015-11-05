@@ -16,13 +16,45 @@
 </h:head> 
 
 <h:body>
-	<ui:composition template="/templates/layout_user.xhtml">
+	<ui:composition template="/templates/layout.xhtml">
 		<ui:define name="contenido">
 
 		<div class="container-fluid clearfix">
-			<div class="page-header text-center">
-			  <h1>SAPo</h1>
-			</div>
+		
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
+                                            <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+                                            <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            <div class="item">
+                                                <img src="http://placehold.it/900x500/39CCCC/ffffff&amp;text=I+Love+Bootstrap" alt="First slide"></img>
+                                                <div class="carousel-caption">
+                                                    First Slide
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <img src="http://placehold.it/900x500/3c8dbc/ffffff&amp;text=I+Love+Bootstrap" alt="Second slide"></img>
+                                                <div class="carousel-caption">
+                                                    Second Slide
+                                                </div>
+                                            </div>
+                                            <div class="item active">
+                                                <img src="http://placehold.it/900x500/f39c12/ffffff&amp;text=I+Love+Bootstrap" alt="Third slide"></img>
+                                                <div class="carousel-caption">
+                                                    Third Slide
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left"></span>
+                                        </a>
+                                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right"></span>
+                                        </a>
+                                    </div>
+			
 			
 				<c:if test="${usuarioBean.logueado == true}">
 					<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
@@ -76,7 +108,7 @@
 					</div>	
 				</c:if>
 			
-			<center><h1>Bienvenido</h1></center>
+			
 		</div>
 		</ui:define>
 	</ui:composition>

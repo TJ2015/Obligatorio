@@ -121,7 +121,7 @@ public class UsuarioBean implements Serializable
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/av_crear.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
@@ -131,9 +131,11 @@ public class UsuarioBean implements Serializable
 		}
 	}
 
-	public void logout() 
+	public void logout() throws IOException 
 	{
 		HttpSession session = SesionBean.getSession();
+		logueado=false;
+		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		session.invalidate();
 	}
 

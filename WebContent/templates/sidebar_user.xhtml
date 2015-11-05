@@ -39,31 +39,11 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-building-o"></i>
-                                <span>Almacenes Virtuales</span>
-                                <i class="fa fa-angle-left pull-right"></i>
+						<li class="active">
+                            <a href="categoria_crear.xhtml">
+                                <i class="fa fa-plus-square"></i> <span>Crear categoria</span>
                             </a>
-                          		 	<c:if test="${usuarioBean.AVs !=null}">
-		 							
-							          <ul class="treeview-menu">
-							          	<c:forEach var="av" items="${sessionScope.AVs}"  >
-				                                <li class="active">
-				                                	<a href="mostrarAV.xhtml">
-				                                		<i class="fa fa-angle-double-right"></i>
-				                                		${av.nombreAV}
-				                                	</a>
-				                                </li>
-				                               
-				                        </c:forEach>    
-									 </ul>
-  
-		    </c:if>               
-		
-                          
                         </li>
-
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-folder"></i>
@@ -71,7 +51,32 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                 <li class="treeview">
+                                <!-- <ui:param name="cats" value="${categoriaBean.mostrarListaCategoria()}"> -->
+                                 <!--  <c:forEach var="cat" items="${cats}"  >
+									<li class="treeview">
+								       <a href="mostrarAV.xhtml">
+								        <span> ${cat.nombre}</span>
+								       <i class="fa fa-angle-double-right"></i>
+								        </a>
+								         <ul class="treeview-menu">
+		                                <li>
+		                                	<a href="#">
+		                                		<i class="fa fa-angle-double-right"></i> 
+		                                		Leche
+		                                	</a>
+		                                </li>
+		                                <li>
+		                                	<a href="#">
+		                                		<i class="fa fa-angle-double-right"></i> 
+		                                		Queso
+		                                	</a>
+		                                </li>		                                
+		                            </ul>
+								     </li>
+								                               
+								 </c:forEach> 
+								 </ui:param>-->
+								 <li class="treeview">  
 		                            <a href="#">
 		                                <span>Lacteos</span>
 		                                <i class="fa fa-angle-left pull-right"></i>
@@ -92,26 +97,7 @@
 		                            </ul>
 		                        </li>
 
-		                        <li class="treeview">
-		                            <a href="#">
-		                                <span>Vegetales</span>
-		                                <i class="fa fa-angle-left pull-right"></i>
-		                            </a>
-		                            <ul class="treeview-menu">
-		                                <li>
-		                                	<a href="#">
-		                                		<i class="fa fa-angle-double-right"></i> 
-		                                		Lechuga
-		                                	</a>
-		                                </li>
-		                                <li>
-		                                	<a href="#">
-		                                		<i class="fa fa-angle-double-right"></i> 
-		                                		Cebolla
-		                                	</a>
-		                                </li>		                                
-		                            </ul>
-		                        </li>
+		                       
 
                             </ul>
                         </li>

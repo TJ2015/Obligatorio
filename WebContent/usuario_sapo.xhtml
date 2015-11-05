@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+      > 
+      
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	
+	
+
+</h:head> 
+
+<h:body>
+<ui:composition template="/templates/layout.xhtml">
+<ui:define name="contenido">
+	<div class="container-fluid clearfix">
+		<div class="page-header text-center">
+		  <h1>Hola ${usuarioBean.nick}</h1>
+		</div>
+		<section class="content">
+		<div class="col-lg-5 col-xs-8">
+		<h3 class="box-title">Crear AV</h3>
+			<div class="panel panel-primary">
+				
+				<div class="panel-body">
+				
+			  		<h:form styleClass="form-horizontal">
+						<div class="form-group">
+							<label for="nombreAV" class="col-lg-2 control-label">Nombre</label>
+							<div class="col-lg-10">
+							  <h:inputText id="nombreAV" value="#{avBean.nombreAV}" styleClass="form-control" required="true" requiredMessage="Debe ingresar el nombre" a:placeholder="NombreAV"/>
+							</div>
+						</div>
+						
+						
+					<input type="hidden" name="hidden1" value="#{usuarioBean.nick}"  />
+					
+					
+						<center><h:commandButton id="botonCrear" styleClass="btn btn-primary" value="Crear" 
+										action="#{avBean.agregarAV()}"/>
+						<h:outputText value="&#160;" />
+						<h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></center>						
+										
+						</h:form>	
+
+				</div>
+			</div>
+		</div>
+		</section>
+		<section class="content">
+			 <div class="col-lg-3 col-xs-6">
+			 <h3 class="box-title">Lista de Avs</h3>
+				<ul class="list-group">
+				
+				   <c:forEach var="av" items="${sessionScope.AVs}"  >
+				      <li class="list-group-item">
+				       <a href="mostrarAV.xhtml">
+				       <i class="fa fa-angle-double-right"></i>
+				          ${av.nombreAV}
+				        </a>
+				     </li>
+				                               
+				 </c:forEach>   
+				</ul>
+			</div>
+		</section>
+		<section class="content">
+		
+			 <div class="col-lg-3 col-xs-6 col-lg-offset-0" style="float:left">
+			 <h3 class="box-title">Notificaciones</h3>
+				<ul class="list-group">
+				   <c:forEach var="av" items="${sessionScope.AVs}"  >
+				      <li class="list-group-item">
+				       <a href="mostrarAV.xhtml">
+				       <i class="fa fa-angle-double-right"></i>
+				          ${av.nombreAV}
+				        </a>
+				     </li>
+				                               
+				 </c:forEach>   
+				</ul>
+			</div>
+		</section>
+	</div>
+	</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

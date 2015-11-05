@@ -81,7 +81,7 @@ public class CategoriaBean implements Serializable {
 
 			if( cinv.crearCategoria(nombre, idAV)) { 	
 				
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
@@ -97,23 +97,19 @@ public class CategoriaBean implements Serializable {
 	public void setCats(List<DataCategoria> cats) {
 		this.cats = cats;
 	}
-	public void mostrarListaCategoria() {
+	public List <DataCategoria> mostrarListaCategoria() throws Exception {
 		try {
-			DataCategoria cat1,cat2,cat3=null;
-			
+
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
-			cat1=new DataCategoria(1, "cat1",null);
-			cat2=new DataCategoria(2, "cat2",null);
-			cat3=new DataCategoria(3, "cat3",null);
-			cats.add(cat1);
-			cats.add(cat2);
-			cats.add(cat3);	
+			cats=cinv.mostrarListaCategoria(idAV);
+			
 					FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaCategoria.xhtml");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		return cats;
 			}
 	
 }
