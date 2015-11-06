@@ -141,10 +141,10 @@ public class UsuarioBean implements Serializable
 			dusu = controlUsuario.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
 				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 			} 
 			else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				//FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
 		} 
 		catch (Exception e) {
