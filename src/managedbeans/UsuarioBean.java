@@ -12,6 +12,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dominio.Usuario;
@@ -36,6 +38,8 @@ public class UsuarioBean implements Serializable {
 	private DataUsuario dusu;
 
 	private boolean logueado = false;
+	
+	private boolean membresia = false;
 
 	public UsuarioBean() {
 
@@ -112,6 +116,22 @@ public class UsuarioBean implements Serializable {
 	public void setLogueado(boolean logueado) {
 		this.logueado = logueado;
 	}
+	
+	
+	
+
+	public boolean isMembresia() {
+		return membresia;
+	}
+
+	public void setMembresia(boolean membresia) {
+		this.membresia = membresia;
+	}
+	
+	
+	
+	
+	
 
 	public void login() throws IOException {
 		try {
@@ -133,14 +153,17 @@ public class UsuarioBean implements Serializable {
 
 	}
 
-	public void logout() {
-
+	public void logout() throws IOException {
+		
 		HttpSession session = SesionBean.getSession();
+		logueado=false;
+		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		session.invalidate();
-
-		// logueado=false;
-
+		
+		
 	}
+
+	
 
 	public void registroUsuario() {
 		try {
@@ -183,5 +206,22 @@ public class UsuarioBean implements Serializable {
 		}
 
 	}
+	
+	
+	//comprar membresia
+	
+		public void comprarMembresia(){
+			
+			HttpSession session = SesionBean.getSession();
+			String nick = (String) session.getAttribute("nickname");
+			if (!cusu.tieneMembresia(nick)){
+			cusu.comprarMembresia(nick);
+			}
+		}
+	
+	
+		
+	
+	
 
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+
+<ui:composition template="/templates/layout.xhtml">
+	<ui:define name="contenido">
+	
+	<div class="container-fluid clearfix" >
+		<div class="page-header text-center">
+
+
+<div class="col-lg-offset-0">
+
+
+
+<div style="border-radius: 100px 40px;width:50%; float:left; background-color:#F3F781">
+<h3>Usuarios Gratuitos</h3>
+<li>Hasta 2 AV</li>
+<li>Compartir hasta 2 AV</li>
+<li>Login con Facebook</li>
+<li>Chat entre usuarios del mismo AV</li>
+<li>Reportes</li>
+<li>Customización del sitio</li>
+
+<br></br>
+
+O también puedes adquirir una membresía
+como Usuario Pago
+
+
+</div>
+
+
+
+
+<div  style="border-radius: 100px 40px; width:50%; float:left;background-color:#F3F781">
+
+<h3>Usuarios Pagos</h3>
+<li>Av ilimitados</li>
+<li>Compartir AV ilimitado '' arreglar funcion</li>
+<li>Login con Facebook</li>
+<li>Chat entre usuarios del mismo AV</li>
+<li>Reportes</li>
+<li>Customización del sitio</li>
+
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="popup">
+<input type="hidden" name="cmd" value="_s-xclick"></input>
+<input type="hidden" name="hosted_button_id" value="7VWFB8NXVAANA"></input>
+<input type="image" src="https://www.sandbox.paypal.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea." ></input>
+
+
+<input name="notify_url" value="Ipnhandler" type="hidden"></input>
+
+
+<img alt="" border="0" src="https://www.sandbox.paypal.com/es_XC/i/scr/pixel.gif" width="1" height="1" onclick="#{usuarioBean.comprarMembresia()}" ></img>
+
+						
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+</div>
+
+		</div>
+</div>
+
+</ui:define>
+	</ui:composition>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body> 
+</html>

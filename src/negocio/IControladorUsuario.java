@@ -35,4 +35,11 @@ public interface IControladorUsuario {
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado;
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado;
 	
+	//para comprar membresia (2 son gratis/// con paypal indefinido
+	public void comprarMembresia(String nickname);
+	//para saber tiene membresia
+	public boolean tieneMembresia(String nickname);
+	// para saber la cantidad de AV
+	public int cantidadAvPorUsuario(String nickname);
+	
 }

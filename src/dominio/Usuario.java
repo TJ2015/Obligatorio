@@ -38,6 +38,8 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date fechaNacimiento;
 	
+	private boolean membresia=false;
+	
 	@OneToMany
 	@JoinTable(name = "av_usuarioCreador",
 		joinColumns = @JoinColumn(name = "usuarioCreador") ,
@@ -73,6 +75,7 @@ public class Usuario implements Serializable {
 		this.password = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		
 	}
 	
 	public DataUsuario getDataUsuario() {
@@ -194,6 +197,19 @@ public class Usuario implements Serializable {
 	}
 	public void removeRecibido(Mensaje msj) {
 		this.mensajesRecibidos.remove(msj);
+	}
+
+	
+
+	
+	//para paypal
+	
+	public boolean isMembresia() {
+		return membresia;
+	}
+
+	public void setMembresia(boolean membresia) {
+		this.membresia = membresia;
 	}
 	
 }

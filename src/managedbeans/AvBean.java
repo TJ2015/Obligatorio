@@ -81,20 +81,31 @@ public class AvBean implements Serializable {
 	public void agregarAV() {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
-		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
-			idAV = cAV.altaAV(nombreAV, nick);
-			session.setAttribute("idAV", idAV);
-
+		int cantidad = cUsu.cantidadAvPorUsuario(nick);		
+			
+		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {				
 			try {
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
+				
+				if((cantidad<2)||(cUsu.tieneMembresia(nick))){
+					idAV = cAV.altaAV(nombreAV, nick);
+					session.setAttribute("idAV", idAV);
+					FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
+					}
+			
+					else{
+						FacesContext.getCurrentInstance().getExternalContext().dispatch("/paypal.xhtml");
+					}
+					
+				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+				}
 
 		}
 	}
+	
 
 	public void compartirAV() {
 		if (cUsu.existeUsuarioNick(nickname)) {
@@ -133,5 +144,10 @@ public class AvBean implements Serializable {
 		}
 
 	}
+	
+	
+	
+	
+	
 
 }

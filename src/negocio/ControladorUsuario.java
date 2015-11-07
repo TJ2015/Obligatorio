@@ -309,5 +309,39 @@ public class ControladorUsuario implements IControladorUsuario {
 		}
 		return res;
 	}	
+	
+	
+	
+	
+	// para las membresias! MARIANELA
+	
+	public void comprarMembresia(String nickname){
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		usu.setMembresia(true);
+		usuarioDAO.actualizarUsuario(usu);
+		
+	
+	}
+	
+	
+	public boolean tieneMembresia(String nickname){
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		return usu.isMembresia();
+	}
+	
+	
+
+	public int cantidadAvPorUsuario(String nickname){
+	
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		List<AV> avs = usu.getAVs();
+		int cantidad=avs.size();
+		return cantidad;
+		
+	}
+	
 
 }
+
+
+
