@@ -34,7 +34,7 @@ public class DatosPrecargados {
 		
 		// CARGAR DATOS
 		System.out.println("Cargando datos...");
-		util.DBUtil.eliminarTenant("test_testAV");
+		//util.DBUtil.eliminarTenant("test_testAV");
 		
 		cUsu.registrarUsuario("Juan", "Perez", "jotape", "jotape", "jp@gmail.com", new Date());
 		cUsu.registrarUsuario("Roberto", "Gomez", "robgom", "robgom", "rob@gmail.com", new Date());
