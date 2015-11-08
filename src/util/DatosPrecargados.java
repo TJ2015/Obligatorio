@@ -47,7 +47,7 @@ public class DatosPrecargados {
 		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date());
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date());
 
-		cAV.altaAV("testAV", "test");
+		/*cAV.altaAV("testAV", "test");
 
 		cInv.crearCategoria("testCat", 1);
 		try {
@@ -57,7 +57,7 @@ public class DatosPrecargados {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 		System.out.println("...Datos cargados con éxito!");
 	}
