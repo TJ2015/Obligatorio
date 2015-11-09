@@ -35,18 +35,23 @@ public class InventarioDAO implements IInventarioDAO {
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void persistirCategoria(Categoria cat, String tenant){
+	public void persistirCategoria(Categoria cat, String tenant){		
+		Session session = null;
 		try {
-			Session session = util.DBUtil.crearSession(tenant);
-			
+			session = util.DBUtil.crearSession(tenant);			
 			session.beginTransaction();
 			session.persist(cat);
-			session.getTransaction().commit();
+			session.getTransaction().commit();			
 			
 		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
 		}
-			
+		finally{
+			util.DBUtil.cerrarFabrica();
+		}
 	}
 
 	@Override
@@ -62,15 +67,21 @@ public class InventarioDAO implements IInventarioDAO {
 	
 	@Override
 	public void persistirProducto(Producto pd, String tenant) {
+		Session session = null;
 		try {
-			Session session = util.DBUtil.crearSession(tenant);
-			
+			session = util.DBUtil.crearSession(tenant);
 			session.beginTransaction();
 			session.persist(pd);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
+		}
+		finally{
+			util.DBUtil.cerrarFabrica();
 		}
 	}
 
@@ -87,15 +98,21 @@ public class InventarioDAO implements IInventarioDAO {
 	
 	@Override
 	public void actualizarCategoria(Categoria cat, String tenant) {
+		Session session = null;
 		try {
-			Session session = util.DBUtil.crearSession(tenant);
-
+			session = util.DBUtil.crearSession(tenant);
 			session.beginTransaction();
 			session.merge(cat);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
+		}
+		finally{
+			util.DBUtil.cerrarFabrica();
 		}
 	}
 
@@ -112,44 +129,88 @@ public class InventarioDAO implements IInventarioDAO {
 	
 	@Override
 	public void actualizarProducto(Producto pd, String tenant) {
+		Session session = null;
 		try {
-			Session session = util.DBUtil.crearSession(tenant);
-			
+			session = util.DBUtil.crearSession(tenant);
 			session.beginTransaction();
 			session.merge(pd);
 			session.getTransaction().commit();
-			
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
 			e.printStackTrace();
+		}
+		finally{
+			util.DBUtil.cerrarFabrica();
 		}
 	}
 
 	@Override
 	public Categoria buscarCategoria(String nombreCat, String tenant) {
-		Session session = util.DBUtil.crearSession(tenant);
-		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat);
-	    
-		return (Categoria) q.uniqueResult();
+		Categoria categoria = null;
+		try {
+			Session session = util.DBUtil.crearSession(tenant);
+			session.beginTransaction();
+			Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat);
+			session.getTransaction().commit();
+		    Object resultado = q.uniqueResult();
+			categoria = (Categoria) resultado;
+			util.DBUtil.cerrarFabrica();
+		} catch (Exception e) {
+			System.out.println("No Existe la Categoria: " + nombreCat);
+		}
+		return categoria;
 	}
 	
 	@Override
 	public Categoria buscarCategoria(String nombreCat) {
-		return (Categoria) em.createNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat).getSingleResult();
+		Categoria categoria = null;
+		try {
+			categoria = (Categoria) em.createNamedQuery("Categoria.buscarPorNombre")
+					.setParameter("nombre", nombreCat)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println("No Existe la Categoria: " + nombreCat);
+		}
+		return categoria;
 	}
 
 	@Override
 	public void eliminarCategoria(Categoria cat) {
-		em.merge(cat);
-		em.remove(cat);
+		try {
+			em.merge(cat);
+		} catch (Exception e) {
+			System.out.println("Error en 'MERGE' al Eminiar la categoria" + cat);
+		}
+		try {
+			em.remove(cat);
+		} catch (Exception e) {
+			System.out.println("Error en 'REMOVE' al Eminiar la categoria" + cat);
+		}
+		
 	}
 
 	@Override
-	public void eliminarCategoria(Categoria cat, String tenant) {
-		Session session = util.DBUtil.crearSession(tenant);
-		session.beginTransaction();
-		session.merge(cat);
-		session.delete(cat);
-		session.getTransaction().commit();
+	public void eliminarCategoria(Categoria cat, String tenant) 
+	{
+		Session session = null;
+		try {
+			session = util.DBUtil.crearSession(tenant);
+			session.beginTransaction();
+			session.merge(cat);
+			session.delete(cat);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		}
+		finally{
+			util.DBUtil.cerrarFabrica();
+		}
 	}
 
 	@Override
@@ -158,11 +219,17 @@ public class InventarioDAO implements IInventarioDAO {
 	}
 
 	@Override
-	public Producto buscarProducto(String nombreProd, String tenant) {
-		Session session = util.DBUtil.crearSession(tenant);
-		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreProd);
-	    
-		return (Producto) q.uniqueResult();
+	public Producto buscarProducto(String nombreProd, String tenant) 
+	{
+		Producto producto = null;
+		try {
+			Session session = util.DBUtil.crearSession(tenant);
+			Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreProd);
+			producto = (Producto) q.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return producto;
 	}
 
 	@Override
@@ -173,11 +240,23 @@ public class InventarioDAO implements IInventarioDAO {
 
 	@Override
 	public void eliminarProducto(Producto prod, String tenant) {
-		Session session = util.DBUtil.crearSession(tenant);
-		session.beginTransaction();
-		session.merge(prod);
-		session.delete(prod);
-		session.getTransaction().commit();
+		Session session = null;
+		try {
+			session = util.DBUtil.crearSession(tenant);
+			session.beginTransaction();
+			session.merge(prod);
+			session.delete(prod);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		}
+		finally{
+			util.DBUtil.cerrarFabrica();
+		}
+		
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.AV;
 import dominio.Atributo;
 import dominio.Categoria;
@@ -12,6 +14,7 @@ import dominio.Producto;
 import negocio.interfases.IControladorInventario;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
+import util.Imagenes;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
@@ -25,41 +28,44 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean crearCategoria(String nombre, long idAV) {
-		Categoria cat = new Categoria(nombre);
-		
-		if( !existeCategoria(nombre, idAV)) {
-			if( idAV > 0) {
-				AV av = avDAO.traerAV(idAV);
-				if( av != null) {
-					
-					invDAO.persistirCategoria(cat, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV() );
+		boolean categoriaCreada = false;
+		try {
+			Categoria cat = new Categoria(nombre);
+			if( !existeCategoria(nombre, idAV)) {
+				if( idAV > 0) {
+					AV av = avDAO.traerAV(idAV);
+					if( av != null) {						
+						invDAO.persistirCategoria(cat, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV() );
+						categoriaCreada = true;
+					}
 				} else {
-					return false;
+					invDAO.persistirCategoria(cat);
+					categoriaCreada = true;
 				}
-			} else {
-				invDAO.persistirCategoria(cat);
 			}
-		} else {
-			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-			
-		return true;
+		return categoriaCreada;
 	}
 
 	@Override
 	public boolean existeCategoria(String nombre, long idAV) {
-		
-		if( idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			
-			if(av != null) {
-				return invDAO.buscarCategoria(nombre, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV()) != null;
-			} else {
-				return false;
+		boolean existeCategoria = false;
+		try {
+			if( idAV > 0) {
+				AV av = avDAO.traerAV(idAV);				
+				if(av != null) {
+					existeCategoria = invDAO.buscarCategoria(nombre, av.getUsuarioCreador().getNick() + "_" + av.getNombreAV()) != null;
+				}
+			} 
+			else {
+				existeCategoria = invDAO.buscarCategoria(nombre) != null;
 			}
-		} else {
-			return invDAO.buscarCategoria(nombre) != null;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return existeCategoria;
 	}
 
 	@Override
@@ -104,41 +110,54 @@ public class ControladorInventario implements IControladorInventario {
 	
 	
 	@Override
-	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock) throws Exception{
-		
-		String tenant = "";
-		Categoria cat = null;
-		
-		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-		
-		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs,stock);
-		prod.setIdAV(idAV);
-		
-		if( idAV > 0 ) {
-			AV av = avDAO.traerAV(idAV);
-			tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-			cat = invDAO.buscarCategoria(categoria, tenant);
+	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock, UploadedFile file) throws Exception
+	{
+		try {
+			String tenant = "";
+			Categoria cat = null;
 			
-			if(cat == null)
-				throw new Exception("No existe la categoria '" + categoria + "'");
+			List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
+			/*************************************************************************/
+			/*************************** BRYAN ***************************************/
 			
-			prod.setCategoria(cat);
-			invDAO.persistirProducto(prod, tenant);
-			cat.addProducto(prod);
-			invDAO.actualizarCategoria(cat, tenant);
+			byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
+			String nombreImagen = Imagenes.obtenerNombreImagen(file);
 			
-		} else {
-			cat = invDAO.buscarCategoria(categoria);
+			Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock, imagen, nombreImagen);
 			
-			if(cat == null)
-				throw new Exception("No existe la categoria '" + categoria + "'");
+			/*************************** BRYAN ***************************************/
+			/*************************************************************************/
+			prod.setIdAV(idAV);
 			
-			prod.setCategoria(cat);
-			invDAO.persistirProducto(prod);
-			cat.addProducto(prod);
-			invDAO.actualizarCategoria(cat);
-					
+			if( idAV > 0 ) {
+				AV av = avDAO.traerAV(idAV);
+				tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+				cat = invDAO.buscarCategoria(categoria, tenant);
+				
+				if(cat == null)
+					throw new Exception("No existe la categoria '" + categoria + "'");
+				
+				prod.setCategoria(cat);
+				invDAO.persistirProducto(prod, tenant);
+				cat.addProducto(prod);
+				invDAO.actualizarCategoria(cat, tenant);
+				
+			} else {
+				cat = invDAO.buscarCategoria(categoria);
+				
+				if(cat == null)
+					throw new Exception("No existe la categoria '" + categoria + "'");
+				
+				prod.setCategoria(cat);
+				invDAO.persistirProducto(prod);
+				cat.addProducto(prod);
+				invDAO.actualizarCategoria(cat);
+						
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@Override

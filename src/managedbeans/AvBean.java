@@ -1,24 +1,24 @@
 package managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import util.Url;
 
 @ManagedBean
 @SessionScoped
 public class AvBean implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
 	@EJB
 	IControladorAV cAV;
 	@EJB
@@ -79,34 +79,33 @@ public class AvBean implements Serializable {
 	}
 
 	public void agregarAV() {
-		HttpSession session = SesionBean.getSession();
-		String nick = (String) session.getAttribute("nickname");
-		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
-			idAV = cAV.altaAV(nombreAV, nick);
-			session.setAttribute("idAV", idAV);
 
-			try {
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			HttpSession session = SesionBean.getSession();
+			String nick = (String) session.getAttribute("nickname");
+			if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
+				idAV = cAV.altaAV(nombreAV, nick);
+				session.setAttribute("idAV", idAV);
+				Url.redireccionarURL("categoria_crear");
+				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/categoria_crear.xhtml");
 			}
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void compartirAV() {
-		if (cUsu.existeUsuarioNick(nickname)) {
-			cAV.compartirAV(idAV, nickname);
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			if (cUsu.existeUsuarioNick(nickname)) {
+				cAV.compartirAV(idAV, nickname);
+				Url.redireccionarURL("index");
+			} else {
+				Url.redireccionarURL("error");
 			}
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
 		}
-
 	}
 
 	public long traerIdAV() {
@@ -117,21 +116,22 @@ public class AvBean implements Serializable {
 	}
 
 	public void eliminarAV() {
-
-		cAV.eliminarAV(idAV);
-
+		try {
+			cAV.eliminarAV(idAV);
+			Url.redireccionarURL("index");
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
 	}
 
 	public void cancelarAccion() {
-
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Url.redireccionarURL("index");
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
-
 	}
 
 }

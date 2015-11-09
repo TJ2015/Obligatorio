@@ -1,30 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head></h:head> 
+<h:head></h:head>
 <body>
-
+	
 	Hola #{usuarioBean.nick}!!
-<ui:composition template="/templates/layout.xhtml">
+	<ui:composition template="/templates/layout.xhtml">
 		<ui:define name="contenido">
-		<div class="container-fluid clearfix">
-		<div class="list-group">
+			<div class="container-fluid clearfix">
+				<div class="list-group">
 
-		  <c:if test="${usuarioBean.logueado == true}">
-		 	<c:if test="${usuarioBean.AVs !=null}">
-			        <c:forEach var="av" items="${usuarioBean.AVs}"  >
-			         <a href="#" class="list-group-item">${av.nombreAV}</a>
-	            </c:forEach>    
-		    </c:if>               
-		 </c:if>
-		</div>
-		<a href="av_crear.xhtml"> Crear AV</a>
-		 </div>
+					<c:if test="#{usuarioBean.existeUsuarioLogeado()}">
+						<c:if test="#{usuarioBean.AVs !=null}">
+							<c:forEach var="av" items="#{usuarioBean.AVs}">
+								<a href="#" class="list-group-item">${av.nombreAV}</a>
+							</c:forEach>
+						</c:if>
+					</c:if>
+				</div>
+				<a href="av_crear.xhtml"> Crear AV</a>
+			</div>
 		</ui:define>
-</ui:composition>
-</body> 
+	</ui:composition>
+</body>
 </html>

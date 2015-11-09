@@ -23,6 +23,7 @@
 <h:body>
 <ui:composition template="/templates/layout.xhtml">
 <ui:define name="contenido">
+	<h:form styleClass="form">
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Crear Categoría</h1>
@@ -32,7 +33,7 @@
 				<div class="panel-heading">Crear Categoria</div>
 				<div class="panel-body">
 				
-			  		<h:form styleClass="form">
+			  		
 						<div class="form-group">
 							<h:outputLabel value="nombre" styleClass="sr-only" for="nombre" />
 							<div class="input-group">
@@ -47,10 +48,10 @@
 
 <center><h:commandButton id="botonCrearCategoria" styleClass="btn btn-primary" value="Crear categoría" 
 				action="#{categoriaBean.crearCategoria()}"/></center>
-</h:form>
+
 <br></br>
-	<center><h:form><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
-										action="#{avBean.cancelarAccion()}"/></h:form></center>	
+	<center><h:commandButton id="botonCancelar" styleClass="btn btn-primary" value="Cancelar" 
+										action="#{avBean.cancelarAccion()}"/></center>	
 
 
 
@@ -68,6 +69,8 @@
 			</div>
 		</div>
 	</div>
+	
+	</h:form>
 	</ui:define>
 	</ui:composition>
 </h:body>

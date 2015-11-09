@@ -1,20 +1,18 @@
 package managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+
 import javax.servlet.http.HttpSession;
 
-import dominio.AV;
-import dominio.Producto;
+import jdk.nashorn.internal.objects.annotations.Where;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
+import util.Url;
 
 @ManagedBean
 @ViewScoped
@@ -68,18 +66,39 @@ public class CategoriaBean implements Serializable {
 
 	public void crearCategoria(){
 		try {
-			
+			testStressCategorias();
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
 			
 			if( cinv.crearCategoria(nombre, idAV)) { 	
-				
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				Url.redireccionarURL("index");
 			} else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				Url.redireccionarURL("error");
 			}
-			
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void testStressCategorias(){
+		try {
+			HttpSession session = SesionBean.getSession();
+			idAV = (long) session.getAttribute("idAV");
+			boolean bien = true;
+			boolean termino = false;
+			int cont = 0;
+			while (bien && !termino) {
+				System.out.println("Vamos a crear la Categoria: " + cont++);
+				if( cinv.crearCategoria("Categoria" + cont, idAV)) { 	
+					if (cont == 99) {
+						termino = true;
+					}
+				} else {
+					bien = false;
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

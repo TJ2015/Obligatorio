@@ -1,7 +1,6 @@
 package dominio;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +35,10 @@ public class Producto implements Serializable {
 	private String descripcion;
 	private double precio;
 	private int stock;
+	
 	@ManyToOne
 	private Categoria categoria;
-	// TODO agregar imagen
+
 	@Transient
 	private List<Atributo> atributosList;
 	
@@ -51,7 +51,47 @@ public class Producto implements Serializable {
 	public void setIdAV(long idAV) {
 		this.idAV = idAV;
 	}
+	
+	
+	/*************************************************************************/
+	/*************************** BRYAN ***************************************/
+	
+	@Column(length=1294967295)
+	private byte[] bytesImagen;
+	private String nombreImagen;
+	
+	public byte[] getBytesImagen() {
+		return bytesImagen;
+	}
 
+	public void setBytesImagen(byte[] bytesImagen) {
+		this.bytesImagen = bytesImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+	
+	///Crea producto con Imagen
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, int stock, byte[] bytesImagen, String nombreImagen) 
+	{
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+		this.stock = stock;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
+	}
+	
+	/*************************** BRYAN ***************************************/
+	/*************************************************************************/
+	
 	private static final long serialVersionUID = 1L;
 
 	public Producto() {
@@ -129,13 +169,25 @@ public class Producto implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", precio=" + precio + ", stock=" + stock + ", categoria=" + categoria + ", atributosList="
+				+ atributosList + ", idAV=" + idAV + ", bytesImagen=" + Arrays.toString(bytesImagen) + ", nombreImagen="
+				+ nombreImagen + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((atributosList == null) ? 0 : atributosList.hashCode());
+		result = prime * result + Arrays.hashCode(bytesImagen);
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + (int) (idAV ^ (idAV >>> 32));
 		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((nombreImagen == null) ? 0 : nombreImagen.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(precio);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -152,6 +204,18 @@ public class Producto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Producto other = (Producto) obj;
+		if (atributosList == null) {
+			if (other.atributosList != null)
+				return false;
+		} else if (!atributosList.equals(other.atributosList))
+			return false;
+		if (!Arrays.equals(bytesImagen, other.bytesImagen))
+			return false;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
 		if (descripcion == null) {
 			if (other.descripcion != null)
 				return false;
@@ -169,12 +233,18 @@ public class Producto implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
+		if (nombreImagen == null) {
+			if (other.nombreImagen != null)
+				return false;
+		} else if (!nombreImagen.equals(other.nombreImagen))
+			return false;
 		if (Double.doubleToLongBits(precio) != Double.doubleToLongBits(other.precio))
 			return false;
 		if (stock != other.stock)
 			return false;
 		return true;
 	}
-	
+
+		
 	
 }

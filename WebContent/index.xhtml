@@ -24,7 +24,7 @@
 			  <h1>SAPo</h1>
 			</div>
 			
-				<c:if test="${usuarioBean.logueado == true}">
+				<c:if test="#{usuarioBean.existeUsuarioLogeado()}">
 					<h:form styleClass="form">
 						<h:commandButton id="botonVerAv" styleClass="btn btn-primary" value="Ver lista de AV" 
 					action="#{usuarioBean.mostrarListaAV()}"/>

@@ -13,17 +13,43 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
-public class DBUtil {
+public final class DBUtil {
 
-	public static Session crearSession(String tenant) {
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-		Session session = factory.withOptions().tenantIdentifier("sapo_" + tenant).openSession();
+	private static SessionFactory factory = null;
+	
+	public static Session crearSession(String tenant) 
+	{
+		Session session = null;
+		try {
+			/*************************************************************************/
+			/*************************** BRYAN ***************************************/
+			if (factory == null || factory.isClosed()) {
+				factory = new Configuration().configure().buildSessionFactory();
+			}
+			session = factory.withOptions().tenantIdentifier("sapo_" + tenant).openSession();
+			
+			/*************************** BRYAN ***************************************/
+			/*************************************************************************/
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return session;
+	}
+	
+	public static void cerrarFabrica()
+	{
+		try {
+			if (factory != null && !factory.isClosed()) {
+				factory.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void crearBase(String nombre) {
-		ConnectionProvider conProv = new ConnectionProviderImpl("");
 		try {
+			ConnectionProvider conProv = new ConnectionProviderImpl("");
 			conProv.getConnection().createStatement().execute("CREATE DATABASE IF NOT EXISTS " + nombre);
 			conProv.getConnection().close();
 			try {
@@ -39,14 +65,10 @@ public class DBUtil {
 					count++;
 				}
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (SQLException e) {
-			throw new HibernateException(
-					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre
-							+ "]",
-					e);
+			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre+ "]",e);
 		}
 	}
 
@@ -78,59 +100,57 @@ public class DBUtil {
 			System.out.println("clave modificada con éxito");
 
 		} catch (SQLException e) {
-			throw new HibernateException(
-					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre
-							+ "]",
-					e);
+			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre+ "]", e);
 		}
 	}
 
 	public static List<String> getQueriesFromSQLFile(String url) throws FileNotFoundException {
+		List<String> queries = null;
+		try {
+			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(url);
+			Scanner input;
+			List<String> lineas = new ArrayList<>();
+			queries = new ArrayList<>();
 
-		InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(url);
-		Scanner input;
-		List<String> lineas = new ArrayList<>();
-		List<String> queries = new ArrayList<>();
+			input = new Scanner(in, "utf-8");
 
-		input = new Scanner(in, "utf-8");
-
-		while (input.hasNext()) {
-			// or to process line by line
-			lineas.add(input.nextLine());
-		}
-
-		String aux = "";
-		String auxCom = "";
-		boolean comentario = false;
-
-		for (String l : lineas) {
-			if (!l.startsWith("--") && (!comentario)) {
-				if (!l.startsWith("/*") || (l.startsWith("/*") && l.contains("40101 SET NAMES"))) {
-					aux += l;
-					if (l.endsWith(";")) {
-						queries.add(aux);
-						aux = "";
-					}
-				} else {
-					if (!l.endsWith("*/") && !l.endsWith("*/;")) {
-						comentario = true;
-					}
-				}
-			} else if (l.endsWith("*/") || l.endsWith("*/;")) {
-				comentario = false;
+			while (input.hasNext()) {
+				// or to process line by line
+				lineas.add(input.nextLine());
 			}
-		}
-		input.close();
 
+			String aux = "";
+			boolean comentario = false;
+
+			for (String l : lineas) {
+				if (!l.startsWith("--") && (!comentario)) {
+					if (!l.startsWith("/*") || (l.startsWith("/*") && l.contains("40101 SET NAMES"))) {
+						aux += l;
+						if (l.endsWith(";")) {
+							queries.add(aux);
+							aux = "";
+						}
+					} else {
+						if (!l.endsWith("*/") && !l.endsWith("*/;")) {
+							comentario = true;
+						}
+					}
+				} else if (l.endsWith("*/") || l.endsWith("*/;")) {
+					comentario = false;
+				}
+			}
+			input.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		return queries;
 	}
 
 	public static void eliminarTenant(String tenant) {
-		ConnectionProvider conProv = new ConnectionProviderImpl("");
 		try {
+			ConnectionProvider conProv = new ConnectionProviderImpl("");
 			conProv.getConnection().createStatement().execute("DROP DATABASE sapo_" + tenant);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

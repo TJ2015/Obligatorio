@@ -5,8 +5,12 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.primefaces.model.UploadedFile;
 
 import negocio.interfases.IControladorInventario;
+import util.Url;
 
 
 @ManagedBean
@@ -24,6 +28,23 @@ public class ProductoBean implements Serializable {
 	
 	//para descripcion producto
 	private long idAV;
+	
+	/*************************************************************************/
+	/*************************** BRYAN ***************************************/
+	
+	private UploadedFile file;
+	
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+	
+	/*************************** BRYAN ***************************************/
+	/*************************************************************************/
+	
 	
 	public ProductoBean(long idAV) {
 			super();
@@ -105,19 +126,46 @@ public class ProductoBean implements Serializable {
 
 
 	public void crearProductoDescripción() {
-		
 		try {
-			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
+			
+			testStressProducto();
+			
+			/******************************************************/
+			/****************** BRYAN ************************************/
+			/******************************************************/
+			idAV = 1; //HARDCODE
+			
+			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
 			//cinv.setStockProducto(nombre, idAV, stock);
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			Url.redireccionarURL("index");
 		} catch (Exception e) {
 			e.printStackTrace();
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			Url.redireccionarURL("error");
 		}
 		
 	}
+	
+	
+	public void testStressProducto() {
+		try {
+			//HttpSession session = SesionBean.getSession();
+			//idAV = (long) session.getAttribute("idAV");
+			boolean bien = true;
+			boolean termino = false;
+			int cont = 0;
+			idAV = 1; //HARDCODE
+			while (bien && !termino) {
+				System.out.println("Vamos a crear El producto: " + cont++);
+				cinv.crearProducto(nombre + cont, descripcion, precio, categoria, atributos, idAV, stock, file);
+				if (cont == 99) {
+					termino = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
 }
