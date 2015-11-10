@@ -863,10 +863,10 @@ public class PruebaMB implements Serializable {
 		tests.put("Login Administrador", testLoginAdmin()); 
 		tests.put("Modificar Administrador", testModificarAdmin());
 		tests.put("Crear Categoria", testCrearCategoria());
+		tests.put("Modificar Categoria", modificarNombreCategoria());
+		tests.put("Eliminar Categoria", testEliminarCategoria());
 		
-		//tests.put("Modificar Categoria", modificarNombreCategoria());
-		//tests.put("Eliminar Categoria", testEliminarCategoria());
-		//tests.put("Copiar Producto", testCopiarProducto());
+		tests.put("Copiar Producto", testCopiarProducto());
 		
 		/*
 		cInv.crearCategoria("cat1", ID_AV);

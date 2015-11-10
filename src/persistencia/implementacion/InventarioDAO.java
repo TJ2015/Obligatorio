@@ -187,7 +187,6 @@ public class InventarioDAO implements IInventarioDAO {
 
 	@Override
 	public ProductoAComprar buscarProductoDeLista(long idProdComp, String tenant) {
-		session.beginTransaction();
 		return session.get(ProductoAComprar.class, idProdComp);
 	}
 
