@@ -40,4 +40,7 @@ public interface IAvDAO {
 
 	public List<Object> getAllNotificaciones(String tenant);
 
+	void open(String tenant);
+
+	void close(String tenant);
 }

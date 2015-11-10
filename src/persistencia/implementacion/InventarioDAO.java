@@ -21,56 +21,56 @@ import persistencia.interfases.IInventarioDAO;
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class InventarioDAO implements IInventarioDAO {
-		
-	@javax.persistence.PersistenceContext(unitName="Obligatorio")
+
+	@javax.persistence.PersistenceContext(unitName = "Obligatorio")
 	private javax.persistence.EntityManager em;
-	
+
 	private Session session;
-	
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void persistirCategoria(Categoria cat){
+	public void persistirCategoria(Categoria cat) {
 		try {
-			//Persiste un categoria a la base de datos
+			// Persiste un categoria a la base de datos
 			em.persist(cat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
+
 	}
-	
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void persistirCategoria(Categoria cat, String tenant){
+	public void persistirCategoria(Categoria cat, String tenant) {
 		try {
 			session.beginTransaction();
 			session.persist(cat);
 			session.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
+
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void persistirProducto(Producto pd) {
 		try {
-			//Persiste un categoria a la base de datos
+			// Persiste un categoria a la base de datos
 			em.persist(pd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void persistirProducto(Producto pd, String tenant) {
 		try {
 			session.beginTransaction();
 			session.persist(pd);
 			session.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,20 +80,20 @@ public class InventarioDAO implements IInventarioDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void actualizarCategoria(Categoria obj) {
 		try {
-			//Persiste un categoria a la base de datos
+			// Persiste un categoria a la base de datos
 			em.persist(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void actualizarCategoria(Categoria cat, String tenant) {
 		try {
 			session.beginTransaction();
 			session.merge(cat);
 			session.getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,13 +103,13 @@ public class InventarioDAO implements IInventarioDAO {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void actualizarProducto(Producto pd) {
 		try {
-			//Persiste un categoria a la base de datos
+			// Persiste un categoria a la base de datos
 			em.persist(pd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void actualizarProducto(Producto pd, String tenant) {
 		try {
@@ -124,18 +124,20 @@ public class InventarioDAO implements IInventarioDAO {
 	@Override
 	public Categoria buscarCategoria(String nombreCat, String tenant) {
 		Query q = session.getNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat);
-	    
+
 		return (Categoria) q.uniqueResult();
 	}
+
 	@Override
-	public List <Categoria> buscarListaCategoriaspoAV(long idAV,String tenant) {
+	public List<Categoria> buscarListaCategoriaspoAV(long idAV, String tenant) {
 		Query q = session.getNamedQuery("Categoria.getAll");
 		return q.list();
 	}
-	
+
 	@Override
 	public Categoria buscarCategoria(String nombreCat) {
-		return (Categoria) em.createNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat).getSingleResult();
+		return (Categoria) em.createNamedQuery("Categoria.buscarPorNombre").setParameter("nombre", nombreCat)
+				.getSingleResult();
 	}
 
 	@Override
@@ -154,13 +156,14 @@ public class InventarioDAO implements IInventarioDAO {
 
 	@Override
 	public Producto buscarProducto(String nombreProd) {
-		return (Producto) em.createNamedQuery("Producto.buscarPorNombre").setParameter("nombre", nombreProd).getSingleResult();
+		return (Producto) em.createNamedQuery("Producto.buscarPorNombre").setParameter("nombre", nombreProd)
+				.getSingleResult();
 	}
 
 	@Override
 	public Producto buscarProducto(String nombreProd, String tenant) {
 		Query q = session.getNamedQuery("Producto.buscarPorNombre").setParameter("nombre", nombreProd);
-		Producto prod = (Producto) q.uniqueResult(); 
+		Producto prod = (Producto) q.uniqueResult();
 		return prod;
 	}
 
@@ -200,7 +203,7 @@ public class InventarioDAO implements IInventarioDAO {
 	@Override
 	public List<ProductoAComprar> getAllProductoAComprar(String tenant) {
 		Query q = session.getNamedQuery("ProductoAComprar.getAll");
-	    
+
 		return q.list();
 	}
 
@@ -209,7 +212,7 @@ public class InventarioDAO implements IInventarioDAO {
 		Query q = session.getNamedQuery("ProductoAComprar.buscarPorProductoId").setParameter("idProd", idProducto);
 		return (ProductoAComprar) q.uniqueResult();
 	}
-	
+
 	@Override
 	public void open(String tenant) {
 		session = util.DBUtil.crearSession(tenant);
@@ -221,4 +224,3 @@ public class InventarioDAO implements IInventarioDAO {
 	}
 
 }
-
