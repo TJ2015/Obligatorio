@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.hibernate.HibernateException;
@@ -15,10 +17,22 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 public class DBUtil {
 
+	private static Map<String, Session> sesiones = new HashMap<>();
+
 	public static Session crearSession(String tenant) {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.withOptions().tenantIdentifier("sapo_" + tenant).openSession();
 		return session;
+	}
+	
+	public static Session getSession(String tenant) {
+		return sesiones.get(tenant);
+	}
+	
+	public static void closeSession(String tenant) {
+		Session sesion = sesiones.get(tenant);
+		sesion.getSessionFactory().close();
+		sesiones.remove(tenant);
 	}
 
 	public static void crearBase(String nombre) {

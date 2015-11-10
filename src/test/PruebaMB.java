@@ -725,7 +725,6 @@ public class PruebaMB implements Serializable {
 		try {
 			cInv.eliminarCategoria("categoriaPrueba2", ID_AV);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		DataCategoria cat = null;
@@ -771,7 +770,44 @@ public class PruebaMB implements Serializable {
 	}
 	
 	public boolean testCopiarProducto() {
-		return false;
+		
+		if( cInv.crearCategoria("categoriaPrueba3", ID_AV) ) {
+			try {
+				cInv.crearProducto("productoPrueba1", "prod desc 1", 123, "categoriaPrueba3", "attr1:val1;attr2:val2;", ID_AV, 15);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		cInv.crearCategoria("categoriaPrueba4", ID_AV);
+		
+		long idAVDestino = 0;
+		try {
+			idAVDestino = cAV.altaAV("testAV2", "test");
+		} catch (NombreDeAVInvalido e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			cInv.copiarProducto("productoPrueba1", ID_AV, idAVDestino);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		DataProducto dp = null;
+		try {
+			dp = cInv.getProducto("productoPrueba1", idAVDestino);
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		if( dp == null )
+			return false;
+		
+		return true;
 	}
 	
 	public boolean testMoverProducto() {
@@ -808,7 +844,7 @@ public class PruebaMB implements Serializable {
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-		/*
+		
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
@@ -827,9 +863,21 @@ public class PruebaMB implements Serializable {
 		tests.put("Login Administrador", testLoginAdmin()); 
 		tests.put("Modificar Administrador", testModificarAdmin());
 		tests.put("Crear Categoria", testCrearCategoria());
+		
+		//tests.put("Modificar Categoria", modificarNombreCategoria());
+		//tests.put("Eliminar Categoria", testEliminarCategoria());
+		//tests.put("Copiar Producto", testCopiarProducto());
+		
+		/*
+		cInv.crearCategoria("cat1", ID_AV);
+		for( int i = 0; i < 2000; i++ ) {
+			try {
+				cInv.crearProducto("prod" + i, "prod desc " + i, 123, "cat1", "attr1:val1;attr2:val2;", ID_AV, 5);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		*/
-		tests.put("Modificar Categoria", modificarNombreCategoria());
-		tests.put("Eliminar Categoria", testEliminarCategoria());
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");

@@ -26,11 +26,11 @@ import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
-	@EJB
-	private IInventarioDAO invDAO;
-	@EJB
+	@EJB //BORRAR CUANDO NO SE USE
 	private IAvDAO avDAO;
-
+	
+	private IInventarioDAO invDAO = new InventarioDAO();
+	
 	public ControladorInventario() {
 	}
 
@@ -39,13 +39,14 @@ public class ControladorInventario implements IControladorInventario {
 		Categoria cat = new Categoria(nombre);
 
 		String tenant = getTenant(idAV);
-
 		if( tenant != null ) {
+			invDAO.open(tenant);
 			Categoria cate = invDAO.buscarCategoria(nombre, tenant);
 			if( cate != null )
 				return false;
 			
 			invDAO.persistirCategoria(cat, tenant);
+			invDAO.close(tenant);
 		} else {
 			return false;
 		}
@@ -55,36 +56,29 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean existeCategoria(String nombre, long idAV) {
-
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-
-			if (av != null) {
-				return invDAO.buscarCategoria(nombre,
-						av.getUsuarioCreador().getNick() + "_" + av.getNombreAV()) != null;
-			} else {
-				return false;
-			}
-		} else {
-			return invDAO.buscarCategoria(nombre) != null;
+		
+		boolean existe = false;
+		
+		String tenant = getTenant(idAV);
+		if (tenant != null) {			
+			invDAO.open(tenant);
+			existe = invDAO.buscarCategoria(nombre, tenant) != null;
+			invDAO.close(tenant);
 		}
+		
+		return existe;
 	}
 
 	@Override
 	public void modificarNombreCategoria(String nombre, long idAV, String nuevoNombre) throws Exception {
 		if (existeCategoria(nombre, idAV)) {
-			if (idAV > 0) {
-				AV av = avDAO.traerAV(idAV);
-				if (av != null) {
-					String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-					Categoria cat = invDAO.buscarCategoria(nombre, tenant);
-					cat.setNombre(nuevoNombre);
-					invDAO.actualizarCategoria(cat, tenant);
-				}
-			} else {
-				Categoria cat = invDAO.buscarCategoria(nombre);
+			String tenant = getTenant(idAV);
+			if( tenant != null ) {
+				invDAO.open(tenant);
+				Categoria cat = invDAO.buscarCategoria(nombre, tenant);
 				cat.setNombre(nuevoNombre);
-				invDAO.persistirCategoria(cat);
+				invDAO.actualizarCategoria(cat, tenant);
+				invDAO.close(tenant);
 			}
 		} else {
 			throw new Exception("No existe la categoría");
@@ -94,16 +88,12 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public void eliminarCategoria(String nombre, long idAV) throws Exception {
 		if (existeCategoria(nombre, idAV)) {
-			if (idAV > 0) {
-				AV av = avDAO.traerAV(idAV);
-				if (av != null) {
-					String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-					Categoria cat = invDAO.buscarCategoria(nombre, tenant);
-					invDAO.eliminarCategoria(cat, tenant);
-				}
-			} else {
-				Categoria cat = invDAO.buscarCategoria(nombre);
-				invDAO.eliminarCategoria(cat);
+			String tenant = getTenant(idAV);
+			if (tenant != null) {
+				invDAO.open(tenant);
+				Categoria cat = invDAO.buscarCategoria(nombre, tenant);
+				invDAO.eliminarCategoria(cat, tenant);
+				invDAO.close(tenant);
 			}
 		} else {
 			throw new Exception("No existe la categoría");
@@ -114,16 +104,13 @@ public class ControladorInventario implements IControladorInventario {
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
 			long idAV, int stock) throws Exception {
 
-		String tenant = "";
 		Categoria cat = null;
-
 		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-
 		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock);
 
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
 			cat = invDAO.buscarCategoria(categoria, tenant);
 
 			if (cat == null)
@@ -133,73 +120,41 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.persistirProducto(prod, tenant);
 			cat.addProducto(prod);
 			invDAO.actualizarCategoria(cat, tenant);
-
-		} else {
-			cat = invDAO.buscarCategoria(categoria);
-
-			if (cat == null)
-				throw new Exception("No existe la categoria '" + categoria + "'");
-
-			prod.setCategoria(cat);
-			invDAO.persistirProducto(prod);
-			cat.addProducto(prod);
-			invDAO.actualizarCategoria(cat);
-
+			invDAO.close(tenant);
 		}
 	}
 
 	@Override
 	public void setStockProducto(String nombreProd, long idAV, int stock) {
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
 			Producto prod = invDAO.buscarProducto(nombreProd, tenant);
 			prod.setStock(stock);
-
 			invDAO.actualizarProducto(prod, tenant);
-
-		} else {
-			Producto prod = invDAO.buscarProducto(nombreProd);
-			prod.setStock(stock);
-			invDAO.actualizarProducto(prod);
+			invDAO.close(tenant);
 		}
 	}
 
 	@Override
 	public void cambiarCategoriaProducto(String categoria, String producto, long idAV) {
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
 			Producto prod = invDAO.buscarProducto(producto, tenant);
 			Categoria catNueva = invDAO.buscarCategoria(categoria, tenant);
 			Categoria catVieja = prod.getCategoria();
 
 			List<Producto> prods = catVieja.getProductos();
 			prods.remove(prod);
-
 			prod.getCategoria().setProductos(prods);
-
 			prod.setCategoria(catNueva);
 			catNueva.addProducto(prod);
 
 			invDAO.actualizarProducto(prod, tenant);
 			invDAO.actualizarCategoria(catVieja, tenant);
 			invDAO.actualizarCategoria(catNueva, tenant);
-
-		} else {
-			Producto prod = invDAO.buscarProducto(producto);
-			Categoria catNueva = invDAO.buscarCategoria(categoria);
-			Categoria catVieja = prod.getCategoria();
-
-			List<Producto> prods = catVieja.getProductos();
-			prods.remove(prod);
-			prod.getCategoria().setProductos(prods);
-			prod.setCategoria(catNueva);
-			catNueva.addProducto(prod);
-
-			invDAO.actualizarProducto(prod);
+			invDAO.close(tenant);
 		}
 	}
 
@@ -207,75 +162,72 @@ public class ControladorInventario implements IControladorInventario {
 	public void modificarProducto(String nombreProd, long idAV, String nombre, String descripcion, double precio,
 			String atributos) throws Exception {
 
-		String tenant;
-
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		} else {
-			tenant = "master";
-		}
-
-		if (invDAO.buscarProducto(nombre, tenant) != null) {
-			Producto prod = invDAO.buscarProducto(nombreProd, tenant);
-
-			prod.setNombre(nombre);
-			prod.setDescripcion(descripcion);
-			prod.setPrecio(precio);
-
-			List<Atributo> attrs = util.Serializador.convertirDesdeString(atributos);
-
-			prod.setAtributosList(attrs);
-
-			invDAO.actualizarProducto(prod, tenant);
-		} else {
-			throw new Exception("Ya existe un producto con ese nombre.");
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
+			if (invDAO.buscarProducto(nombre, tenant) != null) {
+				Producto prod = invDAO.buscarProducto(nombreProd, tenant);
+	
+				prod.setNombre(nombre);
+				prod.setDescripcion(descripcion);
+				prod.setPrecio(precio);
+	
+				List<Atributo> attrs = util.Serializador.convertirDesdeString(atributos);
+	
+				prod.setAtributosList(attrs);
+	
+				invDAO.actualizarProducto(prod, tenant);
+			} else {
+				throw new Exception("Ya existe un producto con ese nombre.");
+			}
+			invDAO.close(tenant);
 		}
 
 	}
 
 	@Override
 	public boolean copiarProducto(String nombreProducto, long idAVOrigen, long idAVDestino) throws Exception {
-		String tenantOrigen;
-		String tenantDestino;
 
 		if (idAVOrigen == idAVDestino) {
 			throw new Exception("El AV de origen y destino son el mismo.");
 		}
-
-		if (idAVOrigen > 0) {
-			AV av = avDAO.traerAV(idAVOrigen);
-			tenantOrigen = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		} else {
-			tenantOrigen = "master";
+		
+		String tenantOrigen = getTenant(idAVOrigen);
+		String tenantDestino = getTenant(idAVDestino);
+		
+		if( (tenantOrigen != null)&&(tenantDestino != null) ) {
+			
+			invDAO.open(tenantOrigen);
+			invDAO.open(tenantDestino);
+			
+			Producto prodOriginal = invDAO.buscarProducto(nombreProducto, tenantOrigen);
+			
+			if( prodOriginal == null )
+				throw new exceptions.NoExisteElProducto();
+			
+			Categoria cat = invDAO.buscarCategoria(prodOriginal.getCategoria().getNombre(), tenantDestino);
+	
+			if (cat == null) {
+				cat = new Categoria(prodOriginal.getCategoria().getNombre());
+				invDAO.persistirCategoria(cat, tenantDestino);
+			}
+	
+			List<Atributo> attrs = util.Serializador.convertirDesdeString(prodOriginal.getAtributos());
+	
+			Producto prodNuevo = new Producto(prodOriginal.getNombre(), prodOriginal.getDescripcion(),
+					prodOriginal.getPrecio(), cat, attrs, prodOriginal.getStock());
+	
+			invDAO.persistirProducto(prodNuevo, tenantDestino);
+			cat.addProducto(prodNuevo);
+			invDAO.actualizarCategoria(cat, tenantDestino);
+			
+			invDAO.close(tenantOrigen);
+			invDAO.close(tenantDestino);
+			
+			return true;
 		}
 
-		if (idAVDestino > 0) {
-			AV av = avDAO.traerAV(idAVDestino);
-			tenantDestino = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		} else {
-			tenantDestino = "master";
-		}
-
-		Producto prodOriginal = invDAO.buscarProducto(nombreProducto, tenantOrigen);
-
-		Categoria cat = invDAO.buscarCategoria(prodOriginal.getCategoria().getNombre(), tenantDestino);
-
-		if (cat == null) {
-			cat = new Categoria(prodOriginal.getCategoria().getNombre());
-			invDAO.persistirCategoria(cat, tenantDestino);
-		}
-
-		List<Atributo> attrs = util.Serializador.convertirDesdeString(prodOriginal.getAtributos());
-
-		Producto prodNuevo = new Producto(prodOriginal.getNombre(), prodOriginal.getDescripcion(),
-				prodOriginal.getPrecio(), cat, attrs, prodOriginal.getStock());
-		cat.addProducto(prodNuevo);
-
-		invDAO.persistirProducto(prodNuevo, tenantDestino);
-		invDAO.actualizarCategoria(cat, tenantDestino);
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -307,22 +259,18 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public void eliminarProducto(String nombre, long idAV) {
 
-		String tenant;
-
-		if (idAV > 0) {
-			AV av = avDAO.traerAV(idAV);
-			tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
-		} else {
-			tenant = "master";
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
+			Producto prod = invDAO.buscarProducto(nombre, tenant);
+	
+			Categoria cat = prod.getCategoria();
+			cat.removeProducto(prod);
+	
+			invDAO.actualizarCategoria(cat, tenant);
+			invDAO.eliminarProducto(prod, tenant);
+			invDAO.close(tenant);
 		}
-
-		Producto prod = invDAO.buscarProducto(nombre, tenant);
-
-		Categoria cat = prod.getCategoria();
-		cat.removeProducto(prod);
-
-		invDAO.actualizarCategoria(cat, tenant);
-		invDAO.eliminarProducto(prod, tenant);
 
 	}
 
@@ -332,15 +280,15 @@ public class ControladorInventario implements IControladorInventario {
 		List<DataCategoria> dcats = new ArrayList<>();
 		DataCategoria dc = null;
 
-		AV av = avDAO.traerAV(idAV);
-		if (av != null) {
-			String tenant = av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+		String tenant = getTenant(idAV);
+		if( tenant != null ) {
+			invDAO.open(tenant);
 			cats = invDAO.buscarListaCategoriaspoAV(idAV, tenant);
 			for (Categoria cat : cats) {
 				dc = cat.getDataCategoria();
 				dcats.add(dc);
 			}
-
+			invDAO.close(tenant);
 		}
 
 		return dcats;
@@ -350,11 +298,14 @@ public class ControladorInventario implements IControladorInventario {
 	public DataCategoria getCategoria(String nombreCat, long idAV) throws NoExisteElAV {
 		String tenant = getTenant(idAV);
 		DataCategoria dataCat = null;
-		if (tenant != null) {			
+		if (tenant != null) {
+			invDAO.open(tenant);
 			Categoria cat = invDAO.buscarCategoria(nombreCat, tenant);
 			
 			if( cat != null )
 				dataCat = cat.getDataCategoria();
+			
+			invDAO.close(tenant);
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
@@ -374,6 +325,7 @@ public class ControladorInventario implements IControladorInventario {
 
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
+			invDAO.open(tenant);
 			Producto prod = invDAO.buscarProducto(producto, tenant);
 
 			if (prod != null) {
@@ -399,6 +351,7 @@ public class ControladorInventario implements IControladorInventario {
 				ProductoAComprar pac = new ProductoAComprar(prod, cantidad);
 
 				invDAO.persistirProductoAComprar(pac, tenant);
+				invDAO.close(tenant);
 			} else {
 				throw new exceptions.NoExisteElProducto();
 			}
@@ -414,6 +367,7 @@ public class ControladorInventario implements IControladorInventario {
 			throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
+			invDAO.open(tenant);
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
 
 			if (pac != null) {
@@ -421,6 +375,7 @@ public class ControladorInventario implements IControladorInventario {
 			} else {
 				throw new exceptions.NoExisteElProductoAComprar();
 			}
+			invDAO.close(tenant);
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
@@ -429,23 +384,28 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public void productoComprado(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
-		ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-		eliminarProductoDeListaDeCompra(idAV, idProdComp);
-		Producto prod = pac.getProducto();
-		setStockProducto(prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
+		if (tenant != null) {
+			invDAO.open(tenant);
+			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
+			eliminarProductoDeListaDeCompra(idAV, idProdComp);
+			Producto prod = pac.getProducto();
+			setStockProducto(prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
+			invDAO.close(tenant);
+		}
 	}
 
 	@Override
 	public List<DataProductoAComprar> getListaDeCompra(long idAV) throws NoExisteElAV {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
+			invDAO.open(tenant);
 			List<ProductoAComprar> pacs = invDAO.getAllProductoAComprar(tenant);
 			List<DataProductoAComprar> dpacs = new ArrayList<>();
 
 			for (ProductoAComprar pc : pacs) {
 				dpacs.add(pc.getDataProductoAComprar());
 			}
-
+			invDAO.close(tenant);
 			return dpacs;
 		} else {
 			throw new exceptions.NoExisteElAV();
@@ -455,18 +415,23 @@ public class ControladorInventario implements IControladorInventario {
 	@Override
 	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp)
 			throws NoExisteElAV, NoExisteElProductoAComprar {
+		DataProductoAComprar dpac = null;
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
+			invDAO.open(tenant);
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
 
 			if (pac != null) {
-				return pac.getDataProductoAComprar();
+				dpac = pac.getDataProductoAComprar();
 			} else {
 				throw new exceptions.NoExisteElProductoAComprar();
 			}
+			invDAO.close(tenant);
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
+		
+		return dpac;
 	}
 
 	private String getTenant(long idAV) {
@@ -498,13 +463,16 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	private DataProducto getProducto(String nombre, String tenant) throws NoExisteElProducto {
+		DataProducto dp = null;
+		invDAO.open(tenant);
 		Producto prod = invDAO.buscarProducto(nombre, tenant);
 
 		if (prod != null) {
-			return prod.getDataProducto();
+			dp = prod.getDataProducto();
 		} else {
 			throw new exceptions.NoExisteElProducto();
 		}
-
+		invDAO.close(tenant);
+		return dp;
 	}
 }
