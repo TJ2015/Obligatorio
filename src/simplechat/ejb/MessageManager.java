@@ -31,14 +31,19 @@ public class MessageManager implements MessageManagerLocal {
  
     @Override
     public Message getFirstAfter(Date after) {
-        if(messages.isEmpty())
-            return null;
-        if(after == null)
-            return messages.get(0);
-        for(Message m : messages) {
-            if(m.getDateSent().after(after))
-                return m;
-        }
+    	
+    	try {
+    		if(messages.isEmpty())
+                return null;
+            if(after == null)
+                return messages.get(0);
+            for(Message m : messages) {
+                if(m.getDateSent().after(after))
+                    return m;
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return null;
     }
  

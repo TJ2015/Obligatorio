@@ -58,7 +58,7 @@ public class MessageBean implements Serializable {
     public void sendMessage(ActionEvent evt) {
         mm.sendMessage(message);
     }
- 
+    
     public void firstUnreadMessage(ActionEvent evt) {
        RequestContext ctx = RequestContext.getCurrentInstance();
  
@@ -73,7 +73,7 @@ public class MessageBean implements Serializable {
        ctx.addCallbackParam("user", m.getUser());
        ctx.addCallbackParam("dateSent", m.getDateSent().toString());
        ctx.addCallbackParam("text", m.getMessage());
- 
+       
     }
  
 }
