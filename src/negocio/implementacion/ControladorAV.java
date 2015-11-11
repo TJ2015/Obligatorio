@@ -18,6 +18,7 @@ import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
+import persistencia.implementacion.AvDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IUsuarioDAO;
 
@@ -31,6 +32,8 @@ public class ControladorAV implements IControladorAV {
 	private IUsuarioDAO usuarioDAO;
 	@EJB
 	private IAvDAO avDAO;
+	
+	private IAvDAO avDAOTenant = new AvDAO();
 
 	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido {
 
@@ -125,10 +128,10 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
+				avDAOTenant.open(tenant);
 				Nota nota = new Nota(texto, usuario);
-				avDAO.persistirNota(nota, tenant);
-				avDAO.close(tenant);
+				avDAOTenant.persistirNota(nota, tenant);
+				avDAOTenant.close(tenant);
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
 			}
@@ -142,9 +145,9 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
-				avDAO.eliminarNota(idNota, tenant);
-				avDAO.close(tenant);
+				avDAOTenant.open(tenant);
+				avDAOTenant.eliminarNota(idNota, tenant);
+				avDAOTenant.close(tenant);
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
 			}
@@ -158,10 +161,10 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
+				avDAOTenant.open(tenant);
 				Notificacion noti = new Notificacion(texto);
-				avDAO.persistirNotificacion(noti, tenant);
-				avDAO.close(tenant);
+				avDAOTenant.persistirNotificacion(noti, tenant);
+				avDAOTenant.close(tenant);
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
 			}
@@ -175,12 +178,12 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
-				Notificacion noti = avDAO.buscarNotificacion(idNoti, tenant);
+				avDAOTenant.open(tenant);
+				Notificacion noti = avDAOTenant.buscarNotificacion(idNoti, tenant);
 				noti.setTexto(texto);
 				noti.setLeido(leido);
-				avDAO.actualizarNotificacion(noti, tenant);
-				avDAO.close(tenant);
+				avDAOTenant.actualizarNotificacion(noti, tenant);
+				avDAOTenant.close(tenant);
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
 			}
@@ -194,9 +197,9 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
-				avDAO.eliminarNotificacion(idNoti, tenant);
-				avDAO.close(tenant);
+				avDAOTenant.open(tenant);
+				avDAOTenant.eliminarNotificacion(idNoti, tenant);
+				avDAOTenant.close(tenant);
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
 			}
@@ -219,15 +222,15 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
-				List<Object> notas = avDAO.getAllNotas(tenant);
+				avDAOTenant.open(tenant);
+				List<Object> notas = avDAOTenant.getAllNotas(tenant);
 				List<DataNota> datas = new ArrayList<>();
 
 				for (Object o : notas) {
 					Nota n = (Nota) o;
 					datas.add(n.getDataNota());
 				}
-				avDAO.close(tenant);
+				avDAOTenant.close(tenant);
 				return datas;
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);
@@ -242,15 +245,15 @@ public class ControladorAV implements IControladorAV {
 		if (idAV > 0) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
-				avDAO.open(tenant);
-				List<Object> notis = avDAO.getAllNotificaciones(tenant);
+				avDAOTenant.open(tenant);
+				List<Object> notis = avDAOTenant.getAllNotificaciones(tenant);
 				List<DataNotificacion> datas = new ArrayList<>();
 
 				for (Object o : notis) {
 					Notificacion n = (Notificacion) o;
 					datas.add(n.getDataNotificacion());
 				}
-				avDAO.close(tenant);
+				avDAOTenant.close(tenant);
 				return datas;
 			} else {
 				throw new Exception("No existe un AV con id: " + idAV);

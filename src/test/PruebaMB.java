@@ -1016,14 +1016,12 @@ public class PruebaMB implements Serializable {
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-		/*
+		
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
-		*/
 		tests.put("Crear Nota", testCrearNota()); 
 		tests.put( "Crear Notificacion" , testCrearNotifiacion());
-		/*
 		tests.put("Enviar Mensaje", testEnviarMensaje()); 
 		tests.put("Marcar Mensaje Como Leido", testMarcarMensajeComoLeido());
 		tests.put("Eliminar Mensaje Recibido", testEliminarMensajeRecibido()); 
@@ -1046,7 +1044,7 @@ public class PruebaMB implements Serializable {
 		tests.put("Set Stock Producto", testSetStockProducto());
 		tests.put("Set Stock Producto", testCambiarCategoriaProducto());
 		tests.put("Eliminar Producto", testEliminarProducto());
-		*/
+		
 		
 		/*
 		cInv.crearCategoria("cat1", ID_AV);
