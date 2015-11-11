@@ -2,6 +2,7 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataUsuario;
+import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
@@ -30,6 +33,26 @@ public class AvBean implements Serializable {
 	private String nombreAV;
 	private String mensaje;
 	private String usuarioCreador;
+	private int cantUsuComp;
+	private List<DataUsuario> usus=new ArrayList<>();
+	
+	public int getCantUsuComp() {
+		return cantUsuComp;
+	}
+
+	public void setCantUsuComp(int cantUsuComp) {
+		this.cantUsuComp = cantUsuComp;
+	}
+
+	public List<DataUsuario> getUsus() {
+		return usus;
+	}
+
+	public void setUsus(List<DataUsuario> usus) {
+		this.usus = usus;
+	}
+
+	
 
 	public String getNombreAV() {
 		return nombreAV;
@@ -103,15 +126,12 @@ public class AvBean implements Serializable {
 		}
 	}
 
-	public void compartirAV() {
+	public void compartirAV() throws NoExisteElAV {
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
 		if (cUsu.existeUsuarioNick(nickname)) {
 			cAV.compartirAV(idAV, nickname);
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			cantUsuComp++;
 		}
 
 	}
@@ -148,5 +168,28 @@ public class AvBean implements Serializable {
 		}
 
 	}
+	public void mostrarListaUsuariosCompartidos() throws NoExisteElAV 
+	{
+		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV= (long) session.getAttribute("idAV");
+			usus=cAV.traerAV(idAV).getUsuariosCompartidos();
+			//session.setAttribute("usus",.toArray());
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuarios_compartidos.xhtml");
+
+			
+		} catch (IOException e) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+			
+	}
+
+	
+	
 
 }

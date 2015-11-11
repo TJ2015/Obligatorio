@@ -16,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataUsuario;
 
 /**
  * 
@@ -53,7 +55,11 @@ public class AV implements Serializable {
 
 	public DataAV getDataAV() {
 		String nombreUsu = usuarioCreador.getNombre();
-		DataAV dav = new DataAV(nombreAV, nombreUsu);
+		List<DataUsuario> listDusu = new ArrayList<>();
+		for (Usuario usus : usuariosCompartidos) {
+			listDusu.add(usus.getDataUsuario());
+		}
+		DataAV dav = new DataAV(nombreAV, nombreUsu,listDusu);
 		dav.setIdAV(idAV);
 		return dav;
 	}

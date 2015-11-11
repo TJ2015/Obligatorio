@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.Usuario;
+
 public class DataAV implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,6 +13,8 @@ public class DataAV implements Serializable {
 	private long idAV;
 	private String nombreAV;
 	private String nickname;
+	private List<DataUsuario> usuariosCompartidos = new ArrayList<>();
+	private List<DataCategoria> categorias;
 
 	public String getNickname() {
 		return nickname;
@@ -20,12 +24,10 @@ public class DataAV implements Serializable {
 		this.nickname = nickname;
 	}
 
-	private List<DataUsuario> usuariosCompartidos;
-	private List<DataCategoria> categorias;
-
-	public DataAV(String nombreAV, String nickname) {
+	public DataAV(String nombreAV, String nickname, List<DataUsuario>ususComp) {
 		this.nombreAV = nombreAV;
 		this.nickname = nickname;
+		this.usuariosCompartidos=ususComp;
 		this.setCategorias(new ArrayList<>());
 
 	}

@@ -40,9 +40,10 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                     	<li >
-                            <a href="compartirAV.xhtml">
+                    	<a href="compartirAv.xhtml">
                                 <i class="fa fa-plus-square"></i> <span>Compartir AV</span>
-                            </a>
+                            </a>            
+                        
                         </li>
 						<li >
                             <a href="categoria_crear.xhtml">
@@ -72,9 +73,7 @@
 		                            	<c:forEach var="prod" items="${cat.productos}">
 			                                <li>
 			                                	<h:form>
-			                                	
-		
-												    <h:commandLink action="#{productoBean.cargarProducto()}" >
+			                                		<h:commandLink action="#{productoBean.cargarProducto()}" >
 									                   <i class="fa fa-angle-double-right"></i> 
 			                                			${prod.nombre}
 													</h:commandLink>

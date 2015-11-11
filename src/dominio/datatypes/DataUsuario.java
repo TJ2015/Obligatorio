@@ -41,7 +41,7 @@ public class DataUsuario implements Serializable {
 	}
 
 	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento,List <DataAV> avs,List <DataAV> avsComp, String nombreImagen, InputStream imagen) 
+			Date fechaNacimiento,List <DataAV> avs,String nombreImagen, InputStream imagen) 
 	{
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -50,7 +50,6 @@ public class DataUsuario implements Serializable {
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
 		this.AVs=avs;
-		this.AVsCompar=avsComp;
 		this.nombreImagen = nombreImagen;
 		this.imagen = imagen;
 	}

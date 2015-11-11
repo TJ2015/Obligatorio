@@ -116,14 +116,9 @@ public class Usuario implements Serializable {
 					lDataAlmacen.add(almacen.getDataAV());
 				}
 			}
-			if (AVcompartidos != null) {
-				lDataCompartidos = new ArrayList<>();
-				for (AV avs : AVcompartidos) {
-					lDataCompartidos.add(avs.getDataAV());
-				}
-			}
+			
 			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
-			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, nombreImagen, imagen);
 
 		} catch (Exception e) {
 			e.printStackTrace();

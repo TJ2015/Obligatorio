@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
@@ -29,9 +30,28 @@ public class ProductoBean implements Serializable {
 	private String categoria;
 	private String atributos;
 	private int stock;
+	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
+	List<String> nomProd=new ArrayList<>();
+
 
 	private static final long serialVersionUID = 1L;
+
+	public int getCantProd() {
+		return cantProd;
+	}
+
+	public void setCantProd(int cantProd) {
+		this.cantProd = cantProd;
+	}
+
+	public List<String> getNomProd() {
+		return nomProd;
+	}
+
+	public void setNomProd(List<String> nomProd) {
+		this.nomProd = nomProd;
+	}
 
 	// para descripcion producto
 	private long idAV;
@@ -142,6 +162,33 @@ public class ProductoBean implements Serializable {
 		long idAV = (long) session.getAttribute("idAV");
 		try {
 			dprods = cinv.getCategoria(nombreCat, idAV).getProductos();
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaProducto.xhtml");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
+	public void mostrarTodosProd(){
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		List <DataCategoria> dcats= new ArrayList<>();
+		List <DataProducto> dprodT= new ArrayList<>();
+		try {
+			dcats=cinv.mostrarListaCategoria(idAV);
+			
+			for(DataCategoria cats:dcats){
+				dprodT=cats.getProductos();
+				for(DataProducto prods:dprodT){
+					nomProd.add(prods.getNombre());
+					cantProd++;
+				}
+			}
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaProducto.xhtml");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
