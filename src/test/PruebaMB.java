@@ -1045,18 +1045,6 @@ public class PruebaMB implements Serializable {
 		tests.put("Set Stock Producto", testCambiarCategoriaProducto());
 		tests.put("Eliminar Producto", testEliminarProducto());
 		
-		
-		/*
-		cInv.crearCategoria("cat1", ID_AV);
-		for( int i = 0; i < 2000; i++ ) {
-			try {
-				cInv.crearProducto("prod" + i, "prod desc " + i, 123, "cat1", "attr1:val1;attr2:val2;", ID_AV, 5);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		*/
-		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
 		} catch (IOException e) {

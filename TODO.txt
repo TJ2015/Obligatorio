@@ -27,3 +27,5 @@ Ganar membresia con facebook
 Metodos de acceso a datos (getters de DataTypes)
 
 Controlar que los nombres de usuario, categoria y producto sean alfanumericos
+
+BOBOSSSS
