@@ -23,7 +23,7 @@ public interface IControladorInventario {
 	public boolean copiarProducto(String nombreProducto, long idAVOrigen, long idAVDestino) throws Exception;
 	public boolean moverProducto(String producto, long idAVOrigen, long idAVDestino) throws Exception;
 	public boolean moverProductos(List<String> productos, long idAVOrigen, long idAVDestino);
-	public void modificarProducto(String nombreProd, long idAV, String nombre, String descripcion, double precio, String atributos) throws Exception;
+	public void modificarProducto(String nombreProd, long idAV, String nuevoNombre, String descripcion, double precio, String atributos) throws Exception;
 	public void setStockProducto(String nombreProd, long idAV, int stock);
 	public void cambiarCategoriaProducto(String nuevaCategoria, String producto, long idAV);
 	public void eliminarProducto(String nombre, long idAV);

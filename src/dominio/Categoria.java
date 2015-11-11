@@ -35,7 +35,7 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
 	private String nombre;
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	@OneToMany(cascade = { CascadeType.REMOVE })
 	@ElementCollection
 	@JoinTable(name = "categoria_productos", joinColumns = @JoinColumn(name = "categoria") , inverseJoinColumns = @JoinColumn(name = "idCategoria") )
 	private List<Producto> productos = new ArrayList<>();

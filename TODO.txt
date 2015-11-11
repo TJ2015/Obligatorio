@@ -9,11 +9,11 @@ Sincronizar lista de compra con stock
 Algoritmo de recomendación
 
 Log de movimientos stock
+Log de movimientos de usuario
+Log de ganancias y proyecciones
 
 Reportes administrador:
-	Log de movimientos de usuario
-	Log de ganancias y proyecciones
-	Prducto generico más utilizado
+	Prducto generico más utilizado usar logs)
 	Deteccion de fraude
 
 Reportes usuario: 
@@ -25,3 +25,5 @@ Notificaciones de limites de cuenta
 Ganar membresia con facebook
 
 Metodos de acceso a datos (getters de DataTypes)
+
+Controlar que los nombres de usuario, categoria y producto sean alfanumericos
