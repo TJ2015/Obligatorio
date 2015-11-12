@@ -43,6 +43,7 @@ public class Usuario implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	private Date fecchaRegistro;
 	
 	@Column(length=1294967295)
 	private byte[] bytesImagen;
@@ -75,7 +76,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
-		super();
+		this.fecchaRegistro = new Date();
 	}
 	
 	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, byte[] bytesImagen, String nombreImagen) {
@@ -88,6 +89,7 @@ public class Usuario implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 		this.bytesImagen = bytesImagen;
 		this.nombreImagen = nombreImagen;
+		this.fecchaRegistro = new Date();
 	}
 
 	public Usuario(DataUsuarioSocial usuarioSocial) {
@@ -118,7 +120,7 @@ public class Usuario implements Serializable {
 			}
 			
 			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
-			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, nombreImagen, imagen);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, nombreImagen, imagen, fecchaRegistro);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -321,6 +323,14 @@ public class Usuario implements Serializable {
 
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;
+	}
+
+	public Date getFecchaRegistro() {
+		return fecchaRegistro;
+	}
+
+	public void setFecchaRegistro(Date fecchaRegistro) {
+		this.fecchaRegistro = fecchaRegistro;
 	}
 	
 }

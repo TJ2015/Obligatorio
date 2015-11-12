@@ -8,7 +8,9 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import exceptions.NoExisteElUsuario;
 import exceptions.NombreDeAVInvalido;
+import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
@@ -26,7 +28,7 @@ public class DatosPrecargados {
 	
 
 	@PostConstruct
-	void atStartup() {
+	void atStartup(){
 
 		util.DBUtil.modificarBase("sapo_master");
 		

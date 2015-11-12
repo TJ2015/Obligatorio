@@ -170,7 +170,6 @@ public class UsuarioBean implements Serializable
 		this.imagen = null;
 	}
 	
-
 	public void mostrarListaAV() 
 	{
 		try {

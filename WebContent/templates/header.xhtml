@@ -32,7 +32,7 @@
 		                   <li ><a href="login.xhtml" >Ingresar</a></li>
 		                   <li ><a href="registro.xhtml" >Registrarse</a></li>
 		                   </c:if>
-		                    <c:if test="${usuarioBean.logueado ==true}">
+		                    <c:if test="${usuarioBean.logueado == true}">
 		                    <li>
   								<h:form>
                                   <h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" />   	

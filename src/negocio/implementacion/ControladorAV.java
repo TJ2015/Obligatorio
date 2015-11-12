@@ -290,15 +290,29 @@ public class ControladorAV implements IControladorAV {
 	}
 
 	@Override
-	public List<DataLogEntry> getLogStock(long idAV) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<DataLogEntry> getLogStock(long idAV, int offset, int cant) {
-		// TODO Auto-generated method stub
-		return null;
+	public void descompartirAV(long idAV, String nickUsuario) throws NoExisteElAV {
+		
+		AV av = avDAO.traerAV(idAV);
+		
+		if( av != null) {
+			List<Usuario> compas = av.getUsuariosCompartidos();
+			Usuario compa = null;
+			for( Usuario usu : compas ) {
+				if( usu.getNick().equals(nickUsuario) ) {
+					compa = usu;
+					break;
+				}
+			}
+			av.removeUsuarioCompartido(compa);
+			compa.removeAVCompartido(av);
+			
+			avDAO.actualizarAV(av);
+			usuarioDAO.actualizarUsuario(compa);
+			
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+		
 	}
 
 }

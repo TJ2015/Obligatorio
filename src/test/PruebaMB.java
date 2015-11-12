@@ -594,7 +594,7 @@ public class PruebaMB implements Serializable {
 		}
 
 		try {
-			return cUsu.loginAdmin(nick, pass);
+			return cUsu.loginAdmin(nick, pass) != null;
 		} catch (NoExisteElUsuario e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -637,7 +637,7 @@ public class PruebaMB implements Serializable {
 		}
 
 		try {
-			return OK && cUsu.loginAdmin(nick, passNuevo);
+			return OK && cUsu.loginAdmin(nick, passNuevo) != null;
 		} catch (NoExisteElUsuario e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

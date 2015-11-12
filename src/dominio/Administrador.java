@@ -11,8 +11,7 @@ import dominio.datatypes.DataAdministrador;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Administrador.buscarPorNick", query="SELECT a FROM Administrador a WHERE a.nick = :nick")
-})
+		@NamedQuery(name = "Administrador.buscarPorNick", query = "SELECT a FROM Administrador a WHERE a.nick = :nick") })
 public class Administrador implements Serializable {
 
 	@Id
@@ -21,21 +20,19 @@ public class Administrador implements Serializable {
 	private String nick;
 	private String password;
 	private String email;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public Administrador() {
 		super();
 	}
 
-	
 	public Administrador(String nick, String password, String email) {
 		super();
 		this.nick = nick;
 		this.password = password;
 		this.email = email;
 	}
-
 
 	public long getId() {
 		return id;
@@ -60,16 +57,14 @@ public class Administrador implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	@Override
 	public String toString() {
@@ -113,5 +108,5 @@ public class Administrador implements Serializable {
 	public DataAdministrador getDataAdministrador() {
 		return new DataAdministrador(id, nick, password, email);
 	}
-	
+
 }

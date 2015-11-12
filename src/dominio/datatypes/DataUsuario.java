@@ -20,6 +20,7 @@ public class DataUsuario implements Serializable {
 	private List<DataAV> AVsCompar = new ArrayList<>();
 	private String nombreImagen;
 	private InputStream imagen;
+	private Date fechaRegistro;
 
 	public List<DataAV> getAVs() {
 		return AVs;
@@ -41,7 +42,7 @@ public class DataUsuario implements Serializable {
 	}
 
 	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento,List <DataAV> avs,String nombreImagen, InputStream imagen) 
+			Date fechaNacimiento,List <DataAV> avs,String nombreImagen, InputStream imagen, Date fechaRegistro) 
 	{
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -52,6 +53,7 @@ public class DataUsuario implements Serializable {
 		this.AVs=avs;
 		this.nombreImagen = nombreImagen;
 		this.imagen = imagen;
+		this.fechaRegistro = fechaRegistro;
 	}
 
 	public String getNombre() {
@@ -168,6 +170,14 @@ public class DataUsuario implements Serializable {
 	}
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;
+	}
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
 	
 }

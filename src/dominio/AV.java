@@ -95,6 +95,14 @@ public class AV implements Serializable {
 	public void setUsuariosCompartidos(List<Usuario> usuariosCompartidos) {
 		this.usuariosCompartidos = usuariosCompartidos;
 	}
+	
+	public void addUsuarioCompartido(Usuario usu) {
+		this.usuariosCompartidos.add(usu);
+	}
+	
+	public void removeUsuarioCompartido(Usuario usu) {
+		this.usuariosCompartidos.remove(usu);
+	}
 
 	@Override
 	public int hashCode() {

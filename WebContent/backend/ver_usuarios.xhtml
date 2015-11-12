@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+#ListaAVsCreados li {
+	width: 100%;
+}
+
+li i {
+	float: right;
+}
+</style>
+
+</h:head>
+
+<h:body>
+	<ui:composition template="/templates/layout_admin.xhtml">
+		<ui:define name="contenido">
+			<c:if test="${!adminBean.logueado}">
+				<meta http-equiv="Refresh" content="0; URL=login_admin.xhtml"></meta>
+			</c:if>
+			<c:if test="${adminBean.logueado}">
+				<div class="container-fluid clearfix">
+					<div class="page-header text-center">
+						<h1>Usuarios registrados</h1>
+					</div>
+
+					<section class="content">
+					<div class="col-lg-3 col-xs-6">
+						<ul class="list-group" id="ListaUsuarios">
+							<section class="content">
+			                    <div class="row">
+			                        <div class="col-xs-12">
+			                            <div class="box">
+			                                <div class="box-header">
+			                                    <h3 class="box-title">Data Table With Full Features</h3>                                    
+			                                </div><!-- /.box-header -->
+			                                <div class="box-body table-responsive">
+			                                    <table id="example1" class="table table-bordered table-striped">
+			                                        <thead>
+			                                            <tr>
+			                                                <th>Nickname</th>
+			                                                <th>Email</th>
+			                                                <th>Fecha Nacimiento</th>
+			                                                <th>Premium</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr>
+			                                                <td>Trident</td>
+			                                                <td>Internet
+			                                                    Explorer 4.0</td>
+			                                                <td>Win 95+</td>
+			                                                <td> 4</td>
+			                                            </tr>
+			                                            <tr>
+			                                                <td>Trident</td>
+			                                                <td>Internet
+			                                                    Explorer 4.0</td>
+			                                                <td>Win 95+</td>
+			                                                <td> 4</td>
+			                                            </tr>
+			                                            <tr>
+			                                                <td>Trident</td>
+			                                                <td>Internet
+			                                                    Explorer 4.0</td>
+			                                                <td>Win 95+</td>
+			                                                <td> 4</td>
+			                                            </tr>
+			                                            <tr>
+			                                                <td>Trident</td>
+			                                                <td>Internet
+			                                                    Explorer 4.0</td>
+			                                                <td>Win 95+</td>
+			                                                <td> 4</td>
+			                                            </tr>
+			                                        </tbody>
+			                                        <tfoot>
+			                                            <tr>
+			                                                <th>Nickname</th>
+			                                                <th>Email</th>
+			                                                <th>Fecha Nacimiento</th>
+			                                                <th>Premium</th>
+			                                            </tr>
+			                                        </tfoot>
+			                                    </table>
+			                                </div><!-- /.box-body -->
+			                            </div><!-- /.box -->
+			                        </div>
+			                    </div>
+			
+			                </section><!-- /.content -->
+						</ul>
+					</div>
+					</section>
+				</div>
+			</c:if>
+			<script src="../resources/adminlte/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+			<script src="../resources/adminlte/js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+			<!-- page script -->
+	        <script type="text/javascript">
+	            $(function() {
+	                $("#example1").dataTable();
+	                $('#example2').dataTable({
+	                    "bPaginate": true,
+	                    "bLengthChange": false,
+	                    "bFilter": false,
+	                    "bSort": true,
+	                    "bInfo": true,
+	                    "bAutoWidth": false
+	                });
+	            });
+	        </script>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
