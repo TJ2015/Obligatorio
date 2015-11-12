@@ -8,9 +8,9 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import exceptions.NombreDeAVInvalido;
+//import exceptions.NombreDeAVInvalido;
 import negocio.interfases.IControladorAV;
-import negocio.interfases.IControladorInventario;
+/*import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
 
 @Startup
@@ -30,7 +30,7 @@ public class DatosPrecargados {
 
 		util.DBUtil.modificarBase("sapo_master");
 		
-		// CARGAR DATOS
+	/*	// CARGAR DATOS
 		System.out.println("Cargando datos...");
 		
 		cUsu.crearNuevoTipo("comun");
@@ -47,4 +47,4 @@ public class DatosPrecargados {
 	void atShutdown() {
 
 	}
-}
+}*/
