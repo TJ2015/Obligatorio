@@ -26,7 +26,7 @@ import javax.persistence.CascadeType;
  *
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
+@NamedQueries({ @NamedQuery(name = "Categoria.getAll", query = "SELECT c FROM Categoria c"),
 		@NamedQuery(name = "Categoria.buscarPorNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre"),
 		@NamedQuery(name = "Categoria.traerTodasCats", query = "SELECT c FROM Categoria c") })
 public class Categoria implements Serializable {

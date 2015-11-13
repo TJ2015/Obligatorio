@@ -35,28 +35,76 @@
 		<div class="page-header text-center">
 		  <h1>Productos del AV</h1>
 		</div>
-		
 		<section class="content">
-			 <div class="col-lg-3 col-xs-6">
-			 <h3 class="box-title">Todos los productos</h3>
-				<ul class="list-group" id="ListaUsuariosCompartidos">
-				<ui:param name="nomP" value="${productoBean.nomProd}"></ui:param>
-                                
-				   <c:forEach var="nombre" items="${nomP}"  >
-				      <li class="list-group-item">
-				       <a href="mostrarAV.xhtml">
-				       <i class="fa fa-angle-double-right"></i>
-				          ${nombre} 
-				        </a>
-				        <a href="#" data-toggle="modal" data-target="#myModal">
-				        <i class="fa fa-trash-o" style="float:right" ></i>
-				        </a>
-				     </li>
-				                               
-				 </c:forEach>   
-				</ul>
-			</div>
-		</section>
+                            
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Todos los productos</h3>                                    
+                                </div><!-- /.box-header -->
+                                <div class="box-body table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Categoria</th> 
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          
+				  								 <c:forEach var="p" items="${productoBean.dprods2}"  >                            
+											     
+											      <tr>
+											       <td> <a href="ver_producto.xhtml">
+											          ${p.nombre} 
+											        </a>
+											        <a href="#" data-toggle="modal" data-target="#myModal">
+											        
+											        <i class="fa fa-trash-o" style="float:right" ></i>
+											        </a>
+											        	 <!-- Modal -->
+													  <div class="modal fade" id="myModal" role="dialog">
+													    <div class="modal-dialog">
+													    
+													      <!-- Modal content-->
+													      <div class="modal-content">
+													        <div class="modal-header">
+													          <button type="button" class="close" data-dismiss="modal">&times;</button>
+													          <h4 class="modal-title">Eliminar Producto</h4>
+													        </div>
+													        <div class="modal-body">
+													          <p>¿Esta seguro que desea eliminar este Producto?.</p>
+													        </div>
+													        <div class="modal-footer">
+													        <h:form>
+													        	  <h:commandButton  action="#{productoBean.eliminarProducto(p.nombre)" value="Aceptar" class="btn btn-default" />  
+													        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+													        </h:form>
+													        
+													         
+													        </div>
+													      </div>
+													      
+													    </div>
+													  </div>
+											        </td>
+											        <td>#{p.categoria}</td>
+											        </tr>
+											                           
+											 </c:forEach> 
+                                            
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Categoria</th> 
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+
+                </section><!-- /.content -->
 		
 	</div>
 	 <!-- Modal -->
@@ -67,14 +115,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Eliminar AV</h4>
+          <h4 class="modal-title">Eliminar Producto</h4>
         </div>
         <div class="modal-body">
-          <p>¿Esta seguro que desea eliminar este AV?.</p>
+          <p>¿Esta seguro que desea eliminar este Producto?.</p>
         </div>
         <div class="modal-footer">
         <h:form>
-        	  <h:commandButton  action="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
+        	  <h:commandButton  action="#{productoBean.eliminarProducto()}" value="Aceptar" class="btn btn-default" />  
         	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
         </h:form>
         
