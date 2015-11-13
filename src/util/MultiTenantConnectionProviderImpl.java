@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.hibernate.HibernateException;
-import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 
@@ -13,8 +12,11 @@ import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 
 public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionProvider {
 
-private final ConnectionProvider connectionProvider = new ConnectionProviderImpl(CurrentTenantIdentifierResolverImpl.DEFAULT_TENANT_ID);
+	private static final long serialVersionUID = 1L;
+	
+	private final ConnectionProvider connectionProvider = new ConnectionProviderImpl(CurrentTenantIdentifierResolverImpl.DEFAULT_TENANT_ID);
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean isUnwrappableAs(Class arg0) {
 		return false;
@@ -32,7 +34,7 @@ private final ConnectionProvider connectionProvider = new ConnectionProviderImpl
 		try {
 			conn = connectionProvider.getConnection();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return conn;
 	}
@@ -44,13 +46,13 @@ private final ConnectionProvider connectionProvider = new ConnectionProviderImpl
 	
 	@Override
 	public Connection getConnection(String tenantIdentifier) throws SQLException {
-		final Connection connection = getAnyConnection();
+		Connection connection = null;
 		try {
+			connection = getAnyConnection();
 			connection.createStatement().execute( "USE " + tenantIdentifier );
 		}
 		catch ( SQLException e ) {
-			throw new HibernateException(
-					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" +tenantIdentifier + "]",e);
+			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" +tenantIdentifier + "]",e);
 		}
 		return connection;
 	}
@@ -61,11 +63,11 @@ private final ConnectionProvider connectionProvider = new ConnectionProviderImpl
 			connection.createStatement().execute( "USE default_db" );
 		}
 		catch ( SQLException e ) {
-			throw new HibernateException(
-					"Could not alter JDBC connection to specified schema [" +
-							tenantIdentifier + "]",e);
+			throw new HibernateException("Could not alter JDBC connection to specified schema [" + tenantIdentifier + "]",e);
 		}
-		connectionProvider.closeConnection( connection );
+		finally{
+			connectionProvider.closeConnection( connection );
+		}
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package dominio;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +21,13 @@ import javax.persistence.Transient;
 
 import dominio.datatypes.DataProducto;
 
-
-
 /**
  * Entity implementation class for Entity: Producto
  */
 @Entity
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name="Producto.buscarPorNombre", query="SELECT p FROM Producto p WHERE p.nombre = :nombre")
-})
+		@NamedQuery(name = "Producto.buscarPorNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre") })
 public class Producto implements Serializable {
 
 	@Id
@@ -39,11 +37,61 @@ public class Producto implements Serializable {
 	private String descripcion;
 	private double precio;
 	private int stock;
+
 	@ManyToOne
 	private Categoria categoria;
-	// TODO agregar imagen
+
 	@Transient
 	private List<Atributo> atributosList = new ArrayList<>();
+
+	private long idAV;
+
+	public long getIdAV() {
+		return idAV;
+	}
+
+	public void setIdAV(long idAV) {
+		this.idAV = idAV;
+	}
+
+	/*************************************************************************/
+	/*************************** BRYAN ***************************************/
+
+	@Column(length = 1294967295)
+	private byte[] bytesImagen;
+	private String nombreImagen;
+
+	public byte[] getBytesImagen() {
+		return bytesImagen;
+	}
+
+	public void setBytesImagen(byte[] bytesImagen) {
+		this.bytesImagen = bytesImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+
+	/// Crea producto con Imagen
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
+			int stock, byte[] bytesImagen, String nombreImagen) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+		this.stock = stock;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
+	}
+
+	/*************************** BRYAN ***************************************/
+	/*************************************************************************/
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,9 +99,9 @@ public class Producto implements Serializable {
 		super();
 		this.stock = -1;
 	}
-	
-	public Producto(String nombre, String descripcion, double precio, Categoria categoria,
-			List<Atributo> atributosList, int stock) {
+
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
+			int stock) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -65,50 +113,61 @@ public class Producto implements Serializable {
 
 	public Long getIdProducto() {
 		return this.idProducto;
-	}	
+	}
+
 	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
-	}   
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}   
+	}
+
 	public String getDescripcion() {
 		return this.descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}   
+	}
+
 	public double getPrecio() {
 		return this.precio;
 	}
+
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
+
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	//PARA CONVERTIR A Y DESDE JSON - LO USA EL JPA, NO NOSOTROS!
-	@Access(AccessType.PROPERTY)	
-	@Column(name="atributos", nullable = false)
+
+	// PARA CONVERTIR A Y DESDE JSON - LO USA EL JPA, NO NOSOTROS!
+	@Access(AccessType.PROPERTY)
+	@Column(name = "atributos", nullable = false)
 	public String getAtributos() {
 		return util.Serializador.convertirAString(atributosList);
 	}
+
 	public void setAtributos(String attrs) {
-		if( !attrs.equals("null") ) {
+		if (!attrs.equals("null")) {
 			this.atributosList = util.Serializador.convertirDesdeString(attrs);
 		}
 	}
-	
+
 	public List<Atributo> getAtributosList() {
 		return atributosList;
 	}
+
 	public void setAtributosList(List<Atributo> atributosList) {
 		this.atributosList = atributosList;
 	}
@@ -120,24 +179,36 @@ public class Producto implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+
 	public DataProducto getDataProducto() {
 		Map<String, String> attr = new HashMap<>();
-		
-		for( Atributo a : atributosList ) {
+
+		for (Atributo a : atributosList) {
 			attr.put(a.getNombre(), a.getValor());
 		}
-		
+
 		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Producto [idProducto=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", precio=" + precio + ", stock=" + stock + ", categoria=" + categoria + ", atributosList="
+				+ atributosList + ", idAV=" + idAV + ", bytesImagen=" + Arrays.toString(bytesImagen) + ", nombreImagen="
+				+ nombreImagen + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((atributosList == null) ? 0 : atributosList.hashCode());
+		result = prime * result + Arrays.hashCode(bytesImagen);
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((nombreImagen == null) ? 0 : nombreImagen.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(precio);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -154,6 +225,18 @@ public class Producto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Producto other = (Producto) obj;
+		if (atributosList == null) {
+			if (other.atributosList != null)
+				return false;
+		} else if (!atributosList.equals(other.atributosList))
+			return false;
+		if (!Arrays.equals(bytesImagen, other.bytesImagen))
+			return false;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
 		if (descripcion == null) {
 			if (other.descripcion != null)
 				return false;
@@ -169,12 +252,16 @@ public class Producto implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
+		if (nombreImagen == null) {
+			if (other.nombreImagen != null)
+				return false;
+		} else if (!nombreImagen.equals(other.nombreImagen))
+			return false;
 		if (Double.doubleToLongBits(precio) != Double.doubleToLongBits(other.precio))
 			return false;
 		if (stock != other.stock)
 			return false;
 		return true;
 	}
-	
-	
+
 }

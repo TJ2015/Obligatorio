@@ -7,7 +7,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
 public class ConnectionProviderImpl implements ConnectionProvider {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private final BasicDataSource basicDataSource = new BasicDataSource();
 	
 	public ConnectionProviderImpl(String database){
@@ -20,25 +22,39 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		basicDataSource.setInitialSize(2);
 		basicDataSource.setMaxTotal(10);
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@Override
-		public boolean isUnwrappableAs(Class arg0) {
+	public boolean isUnwrappableAs(Class arg0) {
 		return false;
 	}
-	
+
 	@Override
 	public <t> t unwrap(Class<t> arg0) {
 		return null;
 	}
-	
+
 	@Override
-		public void closeConnection(Connection arg0) throws SQLException {
-		arg0.close();
+	public void closeConnection(Connection arg0) throws SQLException {
+		try {
+			arg0.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
+
 	@Override
 	public Connection getConnection() throws SQLException {
-		return basicDataSource.getConnection();
+		Connection conexion = null;
+		try {
+			conexion = basicDataSource.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conexion;
 	}
+
 	@Override
 	public boolean supportsAggressiveRelease() {
 		return false;

@@ -11,18 +11,20 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import dominio.AV;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
+import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import util.Url;
 
 @ManagedBean
 @SessionScoped
 public class AvBean implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
 	@EJB
 	IControladorAV cAV;
 	@EJB
@@ -35,7 +37,7 @@ public class AvBean implements Serializable {
 	private String usuarioCreador;
 	private int cantUsuComp;
 	private List<DataUsuario> usus = new ArrayList<>();
-	
+
 	public int getCantUsuComp() {
 		return cantUsuComp;
 	}
@@ -51,8 +53,6 @@ public class AvBean implements Serializable {
 	public void setUsus(List<DataUsuario> usus) {
 		this.usus = usus;
 	}
-
-	
 
 	public String getNombreAV() {
 		return nombreAV;
@@ -108,76 +108,70 @@ public class AvBean implements Serializable {
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
 			try {
 				idAV = cAV.altaAV(nombreAV, nick);
+				session.setAttribute("idAV", idAV);
+				session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+				Url.redireccionarURL("categoria_crear");
 			} catch (NombreDeAVInvalido e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			session.setAttribute("idAV", idAV);
-			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
-			
-			
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 		}
 	}
 
-	public void compartirAV() throws NoExisteElAV {
-		HttpSession session = SesionBean.getSession();
-		long idAV= (long) session.getAttribute("idAV");
-		if (cUsu.existeUsuarioNick(nickname)) {
-			cAV.compartirAV(idAV, nickname);
-			cantUsuComp++;
-		}
-
-	}
-
-	public void eliminarAV() throws Exception {
-		HttpSession session = SesionBean.getSession();
-		long idAV= (long) session.getAttribute("idAV");
-		String nickname= (String) session.getAttribute("nickname");
-		
-			cAV.eliminarAV(idAV);
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		
-			
-				System.out.println(nickname + " " + idAV);
-			
-		}
-		
-	
-
-	public void cancelarAccion() {
-
+	public void compartirAV() {
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			if (cUsu.existeUsuarioNick(nickname)) {
+				cAV.compartirAV(idAV, nickname);
+				Url.redireccionarURL("index");
+			} else {
+				Url.redireccionarURL("error");
+			}
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
+	}
 
-		} catch (IOException e) {
+	public long traerIdAV() {
+		try {
+			DataAV av = cAV.traerAVPorNombre(nombreAV, nickname);
+			idAV = av.getIdAV();
+		} catch (UsuarioNoEncontrado e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return idAV;
 
 	}
-	public void mostrarListaUsuariosCompartidos() throws NoExisteElAV 
-	{
+
+	public void eliminarAV() {
+		try {
+			cAV.eliminarAV(idAV);
+			Url.redireccionarURL("index");
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
+	}
+
+	public void cancelarAccion() {
+		try {
+			Url.redireccionarURL("index");
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
+	}
+
+	public void mostrarListaUsuariosCompartidos() throws NoExisteElAV {
 		try {
 			HttpSession session = SesionBean.getSession();
-			long idAV= (long) session.getAttribute("idAV");
-			usus=cAV.traerAV(idAV).getUsuariosCompartidos();
-			//session.setAttribute("usus",.toArray());
+			long idAV = (long) session.getAttribute("idAV");
+			usus = cAV.traerAV(idAV).getUsuariosCompartidos();
+			// session.setAttribute("usus",.toArray());
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuarios_compartidos.xhtml");
 
-			
 		} catch (IOException e) {
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
@@ -186,10 +180,7 @@ public class AvBean implements Serializable {
 			}
 			e.printStackTrace();
 		}
-			
-	}
 
-	
-	
+	}
 
 }

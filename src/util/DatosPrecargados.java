@@ -25,7 +25,6 @@ public class DatosPrecargados {
 	IControladorAV cAV;
 	@EJB
 	IControladorInventario cInv;
-	
 
 	@PostConstruct
 	void atStartup(){

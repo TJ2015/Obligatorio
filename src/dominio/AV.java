@@ -27,8 +27,8 @@ import dominio.datatypes.DataUsuario;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "AV.findAll", query = "SELECT u FROM AV u"),
-		@NamedQuery(name = "AV.buscarPorId", query = "SELECT a FROM AV a WHERE a.idAV =:idAV"),
-		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV") })
+		@NamedQuery(name = "AV.buscarPorId", query = "SELECT u FROM AV u WHERE u.idAV =:idAV"),
+		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT u FROM AV u WHERE u.nombreAV =:nombreAV") })
 public class AV implements Serializable {
 
 	@Id
@@ -59,7 +59,7 @@ public class AV implements Serializable {
 		for (Usuario usus : usuariosCompartidos) {
 			listDusu.add(usus.getDataUsuario());
 		}
-		DataAV dav = new DataAV(nombreAV, nombreUsu,listDusu);
+		DataAV dav = new DataAV(nombreAV, nombreUsu, listDusu);
 		dav.setIdAV(idAV);
 		return dav;
 	}
@@ -95,11 +95,11 @@ public class AV implements Serializable {
 	public void setUsuariosCompartidos(List<Usuario> usuariosCompartidos) {
 		this.usuariosCompartidos = usuariosCompartidos;
 	}
-	
+
 	public void addUsuarioCompartido(Usuario usu) {
 		this.usuariosCompartidos.add(usu);
 	}
-	
+
 	public void removeUsuarioCompartido(Usuario usu) {
 		this.usuariosCompartidos.remove(usu);
 	}
