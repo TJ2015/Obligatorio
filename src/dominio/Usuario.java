@@ -43,7 +43,7 @@ public class Usuario implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
-	private Date fecchaRegistro;
+	private Date fechaRegistro;
 	
 	@Column(length=1294967295)
 	private byte[] bytesImagen;
@@ -76,7 +76,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
-		this.fecchaRegistro = new Date();
+		this.fechaRegistro = new Date();
 	}
 	
 	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, byte[] bytesImagen, String nombreImagen) {
@@ -89,7 +89,7 @@ public class Usuario implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 		this.bytesImagen = bytesImagen;
 		this.nombreImagen = nombreImagen;
-		this.fecchaRegistro = new Date();
+		this.fechaRegistro = new Date();
 	}
 
 	public Usuario(DataUsuarioSocial usuarioSocial) {
@@ -109,18 +109,22 @@ public class Usuario implements Serializable {
 
 	public DataUsuario getDataUsuario() {
 		DataUsuario dataUsuario = null;
-		List<DataAV> lDataAlmacen = null;
-		List<DataAV> lDataCompartidos = null;
+		List<String> lDataAlmacen = new ArrayList<>();;
+		List<String> lDataCompartidos = new ArrayList<>();;
 		try {
 			if (AVs != null) {
-				lDataAlmacen = new ArrayList<>();
 				for (AV almacen : AVs) {
-					lDataAlmacen.add(almacen.getDataAV());
+					lDataAlmacen.add(almacen.getNombreAV());
+				}
+			}
+			if (AVcompartidos != null) {
+				for (AV almacen : AVcompartidos) {
+					lDataCompartidos.add(almacen.getNombreAV());
 				}
 			}
 			
 			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
-			dataUsuario = new DataUsuario(nombre, apellido, nick, password, email, fechaNacimiento, lDataAlmacen, nombreImagen, imagen, fecchaRegistro);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen, fechaRegistro);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,11 +330,11 @@ public class Usuario implements Serializable {
 	}
 
 	public Date getFecchaRegistro() {
-		return fecchaRegistro;
+		return fechaRegistro;
 	}
 
 	public void setFecchaRegistro(Date fecchaRegistro) {
-		this.fecchaRegistro = fecchaRegistro;
+		this.fechaRegistro = fecchaRegistro;
 	}
 	
 }

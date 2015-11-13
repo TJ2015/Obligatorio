@@ -34,7 +34,7 @@ public class AvBean implements Serializable {
 	private String mensaje;
 	private String usuarioCreador;
 	private int cantUsuComp;
-	private List<DataUsuario> usus=new ArrayList<>();
+	private List<DataUsuario> usus = new ArrayList<>();
 	
 	public int getCantUsuComp() {
 		return cantUsuComp;

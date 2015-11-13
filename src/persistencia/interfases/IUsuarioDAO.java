@@ -1,5 +1,7 @@
 package persistencia.interfases;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import dominio.Administrador;
@@ -29,5 +31,7 @@ public interface IUsuarioDAO {
 	public void persistirAdmin(Administrador admin);
 	public void eliminarAdmin(Administrador admin);
 	public void actualizarAdmin(Administrador admin);
+
+	public List<Usuario> getAllUsuarios();
 
 }

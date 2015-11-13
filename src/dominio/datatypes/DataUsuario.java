@@ -13,44 +13,43 @@ public class DataUsuario implements Serializable {
 	private String nombre;
 	private String apellido;
 	private String nick;
-	private String pasword;
 	private String email;
 	private Date fechaNacimiento;
-	private List<DataAV> AVs = new ArrayList<>();
-	private List<DataAV> AVsCompar = new ArrayList<>();
+	private List<String> AVs = new ArrayList<>();
+	private List<String> AVsCompar = new ArrayList<>();
 	private String nombreImagen;
 	private InputStream imagen;
 	private Date fechaRegistro;
 
-	public List<DataAV> getAVs() {
+	public List<String> getAVs() {
 		return AVs;
 	}
 
-	public List<DataAV> getAVsCompar() {
+	public List<String> getAVsCompar() {
 		return AVsCompar;
 	}
 
-	public void setAVsCompar(List<DataAV> aVsCompar) {
+	public void setAVsCompar(List<String> aVsCompar) {
 		AVsCompar = aVsCompar;
 	}
 
-	public void setAVs(List<DataAV> aVs) {
+	public void setAVs(List<String> aVs) {
 		AVs = aVs;
 	}
 
 	public DataUsuario() {
 	}
-
-	public DataUsuario(String nombre, String apellido, String nick, String pasword, String email,
-			Date fechaNacimiento,List <DataAV> avs,String nombreImagen, InputStream imagen, Date fechaRegistro) 
-	{
+	
+	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
+			List<String> aVs, List<String> aVsCompar, String nombreImagen, InputStream imagen, Date fechaRegistro) {
+		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
-		this.pasword = pasword;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
-		this.AVs=avs;
+		AVs = aVs;
+		AVsCompar = aVsCompar;
 		this.nombreImagen = nombreImagen;
 		this.imagen = imagen;
 		this.fechaRegistro = fechaRegistro;
@@ -80,14 +79,6 @@ public class DataUsuario implements Serializable {
 		this.nick = nick;
 	}
 
-	public String getPasword() {
-		return pasword;
-	}
-
-	public void setPasword(String pasword) {
-		this.pasword = pasword;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -103,17 +94,21 @@ public class DataUsuario implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((AVs == null) ? 0 : AVs.hashCode());
+		result = prime * result + ((AVsCompar == null) ? 0 : AVsCompar.hashCode());
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
+		result = prime * result + ((fechaRegistro == null) ? 0 : fechaRegistro.hashCode());
+		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
 		result = prime * result + ((nick == null) ? 0 : nick.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((pasword == null) ? 0 : pasword.hashCode());
+		result = prime * result + ((nombreImagen == null) ? 0 : nombreImagen.hashCode());
 		return result;
 	}
 
@@ -126,6 +121,16 @@ public class DataUsuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DataUsuario other = (DataUsuario) obj;
+		if (AVs == null) {
+			if (other.AVs != null)
+				return false;
+		} else if (!AVs.equals(other.AVs))
+			return false;
+		if (AVsCompar == null) {
+			if (other.AVsCompar != null)
+				return false;
+		} else if (!AVsCompar.equals(other.AVsCompar))
+			return false;
 		if (apellido == null) {
 			if (other.apellido != null)
 				return false;
@@ -141,6 +146,16 @@ public class DataUsuario implements Serializable {
 				return false;
 		} else if (!fechaNacimiento.equals(other.fechaNacimiento))
 			return false;
+		if (fechaRegistro == null) {
+			if (other.fechaRegistro != null)
+				return false;
+		} else if (!fechaRegistro.equals(other.fechaRegistro))
+			return false;
+		if (imagen == null) {
+			if (other.imagen != null)
+				return false;
+		} else if (!imagen.equals(other.imagen))
+			return false;
 		if (nick == null) {
 			if (other.nick != null)
 				return false;
@@ -151,10 +166,10 @@ public class DataUsuario implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
-		if (pasword == null) {
-			if (other.pasword != null)
+		if (nombreImagen == null) {
+			if (other.nombreImagen != null)
 				return false;
-		} else if (!pasword.equals(other.pasword))
+		} else if (!nombreImagen.equals(other.nombreImagen))
 			return false;
 		return true;
 	}

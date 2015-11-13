@@ -1,5 +1,7 @@
 package persistencia.implementacion;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -202,5 +204,16 @@ public class UsuarioDAO implements IUsuarioDAO {
 			e.printStackTrace();
 		}
 		return usuario;
+	}
+
+	@Override
+	public List<Usuario> getAllUsuarios() {
+		List<Usuario> usuarios = null;
+		try {
+			usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usuarios;
 	}
 }

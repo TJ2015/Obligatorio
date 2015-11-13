@@ -77,4 +77,6 @@ public interface IControladorUsuario {
 
 	public DataUsuario getUsuario(String nickname);
 
+	public List<DataUsuario> getUsuarios();
+
 }

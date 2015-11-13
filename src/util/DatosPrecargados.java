@@ -38,6 +38,8 @@ public class DatosPrecargados {
 		cUsu.crearNuevoTipo("comun");
 		cUsu.crearNuevoTipo("facebook");
 
+		cUsu.registrarUsuario("Lautaro", "Acosta", "lautaroa14", "lautaroa14", "lautaroa14@gmail.com", new Date(), null);
+		cUsu.registrarUsuario("Santiago", "Callejas", "sancagon87", "sancagon87", "sancagon87@gmail.com", new Date(), null);
 		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date(), null);
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date(), null);
 		

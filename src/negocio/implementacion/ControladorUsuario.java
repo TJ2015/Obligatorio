@@ -499,4 +499,18 @@ public class ControladorUsuario implements IControladorUsuario {
 
 		return du;
 	}
+
+	@Override
+	public List<DataUsuario> getUsuarios() {
+		List<Usuario> usus = usuarioDAO.getAllUsuarios();
+		List<DataUsuario> dusus = new ArrayList<>();
+		
+		if( usus != null ) {
+			for( Usuario usu : usus ) {
+				dusus.add(usu.getDataUsuario());
+			}
+		}
+		
+		return dusus;
+	}
 }
