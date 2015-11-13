@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 	
 	
 
@@ -14,6 +15,7 @@
 	Hola #{usuarioBean.nick}!!
 <ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
+		
 			<div class="container-fluid clearfix">
 				<div class="list-group">
 					<section class="content">
@@ -31,9 +33,9 @@
 								
 							
 								<h:form class="small-box-footer">
-			                        <h:commandLink action="#{avBean.mostrarListaUsuariosCompartidos()}" >
-									    <i class="fa fa-arrow-circle-right"></i> 
+			                        <h:commandLink action="#{avBean.mostrarListaUsuariosCompartidos()}" style="text-decoration:none;color:white;" >
 			                                Mas información
+			                              <i class="fa fa-arrow-circle-right"></i> 
 									</h:commandLink>
 								</h:form>
 								
@@ -45,14 +47,18 @@
 							<div class="small-box bg-teal">
 								<div class="inner">
 									<h3>14</h3>
-									<p>Notificaciones</p>
+									<p>Categorias</p>
 								</div>
 								<div class="icon">
-									<i class="ion ion-ios7-alarm-outline"></i>
+									<i class="ion ion-ios7-pricetag-outline"></i>
 								</div>
-								<a href="#" class="small-box-footer"> More info <i
-									class="fa fa-arrow-circle-right"></i>
-								</a>
+								<h:form class="small-box-footer">
+			                        <h:commandLink action="verListaCategoria" actionListener="#{categoriaBean.mostrarListaCategoria()}" style="text-decoration:none;color:white;">
+			                                Mas información
+			                             <i class="fa fa-arrow-circle-right"></i> 
+									</h:commandLink>
+								</h:form>
+								
 							</div>
 						</div>
 						<!-- ./col -->
@@ -67,9 +73,10 @@
 									<i class="ion ion-ios7-pricetag-outline"></i>
 								</div>
 								<h:form class="small-box-footer">
-			                        <h:commandLink action="#{productoBean.mostrarTodosProd()}" >
-									    <i class="fa fa-arrow-circle-right"></i> 
+			                        <h:commandLink action="#{productoBean.mostrarTodosProd()}" style="text-decoration:none;color:white;">
+									   
 			                                Mas información
+			                             <i class="fa fa-arrow-circle-right"></i> 
 									</h:commandLink>
 								</h:form>
 								
@@ -127,7 +134,7 @@
 											<div class="item">
 												<img src="resources/adminlte/img/hamburguesa.jpg"
 													alt="Third slide"></img>
-												<div class="carousel-caption">Hamburguea</div>
+												<div class="carousel-caption">Hamburguesa</div>
 											</div>
 
 										</div>
@@ -145,32 +152,141 @@
 							<!-- /.box -->
 						</div>
 						<!-- /.col -->
-
-
-						<!-- <section class="col-lg-6 connectedSortable"> -->
-						<!-- Chat box -->
-						
-						<div class="col-md-6">
-							<div class="box box-success">
+										
+					<div class="row">
+						<div class="col-md-6">				
+						<div class="box box-success">
 								<div class="box-header">
 									<h3 class="box-title">
 										<i class="fa fa-comments-o"></i> Chat
 									</h3>
-									
+									<div class="box-tools pull-right" data-toggle="tooltip"
+										title="Status">
+										<div class="btn-group" data-toggle="btn-toggle">
+										
+											<button type="button" class="btn btn-default btn-sm active">
+												<i class="fa fa-square text-green"></i>
+											</button>
+											<button type="button" class="btn btn-default btn-sm">
+												<i class="fa fa-square text-red"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="box-body chat" id="chat-box">
+									<div id="mesnajesRecibidosChat"></div>
 								</div>
 								<!-- /.chat -->
 								<div class="box-footer">
-								
-									
+									<div class="input-group">
+										<h:inputText styleClass="form-control mensajeDeChat" a:placeholder="Escriba su mensaje..."/>
+										<div class="input-group-btn">
+										<h:form>
+											<h:commandButton type="button" value="Enviar" styleClass="btn btn-success" onclick="javascript:enviarMensaje();" />
+										</h:form>
+										</div>
+									</div>
 								</div>
 							</div>
-							<!-- /.box (chat box) -->
-						</div>
+					</div>
+					</div>
 					</div>
 					</section>
+				<section class="content">
+					
+						<div class="col-md-6">
+							<div class="box box-success">
+								<div class="box-header">
+								
+								 <div class="input-group">
+									 <!-- Comments Form -->
+				                   <h3 class="box-title">
+										<i class="fa fa-edit"></i> Notas
+									</h3>
+									</div>
+									<div class="box-body">
+				                        <div class="form-group">
+				                            <textarea class="form-control" rows="3" placeholder="Nota ..."></textarea>
+				                        </div>
+				                      <form >
+				                        <button type="submit" class="btn btn-primary">Submit</button>
+				                    </form>
+				                    </div>
+								</div>
+				                <hr>
+				
+				                <!-- Posted Comments -->
+				
+				                <!-- Comment -->
+				                <div class="box-body chat" id="chat-box">
+				                <div class="media">
+				                    
+				                    <div class="media-body">
+				                        <h4 class="media-heading">Start Bootstrap
+				                            <small>August 25, 2014 at 9:30 PM</small>
+				                        </h4>
+				                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+				                    </div>
+				                </div>
+				                </div>
+									</hr>
 					
 				</div>
 			</div>
+		</section>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+				})
+				
+				
+				$('.mensajeDeChat').keypress(function(e) {
+				    if(e.which == 13) {
+				    	enviarMensaje()
+				    }
+				});
+				
+				var websockets = new WebSocket("ws://localhost:8080/Obligatorio/chat"); 			
+			
+				websockets.onmessage = function(e){
+					mostrarMensaje(e.data)
+				}
+				
+				function enviarMensaje(){
+					var mensaje = $(".mensajeDeChat").val();		
+					websockets.send(mensaje);
+					$(".mensajeDeChat").val("");
+				}
+			
+				function mostrarMensaje(mensaje){
+					var fecha = document.createElement("i");
+					$(fecha).addClass("fa fa-clock-o");
+					var contFecha = document.createElement("small");
+					$(contFecha).addClass("text-muted pull-right");
+					contFecha.appendChild(fecha);
+					contFecha.innerHTML += "  2:15"; //Agregarle la fecha 
+					var nombre = document.createElement("a");
+					$(nombre).addClass("name");
+					$(nombre).attr('href','#');
+					nombre.appendChild(contFecha);
+					nombre.innerHTML += "Nombre del Usuario"; //Agregar Nombre del usuario
+					var contMensaje = document.createElement("p");
+					$(contMensaje).addClass("message");
+					contMensaje.appendChild(nombre);
+					contMensaje.innerHTML += mensaje;
+					var imagen = document.createElement("img");
+					$(imagen).addClass("online");
+					$(imagen).attr('src','#'); // Poner la imagen del usuario
+					$(imagen).attr('alt','U'); //
+					var contChat = document.createElement("div");
+					$(contChat).addClass("item");
+					contChat.appendChild(imagen);
+					contChat.appendChild(contMensaje);
+					var contMensajes = document.getElementById("mesnajesRecibidosChat");
+					contMensajes.appendChild(contChat);
+				}
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

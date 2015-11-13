@@ -9,21 +9,78 @@
 <body>
 
 	
-<ui:composition template="/templates/layout.xhtml">
+<ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
 		<div class="container-fluid clearfix">
-
-		<div class="list-group">
-		 	Categoria del AV #{avBean.nombreAV}!!
-		 	
-		 	<c:if test="categoriaBean.cats !=null}">
-		 	 <c:forEach var="cat" items="${categoriaBean.cats}"  >
-			         <a href="verListaProdcto.xhtml" class="list-group-item">${cat.nombre}</a>
-	          </c:forEach>    
-		        </c:if>      
+		<div class="page-header text-center">
+		  <h1>Categorias</h1>
 		</div>
-		<a href="av_crear.xhtml"> Crear AV</a>
+			<section class="content">
+                            
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">Todas las categorias</h3>                                    
+                                </div><!-- /.box-header -->
+                                <div class="box-body table-responsive">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                             <c:forEach var="cat" items="${categoriaBean.cats}"  >
+											     <tr>
+											       <td> <a href="mostrarAV.xhtml">
+											          ${cat.nombre} 
+											        </a>
+											        <a href="#" data-toggle="modal" data-target="#myModal">
+											        
+											        <i class="fa fa-trash-o" style="float:right" ></i>
+											        </a>
+											        </td>
+											     </tr>                        
+											 </c:forEach> 
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+
+                </section><!-- /.content -->
 	</div>
+	 <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Eliminar Producto</h4>
+		        </div>
+		        <div class="modal-body">
+		          <p>¿Esta seguro que desea eliminar este Producto?.</p>
+		        </div>
+		        <div class="modal-footer">
+		        <h:form>
+		        	  <h:commandButton  action="#{productoBean.eliminarProducto()}" value="Aceptar" class="btn btn-default" />  
+		        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+		        </h:form>
+		        
+		         
+		        </div>
+		      </div>
+      
+    </div>
+    </div>
 		</ui:define>
 </ui:composition>
 </body> 

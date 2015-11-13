@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.ejb.EJB;
 import javax.ejb.SessionBean;
@@ -32,10 +33,21 @@ public class ProductoBean implements Serializable {
 	private int stock;
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
+	private List<DataProducto> dprods2 = new ArrayList<>();
+
+	
+
 	List<String> nomProd=new ArrayList<>();
 
 
 	private static final long serialVersionUID = 1L;
+	public List<DataProducto> getDprods2() {
+		return dprods2;
+	}
+
+	public void setDprods2(List<DataProducto> dprods2) {
+		this.dprods2 = dprods2;
+	}
 
 	public int getCantProd() {
 		return cantProd;
@@ -185,7 +197,7 @@ public class ProductoBean implements Serializable {
 			for(DataCategoria cats:dcats){
 				dprodT=cats.getProductos();
 				for(DataProducto prods:dprodT){
-					nomProd.add(prods.getNombre());
+					dprods2.add(prods);
 					cantProd++;
 				}
 			}
@@ -218,7 +230,20 @@ public class ProductoBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
+	public void eliminarProducto(String name) throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
+		Locale locale = new Locale(name);
+			cinv.eliminarProducto(name, idAV);
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	
 }
