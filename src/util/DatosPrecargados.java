@@ -1,4 +1,4 @@
-package util;
+/*package util;
 
 import java.util.Date;
 
@@ -51,4 +51,4 @@ public class DatosPrecargados {
 	void atShutdown() {
 
 	}
-}
+}*/
