@@ -15,6 +15,8 @@
 	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
 	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	
+
 </h:head> 
 
 <h:body>
@@ -81,7 +83,7 @@
 					<div class="form-group">
 				        <label for="imagen" class="col-lg-2 control-label">Imagen</label> 
 				        <div class="col-lg-10">
-							<p:fileUpload id="imagen"  value="#{productoBean.file}" styleClass="form-control" mode="simple" />
+							<input type="file" class="filestyle" ></input>
 						</div>
 					</div>
 				<center><h:commandButton id="crearProducto" styleClass="btn btn-primary" value="Crear producto" 
@@ -98,7 +100,6 @@
 	</div>
 </ui:define>
 </ui:composition>
-
 </h:body>
 
 </html>

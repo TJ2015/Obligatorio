@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,22 +29,20 @@ import javax.persistence.CascadeType;
 @NamedQueries({ @NamedQuery(name = "Categoria.getAll", query = "SELECT c FROM Categoria c"),
 		@NamedQuery(name = "Categoria.buscarPorNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre"),
 		@NamedQuery(name = "Categoria.traerTodasCats", query = "SELECT c FROM Categoria c") })
-
 public class Categoria implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
-
 	private String nombre;
 	@OneToMany(cascade = { CascadeType.REMOVE })
 	@ElementCollection
 	@JoinTable(name = "categoria_productos", joinColumns = @JoinColumn(name = "categoria") , inverseJoinColumns = @JoinColumn(name = "idCategoria") )
 	private List<Producto> productos = new ArrayList<>();
-
 	private static final long serialVersionUID = 1L;
 
 	public Categoria() {
+
 	}
 
 	public Categoria(String nombre) {
@@ -121,10 +120,5 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Categoria [idCategoria=" + idCategoria + ", nombre=" + nombre + "]";
-	}
-
+	
 }

@@ -19,11 +19,11 @@ import org.primefaces.model.UploadedFile;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorUsuario;
-import util.Url;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable {
+public class UsuarioBean implements Serializable 
+{
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -38,7 +38,7 @@ public class UsuarioBean implements Serializable {
 	private List<DataAV> AVs = new ArrayList<>();
 	private DataUsuario dusu;
 	private boolean logueado;
-
+		
 	public boolean isLogueado() {
 		return logueado;
 	}
@@ -48,9 +48,9 @@ public class UsuarioBean implements Serializable {
 	}
 
 	private UploadedFile file;
-
+	
 	private StreamedContent imagen;
-
+	
 	public UsuarioBean() {
 
 	}
@@ -119,73 +119,82 @@ public class UsuarioBean implements Serializable {
 		this.dusu = dusu;
 	}
 
-	public void login() throws IOException {
+	public void login() throws IOException 
+	{
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
 			if (dataUsuario != null) {
-				logueado = true;
+				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
-				Url.redireccionarURL("usuario_sapo");
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
 			} else {
-				Url.redireccionarURL("error");
-				// FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
-		} catch (Exception e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void logout() throws IOException {
+	public void logout() throws IOException 
+	{
 		HttpSession session = SesionBean.getSession();
-		logueado = false;
+		logueado=false;
 		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
 		session.invalidate();
 	}
-
-	public void registroUsuario() {
+		
+	
+	public void registroUsuario() 
+	{
 		try {
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
 				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
-				HttpSession session = SesionBean.getSession();
-				session.setAttribute("nickname", nick);
-				session.setAttribute("dataUsuario", dusu);
-				Url.redireccionarURL("index");
-			} else {
-				Url.redireccionarURL("error");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+			} 
+			else {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	public void limpiarBean() {
+	
+	public void limpiarBean()
+	{
 		this.file = null;
 		this.imagen = null;
 	}
-
-	public void mostrarListaAV() {
+	
+	public void mostrarListaAV() 
+	{
 		try {
 			HttpSession session = SesionBean.getSession();
 			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 			AVs = cusu.mostrarListaAv(nick);
 
-			Url.redireccionarURL("verListaAV");
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaAV.xhtml");
 
-		} catch (Exception e) {
-			Url.redireccionarURL("error");
+		} catch (IOException e) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}
-
-	public boolean existeUsuarioLogeado() {
+	
+	public boolean existeUsuarioLogeado()
+	{
 		boolean existeUsuario = false;
 		try {
 			HttpSession session = SesionBean.getSession();
-			DataUsuario dataUsuario = (DataUsuario) session.getAttribute("dataUsuario");
+			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
 			existeUsuario = dataUsuario != null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -201,11 +210,11 @@ public class UsuarioBean implements Serializable {
 		this.file = file;
 	}
 
-	public StreamedContent getImagen() {
+	public StreamedContent  getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(StreamedContent imagen) {
+	public void setImagen(StreamedContent  imagen) {
 		this.imagen = imagen;
 	}
 

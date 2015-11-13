@@ -9,7 +9,8 @@
        xmlns:h="http://java.sun.com/jsf/html"
       >
     <body>
-	    <ui:composition>			
+	    <ui:composition>
+			
 			<header class="navbar navbar-inverse wet-asphalt" role="banner">
 		        <div class="container">
 		            <div class="navbar-header">
@@ -36,12 +37,22 @@
   								<h:form>
                                   <h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" />   	
                                  </h:form>	
-                             </li>
+                             </li>	                
+                             	<h:form styleClass="form">
+		                	   	 <li ><a href="chat.xhtml" target="_blank" >Ingresar al chat</a></li>
+		                	   	  <li><a href="#">Membresía</a></li>
+		                	 	                	   	
+		                   </h:form>
 		                   </c:if>
+		                   
+		                   
+							  
+
 		                </ul>
 		            </div>
 		        </div>
 		    </header>
+				
 	    </ui:composition>
     </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head></h:head> 
+<body>
+
+	Hola #{usuarioBean.nick}!!
+<ui:composition template="/templates/layout.xhtml">
+		<ui:define name="contenido">
+		<div class="container-fluid clearfix">
+		<div class="list-group">
+
+		  <c:if test="${usuarioBean.logueado == true}">
+		 	<c:if test="${usuarioBean.AVs !=null}">
+		 	<h:form styleClass="form">
+						<h:commandButton id="botonVerAv" styleClass="btn btn-success" value="Ver lista de cat" 
+					action="#{categoriaBean.mostrarListaCategoria()}"/>
+					</h:form>
+		 		<c:forEach var="av" items="${usuarioBean.AVs}"  >
+			        <h:form>
+					    <h:commandLink value="${av.nombreAV}" action="#{categoriaBean.mostrarListaCategoria()}" /> 
+					</h:form>
+	            </c:forEach>    
+		    </c:if>               
+		 </c:if>
+		</div>
+		<a href="av_crear.xhtml"> Crear AV</a>
+		 </div>
+		</ui:define>
+</ui:composition>
+</body> 
+</html>

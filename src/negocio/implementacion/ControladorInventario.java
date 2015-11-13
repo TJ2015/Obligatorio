@@ -6,8 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import org.primefaces.model.UploadedFile;
-
 import dominio.AV;
 import dominio.Atributo;
 import dominio.Categoria;
@@ -19,12 +17,12 @@ import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
+import exceptions.NoExisteLaCategoria;
 import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorInventario;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
-import util.Imagenes;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
@@ -58,6 +56,7 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean existeCategoria(String nombre, long idAV) {
+
 		boolean existe = false;
 
 		String tenant = getTenant(idAV);
@@ -103,14 +102,11 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
-			long idAV, int stock, UploadedFile file) throws Exception {
+			long idAV, int stock) throws Exception {
 
 		Categoria cat = null;
 		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-		byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
-		String nombreImagen = Imagenes.obtenerNombreImagen(file);
-
-		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock, imagen, nombreImagen);
+		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock);
 
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
@@ -126,7 +122,6 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.actualizarCategoria(cat, tenant);
 			invDAO.close(tenant);
 		}
-
 	}
 
 	@Override

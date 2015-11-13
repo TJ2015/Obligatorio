@@ -8,13 +8,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataCategoria;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
-import util.Url;
 
 @ManagedBean
 @ViewScoped
@@ -81,6 +81,24 @@ public class CategoriaBean implements Serializable {
 		super();
 	}
 
+	public void crearCategoria() throws Exception {
+		try {
+
+			HttpSession session = SesionBean.getSession();
+			idAV = (long) session.getAttribute("idAV");
+
+			if (cinv.crearCategoria(nombre, idAV)) {
+
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
+			} else {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<DataCategoria> getCats() {
 		return cats;
 	}
@@ -102,44 +120,4 @@ public class CategoriaBean implements Serializable {
 		return cats;
 	}
 
-	public void crearCategoria(){
-		try {
-			testStressCategorias();
-			HttpSession session = SesionBean.getSession();
-			idAV = (long) session.getAttribute("idAV");
-			
-			if( cinv.crearCategoria(nombre, idAV)) { 	
-				Url.redireccionarURL("index");
-			} else {
-				Url.redireccionarURL("error");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public void testStressCategorias(){
-		try {
-			HttpSession session = SesionBean.getSession();
-			idAV = (long) session.getAttribute("idAV");
-			boolean bien = true;
-			boolean termino = false;
-			int cont = 0;
-			while (bien && !termino) {
-				System.out.println("Vamos a crear la Categoria: " + cont++);
-				if( cinv.crearCategoria("Categoria" + cont, idAV)) { 	
-					if (cont == 99) {
-						termino = true;
-					}
-				} else {
-					bien = false;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 }
-

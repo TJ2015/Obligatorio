@@ -16,7 +16,6 @@ public final class Imagenes {
 		return (file != null ? file.getFileName() : null);
 	}
 	
-	@SuppressWarnings("resource")
 	public final static byte[] convertirInputStreamToArrayByte(UploadedFile file)
 	{
 		byte[] bytes = null;
@@ -33,7 +32,6 @@ public final class Imagenes {
 		return bytes;
 	}
 	
-	@SuppressWarnings("resource")
 	public final static byte[] convertirUrlToArrayByte(String urlString)
 	{
 		byte[] bytes = null;

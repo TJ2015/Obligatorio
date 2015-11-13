@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.hibernate.HibernateException;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 
@@ -12,11 +13,8 @@ import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 
 public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionProvider {
 
-	private static final long serialVersionUID = 1L;
-	
-	private final ConnectionProvider connectionProvider = new ConnectionProviderImpl(CurrentTenantIdentifierResolverImpl.DEFAULT_TENANT_ID);
+private final ConnectionProvider connectionProvider = new ConnectionProviderImpl(CurrentTenantIdentifierResolverImpl.DEFAULT_TENANT_ID);
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean isUnwrappableAs(Class arg0) {
 		return false;
@@ -34,7 +32,7 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
 		try {
 			conn = connectionProvider.getConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return conn;
 	}
@@ -46,13 +44,13 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
 	
 	@Override
 	public Connection getConnection(String tenantIdentifier) throws SQLException {
-		Connection connection = null;
+		final Connection connection = getAnyConnection();
 		try {
-			connection = getAnyConnection();
 			connection.createStatement().execute( "USE " + tenantIdentifier );
 		}
 		catch ( SQLException e ) {
-			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" +tenantIdentifier + "]",e);
+			throw new HibernateException(
+					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" +tenantIdentifier + "]",e);
 		}
 		return connection;
 	}
@@ -63,11 +61,11 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
 			connection.createStatement().execute( "USE default_db" );
 		}
 		catch ( SQLException e ) {
-			throw new HibernateException("Could not alter JDBC connection to specified schema [" + tenantIdentifier + "]",e);
+			throw new HibernateException(
+					"Could not alter JDBC connection to specified schema [" +
+							tenantIdentifier + "]",e);
 		}
-		finally{
-			connectionProvider.closeConnection( connection );
-		}
+		connectionProvider.closeConnection( connection );
 	}
 	
 	@Override

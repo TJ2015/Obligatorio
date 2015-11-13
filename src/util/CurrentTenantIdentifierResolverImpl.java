@@ -9,19 +9,13 @@ public class CurrentTenantIdentifierResolverImpl implements CurrentTenantIdentif
 
 	@Override
 	public String resolveCurrentTenantIdentifier() {
-		
-		String tenantId = null;
-		try {
-			System.out.println("from inside resolveCurrentTenantIdentifier....");
-			tenantId = _tenantIdentifier.get();
+		System.out.println("from inside resolveCurrentTenantIdentifier....");
+		String tenantId = _tenantIdentifier.get();
 
-			if(tenantId == null)
-				tenantId = DEFAULT_TENANT_ID;
+		if(tenantId == null)
+			tenantId = DEFAULT_TENANT_ID;
 
-			System.out.println("threadlocal tenant id ="+tenantId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println("threadlocal tenant id ="+tenantId);
 		return tenantId;
 	}
 

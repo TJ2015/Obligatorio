@@ -41,7 +41,7 @@ public class PruebaMB implements Serializable {
 	private boolean allok = true;
 	private long ID_AV;
 	private long ID_AV2;
-
+	
 	@EJB
 	IControladorAV cAV;
 	@EJB
@@ -85,10 +85,9 @@ public class PruebaMB implements Serializable {
 		}
 		cInv.crearCategoria("testCat", ID_AV);
 		try {
-			cInv.crearProducto("testProd1", "producto de prueba 1", 111, "testCat", "attr1:val1;attr2:val2;", ID_AV, 10,
-					null);
+			cInv.crearProducto("testProd1", "producto de prueba 1", 111, "testCat", "attr1:val1;attr2:val2;", ID_AV, 10);
 			cInv.crearProducto("testProd2", "producto de prueba 2", 222, "testCat", "attr1:val1;attr2:val2;attr3:val3;",
-					ID_AV, 20, null);
+					ID_AV, 20);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,8 +102,7 @@ public class PruebaMB implements Serializable {
 	}
 
 	public boolean testRegistrarUsuario() {
-		DataUsuario du = cUsu.registrarUsuario("Test", "Run 4", "test4", "test4", "test4@example.org", new Date(),
-				null);
+		DataUsuario du = cUsu.registrarUsuario("Test", "Run 4", "test4", "test4", "test4@example.org", new Date(), null);
 
 		if (du == null)
 			return false;
@@ -646,14 +644,14 @@ public class PruebaMB implements Serializable {
 			return false;
 		}
 	}
-
+	
 	public boolean testCrearCategoria() {
 		String nombre = "catTest2";
-		if (!cInv.crearCategoria(nombre, ID_AV))
+		if( !cInv.crearCategoria(nombre, ID_AV) )
 			return false;
-
+		
 		DataCategoria cat = null;
-
+		
 		try {
 			cat = cInv.getCategoria(nombre, ID_AV);
 		} catch (NoExisteElAV e) {
@@ -661,15 +659,15 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
-		if ((cat == null) && (!cat.getNombre().equals(nombre)))
+		
+		if( (cat == null)&&(!cat.getNombre().equals(nombre)) )
 			return false;
-
-		if (!cInv.crearCategoria(nombre, 0))
+		
+		if( !cInv.crearCategoria(nombre, 0) )
 			return false;
-
+		
 		cat = null;
-
+		
 		try {
 			cat = cInv.getCategoria(nombre, 0);
 		} catch (NoExisteElAV e) {
@@ -677,24 +675,23 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
-		if ((cat == null) && (!cat.getNombre().equals(nombre)))
+		
+		if( (cat == null)&&(!cat.getNombre().equals(nombre)) )
 			return false;
-
+		
 		return true;
 	}
-
+	
 	public boolean modificarNombreCategoria() {
-
+		
 		cInv.crearCategoria("categoriaPrueba", ID_AV);
 		try {
-			cInv.crearProducto("testProd3", "testProd3", 123, "categoriaPrueba", "attr1:val1;attr2:val2;", ID_AV, 10,
-					null);
+			cInv.crearProducto("testProd3", "testProd3", 123, "categoriaPrueba", "attr1:val1;attr2:val2;", ID_AV, 10);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 		try {
 			cInv.modificarNombreCategoria("categoriaPrueba", ID_AV, "categoriaNombreNuevo");
 		} catch (Exception e) {
@@ -702,9 +699,9 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 		try {
-			if (cInv.getCategoria("categoriaPrueba", ID_AV) != null)
+			if( cInv.getCategoria("categoriaPrueba", ID_AV) != null )
 				return false;
 		} catch (NoExisteElAV e) {
 			// TODO Auto-generated catch block
@@ -718,18 +715,18 @@ public class PruebaMB implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if (cat == null)
+		
+		if( cat == null )
 			return false;
-
-		if ((cat.getProductos().size() > 0) && cat.getProductos().get(0).getNombre().equals("testProd3"))
+		
+		if( (cat.getProductos().size() > 0) && cat.getProductos().get(0).getNombre().equals("testProd3") )
 			return true;
-
+		
 		return false;
 	}
-
+	
 	public boolean testEliminarCategoria() {
-
+		
 		cInv.crearCategoria("categoriaPrueba2", ID_AV);
 		try {
 			cInv.eliminarCategoria("categoriaPrueba2", ID_AV);
@@ -743,18 +740,15 @@ public class PruebaMB implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if (cat != null)
+		
+		if( cat != null )
 			return false;
-
+		
 		cInv.crearCategoria("categoriaPrueba2", ID_AV);
 		try {
-			cInv.crearProducto("testProd4", "testProd4", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10,
-					null);
-			cInv.crearProducto("testProd5", "testProd5", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10,
-					null);
-			cInv.crearProducto("testProd6", "testProd6", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10,
-					null);
+			cInv.crearProducto("testProd4", "testProd4", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10);
+			cInv.crearProducto("testProd5", "testProd5", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10);
+			cInv.crearProducto("testProd6", "testProd6", 123, "categoriaPrueba2", "attr1:val1;attr2:val2;", ID_AV, 10);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -766,7 +760,7 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 		cat = null;
 		try {
 			cat = cInv.getCategoria("categoriaPrueba2", ID_AV);
@@ -774,27 +768,26 @@ public class PruebaMB implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if (cat == null)
+		
+		if( cat == null )
 			return true;
-
+		
 		return false;
 	}
-
+	
 	public boolean testCopiarProducto() {
-
-		if (cInv.crearCategoria("categoriaPrueba3", ID_AV)) {
+		
+		if( cInv.crearCategoria("categoriaPrueba3", ID_AV) ) {
 			try {
-				cInv.crearProducto("productoPrueba1", "prod desc 1", 123, "categoriaPrueba3", "attr1:val1;attr2:val2;",
-						ID_AV, 15, null);
+				cInv.crearProducto("productoPrueba1", "prod desc 1", 123, "categoriaPrueba3", "attr1:val1;attr2:val2;", ID_AV, 15);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
 			}
 		}
-
+		
 		long idAVDestino = ID_AV2;
-
+		
 		try {
 			cInv.copiarProducto("productoPrueba1", ID_AV, idAVDestino);
 		} catch (Exception e) {
@@ -808,20 +801,20 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
-		if (dp == null)
+		
+		if( dp == null )
 			return false;
 		return true;
-
+		
 	}
-
+	
 	public boolean testMoverProducto() {
 		String cat = "categoriaPrueba4";
 		String prod = "productoPrueba2";
-
-		if (cInv.crearCategoria(cat, ID_AV)) {
+		
+		if( cInv.crearCategoria(cat, ID_AV) ) {
 			try {
-				cInv.crearProducto(prod, "prod desc 1", 123, cat, "attr1:val1;attr2:val2;", ID_AV, 15, null);
+				cInv.crearProducto(prod, "prod desc 1", 123, cat, "attr1:val1;attr2:val2;", ID_AV, 15);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -841,21 +834,21 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 		DataProducto dp2 = null;
-
-		if (dp == null)
+		
+		if( dp == null )
 			return false;
-
+		
 		try {
 			dp2 = cInv.getProducto(prod, ID_AV);
 		} catch (NoExisteElAV | NoExisteElProducto e) {
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	public boolean testMoverListaDeProductos() {
 		String cat = "categoriaPrueba5";
 		List<String> prods = new ArrayList<>();
@@ -863,11 +856,11 @@ public class PruebaMB implements Serializable {
 		prods.add("proMover2");
 		prods.add("proMover3");
 		prods.add("proMover4");
-
-		if (cInv.crearCategoria(cat, ID_AV)) {
-			for (String p : prods) {
+		
+		if( cInv.crearCategoria(cat, ID_AV) ) {
+			for( String p : prods ) {
 				try {
-					cInv.crearProducto(p, "prod desc 1", 123, cat, "attr1:val1;attr2:val2;", ID_AV, 15, null);
+					cInv.crearProducto(p, "prod desc 1", 123, cat, "attr1:val1;attr2:val2;", ID_AV, 15);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return false;
@@ -876,7 +869,7 @@ public class PruebaMB implements Serializable {
 		} else {
 			return false;
 		}
-
+		
 		long idAVDestino = ID_AV2;
 		try {
 			cInv.moverProductos(prods, ID_AV, idAVDestino);
@@ -884,8 +877,8 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
-		for (String p : prods) {
+		
+		for( String p : prods ) {
 			try {
 				cInv.getProducto(p, idAVDestino);
 			} catch (NoExisteElAV | NoExisteElProducto e) {
@@ -898,23 +891,28 @@ public class PruebaMB implements Serializable {
 			} catch (NoExisteElAV | NoExisteElProducto e) {
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	public boolean testModificarProducto() {
-		String nom = "prodPruevaMod", nom2 = "prodPruevaMod2", desc = "pro desc mod", attrs = "attr1:val1;attr2:val2;",
-				desc2 = "prod desc mod 2", attrs2 = "attr12:val12;attr22:val22;";
-
-		double precio = 123, precio2 = 321;
-
+		String nom = "prodPruevaMod",
+			nom2 = "prodPruevaMod2",
+			desc = "pro desc mod",
+			attrs = "attr1:val1;attr2:val2;",
+			desc2 = "prod desc mod 2",
+			attrs2 = "attr12:val12;attr22:val22;";
+		
+		double precio = 123,
+			precio2 = 321;
+		
 		try {
-			cInv.crearProducto(nom, desc, precio, "testCat", attrs, ID_AV, 50, null);
+			cInv.crearProducto(nom, desc, precio, "testCat", attrs, ID_AV, 50);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		try {
 			cInv.modificarProducto(nom, ID_AV, nom2, desc2, precio2, attrs2);
 		} catch (Exception e) {
@@ -928,29 +926,29 @@ public class PruebaMB implements Serializable {
 			return false;
 		}
 		Map<String, String> attrsMap = dp.getAtributosList();
-
+		
 		Iterator<String> iter = attrsMap.keySet().iterator();
 		String attrsStr = "";
-		while (iter.hasNext()) {
+		while( iter.hasNext() ) {
 			String nest = iter.next();
 			attrsStr += nest + ":" + attrsMap.get(nest) + ";";
 		}
-
-		if (dp.getDescripcion().equals(desc2) && attrsStr.equals(attrs2)) {
+		
+		if(dp.getDescripcion().equals(desc2)&&attrsStr.equals(attrs2)) {
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	public boolean testSetStockProducto() {
 		try {
-			cInv.crearProducto("prodStock", "prodStock", 123, "testCat", "attr12:val12;attr22:val22;", ID_AV, 1, null);
+			cInv.crearProducto("prodStock", "prodStock", 123, "testCat", "attr12:val12;attr22:val22;", ID_AV, 1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		cInv.setStockProducto("prodStock", ID_AV, 50);
 		DataProducto dp = null;
 		try {
@@ -960,40 +958,40 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
-		if (dp.getStock() == 50)
+		
+		if( dp.getStock() == 50 )
 			return true;
-
+		
 		return false;
 	}
-
+	
 	public boolean testCambiarCategoriaProducto() {
 		try {
-			cInv.crearProducto("prodCat", "prodCat", 123, "testCat", "asd:ASD;", ID_AV, 50, null);
+			cInv.crearProducto("prodCat", "prodCat", 123, "testCat", "asd:ASD;", ID_AV, 50);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		cInv.crearCategoria("catProd", ID_AV);
 		cInv.cambiarCategoriaProducto("catProd", "prodCat", ID_AV);
-
+		
 		DataProducto dp = null;
-
+		
 		try {
 			dp = cInv.getProducto("prodCat", ID_AV);
 		} catch (NoExisteElAV | NoExisteElProducto e) {
 			e.printStackTrace();
 			return false;
 		}
-
-		if (dp.getCategoria().equals("catProd"))
+		
+		if( dp.getCategoria().equals("catProd") )
 			return true;
-
+		
 		return false;
 	}
-
+	
 	public boolean testEliminarProducto() {
 		try {
-			cInv.crearProducto("prodEliminar", "prodEliminar", 123, "testCat", "asd:ASD;", ID_AV, 50, null);
+			cInv.crearProducto("prodEliminar", "prodEliminar", 123, "testCat", "asd:ASD;", ID_AV, 50);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -1004,37 +1002,37 @@ public class PruebaMB implements Serializable {
 		} catch (NoExisteElAV | NoExisteElProducto e) {
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	public boolean testPersistirLog() {
 
 		return false;
 	}
 
 	public void testSuitTrucho() {
-
+		
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-
+		
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
-		tests.put("Crear Nota", testCrearNota());
-		tests.put("Crear Notificacion", testCrearNotifiacion());
-		tests.put("Enviar Mensaje", testEnviarMensaje());
+		tests.put("Crear Nota", testCrearNota()); 
+		tests.put( "Crear Notificacion" , testCrearNotifiacion());
+		tests.put("Enviar Mensaje", testEnviarMensaje()); 
 		tests.put("Marcar Mensaje Como Leido", testMarcarMensajeComoLeido());
-		tests.put("Eliminar Mensaje Recibido", testEliminarMensajeRecibido());
-		tests.put("Eliminar Mensaje Enviado", testEliminarMensajeEnviado());
+		tests.put("Eliminar Mensaje Recibido", testEliminarMensajeRecibido()); 
+		tests.put("Eliminar Mensaje Enviado", testEliminarMensajeEnviado()); 
 		tests.put("Eliminar Mensaje", testEliminarMensaje());
 		tests.put("Agregar Producto A Lista De Compras", testAgregarEnListaDeCompra());
-		tests.put("Eliminar Producto de Lista de Compras", testEliminarProductoDeListaDeCompra());
-		tests.put("Producto Comprado", testProductoComprado());
-		tests.put("Registrar Administrador", testRegistrarAdmin());
-		tests.put("Eliminar Administrador", testEliminarAdmin());
-		tests.put("Login Administrador", testLoginAdmin());
+		tests.put("Eliminar Producto de Lista de Compras", testEliminarProductoDeListaDeCompra()); 
+		tests.put("Producto Comprado", testProductoComprado()); 
+		tests.put("Registrar Administrador", testRegistrarAdmin()); 
+		tests.put("Eliminar Administrador", testEliminarAdmin()); 
+		tests.put("Login Administrador", testLoginAdmin()); 
 		tests.put("Modificar Administrador", testModificarAdmin());
 		tests.put("Crear Categoria", testCrearCategoria());
 		tests.put("Modificar Categoria", modificarNombreCategoria());
@@ -1046,7 +1044,7 @@ public class PruebaMB implements Serializable {
 		tests.put("Set Stock Producto", testSetStockProducto());
 		tests.put("Set Stock Producto", testCambiarCategoriaProducto());
 		tests.put("Eliminar Producto", testEliminarProducto());
-
+		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
 		} catch (IOException e) {

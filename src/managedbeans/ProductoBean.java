@@ -7,18 +7,16 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.ejb.EJB;
+import javax.ejb.SessionBean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
-import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorInventario;
-import util.Url;
 
 @ManagedBean
 public class ProductoBean implements Serializable {
@@ -36,23 +34,13 @@ public class ProductoBean implements Serializable {
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
 	private List<DataProducto> dprods2 = new ArrayList<>();
-	private long idAV;
+
 	
-	private UploadedFile file;
-	
-	
+
 	List<String> nomProd=new ArrayList<>();
 
 
 	private static final long serialVersionUID = 1L;
-	
-	public UploadedFile getFile() {
-		return file;
-	}
-
-	public void setFile(UploadedFile file) {
-		this.file = file;
-	}
 	public List<DataProducto> getDprods2() {
 		return dprods2;
 	}
@@ -76,6 +64,10 @@ public class ProductoBean implements Serializable {
 	public void setNomProd(List<String> nomProd) {
 		this.nomProd = nomProd;
 	}
+
+	// para descripcion producto
+	private long idAV;
+
 	private DataProducto dataProducto;
 
 	public ProductoBean(long idAV) {
@@ -163,12 +155,16 @@ public class ProductoBean implements Serializable {
 		long idAV = (long) session.getAttribute("idAV");
 
 		try {
-			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock, file);
+			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
 			//cinv.setStockProducto(nombre, idAV, stock);
-			Url.redireccionarURL("ver_producto");
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/ver_producto.xhtml");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Url.redireccionarURL("error");
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 	}

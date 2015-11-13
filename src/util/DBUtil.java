@@ -15,7 +15,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 
-public final class DBUtil {
+public class DBUtil {
+
 	private static Map<String, Session> sesiones = new HashMap<>();
 
 	public static Session crearSession(String tenant) {
@@ -35,8 +36,8 @@ public final class DBUtil {
 	}
 
 	public static void crearBase(String nombre) {
+		ConnectionProvider conProv = new ConnectionProviderImpl("");
 		try {
-			ConnectionProvider conProv = new ConnectionProviderImpl("");
 			conProv.getConnection().createStatement().execute("CREATE DATABASE IF NOT EXISTS " + nombre);
 			conProv.getConnection().close();
 			try {
@@ -52,10 +53,14 @@ public final class DBUtil {
 					count++;
 				}
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (SQLException e) {
-			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre+ "]",e);
+			throw new HibernateException(
+					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre
+							+ "]",
+					e);
 		}
 	}
 
@@ -87,55 +92,56 @@ public final class DBUtil {
 			System.out.println("clave modificada con éxito");
 
 		} catch (SQLException e) {
-			throw new HibernateException("MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre+ "]", e);
+			throw new HibernateException(
+					"MultiTenantConnectionProvider::Could not alter JDBC connection to specified schema [" + nombre
+							+ "]",
+					e);
 		}
 	}
 
 	public static List<String> getQueriesFromSQLFile(String url) throws FileNotFoundException {
-		List<String> queries = null;
-		try {
-			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(url);
-			Scanner input;
-			List<String> lineas = new ArrayList<>();
-			queries = new ArrayList<>();
 
-			input = new Scanner(in, "utf-8");
+		InputStream in = DBUtil.class.getClassLoader().getResourceAsStream(url);
+		Scanner input;
+		List<String> lineas = new ArrayList<>();
+		List<String> queries = new ArrayList<>();
 
-			while (input.hasNext()) {
-				// or to process line by line
-				lineas.add(input.nextLine());
-			}
+		input = new Scanner(in, "utf-8");
 
-			String aux = "";
-			boolean comentario = false;
+		while (input.hasNext()) {
+			// or to process line by line
+			lineas.add(input.nextLine());
+		}
 
-			for (String l : lineas) {
-				if (!l.startsWith("--") && (!comentario)) {
-					if (!l.startsWith("/*") || (l.startsWith("/*") && l.contains("40101 SET NAMES"))) {
-						aux += l;
-						if (l.endsWith(";")) {
-							queries.add(aux);
-							aux = "";
-						}
-					} else {
-						if (!l.endsWith("*/") && !l.endsWith("*/;")) {
-							comentario = true;
-						}
+		String aux = "";
+		String auxCom = "";
+		boolean comentario = false;
+
+		for (String l : lineas) {
+			if (!l.startsWith("--") && (!comentario)) {
+				if (!l.startsWith("/*") || (l.startsWith("/*") && l.contains("40101 SET NAMES"))) {
+					aux += l;
+					if (l.endsWith(";")) {
+						queries.add(aux);
+						aux = "";
 					}
-				} else if (l.endsWith("*/") || l.endsWith("*/;")) {
-					comentario = false;
+				} else {
+					if (!l.endsWith("*/") && !l.endsWith("*/;")) {
+						comentario = true;
+					}
 				}
+			} else if (l.endsWith("*/") || l.endsWith("*/;")) {
+				comentario = false;
 			}
-			input.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
+		}
+		input.close();
+
 		return queries;
 	}
 
 	public static void eliminarTenant(String tenant) {
+		ConnectionProvider conProv = new ConnectionProviderImpl("");
 		try {
-			ConnectionProvider conProv = new ConnectionProviderImpl("");
 			conProv.getConnection().createStatement().execute("DROP DATABASE sapo_" + tenant);
 		} catch (SQLException e) {
 			e.printStackTrace();
