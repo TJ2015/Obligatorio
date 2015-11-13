@@ -10,13 +10,8 @@ import javax.ejb.Startup;
 
 
 import simplechat.web.Message;
-//import ru.reshaka.labs.chat.Message;
 
  
-/**
- * Simple chat logic
- * @author Danon
- */
 @Singleton
 @Startup
 public class MessageManager implements MessageManagerLocal {

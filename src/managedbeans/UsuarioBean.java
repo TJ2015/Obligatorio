@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -218,5 +220,29 @@ public class UsuarioBean implements Serializable
 	public void setImagen(StreamedContent  imagen) {
 		this.imagen = imagen;
 	}
+	
+	public void hola(int num){
+		System.out.println(num);
+	}
+	
+	public void change(String language) {
+		System.out.println(language);
+	}
+	
+	private String language;
+	
+	
 
+	public void change() {
+		System.out.println(language);
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	
 }

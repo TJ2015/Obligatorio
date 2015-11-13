@@ -108,11 +108,13 @@ public class AvBean implements Serializable {
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
 			try {
 				idAV = cAV.altaAV(nombreAV, nick);
+				
 			} catch (NombreDeAVInvalido e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			session.setAttribute("idAV", idAV);
+			session.setAttribute("nombreAV", nick + "_" + nombreAV);
 			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
 			
 			

@@ -32,6 +32,23 @@ public final class Imagenes {
 		return bytes;
 	}
 	
+	
+	public final static byte[] convertirInputStreamToArrayByte(InputStream is)
+	{
+		byte[] bytes = null;
+		try {
+			if (is != null) {
+				bytes = new byte[1048576*8];
+				OutputStream out = new FileOutputStream(new File("icon.jpg"));
+				out.write(bytes, 0, is.read(bytes));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bytes;
+	}
+	
+	
 	public final static byte[] convertirUrlToArrayByte(String urlString)
 	{
 		byte[] bytes = null;

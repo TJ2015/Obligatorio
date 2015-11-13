@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+org.jboss.tools.openshift.ApplicationId=5642361b7628e1c2e30001a1
+org.jboss.tools.openshift.ApplicationName=obligatorio
+org.jboss.tools.openshift.Connection=https\://bryan.braz%40gmail.com@openshift.redhat.com
+org.jboss.tools.openshift.Domain=tj2015
+org.jboss.tools.openshift.RemoteName=openshift
