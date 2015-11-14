@@ -284,6 +284,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
+		//devuelve lista de mensaje cant q queres
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 
 		if (usu != null) {
@@ -300,11 +301,13 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario) throws UsuarioNoEncontrado {
+		//todos los del usuario
 		return getMensajesEnviados(usuario, 0, 0);
 	}
 
 	@Override
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
+		//lista de la cant q queres
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 
 		if (usu != null) {
@@ -321,10 +324,28 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesRecibidos(String usuario) throws UsuarioNoEncontrado {
+		//todos los recibidos
 		return getMensajesRecibidos(usuario, 0, 0);
+	}
+	public List<DataMensaje> getMensajesRecibidosNoLeidos(String usuario) throws UsuarioNoEncontrado {
+		//todos los recibidos
+		Usuario usu = usuarioDAO.buscarUsuario(usuario);
+
+		if (usu != null) {
+			List<Mensaje> mensajes = usu.getMensajesRecibidos();
+			List<DataMensaje> msjs = new ArrayList<>();
+			for (Mensaje m : mensajes) {
+				if(!m.isLeido())
+				msjs.add(m.getDataMensaje());
+			}
+			return msjs;
+		} else {
+			throw new exceptions.UsuarioNoEncontrado();
+		}
 	}
 
 	private List<DataMensaje> getMensajes(List<Mensaje> msjs, int offset, int cant) {
+		
 		List<DataMensaje> mensajes = new ArrayList<>();
 		int ini = 0, fin = msjs.size();
 
@@ -351,6 +372,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado {
+		//cualquier msj
 		Mensaje msj = usuarioDAO.buscarMensaje(id);
 
 		if (msj != null) {
@@ -362,6 +384,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado {
+		//levanta 1 msj es al pedooooooooooooo
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for (Mensaje m : usu.getMensajesEnviados()) {
@@ -375,6 +398,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
+		//al pedooooo
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for (Mensaje m : usu.getMensajesRecibidos()) {

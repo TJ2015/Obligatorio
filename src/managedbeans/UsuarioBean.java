@@ -17,8 +17,10 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
+import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
@@ -36,13 +38,77 @@ public class UsuarioBean implements Serializable
 
 	private String nombre;
 	private String apellido;
+	private String destinatario;
+	private String mensaje;
 	private String nick;
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
+	List<DataMensaje> msjsNoLeidos = new ArrayList<>();
+	List<DataMensaje> msjsEnviados = new ArrayList<>();
+	List<DataMensaje> msjsRecibidos = new ArrayList<>();
+	
+	private DataMensaje dmsj;
 	private DataUsuario dusu;
 	private boolean logueado;
+	private UploadedFile file;
+	private StreamedContent imagen;
+
+	private List<DataMensaje> msjs;
+	
+	
+	public List<DataMensaje> getMsjs() {
+		return msjs;
+	}
+
+	public void setMsjs(List<DataMensaje> msjs) {
+		this.msjs = msjs;
+	}
+
+	public List<DataMensaje> getMsjsRecibidos() {
+		return msjsRecibidos;
+	}
+
+	public void setMsjsRecibidos(List<DataMensaje> msjsRecibidos) {
+		this.msjsRecibidos = msjsRecibidos;
+	}
+	public List<DataMensaje> getMsjsEnviados() {
+		return msjsEnviados;
+	}
+
+	public void setMsjsEnviados(List<DataMensaje> msjsEnviados) {
+		this.msjsEnviados = msjsEnviados;
+	}
+	public DataMensaje getDmsj() {
+		return dmsj;
+	}
+
+	public void setDmsj(DataMensaje dmsj) {
+		this.dmsj = dmsj;
+	}
+	public String getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	public List<DataMensaje> getMsjsNoLeidos() {
+		return msjsNoLeidos;
+	}
+
+	public void setMsjsNoLeidos(List<DataMensaje> msjsNoLeidos) {
+		this.msjsNoLeidos = msjsNoLeidos;
+	}
 		
 	public boolean isLogueado() {
 		return logueado;
@@ -52,9 +118,7 @@ public class UsuarioBean implements Serializable
 		this.logueado = logueado;
 	}
 	
-	private UploadedFile file;
 	
-	private StreamedContent imagen;
 	
 	public UsuarioBean() {
 
@@ -233,8 +297,7 @@ public class UsuarioBean implements Serializable
 		} catch (NoExisteElAV e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 	
 	//Ejemplo para mostrar la imagen, se debe definir:
 	//<p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" cache="false"></p:graphicImage>
@@ -252,4 +315,34 @@ public class UsuarioBean implements Serializable
 		return imagen;
 	}
 
+	public List<DataMensaje> mostrarListaMsjNoLeidos() throws UsuarioNoEncontrado 
+	{
+			HttpSession session = SesionBean.getSession();
+			String nick = (String) session.getAttribute("nickname");
+			msjsNoLeidos=cusu.getMensajesRecibidosNoLeidos(nick);
+			return msjsNoLeidos;
+			
+	}
+	public List<DataMensaje> listMensajesEnviados() throws UsuarioNoEncontrado 
+	{
+			HttpSession session = SesionBean.getSession();
+			String nick = (String) session.getAttribute("nickname");
+			msjs=cusu.getMensajesEnviados(nick);
+			return msjs;
+			
+	}
+	public List<DataMensaje> listMensajesRecibidos() throws UsuarioNoEncontrado 
+	{
+			HttpSession session = SesionBean.getSession();
+			String nick = (String) session.getAttribute("nickname");
+			msjs = cusu.getMensajesRecibidos(nick);
+			return msjs;
+			
+	}
+	public void crearMensaje() 
+	{
+			HttpSession session = SesionBean.getSession();
+			String remitente = (String) session.getAttribute("nickname");
+			boolean msjCreado= cusu.enviarMensaje(remitente, destinatario, mensaje);
+	}
 }
