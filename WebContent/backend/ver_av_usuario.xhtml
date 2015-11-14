@@ -4,7 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
@@ -96,6 +97,10 @@ section#perfil {
 															<td>Nombre:</td>
 															<td>${AV.getNombreAV()}</td>
 														</tr>
+														<tr>
+															<td>Usuario creador:</td>
+															<td>${AV.getNickname()}</td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -108,23 +113,71 @@ section#perfil {
 					</section>
 
 					<section>
+					<center>
+						<h1>Usuarios Compartidos</h1>
+					</center>
+
+					<h:form>
+						<table id="example1" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Nickname</th>
+									<th>Email</th>
+									<th>Nombre</th>
+									<th>Apellido</th>
+									<th>Fecha de Nacimiento</th>
+									<th>Estatus</th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:param name="usus" value="${AV.getUsuariosCompartidos()}"></ui:param>
+								<c:forEach var="usu" items="${usus}">
+
+									<tr>
+										<td><h:commandLink action="ver_usuario"
+												actionListener="#{adminBean.getUsuario(usu.getNick())}"
+												value="${usu.getNick()}" /></td>
+										<td>${usu.getEmail()}</td>
+										<td>${usu.getNombre()}</td>
+										<td>${usu.getApellido()}</td>
+										<td>${usu.getFechaNacimiento()}</td>
+										<td>FREE</td>
+									</tr>
+
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>Nickname</th>
+									<th>Email</th>
+									<th>Nombre</th>
+									<th>Apellido</th>
+									<th>Fecha de Nacimiento</th>
+									<th>Estatus</th>
+								</tr>
+							</tfoot>
+						</table>
+					</h:form> 
+					</section>
+					<section>
+
+					<center>
+						<h1>Productos</h1>
+					</center>
 					<table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>Nombre</th>
 								<th>Categoria</th>
-
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="p" items="${prods}">
 								<tr>
-									<td>
-										<a href="ver_producto.xhtml"> ${p.nombre} </a> <a
+									<td><a href="ver_producto.xhtml"> ${p.nombre} </a> <a
 										href="#" data-toggle="modal" data-target="#myModal"> <i
 											class="fa fa-trash-o" style="float: right"></i>
-										</a>
-									</td>
+									</a></td>
 									<td>#{p.categoria}</td>
 								</tr>
 
