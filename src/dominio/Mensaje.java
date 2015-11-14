@@ -11,6 +11,9 @@ import dominio.datatypes.DataMensaje;
  * Entity implementation class for Entity: Mensaje
  *
  */
+@NamedQueries({ 
+	@NamedQuery(name = "Mensaje.buscarNoLeidos", query = "SELECT m FROM Mensaje m WHERE m.leido = false"),
+	})
 @Entity
 public class Mensaje implements Serializable {
 

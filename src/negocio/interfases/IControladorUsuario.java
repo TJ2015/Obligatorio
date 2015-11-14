@@ -54,6 +54,8 @@ public interface IControladorUsuario {
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado;
 
 	public List<DataMensaje> getMensajesRecibidos(String usuario) throws UsuarioNoEncontrado;
+	
+	public List<DataMensaje> getMensajesRecibidosNoLeidos(String usuario) throws UsuarioNoEncontrado;
 
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado;
 
