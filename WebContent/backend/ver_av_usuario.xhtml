@@ -172,17 +172,20 @@ section#perfil {
 							</tr>
 						</thead>
 						<tbody>
+						<h:form>
 							<c:forEach var="p" items="${prods}">
 								<tr>
-									<td><a href="ver_producto.xhtml"> ${p.nombre} </a> <a
-										href="#" data-toggle="modal" data-target="#myModal"> <i
-											class="fa fa-trash-o" style="float: right"></i>
-									</a></td>
+									<td>
+										
+										<a href="ver_producto.xhtml"> ${p.nombre} </a>
+										<h:commandLink action="ver_av_usuario" actionListener="${adminBean.setEliminar(p.nombre)}" value="" class="fa fa-trash-o" style="float: right">
+											<i class="fa fa-trash-o" style="float: right"></i>
+										</h:commandLink>
+									</td>
 									<td>#{p.categoria}</td>
 								</tr>
-
 							</c:forEach>
-
+						</h:form>
 						</tbody>
 						<tfoot>
 							<tr>
@@ -194,6 +197,10 @@ section#perfil {
 					</section>
 
 				</div>
+
+
+
+
 
 				<!-- Modal -->
 				<div class="modal fade" id="myModal" role="dialog">
@@ -210,7 +217,7 @@ section#perfil {
 							</div>
 							<div class="modal-footer">
 								<h:form>
-									<h:commandButton action="#{productoBean.eliminarProducto()}"
+									<h:commandButton action="ver_av_usuario" actionListener="#{adminBean.eliminarProducto()}"
 										value="Aceptar" class="btn btn-default" />
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Cancelar</button>
@@ -238,6 +245,12 @@ section#perfil {
 	                });
 	            });
 	        </script>
+	        <c:if test="#{adminBean.eliminarProducto}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#myModal").modal('show');
+				</h:outputScript>
+			</c:if>
 			</ui:define>
 		</ui:composition>
 	</c:if>

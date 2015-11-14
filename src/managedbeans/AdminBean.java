@@ -44,6 +44,8 @@ public class AdminBean implements Serializable {
 	private DataUsuario usuario;
 	private DataAV avUsu;
 	private List<DataProducto> prodsUsu = new ArrayList<>();
+	private boolean eliminarProducto;
+	private String prodEliminar;
 
 	public AdminBean() {
 		super();
@@ -154,6 +156,22 @@ public class AdminBean implements Serializable {
 		this.imagen = imagen;
 	}
 
+	public boolean isEliminarProducto() {
+		return eliminarProducto;
+	}
+
+	public void setEliminarProducto(boolean eliminarProducto) {
+		this.eliminarProducto = eliminarProducto;
+	}
+
+	public String getProdEliminar() {
+		return prodEliminar;
+	}
+
+	public void setProdEliminar(String prodEliminar) {
+		this.prodEliminar = prodEliminar;
+	}
+
 	public DataUsuario getUsuario() {
 		return usuario;
 	}
@@ -197,4 +215,20 @@ public class AdminBean implements Serializable {
 		}
 	}
 
+	public void setEliminar(String prod) {
+		prodEliminar = prod;
+		eliminarProducto = true;
+	}
+	
+	public void eliminarProducto() {
+		eliminarProducto = false;
+		cInv.eliminarProducto(prodEliminar, avUsu.getIdAV());
+		try {
+			avUsu = cAV.traerAVPorNombre(avUsu.getNombreAV(), avUsu.getNickname());
+			prodsUsu = cInv.getProductos(avUsu.getIdAV());
+		} catch (UsuarioNoEncontrado e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
