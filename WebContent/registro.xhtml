@@ -82,7 +82,7 @@
 												<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 											</div>
 											
-											<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
+											<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
 			          								<f:convertDateTime pattern="d-M-yyyy" />
 			        						</h:inputText>
 										</div>
@@ -93,7 +93,7 @@
 											<div class="input-group-addon">
 												<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 											</div>
-											<p:fileUpload id="imagenUsuario" value="#{usuarioBean.file}" styleClass="form-control" required="true" mode="simple" update="growl" />
+											<p:fileUpload id="imagenUsuario" value="#{usuarioBean.file}" styleClass="form-control" mode="simple" update="growl" />
 										</div>
 									</div>
 									<h:commandButton id="botonRegistrar" styleClass="btn btn-primary" value="Registrarse" action="#{usuarioBean.registroUsuario()}"/>
