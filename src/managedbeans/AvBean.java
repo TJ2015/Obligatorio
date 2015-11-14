@@ -114,7 +114,12 @@ public class AvBean implements Serializable {
 			}
 			session.setAttribute("idAV", idAV);
 			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
-			
+			try {
+				session.setAttribute("dAV", cAV.traerAV(idAV));
+			} catch (NoExisteElAV e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
 			
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");

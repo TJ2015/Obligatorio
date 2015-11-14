@@ -210,7 +210,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public List<Usuario> getAllUsuarios() {
 		List<Usuario> usuarios = null;
 		try {
-			usuarios = em.createNamedQuery("Usuario.findAll", Usuario.class).getResultList();
+			usuarios = em.createNamedQuery("Usuario.getAll", Usuario.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

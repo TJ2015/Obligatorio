@@ -89,7 +89,7 @@ public class CategoriaBean implements Serializable {
 
 			if (cinv.crearCategoria(nombre, idAV)) {
 
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
 			}
@@ -109,7 +109,6 @@ public class CategoriaBean implements Serializable {
 
 	public List<DataCategoria> mostrarListaCategoria() throws Exception {
 		try {
-
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
 			cats = cinv.mostrarListaCategoria(idAV);

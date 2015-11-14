@@ -50,11 +50,30 @@ public class ProductoBean implements Serializable {
 	}
 
 	public int getCantProd() {
+		HttpSession session = SesionBean.getSession();
+		cantProd = 0;
+		long idAV = (long) session.getAttribute("idAV");
+		try {
+			for(DataCategoria cats : cinv.mostrarListaCategoria(idAV)){
+				cantProd += cats.getProductos().size();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return cantProd;
 	}
 
 	public void setCantProd(int cantProd) {
-		this.cantProd = cantProd;
+		HttpSession session = SesionBean.getSession();
+		cantProd = 0;
+		long idAV = (long) session.getAttribute("idAV");
+		try {
+			for(DataCategoria cats : cinv.mostrarListaCategoria(idAV)){
+				cantProd += cats.getProductos().size();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<String> getNomProd() {
@@ -186,8 +205,9 @@ public class ProductoBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	public void mostrarTodosProd(){
+	public void mostrarTodosProd() {
 		HttpSession session = SesionBean.getSession();
+		cantProd = 0;
 		long idAV = (long) session.getAttribute("idAV");
 		List <DataCategoria> dcats= new ArrayList<>();
 		List <DataProducto> dprodT= new ArrayList<>();
@@ -233,17 +253,17 @@ public class ProductoBean implements Serializable {
 
 	}
 	public void eliminarProducto(String name) throws Exception {
-		HttpSession session = SesionBean.getSession();
-		long idAV= (long) session.getAttribute("idAV");
-		Locale locale = new Locale(name);
-			cinv.eliminarProducto(name, idAV);
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+	HttpSession session = SesionBean.getSession();
+	long idAV= (long) session.getAttribute("idAV");
+	Locale locale = new Locale(name);
+		cinv.eliminarProducto(name, idAV);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+	}
 	
 }

@@ -18,6 +18,8 @@ import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataUsuario;
+import exceptions.NoExisteElAV;
+import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
 
 @ManagedBean
@@ -28,6 +30,8 @@ public class UsuarioBean implements Serializable
 
 	@EJB
 	IControladorUsuario cusu;
+	@EJB
+	IControladorAV cav;
 
 	private String nombre;
 	private String apellido;
@@ -46,7 +50,7 @@ public class UsuarioBean implements Serializable
 	public void setLogueado(boolean logueado) {
 		this.logueado = logueado;
 	}
-
+	
 	private UploadedFile file;
 	
 	private StreamedContent imagen;
@@ -123,11 +127,13 @@ public class UsuarioBean implements Serializable
 	{
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
+			
 			if (dataUsuario != null) {
 				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
+				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
 			} else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
@@ -153,7 +159,12 @@ public class UsuarioBean implements Serializable
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
 				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
+				logueado=true;
+				HttpSession session = SesionBean.getSession();
+				session.setAttribute("nickname", nick);
+				session.setAttribute("dataUsuario", dusu);
+				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
 			} 
 			else {
 				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
@@ -216,6 +227,17 @@ public class UsuarioBean implements Serializable
 
 	public void setImagen(StreamedContent  imagen) {
 		this.imagen = imagen;
+	}
+	
+	public void verAV(long idAV) {
+		HttpSession session = SesionBean.getSession();
+		try {
+			session.setAttribute("dAV", cav.traerAV(idAV));
+			session.setAttribute("idAV", idAV);
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

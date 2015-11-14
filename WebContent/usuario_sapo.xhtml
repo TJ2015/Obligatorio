@@ -70,19 +70,20 @@
 			 <div class="col-lg-3 col-xs-6">
 			 <h3 class="box-title">Lista de Avs</h3>
 				<ul class="list-group" id="ListaAVsCreados">
-				
-				   <c:forEach var="av" items="${sessionScope.AVs}"  >
-				      <li class="list-group-item">
-				       <a href="mostrarAV.xhtml">
-				       <i class="fa fa-angle-double-right"></i>
-				          ${av.nombreAV} 
-				        </a>
-				        <a href="#" data-toggle="modal" data-target="#myModal">
-				        <i class="fa fa-trash-o" style="float:right" ></i>
-				        </a>
-				     </li>
-				                               
-				 </c:forEach>   
+				<h:form>
+				<c:forEach var="av" items="${sessionScope.AVs}"  >
+					<li class="list-group-item">
+					 <h:commandLink actionListener="${usuarioBean.verAV(av.getIdAV())}" action="mostrarAV">
+					 	<i class="fa fa-angle-double-right"></i>
+					 	${av.nombreAV}
+					 </h:commandLink>
+					  <a href="#" data-toggle="modal" data-target="#myModal">
+					  <i class="fa fa-trash-o" style="float:right" ></i>
+					   </a>
+					</li> 
+					              
+				 </c:forEach>
+				 </h:form> 
 				</ul>
 			</div>
 		</section>
