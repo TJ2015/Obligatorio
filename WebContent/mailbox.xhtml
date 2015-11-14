@@ -79,16 +79,18 @@
                                             <div class="table-responsive">
                                                 <!-- THE MESSAGES -->
                                                 
-                                              <c:forEach var="msj" items="${listm}">
                                                 <table class="table table-mailbox">
-                                                    <tr class="unread">
+                                                <c:forEach var="msj" items="${listm}">
+                                                    <tr >
                                                         <td class="small-col"><input type="checkbox" /></td>
                                                         <td class="small-col"><i class="fa fa-star"></i></td>
                                                         <td class="name"><a href="#">#{msj.destinatario}</a></td>
-                                                        <td class="time">#{m.fecha}</td>
+                                                        <td class="subject">#{msj.mensaje.substring(0,3)}</td>
+                                                        <td class="time">#{msj.fecha}</td>
                                                     </tr>
+                                                     </c:forEach>
                                                 </table>
-                                                </c:forEach>
+                                               
                                             </div><!-- /.table-responsive -->
                                         </div><!-- /.col (RIGHT) -->
                                     </div><!-- /.row -->
@@ -130,8 +132,8 @@
                         <div class="modal-footer clearfix">
 
                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
-
-                            <h:commandButton type="submit" class="btn btn-primary pull-left" action="#{usuarioBean.crearMensaje()}"><i class="fa fa-envelope"></i>Enviar</h:commandButton>
+							
+                            <h:commandButton id="botonEnviar" type="submit" styleClass="btn btn-primary pull-left" icon="fa fa-envelope" value="Enviar" action="#{usuarioBean.crearMensaje()}"></h:commandButton>
                         </div>
                     </h:form>
                 </div><!-- /.modal-content -->
