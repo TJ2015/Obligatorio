@@ -2,21 +2,23 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAdministrador;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
 
@@ -29,6 +31,8 @@ public class AdminBean implements Serializable {
 	IControladorUsuario cusu;
 	@EJB
 	IControladorAV cAV;
+	@EJB
+	IControladorInventario cInv;
 
 	private String nick;
 	private String password;
@@ -39,6 +43,7 @@ public class AdminBean implements Serializable {
 	private String emailReg;
 	private DataUsuario usuario;
 	private DataAV avUsu;
+	private List<DataProducto> prodsUsu = new ArrayList<>();
 
 	public AdminBean() {
 		super();
@@ -92,6 +97,14 @@ public class AdminBean implements Serializable {
 		this.emailReg = emailReg;
 	}
 
+	public List<DataProducto> getProdsUsu() {
+		return prodsUsu;
+	}
+
+	public void setProdsUsu(List<DataProducto> prodsUsu) {
+		this.prodsUsu = prodsUsu;
+	}
+
 	public void login() throws IOException {
 		try {
 			DataAdministrador da = cusu.loginAdmin(nick, password);
@@ -102,7 +115,7 @@ public class AdminBean implements Serializable {
 				error = null;
 				String hash = util.Gravatar.md5Hex(da.getEmail());
 				setImagen("http://www.gravatar.com/avatar/" + hash + "?d=retro");
-				Url.redireccionarURL("admin");
+				Url.redireccionarURL("backend/admin");
 			} else {
 				error = "Nombre de usuario o contraseña incorrecta.";
 			}
@@ -114,7 +127,7 @@ public class AdminBean implements Serializable {
 	public void logout() throws IOException {
 		HttpSession session = SesionBean.getSession();
 		session.invalidate();
-		Url.redireccionarURL("login_admin");
+		Url.redireccionarURL("backend/login_admin");
 	}
 
 	public int cantUsu() {
@@ -160,7 +173,7 @@ public class AdminBean implements Serializable {
 	public void registrarAdministrador() {
 		try {
 			cusu.registrarAdmin(nickReg, "", emailReg);
-			Url.redireccionarURL("admin");
+			Url.redireccionarURL("backend/admin");
 		} catch (YaExisteElUsuario e) {
 			error = "Ya existe un administrador con ese nickname/email";
 		}
@@ -177,7 +190,8 @@ public class AdminBean implements Serializable {
 
 	public void getAV(String nickname, String av) {
 		try {
-			avUsu = cAV.traerAVPorNombre(nickname, av);
+			avUsu = cAV.traerAVPorNombre(av, nickname);
+			prodsUsu = cInv.getProductos(avUsu.getIdAV());
 		} catch (UsuarioNoEncontrado e) {
 			e.printStackTrace();
 		}

@@ -59,5 +59,6 @@ public interface IInventarioDAO {
 
 	void close(String tenant);
 
-	// public Producto encontrarProducto(String nombreProd, long idAV);
+	public List<Producto> getAllProducto(String tenant);
+	
 }

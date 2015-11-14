@@ -37,8 +37,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 	public Usuario buscarUsuario(String nick) {
 		Usuario usuario = null;
 		try {
-			// Se busca el usuario en la base
-			// usuario = em.find(Usuario.class, nick);
 			usuario = em.createNamedQuery("Usuario.buscarPorNick", Usuario.class).setParameter("nick", nick)
 					.getSingleResult();
 		} catch (Exception e) {

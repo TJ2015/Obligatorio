@@ -32,7 +32,7 @@ public class ControladorAV implements IControladorAV {
 	private IUsuarioDAO usuarioDAO;
 	@EJB
 	private IAvDAO avDAO;
-	
+
 	private IAvDAO avDAOTenant = new AvDAO();
 
 	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido {
@@ -102,18 +102,18 @@ public class ControladorAV implements IControladorAV {
 
 	@Override
 	public void eliminarAV(long idAV) throws Exception {
-		
+
 		AV av = avDAO.traerAV(idAV);
 		String tenant = getTenant(idAV);
-		if( tenant != null) {				
+		if (tenant != null) {
 			List<Usuario> usuarios = av.getUsuariosCompartidos();
-			
-			for( Usuario usu : usuarios ) {
+
+			for (Usuario usu : usuarios) {
 				usu.removeAVCompartido(av);
 				usuarioDAO.actualizarUsuario(usu);
 			}
-			
-			Usuario usu = av.getUsuarioCreador();		
+
+			Usuario usu = av.getUsuarioCreador();
 			usu.removeAV(av);
 			usuarioDAO.actualizarUsuario(usu);
 			avDAO.eliminarAV(tenant, av);
@@ -291,28 +291,27 @@ public class ControladorAV implements IControladorAV {
 
 	@Override
 	public void descompartirAV(long idAV, String nickUsuario) throws NoExisteElAV {
-		
+
 		AV av = avDAO.traerAV(idAV);
-		
-		if( av != null) {
+
+		if (av != null) {
 			List<Usuario> compas = av.getUsuariosCompartidos();
 			Usuario compa = null;
-			for( Usuario usu : compas ) {
-				if( usu.getNick().equals(nickUsuario) ) {
+			for (Usuario usu : compas) {
+				if (usu.getNick().equals(nickUsuario)) {
 					compa = usu;
 					break;
 				}
 			}
 			av.removeUsuarioCompartido(compa);
 			compa.removeAVCompartido(av);
-			
+
 			avDAO.actualizarAV(av);
 			usuarioDAO.actualizarUsuario(compa);
-			
+
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}
-		
 	}
 
 }

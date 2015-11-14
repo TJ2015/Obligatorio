@@ -33,7 +33,6 @@ import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
-import util.Url;
 
 @ManagedBean
 public class PruebaMB implements Serializable {
@@ -1017,7 +1016,7 @@ public class PruebaMB implements Serializable {
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-		
+
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
@@ -1045,8 +1044,12 @@ public class PruebaMB implements Serializable {
 		tests.put("Set Stock Producto", testSetStockProducto());
 		tests.put("Set Stock Producto", testCambiarCategoriaProducto());
 		tests.put("Eliminar Producto", testEliminarProducto());
-		
-		Url.redireccionarURL("test_result");
+
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

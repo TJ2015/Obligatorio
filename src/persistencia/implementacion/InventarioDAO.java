@@ -223,4 +223,11 @@ public class InventarioDAO implements IInventarioDAO {
 		session.getSessionFactory().close();
 	}
 
+	@Override
+	public List<Producto> getAllProducto(String tenant) {
+		Query q = session.getNamedQuery("Producto.getAll");
+
+		return q.list();
+	}
+
 }

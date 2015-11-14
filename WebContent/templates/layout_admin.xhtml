@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       >
 
     <h:head>
@@ -69,6 +70,13 @@
     </h:head>
 
     <h:body>
+    	
+    	<c:if test="${!adminBean.logueado}">
+			<meta http-equiv="Refresh" content="0; URL=login_admin.xhtml"></meta>
+		</c:if>
+		
+		<c:if test="${adminBean.logueado}">
+    
 		<ui:insert name="header" >
 		  	<ui:include src="../templates/header_admin.xhtml" />
 		</ui:insert>
@@ -90,6 +98,6 @@
 		<script type="text/javascript">
             $("body").addClass("skin-blue");
         </script>
-		
+		</c:if>
     </h:body>
 </html>

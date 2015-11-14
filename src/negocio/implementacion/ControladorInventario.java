@@ -483,4 +483,20 @@ public class ControladorInventario implements IControladorInventario {
 		invDAO.close(tenant);
 		return dp;
 	}
+
+	@Override
+	public List<DataProducto> getProductos(long idAV) {
+		List<Producto> prods = null;
+		List<DataProducto> dprods = new ArrayList<>();
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			invDAO.open(tenant);
+			prods = invDAO.getAllProducto(tenant);
+			for( Producto p : prods ) {
+				dprods.add(p.getDataProducto());
+			}
+			invDAO.close(tenant);
+		}
+		return dprods;
+	}
 }

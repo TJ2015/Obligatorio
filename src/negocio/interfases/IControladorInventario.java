@@ -42,4 +42,6 @@ public interface IControladorInventario {
 	public List<DataProductoAComprar> getListaDeCompra(long idAV) throws NoExisteElAV;
 	public DataProductoAComprar getProductoAComprar(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar;
 	
+	public List<DataProducto> getProductos(long idAV);
+	
 }
