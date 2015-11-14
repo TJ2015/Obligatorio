@@ -18,6 +18,7 @@ import exceptions.UsuarioNoEncontrado;
 import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import util.Url;
 
 @ManagedBean
 @SessionScoped
@@ -101,7 +102,7 @@ public class AdminBean implements Serializable {
 				error = null;
 				String hash = util.Gravatar.md5Hex(da.getEmail());
 				setImagen("http://www.gravatar.com/avatar/" + hash + "?d=retro");
-				FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+				Url.redireccionarURL("admin");
 			} else {
 				error = "Nombre de usuario o contraseña incorrecta.";
 			}
@@ -113,7 +114,7 @@ public class AdminBean implements Serializable {
 	public void logout() throws IOException {
 		HttpSession session = SesionBean.getSession();
 		session.invalidate();
-		FacesContext.getCurrentInstance().getExternalContext().redirect("login_admin.xhtml");
+		Url.redireccionarURL("login_admin");
 	}
 
 	public int cantUsu() {
@@ -159,12 +160,7 @@ public class AdminBean implements Serializable {
 	public void registrarAdministrador() {
 		try {
 			cusu.registrarAdmin(nickReg, "", emailReg);
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Url.redireccionarURL("admin");
 		} catch (YaExisteElUsuario e) {
 			error = "Ya existe un administrador con ese nickname/email";
 		}

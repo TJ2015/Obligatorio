@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.AV;
 import dominio.Atributo;
 import dominio.Categoria;
@@ -23,6 +25,7 @@ import negocio.interfases.IControladorInventario;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
+import util.Imagenes;
 
 @Stateless
 public class ControladorInventario implements IControladorInventario {
@@ -102,12 +105,17 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
-			long idAV, int stock) throws Exception {
+			long idAV, int stock, UploadedFile file) throws Exception {
 
 		Categoria cat = null;
 		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock);
-
+		
+		byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
+		String nombreImagen = Imagenes.obtenerNombreImagen(file);
+		
+		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock, imagen, nombreImagen);
+		
+		
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);

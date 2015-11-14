@@ -41,7 +41,43 @@ public class Producto implements Serializable {
 	private int stock;
 	@ManyToOne
 	private Categoria categoria;
-	// TODO agregar imagen
+
+
+	@Column(length=1294967295)
+	private byte[] bytesImagen;
+	private String nombreImagen;
+	
+	public byte[] getBytesImagen() {
+		return bytesImagen;
+	}
+
+	public void setBytesImagen(byte[] bytesImagen) {
+		this.bytesImagen = bytesImagen;
+	}
+
+	public String getNombreImagen() {
+		return nombreImagen;
+	}
+
+	public void setNombreImagen(String nombreImagen) {
+		this.nombreImagen = nombreImagen;
+	}
+	
+	///Crea producto con Imagen
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList, int stock, byte[] bytesImagen, String nombreImagen) 
+	{
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+		this.stock = stock;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
+	}
+	
+	
+	
 	@Transient
 	private List<Atributo> atributosList = new ArrayList<>();
 

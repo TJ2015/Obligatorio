@@ -74,7 +74,7 @@ public class ControladorUsuario implements IControladorUsuario {
 			if (!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
 				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento,
-						Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
+				Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
 				usu.setTipoUsuario(tipoDAO.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
 			} else {

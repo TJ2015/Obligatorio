@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import dominio.datatypes.DataUsuario;
 import managedbeans.FacebookBean;
 import negocio.interfases.IControladorUsuario;
+import util.Url;
 
 
 @WebServlet("/LoginFacebook")
@@ -49,7 +50,8 @@ public class LoginFacebook extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect(dataUsuario != null ? "index.xhtml" : "login.xhtml");
+		Url.redireccionarURL(dataUsuario != null ? "index" : "login");
+		//response.sendRedirect(dataUsuario != null ? "index.xhtml" : "login.xhtml");
 		//(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)
 	}
 

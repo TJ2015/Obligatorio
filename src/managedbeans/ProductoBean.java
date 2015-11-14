@@ -12,11 +12,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorInventario;
+import util.Url;
 
 @ManagedBean
 public class ProductoBean implements Serializable {
@@ -34,7 +37,17 @@ public class ProductoBean implements Serializable {
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
 	private List<DataProducto> dprods2 = new ArrayList<>();
+	
+	
+	private UploadedFile file;
+		
+	public UploadedFile getFile() {
+		return file;
+	}
 
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
 	
 
 	List<String> nomProd=new ArrayList<>();
@@ -170,20 +183,15 @@ public class ProductoBean implements Serializable {
 	}
 
 	public void crearProductoDescripción() {
-		HttpSession session = SesionBean.getSession();
-		long idAV = (long) session.getAttribute("idAV");
-
 		try {
-			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV,stock);
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
 			//cinv.setStockProducto(nombre, idAV, stock);
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/ver_producto.xhtml");
+			Url.redireccionarURL("ver_producto");
 		} catch (Exception e) {
 			e.printStackTrace();
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			Url.redireccionarURL("error");
 		}
 
 	}
@@ -193,77 +201,58 @@ public class ProductoBean implements Serializable {
 		long idAV = (long) session.getAttribute("idAV");
 		try {
 			dprods = cinv.getCategoria(nombreCat, idAV).getProductos();
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaProducto.xhtml");
+			Url.redireccionarURL("verListaProducto");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
 	}
-	public void mostrarTodosProd() {
-		HttpSession session = SesionBean.getSession();
-		cantProd = 0;
-		long idAV = (long) session.getAttribute("idAV");
-		List <DataCategoria> dcats= new ArrayList<>();
-		List <DataProducto> dprodT= new ArrayList<>();
+	
+
+	public void mostrarTodosProd(){
 		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			List <DataCategoria> dcats= new ArrayList<>();
+			List <DataProducto> dprodT= new ArrayList<>();
 			dcats=cinv.mostrarListaCategoria(idAV);
 			
 			for(DataCategoria cats:dcats){
 				dprodT=cats.getProductos();
 				for(DataProducto prods:dprodT){
 					dprods2.add(prods);
-					cantProd++;
 				}
 			}
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaProducto.xhtml");
+			Url.redireccionarURL("verListaProducto");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
 	}
 	
 	public void cargarProducto() {
-		HttpSession session = SesionBean.getSession();
-		long idAV = (long) session.getAttribute("idAV");
-		/*String nombre = FacesContext.getCurrentInstance().
-				getExternalContext().getRequestParameterMap().get("hidden1");*/
-		
 		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
 			DataProducto dprod = cinv.getProducto(nombre, idAV);
 			
 			this.dataProducto = dprod;
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/ver_producto.xhtml");
+			Url.redireccionarURL("ver_producto");
 			
-		} catch (NoExisteElAV | NoExisteElProducto | IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 	public void eliminarProducto(String name) throws Exception {
-	HttpSession session = SesionBean.getSession();
-	long idAV= (long) session.getAttribute("idAV");
-	Locale locale = new Locale(name);
-		cinv.eliminarProducto(name, idAV);
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			HttpSession session = SesionBean.getSession();
+			long idAV= (long) session.getAttribute("idAV");
+			cinv.eliminarProducto(name, idAV);
+			Url.redireccionarURL("index");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 }

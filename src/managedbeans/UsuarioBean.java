@@ -21,6 +21,7 @@ import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import util.Url;
 
 @ManagedBean
 @SessionScoped
@@ -134,22 +135,28 @@ public class UsuarioBean implements Serializable
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
+				Url.redireccionarURL("usuario_sapo");
 			} else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				Url.redireccionarURL("error");
 			}
 		}
-		catch (IOException e) {
+		catch (Exception e) {
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
 	}
 
 	public void logout() throws IOException 
 	{
-		HttpSession session = SesionBean.getSession();
-		logueado=false;
-		FacesContext.getCurrentInstance().getExternalContext().dispatch("/index.xhtml");
-		session.invalidate();
+		try {
+			HttpSession session = SesionBean.getSession();
+			logueado=false;
+			Url.redireccionarURL("index");
+			session.invalidate();
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
 	}
 		
 	
@@ -158,27 +165,20 @@ public class UsuarioBean implements Serializable
 		try {
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
-				imagen = new DefaultStreamedContent(dusu.getImagen(), "image/jpg");
 				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dusu);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/usuario_sapo.xhtml");
+				Url.redireccionarURL("usuario_sapo");
 			} 
 			else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				Url.redireccionarURL("error");
 			}
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void limpiarBean()
-	{
-		this.file = null;
-		this.imagen = null;
 	}
 	
 	public void mostrarListaAV() 
@@ -188,14 +188,10 @@ public class UsuarioBean implements Serializable
 			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 			AVs = cusu.mostrarListaAv(nick);
 
-			FacesContext.getCurrentInstance().getExternalContext().dispatch("/verListaAV.xhtml");
+			Url.redireccionarURL("verListaAV");
 
-		} catch (IOException e) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
 	}
@@ -230,14 +226,30 @@ public class UsuarioBean implements Serializable
 	}
 	
 	public void verAV(long idAV) {
-		HttpSession session = SesionBean.getSession();
 		try {
+			HttpSession session = SesionBean.getSession();
 			session.setAttribute("dAV", cav.traerAV(idAV));
 			session.setAttribute("idAV", idAV);
 		} catch (NoExisteElAV e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	//Ejemplo para mostrar la imagen, se debe definir:
+	//<p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" cache="false"></p:graphicImage>
+	//Agregar en el encabezado de la vista
+	//xmlns:p="http://primefaces.org/ui"
+	public StreamedContent mostrarImagenUsuario(){
+		StreamedContent imagen = null;
+		try {
+			HttpSession session = SesionBean.getSession();
+			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
+			imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imagen;
 	}
 
 }

@@ -15,6 +15,7 @@ import dominio.AV;
 import dominio.datatypes.DataCategoria;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
+import util.Url;
 
 @ManagedBean
 @ViewScoped
@@ -83,18 +84,14 @@ public class CategoriaBean implements Serializable {
 
 	public void crearCategoria() throws Exception {
 		try {
-
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
-
 			if (cinv.crearCategoria(nombre, idAV)) {
-
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/mostrarAV.xhtml");
+				Url.redireccionarURL("mostrarAV");
 			} else {
-				FacesContext.getCurrentInstance().getExternalContext().dispatch("/error.xhtml");
+				Url.redireccionarURL("error");
 			}
-
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -100,6 +100,7 @@ public class Usuario implements Serializable {
 		this.fechaNacimiento = new Date();
 		this.idSocial = usuarioSocial.id;
 		this.nombreImagen = "imagenSocial.jpg";
+		this.nick = "FB_" + usuarioSocial.id.toString();
 		if (usuarioSocial.getPicture() != null && usuarioSocial.getPicture().getData() != null) 
 		{
 			this.bytesImagen = Imagenes.convertirUrlToArrayByte(usuarioSocial.getPicture().getData().getUrl());
