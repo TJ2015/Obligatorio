@@ -15,9 +15,10 @@ public class DataProducto implements Serializable {
 	private int stock;
 	private String categoria;
 	private Map<String, String> atributosList = new HashMap<>();
+	private byte[] imagen;
 
 	public DataProducto(long idProducto, String nombre, String descripcion, double precio, int stock, String categoria,
-			Map<String, String> atributosList) {
+			Map<String, String> atributosList, byte[] imagen) {
 		super();
 		this.idProducto = idProducto;
 		this.nombre = nombre;
@@ -26,10 +27,19 @@ public class DataProducto implements Serializable {
 		this.stock = stock;
 		this.categoria = categoria;
 		this.atributosList = atributosList;
+		this.imagen = imagen;
 	}
 
 	public DataProducto() {
 		super();
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
 	}
 
 	public long getIdProducto() {

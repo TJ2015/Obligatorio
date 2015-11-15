@@ -18,8 +18,10 @@ public class DataUsuario implements Serializable {
 	private List<String> AVs = new ArrayList<>();
 	private List<String> AVsCompar = new ArrayList<>();
 	private String nombreImagen;
-	private InputStream imagen;
+	private InputStream imagenIS;
+	private byte[] imagen;
 	private Date fechaRegistro;
+	private boolean membresia;
 
 	public List<String> getAVs() {
 		return AVs;
@@ -39,9 +41,10 @@ public class DataUsuario implements Serializable {
 
 	public DataUsuario() {
 	}
-	
+
 	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
-			List<String> aVs, List<String> aVsCompar, String nombreImagen, InputStream imagen, Date fechaRegistro) {
+			List<String> aVs, List<String> aVsCompar, String nombreImagen, InputStream imagen, Date fechaRegistro,
+			boolean membresia) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -51,10 +54,26 @@ public class DataUsuario implements Serializable {
 		AVs = aVs;
 		AVsCompar = aVsCompar;
 		this.nombreImagen = nombreImagen;
-		this.imagen = imagen;
 		this.fechaRegistro = fechaRegistro;
+		this.membresia = membresia;
 	}
 
+	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
+			List<String> aVs, List<String> aVsCompar, String nombreImagen, byte[] imagen, Date fechaRegistro,
+			boolean membresia) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.nick = nick;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		AVs = aVs;
+		AVsCompar = aVsCompar;
+		this.nombreImagen = nombreImagen;
+		this.fechaRegistro = fechaRegistro;
+		this.imagen = imagen;
+		this.membresia = membresia;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -94,7 +113,7 @@ public class DataUsuario implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,15 +193,26 @@ public class DataUsuario implements Serializable {
 		return true;
 	}
 
-	public InputStream getImagen() {
+	public InputStream getImagenIS() {
+		return imagenIS;
+	}
+
+	public void setImagenIS(InputStream imagenIS) {
+		this.imagenIS = imagenIS;
+	}
+
+	public byte[] getImagen() {
 		return imagen;
 	}
-	public void setImagen(InputStream imagen) {
+
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
+
 	public String getNombreImagen() {
 		return nombreImagen;
 	}
+
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;
 	}
@@ -194,5 +224,13 @@ public class DataUsuario implements Serializable {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
-	
+
+	public boolean isMembresia() {
+		return membresia;
+	}
+
+	public void setMembresia(boolean membresia) {
+		this.membresia = membresia;
+	}
+
 }

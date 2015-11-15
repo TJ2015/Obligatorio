@@ -13,4 +13,22 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ServletImagen</servlet-name>
+    <servlet-class>servlets.ServletImagen</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletImagen</servlet-name>
+    <url-pattern>/imagenes/usuario/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ServletImagenProducto</servlet-name>
+    <servlet-class>servlets.ServletImagenProducto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletImagenProducto</servlet-name>
+    <url-pattern>/imagenes/producto/*</url-pattern>
+  </servlet-mapping>
 </web-app>

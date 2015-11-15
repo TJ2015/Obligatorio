@@ -84,9 +84,7 @@ section#perfil {
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-3 col-lg-3 " align="center">
-												<img alt="User Pic"
-													src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png"
-													class="img-circle img-responsive" />
+												<img src="../imagenes/usuario/?nick=${usuario.getNick()}" class="img-circle" alt="User Image" />
 											</div>
 											<div class=" col-md-9 col-lg-9 ">
 												<table class="table table-user-information">
@@ -135,6 +133,9 @@ section#perfil {
 									<ui:param name="avs" value="${usuario.getAVs()}"></ui:param>
 										<c:forEach var="AV" items="${avs}">
 											<h:commandLink action="ver_av_usuario" actionListener="${adminBean.getAV(usuario.getNick(), AV)}" value="${AV}" />
+											<h:commandLink action="ver_usuario" actionListener="${adminBean.prepararParaEliminarAV(AV)}" value="" style="float: right">
+												<i class="fa fa-trash-o" style="float: right"></i>
+											</h:commandLink>
 											<br />
 										</c:forEach>
 								</div>
@@ -146,6 +147,37 @@ section#perfil {
 					</section>
 
 				</div>
+				
+				
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Eliminar Almacén Virtual</h4>
+			</div>
+			<div class="modal-body">
+				<p>AV a eliminar: ${adminBean.avEliminar}</p>
+				<p>¿Esta seguro que desea eliminar este Almacén?</p>
+			</div>
+			<div class="modal-footer">
+				<h:form>
+					<h:commandButton action="ver_usuario" actionListener="#{adminBean.eliminarAV()}"
+						value="Aceptar" class="btn btn-default" />
+					<h:commandButton action="ver_usuario" actionListener="#{adminBean.cancelarEliminarAV()}"
+						value="Cancelar" class="btn btn-default" />
+				</h:form>
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
 
 			<!-- page script -->
 			<script>
@@ -162,6 +194,13 @@ section#perfil {
 	                });
 	            });
 	        </script>
+	        
+	        <c:if test="#{adminBean.eliminarAV}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#myModal").modal('show');
+				</h:outputScript>
+			</c:if>
 		</ui:define>
 	</ui:composition>
 	</c:if>

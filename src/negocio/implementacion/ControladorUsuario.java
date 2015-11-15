@@ -537,4 +537,10 @@ public class ControladorUsuario implements IControladorUsuario {
 		
 		return dusus;
 	}
+
+	@Override
+	public int listaUsuariosPremium() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

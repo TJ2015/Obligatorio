@@ -46,42 +46,29 @@ li i {
 			                                    <table id="example1" class="table table-bordered table-striped">
 			                                        <thead>
 			                                            <tr>
-			                                                <th>Nickname</th>
-			                                                <th>Email</th>
 			                                                <th>Nombre</th>
-			                                                <th>Apellido</th>
-			                                                <th>Fecha de Nacimiento</th>
-			                                                <th>Estatus</th>
 			                                            </tr>
 			                                        </thead>
 			                                        <tbody>
-			                                            <ui:param name="usus" value="${adminBean.getUsuarios()}"></ui:param>
-				  			 							<c:forEach var="usu" items="${usus}" >
+			                                            <ui:param name="cats" value="${adminBean.cargarCategorias()}"></ui:param>
+				  			 							<c:forEach var="cat" items="${cats}" >
 				  			 							
 			                                            <tr>
 			                                                <td>
-			                                                	<h:commandLink action="ver_usuario" actionListener="#{adminBean.getUsuario(usu.getNick())}" value="${usu.getNick()}" />
-			                                                	<h:commandLink action="ver_usuarios" actionListener="${adminBean.prepararParaEliminarUsuario(usu.getNick())}" value="" style="float: right">
+			                                                	<h:commandLink action="ver_categoria" actionListener="#{adminBean.cargarCategoria(cat.getNombre())}" value="${cat.getNombre()}" />
+			                                                	<h:commandLink action="ver_categorias" actionListener="${adminBean.prepararParaEliminarCategoria(cat.getNombre())}" value="" style="float: right">
 																	<i class="fa fa-trash-o" style="float: right"></i>
 																</h:commandLink>
 			                                                </td>
-			                                                <td>${usu.getEmail()}</td>
-			                                                <td>${usu.getNombre()}</td>
-			                                                <td>${usu.getApellido()}</td>
-			                                                <td>${usu.getFechaNacimiento()}</td>
-			                                                <td>FREE</td>
+			                                                <td>${cat.getNombre()}</td>
 			                                            </tr>
 			                                            
 			                                            </c:forEach>
 			                                        </tbody>
 			                                        <tfoot>
 			                                            <tr>
-			                                                <th>Nickname</th>
-			                                                <th>Email</th>
 			                                                <th>Nombre</th>
-			                                                <th>Apellido</th>
-			                                                <th>Fecha de Nacimiento</th>
-			                                                <th>Estatus</th>
+			                                                <th>Categoria</th>
 			                                            </tr>
 			                                        </tfoot>
 			                                    </table>
@@ -104,17 +91,17 @@ li i {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Eliminar Usuario</h4>
+				<h4 class="modal-title">Eliminar Categoria</h4>
 			</div>
 			<div class="modal-body">
-				<p>Usuario a eliminar: ${adminBean.usuarioEliminar}</p>
-				<p>¿Esta seguro que desea eliminar este Usuario?</p>
+				<p>Categoria a eliminar: ${adminBean.categoriaEliminar}</p>
+				<p>¿Esta seguro que desea eliminar esta Categoria?</p>
 			</div>
 			<div class="modal-footer">
 				<h:form>
-					<h:commandButton action="ver_usuarios" actionListener="#{adminBean.eliminarUsuario()}"
+					<h:commandButton action="ver_categorias" actionListener="#{adminBean.eliminarCategoria()}"
 						value="Aceptar" class="btn btn-default" />
-					<h:commandButton action="ver_usuarios" actionListener="#{adminBean.cancelarEliminarUsuario()}"
+					<h:commandButton action="ver_categorias" actionListener="#{adminBean.cancelarEliminarCategoria()}"
 						value="Cancelar" class="btn btn-default" />
 				</h:form>
 			</div>
@@ -140,7 +127,7 @@ li i {
 	            });
 	        </script>
 	        
-	        <c:if test="#{adminBean.eliminarUsuario}">
+	        <c:if test="#{adminBean.eliminarCategoria}">
 				<h:outputScript target="body">
 				    $ = jQuery;
 				    $("#myModal").modal('show');

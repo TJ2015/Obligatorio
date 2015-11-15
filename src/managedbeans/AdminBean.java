@@ -10,10 +10,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAdministrador;
+import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
+import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import exceptions.YaExisteElUsuario;
@@ -46,9 +51,66 @@ public class AdminBean implements Serializable {
 	private List<DataProducto> prodsUsu = new ArrayList<>();
 	private boolean eliminarProducto;
 	private String prodEliminar;
+	private boolean eliminarAV;
+	private String avEliminar;
+	private String usuarioEliminar;
+	private boolean eliminarUsuario;
+	private String nombreCategoria;
+	private String nombreProd;
+	private String nombreCatProd;
+	private String descripcionProd;
+	private double precioProd;
+	private String categoriaProd;
+	private String atributosProd;
+	private int stockProd;
+	private int cantProdProd;
+	private UploadedFile fileProd;
+	private DataProducto prodVer;
+	private String categoriaEliminar;
+	private boolean eliminarCategoria;
+	private DataCategoria categoriaVer;
 
 	public AdminBean() {
-		super();
+	}
+
+	public String getCategoriaEliminar() {
+		return categoriaEliminar;
+	}
+
+	public void setCategoriaEliminar(String categoriaEliminar) {
+		this.categoriaEliminar = categoriaEliminar;
+	}
+
+	public boolean isEliminarCategoria() {
+		return eliminarCategoria;
+	}
+
+	public void setEliminarCategoria(boolean eliminarCategoria) {
+		this.eliminarCategoria = eliminarCategoria;
+	}
+
+	public DataCategoria getCategoriaVer() {
+		return categoriaVer;
+	}
+
+	public void setCategoriaVer(DataCategoria categoriaVer) {
+		this.categoriaVer = categoriaVer;
+	}
+
+	public DataProducto getProdVer() {
+		return prodVer;
+	}
+
+	public void setProdVer(DataProducto prodVer) {
+		this.prodVer = prodVer;
+	}
+
+	public UploadedFile getFileProd() {
+		return fileProd;
+	}
+
+	public void setFileProd(UploadedFile fileProd) {
+		this.fileProd = fileProd;
 	}
 
 	public String getNick() {
@@ -107,6 +169,110 @@ public class AdminBean implements Serializable {
 		this.prodsUsu = prodsUsu;
 	}
 
+	public boolean isEliminarAV() {
+		return eliminarAV;
+	}
+
+	public void setEliminarAV(boolean eliminarAV) {
+		this.eliminarAV = eliminarAV;
+	}
+
+	public String getAvEliminar() {
+		return avEliminar;
+	}
+
+	public void setAvEliminar(String avEliminar) {
+		this.avEliminar = avEliminar;
+	}
+
+	public String getUsuarioEliminar() {
+		return usuarioEliminar;
+	}
+
+	public void setUsuarioEliminar(String usuarioEliminar) {
+		this.usuarioEliminar = usuarioEliminar;
+	}
+
+	public boolean isEliminarUsuario() {
+		return eliminarUsuario;
+	}
+
+	public void setEliminarUsuario(boolean eliminarUsuario) {
+		this.eliminarUsuario = eliminarUsuario;
+	}
+
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
+	}
+
+	public String getNombreProd() {
+		return nombreProd;
+	}
+
+	public void setNombreProd(String nombreProd) {
+		this.nombreProd = nombreProd;
+	}
+
+	public String getNombreCatProd() {
+		return nombreCatProd;
+	}
+
+	public void setNombreCatProd(String nombreCatProd) {
+		this.nombreCatProd = nombreCatProd;
+	}
+
+	public String getDescripcionProd() {
+		return descripcionProd;
+	}
+
+	public void setDescripcionProd(String descripcionProd) {
+		this.descripcionProd = descripcionProd;
+	}
+
+	public double getPrecioProd() {
+		return precioProd;
+	}
+
+	public void setPrecioProd(double precioProd) {
+		this.precioProd = precioProd;
+	}
+
+	public String getCategoriaProd() {
+		return categoriaProd;
+	}
+
+	public void setCategoriaProd(String categoriaProd) {
+		this.categoriaProd = categoriaProd;
+	}
+
+	public String getAtributosProd() {
+		return atributosProd;
+	}
+
+	public void setAtributosProd(String atributosProd) {
+		this.atributosProd = atributosProd;
+	}
+
+	public int getStockProd() {
+		return stockProd;
+	}
+
+	public void setStockProd(int stockProd) {
+		this.stockProd = stockProd;
+	}
+
+	public int getCantProdProd() {
+		return cantProdProd;
+	}
+
+	public void setCantProdProd(int cantProdProd) {
+		this.cantProdProd = cantProdProd;
+	}
+
 	public void login() throws IOException {
 		try {
 			DataAdministrador da = cusu.loginAdmin(nick, password);
@@ -133,19 +299,48 @@ public class AdminBean implements Serializable {
 	}
 
 	public int cantUsu() {
-		return 44;
+		int cant = 0;
+
+		if (logueado) {
+			cant = cusu.getUsuarios().size();
+		}
+
+		return cant;
 	}
 
 	public int cantCat() {
-		return 0;
+		int cant = 0;
+
+		if (logueado) {
+			try {
+				cant = cInv.mostrarListaCategoria(-1).size();
+			} catch (Exception e) {
+				// 505
+				e.printStackTrace();
+			}
+		}
+
+		return cant;
 	}
 
 	public int cantProd() {
-		return 0;
+		int cant = 0;
+
+		if (logueado) {
+			cant = cInv.getProductos(-1).size();
+		}
+
+		return cant;
 	}
 
 	public int cantMembresia() {
-		return 0;
+		int cant = 0;
+
+		if (logueado) {
+			cant = cusu.listaUsuariosPremium();
+		}
+
+		return cant;
 	}
 
 	public String getImagen() {
@@ -203,7 +398,9 @@ public class AdminBean implements Serializable {
 	}
 
 	public void getUsuario(String nickname) {
+		HttpSession session = SesionBean.getSession();
 		usuario = cusu.getUsuario(nickname);
+		session.setAttribute("dataUsuario", usuario);
 	}
 
 	public void getAV(String nickname, String av) {
@@ -215,20 +412,156 @@ public class AdminBean implements Serializable {
 		}
 	}
 
-	public void setEliminar(String prod) {
+	public void prepararParaEliminarProducto(String prod) {
 		prodEliminar = prod;
 		eliminarProducto = true;
 	}
-	
+
 	public void eliminarProducto() {
+		eliminarProducto(false);
+	}
+
+	public void eliminarProducto(boolean generico) {
 		eliminarProducto = false;
-		cInv.eliminarProducto(prodEliminar, avUsu.getIdAV());
+
+		if (!generico) {
+			cInv.eliminarProducto(prodEliminar, avUsu.getIdAV());
+			try {
+				avUsu = cAV.traerAVPorNombre(avUsu.getNombreAV(), avUsu.getNickname());
+				prodsUsu = cInv.getProductos(avUsu.getIdAV());
+			} catch (UsuarioNoEncontrado e) {
+				e.printStackTrace();
+			}
+		} else {
+			cInv.eliminarProducto(prodEliminar, -1);
+		}
+		prodEliminar = null;
+	}
+
+	public void prepararParaEliminarAV(String av) {
+		avEliminar = av;
+		setEliminarAV(true);
+	}
+
+	public void eliminarAV() {
+		setEliminarAV(false);
+		getAV(usuario.getNick(), avEliminar);
+		avEliminar = null;
 		try {
-			avUsu = cAV.traerAVPorNombre(avUsu.getNombreAV(), avUsu.getNickname());
-			prodsUsu = cInv.getProductos(avUsu.getIdAV());
-		} catch (UsuarioNoEncontrado e) {
+			cAV.eliminarAV(avUsu.getIdAV());
+			getUsuario(usuario.getNick());
+		} catch (Exception e) {
+			// MANDAR UN 505
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void prepararParaEliminarUsuario(String usu) {
+		setUsuarioEliminar(usu);
+		setEliminarUsuario(true);
+	}
+
+	public void eliminarUsuario() {
+		setEliminarUsuario(false);
+		cusu.eliminarUsuario(usuarioEliminar);
+		usuarioEliminar = null;
+	}
+
+	public void cancelarEliminarUsuario() {
+		usuarioEliminar = null;
+		eliminarUsuario = false;
+	}
+
+	public void cancelarEliminarAV() {
+		avEliminar = null;
+		eliminarAV = false;
+	}
+
+	public void cancelarEliminarProducto() {
+		prodEliminar = null;
+		eliminarProducto = false;
+	}
+
+	public void crearCategoria() {
+		if (logueado)
+			cInv.crearCategoria(nombreCategoria, -1);
+	}
+
+	public List<DataCategoria> mostrarListaCategoria() {
+		List<DataCategoria> cats = new ArrayList<>();
+		try {
+			cats = cInv.mostrarListaCategoria(-1);
+		} catch (Exception e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+		return cats;
+	}
+
+	public void crearProducto() {
+		try {
+			cInv.crearProducto(nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
+					fileProd);
+		} catch (Exception e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+	}
+
+	public List<DataCategoria> cargarCategorias() {
+		List<DataCategoria> categorias = new ArrayList<>();
+		try {
+			categorias = cInv.mostrarListaCategoria(-1);
+		} catch (Exception e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+		return categorias;
+	}
+
+	public List<DataProducto> cargarProductos() {
+		List<DataProducto> productos = new ArrayList<>();
+		productos = cInv.getProductos(-1);
+		return productos;
+	}
+
+	public void cargarProducto(String prod) {
+		try {
+			prodVer = cInv.getProducto(prod);
+		} catch (NoExisteElProducto e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+	}
+
+	public void prepararParaEliminarCategoria(String cat) {
+		categoriaEliminar = cat;
+		eliminarCategoria = true;
+	}
+
+	public void eliminarCategoria() {
+		eliminarCategoria = false;
+		try {
+			cInv.eliminarCategoria(categoriaEliminar, -1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		categoriaEliminar = null;
+	}
+
+	public void cancelarEliminarCategoria() {
+		categoriaEliminar = null;
+		eliminarCategoria = false;
+	}
+
+	public void cargarCategoria(String nombre) {
+		try {
+			categoriaVer = cInv.getCategoria(nombre, -1);
+		} catch (NoExisteElAV e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+	}
+
 }

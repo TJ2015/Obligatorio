@@ -104,13 +104,13 @@ public class CategoriaBean implements Serializable {
 		this.cats = cats;
 	}
 
-	public List<DataCategoria> mostrarListaCategoria() throws Exception {
+	public List<DataCategoria> mostrarListaCategoria() {
 		try {
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
 			cats = cinv.mostrarListaCategoria(idAV);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			// TODO 505
 			e.printStackTrace();
 		}
 		return cats;

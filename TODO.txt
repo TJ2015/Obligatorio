@@ -28,4 +28,6 @@ Metodos de acceso a datos (getters de DataTypes)
 
 Controlar que los nombres de usuario, categoria y producto sean alfanumericos
 
-BOBOSSSS
+Controlar que no se pueda crar más de un producto con el mismo nombre (en el controlador)
+Controlar que no se pueda crar más de un producto con el mismo nombre (en la vista)
+	Mostrar mensaje de error!

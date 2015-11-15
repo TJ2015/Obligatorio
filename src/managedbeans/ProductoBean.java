@@ -1,23 +1,17 @@
 package managedbeans;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.ejb.EJB;
-import javax.ejb.SessionBean;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
-import exceptions.NoExisteElAV;
-import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorInventario;
 import util.Url;
 
@@ -28,7 +22,6 @@ public class ProductoBean implements Serializable {
 
 	private String nombre;
 	private String nombreCat;
-
 	private String descripcion;
 	private double precio;
 	private String categoria;

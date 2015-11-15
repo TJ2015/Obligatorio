@@ -164,7 +164,7 @@ section#perfil {
 					<center>
 						<h1>Productos</h1>
 					</center>
-					<table id="example1" class="table table-bordered table-striped">
+					<table id="productosLista" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>Nombre</th>
@@ -178,7 +178,7 @@ section#perfil {
 									<td>
 										
 										<a href="ver_producto.xhtml"> ${p.nombre} </a>
-										<h:commandLink action="ver_av_usuario" actionListener="${adminBean.setEliminar(p.nombre)}" value="" class="fa fa-trash-o" style="float: right">
+										<h:commandLink action="ver_av_usuario" actionListener="${adminBean.prepararParaEliminarProducto(p.nombre)}" value="" style="float: right">
 											<i class="fa fa-trash-o" style="float: right"></i>
 										</h:commandLink>
 									</td>
@@ -217,10 +217,10 @@ section#perfil {
 							</div>
 							<div class="modal-footer">
 								<h:form>
-									<h:commandButton action="ver_av_usuario" actionListener="#{adminBean.eliminarProducto()}"
+									<h:commandButton action="ver_usuario" actionListener="#{adminBean.eliminarProducto()}"
 										value="Aceptar" class="btn btn-default" />
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Cancelar</button>
+									<h:commandButton action="ver_usuarios" actionListener="#{adminBean.cancelarEliminarProducto()}"
+										value="Cancelar" class="btn btn-default" />
 								</h:form>
 
 
@@ -231,11 +231,9 @@ section#perfil {
 				</div>
 
 				<!-- page script -->
-				<script>
-	
-            	$(document).load(function() {
-	                $("#example1").dataTable();
-	                $('#example2').dataTable({
+				<h:outputScript target="body">
+					$ = jQuery;
+	                $("#productosLista").dataTable({
 	                    "bPaginate": true,
 	                    "bLengthChange": false,
 	                    "bFilter": false,
@@ -243,8 +241,7 @@ section#perfil {
 	                    "bInfo": true,
 	                    "bAutoWidth": false
 	                });
-	            });
-	        </script>
+	        	</h:outputScript>
 	        <c:if test="#{adminBean.eliminarProducto}">
 				<h:outputScript target="body">
 				    $ = jQuery;

@@ -44,6 +44,7 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date fechaNacimiento;
 	private Date fechaRegistro;
+	private boolean membresia = false;
 	
 	@Column(length=1294967295)
 	private byte[] bytesImagen;
@@ -80,7 +81,6 @@ public class Usuario implements Serializable {
 	}
 	
 	public Usuario(String nombre, String apellido, String nick, String pasword, String email, Date fechaNacimiento, byte[] bytesImagen, String nombreImagen) {
-		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nick = nick;
@@ -124,8 +124,7 @@ public class Usuario implements Serializable {
 				}
 			}
 			
-			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
-			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen, fechaRegistro);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, bytesImagen, fechaRegistro, membresia);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -336,6 +335,14 @@ public class Usuario implements Serializable {
 
 	public void setFecchaRegistro(Date fecchaRegistro) {
 		this.fechaRegistro = fecchaRegistro;
+	}
+
+	public boolean isMembresia() {
+		return membresia;
+	}
+
+	public void setMembresia(boolean membresia) {
+		this.membresia = membresia;
 	}
 	
 }

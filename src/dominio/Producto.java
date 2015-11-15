@@ -171,7 +171,7 @@ public class Producto implements Serializable {
 			attr.put(a.getNombre(), a.getValor());
 		}
 
-		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr);
+		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr, bytesImagen);
 	}
 
 	@Override

@@ -297,22 +297,6 @@ public class UsuarioBean implements Serializable
 		} catch (NoExisteElAV e) {
 			e.printStackTrace();
 		}
-	}	
-	
-	//Ejemplo para mostrar la imagen, se debe definir:
-	//<p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" cache="false"></p:graphicImage>
-	//Agregar en el encabezado de la vista
-	//xmlns:p="http://primefaces.org/ui"
-	public StreamedContent mostrarImagenUsuario(){
-		StreamedContent imagen = null;
-		try {
-			HttpSession session = SesionBean.getSession();
-			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
-			imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return imagen;
 	}
 
 	public List<DataMensaje> mostrarListaMsjNoLeidos() throws UsuarioNoEncontrado 

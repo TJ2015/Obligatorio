@@ -44,4 +44,6 @@ public interface IControladorInventario {
 	
 	public List<DataProducto> getProductos(long idAV);
 	
+	public List<DataProducto> recomendarProductos(String nickname); 
+	
 }

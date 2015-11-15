@@ -19,8 +19,9 @@ import dominio.datatypes.DataProductoAComprar;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
-import exceptions.NoExisteLaCategoria;
 import exceptions.YaExisteElProductoAComprar;
+import negocio.interfases.AlgoritmoDeRecomendacion;
+import negocio.interfases.AlgoritmoDeRecomendacionSimple;
 import negocio.interfases.IControladorInventario;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
@@ -107,17 +108,15 @@ public class ControladorInventario implements IControladorInventario {
 	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
 			long idAV, int stock, UploadedFile file) throws Exception {
 
-		Categoria cat = null;
-		List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
-		
-		byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
-		String nombreImagen = Imagenes.obtenerNombreImagen(file);
-		
-		Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock, imagen, nombreImagen);
-		
-		
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
+			
+			Categoria cat = null;
+			List<Atributo> attrs = util.Serializador.convertirDesdeString(atributosList);
+			byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
+			String nombreImagen = Imagenes.obtenerNombreImagen(file);
+			
+			Producto prod = new Producto(nombre, descripcion, precio, cat, attrs, stock, imagen, nombreImagen);
 			invDAO.open(tenant);
 			cat = invDAO.buscarCategoria(categoria, tenant);
 
@@ -499,4 +498,11 @@ public class ControladorInventario implements IControladorInventario {
 		}
 		return dprods;
 	}
+
+	@Override
+	public List<DataProducto> recomendarProductos(String nickname) {
+		AlgoritmoDeRecomendacion algo = new AlgoritmoDeRecomendacionSimple();
+		return algo.recomendar(nickname);
+	}
+	
 }
