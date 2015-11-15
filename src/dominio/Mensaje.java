@@ -23,6 +23,7 @@ public class Mensaje implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String mensaje;
+	private String asunto;
 	private Date fecha;
 	@ManyToOne
 	private Usuario remitente;
@@ -34,10 +35,19 @@ public class Mensaje implements Serializable {
 		super();
 	}
 
-	public Mensaje(String mensaje, Date fecha) {
+	public Mensaje(String mensaje, Date fecha,String asunto) {
 		super();
 		this.mensaje = mensaje;
 		this.fecha = fecha;
+		this.asunto=asunto;
+	}
+
+	public String getAsunto() {
+		return asunto;
+	}
+
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
 	}
 
 	public long getId() {
@@ -48,12 +58,14 @@ public class Mensaje implements Serializable {
 		this.id = id;
 	}
 
-	public String getTexto() {
+	
+
+	public String getMensaje() {
 		return mensaje;
 	}
 
-	public void setTexto(String texto) {
-		this.mensaje = texto;
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
 	}
 
 	public Date getFecha() {
@@ -141,7 +153,7 @@ public class Mensaje implements Serializable {
 	}
 
 	public DataMensaje getDataMensaje() {
-		return new DataMensaje(id, mensaje, fecha, remitente.getNick(), destinatario.getNick(), leido);
+		return new DataMensaje(id, mensaje, fecha, remitente.getNick(), destinatario.getNick(), leido, asunto);
 	}
 
 }

@@ -37,7 +37,7 @@ public interface IControladorUsuario {
 
 	public boolean tienePermiso(String nickname, long idAV);
 
-	public boolean enviarMensaje(String remitente, String destinatario, String mensaje);
+	public boolean enviarMensaje(String remitente, String destinatario, String mensaje, String asunto);
 
 	public void marcarMensajeComoLeido(long idMensaje);
 

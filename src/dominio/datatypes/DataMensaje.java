@@ -9,6 +9,8 @@ public class DataMensaje implements Serializable {
 
 	private long id;
 	private String mensaje;
+	private String asunto;
+	
 	private Date fecha;
 	private String remitente;
 	private String destinatario;
@@ -18,7 +20,7 @@ public class DataMensaje implements Serializable {
 		super();
 	}
 
-	public DataMensaje(long id, String mensaje, Date fecha, String remitente, String destinatario, boolean leido) {
+	public DataMensaje(long id, String mensaje, Date fecha, String remitente, String destinatario, boolean leido, String asunto) {
 		super();
 		this.id = id;
 		this.mensaje = mensaje;
@@ -26,6 +28,14 @@ public class DataMensaje implements Serializable {
 		this.remitente = remitente;
 		this.destinatario = destinatario;
 		this.leido = leido;
+		this.asunto=asunto;
+	}
+	public String getAsunto() {
+		return asunto;
+	}
+
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
 	}
 
 	public long getId() {
