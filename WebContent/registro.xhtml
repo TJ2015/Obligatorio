@@ -10,7 +10,7 @@
 <!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
 
 <h:head>
-
+	
 </h:head> 
 
 <h:body>
@@ -82,8 +82,8 @@
 												<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 											</div>
 											
-											<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
-			          								<f:convertDateTime pattern="d-M-yyyy" />
+											<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control fechaBootstrapPickers" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
+			          								<f:convertDateTime pattern="dd/MM/yyyy" />
 			        						</h:inputText>
 										</div>
 									</div>
@@ -101,12 +101,29 @@
 						</div>
 					</div>
 				</div>
-					<p:graphicImage value="#{usuarioBean.imagen}" cache="false"></p:graphicImage>
-				<div>
+				
+				<p:graphicImage value="#{usuarioBean.imagen}" cache="true"></p:graphicImage>
+				
+
+				<script type="text/javascript">
+
+					$(document).ready(function(){
+						$('.fechaBootstrapPickers').datepicker({
+						    format: "dd/mm/yyyy",
+						    language: "es",
+						    clearBtn: true
+						});
+
+						$("#ui-datepicker-div").css("z-index", 1000);
+					})
+				
 					
-				</div>
+				</script>
+				
 			
 			</h:form>
+			
+				
 		</ui:define>
 	</ui:composition>
 </h:body>

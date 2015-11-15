@@ -16,6 +16,7 @@ public final class Imagenes {
 		return (file != null ? file.getFileName() : null);
 	}
 	
+	@SuppressWarnings("resource")
 	public final static byte[] convertirInputStreamToArrayByte(UploadedFile file)
 	{
 		byte[] bytes = null;
@@ -32,6 +33,7 @@ public final class Imagenes {
 		return bytes;
 	}
 	
+	@SuppressWarnings("resource")
 	public final static byte[] convertirUrlToArrayByte(String urlString)
 	{
 		byte[] bytes = null;
@@ -42,6 +44,22 @@ public final class Imagenes {
 			//InputStream in = file.getInputstream();
 			OutputStream out = new FileOutputStream(new File("imagen.jpg"));
 			out.write(bytes, 0, is.read(bytes));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bytes;
+	}
+	
+	@SuppressWarnings("resource")
+	public final static byte[] convertirInputStreamToArrayByte(InputStream is)
+	{
+		byte[] bytes = null;
+		try {
+			if (is != null) {
+				bytes = new byte[1048576*8];
+				OutputStream out = new FileOutputStream(new File("icon.jpg"));
+				out.write(bytes, 0, is.read(bytes));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -128,13 +128,14 @@ public class UsuarioBean implements Serializable
 	{
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
-			
 			if (dataUsuario != null) {
 				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
-				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				//session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				//imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
+				dusu = dataUsuario;
 				Url.redireccionarURL("usuario_sapo");
 			} else {
 				Url.redireccionarURL("error");
@@ -163,13 +164,15 @@ public class UsuarioBean implements Serializable
 	public void registroUsuario() 
 	{
 		try {
-			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
-			if (dusu != null) {
+			DataUsuario dataUsuario = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
+			if (dataUsuario != null) {
 				logueado=true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
-				session.setAttribute("dataUsuario", dusu);
-				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				session.setAttribute("dataUsuario", dataUsuario);
+				//session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				//imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
+				dusu = dataUsuario;
 				Url.redireccionarURL("usuario_sapo");
 			} 
 			else {
@@ -185,11 +188,9 @@ public class UsuarioBean implements Serializable
 	{
 		try {
 			HttpSession session = SesionBean.getSession();
-			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+			//session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 			AVs = cusu.mostrarListaAv(nick);
-
 			Url.redireccionarURL("verListaAV");
-
 		} catch (Exception e) {
 			Url.redireccionarURL("error");
 			e.printStackTrace();
@@ -245,7 +246,7 @@ public class UsuarioBean implements Serializable
 		try {
 			HttpSession session = SesionBean.getSession();
 			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
-			imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
+			//imagen = new DefaultStreamedContent(dataUsuario.getImagen(), "image/jpg");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

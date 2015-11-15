@@ -12,219 +12,218 @@
       >
     <body>
 	    <ui:composition>
-			<header class="header">
-            
-            <a href="mostrarAV.xhtml" class="logo">${sessionScope.dAV.getNombreAV()} 
-            </a>
-            <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                        <!-- Messages: style can be found in dropdown.less-->
-                        <li class="dropdown messages-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-envelope"></i>
-                                <span class="label label-success">4</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li><!-- start message -->
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" class="img-circle" alt="Usuario" cache="false"></p:graphicImage>
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li><!-- end message -->
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="resources/adminlte/img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    AdminLTE Design Team
-                                                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="resources/adminlte/img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="resources/adminlte/img/avatar2.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="resources/adminlte/img/avatar.png" class="img-circle" alt="user image"/>
-                                                </div>
-                                                <h4>
-                                                    Reviewers
-                                                    <small><i class="fa fa-clock-o"></i>2 days</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
-                            </ul>
-                        </li>
-                        <!-- Notifications: style can be found in dropdown.less -->
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-warning"></i>
-                                <span class="label label-warning">10</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">Tienes 10 notificaciones</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users warning"></i> 5 new members joined
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-person danger"></i> You changed your username
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">Ver todo</a></li>
-                            </ul>
-                        </li>
-                        <!-- Tasks: style can be found in dropdown.less -->
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-book"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">Hay 9 productos por comprar</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Leche x2
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Queso x1
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Lechuga x2
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Cebolla x3
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">Ver lista completa</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i>
-                                <span>${usuarioBean.nick}<i class="caret"></i></span>
-                            </a>
-                            
+				<header class="header">
+	            
+	            <a href="mostrarAV.xhtml" class="logo">${sessionScope.dAV.getNombreAV()} 
+	            </a>
+	            <!-- Header Navbar: style can be found in header.less -->
+	            <nav class="navbar navbar-static-top" role="navigation">
+	                <!-- Sidebar toggle button-->
+	                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </a>
+	                <div class="navbar-right">
+	                    <ul class="nav navbar-nav">
+	                        <!-- Messages: style can be found in dropdown.less-->
+	                        <li class="dropdown messages-menu">
+	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                                <i class="fa fa-envelope"></i>
+	                                <span class="label label-success">4</span>
+	                            </a>
 	                            <ul class="dropdown-menu">
-	                                <!-- User image -->
-	                                <li class="user-header bg-light-blue">
-	                                    
-	                                    <p>
-	                                        ${usuarioBean.nick}
-	                                    </p>
+	                                <li class="header">You have 4 messages</li>
+	                                <li>
+	                                    <!-- inner menu: contains the actual data -->
+	                                    <ul class="menu">
+	                                        <li><!-- start message -->
+	                                            <a href="#">
+	                                                <div class="pull-left">
+	                                                	<img src="ServletImagen" class="img-circle" alt="ICON" />
+	                                                </div>
+	                                                <h4>
+	                                                    Support Team
+	                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+	                                                </h4>
+	                                                <p>Why not buy a new awesome theme?</p>
+	                                            </a>
+	                                        </li><!-- end message -->
+	                                        <li>
+	                                            <a href="#">
+	                                                <div class="pull-left">
+	                                                    <img src="resources/adminlte/img/avatar2.png" class="img-circle" alt="user image"/>
+	                                                </div>
+	                                                <h4>
+	                                                    AdminLTE Design Team
+	                                                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
+	                                                </h4>
+	                                                <p>Why not buy a new awesome theme?</p>
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <div class="pull-left">
+	                                                    <img src="resources/adminlte/img/avatar.png" class="img-circle" alt="user image"/>
+	                                                </div>
+	                                                <h4>
+	                                                    Developers
+	                                                    <small><i class="fa fa-clock-o"></i> Today</small>
+	                                                </h4>
+	                                                <p>Why not buy a new awesome theme?</p>
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <div class="pull-left">
+	                                                    <img src="resources/adminlte/img/avatar2.png" class="img-circle" alt="user image"/>
+	                                                </div>
+	                                                <h4>
+	                                                    Sales Department
+	                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
+	                                                </h4>
+	                                                <p>Why not buy a new awesome theme?</p>
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <div class="pull-left">
+	                                                    <img src="resources/adminlte/img/avatar.png" class="img-circle" alt="user image"/>
+	                                                </div>
+	                                                <h4>
+	                                                    Reviewers
+	                                                    <small><i class="fa fa-clock-o"></i>2 days</small>
+	                                                </h4>
+	                                                <p>Why not buy a new awesome theme?</p>
+	                                            </a>
+	                                        </li>
+	                                    </ul>
 	                                </li>
-	                                <!-- Menu Footer-->
-	                                <li class="user-footer">
-	                                    <div class="pull-left">
-	                                        <a href="usuario_sapo.xhtml" class="btn btn-default btn-flat">Perfil</a>
-	                                    </div>
-	                                    <div class="pull-right">
-	                                       <h:form>
-	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />   	
-	                                    	</h:form>
-	                                    </div>
+	                                <li class="footer"><a href="#">See All Messages</a></li>
+	                            </ul>
+	                        </li>
+	                        <!-- Notifications: style can be found in dropdown.less -->
+	                        <li class="dropdown notifications-menu">
+	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                                <i class="fa fa-warning"></i>
+	                                <span class="label label-warning">10</span>
+	                            </a>
+	                            <ul class="dropdown-menu">
+	                                <li class="header">Tienes 10 notificaciones</li>
+	                                <li>
+	                                    <!-- inner menu: contains the actual data -->
+	                                    <ul class="menu">
+	                                        <li>
+	                                            <a href="#">
+	                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <i class="fa fa-users warning"></i> 5 new members joined
+	                                            </a>
+	                                        </li>
+	
+	                                        <li>
+	                                            <a href="#">
+	                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
+	                                            </a>
+	                                        </li>
+	                                        <li>
+	                                            <a href="#">
+	                                                <i class="ion ion-ios7-person danger"></i> You changed your username
+	                                            </a>
+	                                        </li>
+	                                    </ul>
+	                                </li>
+	                                <li class="footer"><a href="#">Ver todo</a></li>
+	                            </ul>
+	                        </li>
+	                        <!-- Tasks: style can be found in dropdown.less -->
+	                        <li class="dropdown tasks-menu">
+	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                                <i class="fa fa-book"></i>
+	                                <span class="label label-danger">9</span>
+	                            </a>
+	                            <ul class="dropdown-menu">
+	                                <li class="header">Hay 9 productos por comprar</li>
+	                                <li>
+	                                    <!-- inner menu: contains the actual data -->
+	                                    <ul class="menu">
+	                                        <li><!-- Task item -->
+	                                            <a href="#">
+	                                                <h3>
+	                                                    Leche x2
+	                                                </h3>
+	                                            </a>
+	                                        </li><!-- end task item -->
+	                                        <li><!-- Task item -->
+	                                            <a href="#">
+	                                                <h3>
+	                                                    Queso x1
+	                                                </h3>
+	                                            </a>
+	                                        </li><!-- end task item -->
+	                                        <li><!-- Task item -->
+	                                            <a href="#">
+	                                                <h3>
+	                                                    Lechuga x2
+	                                                </h3>
+	                                            </a>
+	                                        </li><!-- end task item -->
+	                                        <li><!-- Task item -->
+	                                            <a href="#">
+	                                                <h3>
+	                                                    Cebolla x3
+	                                                </h3>
+	                                            </a>
+	                                        </li><!-- end task item -->
+	                                    </ul>
+	                                </li>
+	                                <li class="footer">
+	                                    <a href="#">Ver lista completa</a>
 	                                </li>
 	                            </ul>
-                            
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-				
+	                        </li>
+	                        <!-- User Account: style can be found in dropdown.less -->
+	                        <li class="dropdown user user-menu">
+	                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                                <i class="glyphicon glyphicon-user"></i>
+	                                <span>${usuarioBean.nick}<i class="caret"></i></span>
+	                            </a>
+	                            
+		                            <ul class="dropdown-menu">
+		                                <!-- User image -->
+		                                <li class="user-header bg-light-blue">
+		                                	<img src="ServletImagen" class="img-circle" alt="ICON" />
+		                                    <p>
+		                                        ${usuarioBean.nick}
+		                                    </p>
+		                                </li>
+		                                <!-- Menu Footer-->
+		                                <li class="user-footer">
+		                                    <div class="pull-left">
+		                                        <a href="usuario_sapo.xhtml" class="btn btn-default btn-flat">Perfil</a>
+		                                    </div>
+		                                    <div class="pull-right">
+		                                    	<h:form>
+		                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />   	
+		                                    	</h:form>
+		                                    </div>
+		                                </li>
+		                            </ul>
+	                            
+	                        </li>
+	                    </ul>
+	                </div>
+	            </nav>
+	        </header>
 	    </ui:composition>
     </body>
 </html>

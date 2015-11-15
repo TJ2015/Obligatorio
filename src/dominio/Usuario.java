@@ -123,9 +123,12 @@ public class Usuario implements Serializable {
 					lDataCompartidos.add(almacen.getNombreAV());
 				}
 			}
-			
+			/*
 			InputStream imagen = Imagenes.convertirArrayByteToInputStream(this.bytesImagen);
 			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, imagen, fechaRegistro);
+			*/
+			
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, bytesImagen, fechaRegistro);
 
 		} catch (Exception e) {
 			e.printStackTrace();

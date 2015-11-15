@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS `notificacion` (
 CREATE TABLE IF NOT EXISTS `producto` (
   `idProducto` bigint(20) NOT NULL AUTO_INCREMENT,
   `atributos` varchar(255) NOT NULL,
+  `bytesImagen` longblob DEFAULT NULL,
+  `nombreImagen` varchar(255) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `precio` double NOT NULL,

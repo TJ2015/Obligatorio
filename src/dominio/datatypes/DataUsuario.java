@@ -18,8 +18,9 @@ public class DataUsuario implements Serializable {
 	private List<String> AVs = new ArrayList<>();
 	private List<String> AVsCompar = new ArrayList<>();
 	private String nombreImagen;
-	private InputStream imagen;
+	private InputStream imagenIS;
 	private Date fechaRegistro;
+	private byte[] imagen;
 
 	public List<String> getAVs() {
 		return AVs;
@@ -42,6 +43,21 @@ public class DataUsuario implements Serializable {
 	
 	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
 			List<String> aVs, List<String> aVsCompar, String nombreImagen, InputStream imagen, Date fechaRegistro) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.nick = nick;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		AVs = aVs;
+		AVsCompar = aVsCompar;
+		this.nombreImagen = nombreImagen;
+		this.imagenIS = imagen;
+		this.fechaRegistro = fechaRegistro;
+	}
+	
+	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
+			List<String> aVs, List<String> aVsCompar, String nombreImagen, byte[] imagen, Date fechaRegistro) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -105,7 +121,7 @@ public class DataUsuario implements Serializable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + ((fechaRegistro == null) ? 0 : fechaRegistro.hashCode());
-		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
+		result = prime * result + ((imagenIS == null) ? 0 : imagenIS.hashCode());
 		result = prime * result + ((nick == null) ? 0 : nick.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((nombreImagen == null) ? 0 : nombreImagen.hashCode());
@@ -151,10 +167,10 @@ public class DataUsuario implements Serializable {
 				return false;
 		} else if (!fechaRegistro.equals(other.fechaRegistro))
 			return false;
-		if (imagen == null) {
-			if (other.imagen != null)
+		if (imagenIS == null) {
+			if (other.imagenIS != null)
 				return false;
-		} else if (!imagen.equals(other.imagen))
+		} else if (!imagenIS.equals(other.imagenIS))
 			return false;
 		if (nick == null) {
 			if (other.nick != null)
@@ -174,12 +190,7 @@ public class DataUsuario implements Serializable {
 		return true;
 	}
 
-	public InputStream getImagen() {
-		return imagen;
-	}
-	public void setImagen(InputStream imagen) {
-		this.imagen = imagen;
-	}
+	
 	public String getNombreImagen() {
 		return nombreImagen;
 	}
@@ -194,5 +205,23 @@ public class DataUsuario implements Serializable {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
+
+	public InputStream getImagenIS() {
+		return imagenIS;
+	}
+
+	public void setImagenIS(InputStream imagenIS) {
+		this.imagenIS = imagenIS;
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 	
 }

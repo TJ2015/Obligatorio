@@ -1,0 +1,20 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      > 
+
+<h:head></h:head> 
+<body> 
+	
+	<img height="130" width="130" src="ServletImagen" />
+
+	<img src="#{usuarioBean.imagen}" class="img-circle" alt="User Image" />
+	<br/>
+	<p:graphicImage value="#{usuarioBean.imagen}" class="img-circle" ></p:graphicImage>
+	<br/>
+	<p:graphicImage value="#{usuarioBean.imagen}" class="img-circle" ></p:graphicImage>
+</body> 
+</html>
