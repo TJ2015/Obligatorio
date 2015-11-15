@@ -19,6 +19,7 @@ import org.primefaces.model.UploadedFile;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
+import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
@@ -40,6 +41,7 @@ public class UsuarioBean implements Serializable
 	private String apellido;
 	private String destinatario;
 	private String mensaje;
+	private String asunto;
 	private String nick;
 	private String password;
 	private String email;
@@ -48,15 +50,29 @@ public class UsuarioBean implements Serializable
 	List<DataMensaje> msjsNoLeidos = new ArrayList<>();
 	List<DataMensaje> msjsEnviados = new ArrayList<>();
 	List<DataMensaje> msjsRecibidos = new ArrayList<>();
-	
+	private boolean logueado;
 	private DataMensaje dmsj;
 	private DataUsuario dusu;
-	private boolean logueado;
+	private boolean recibido=false;
 	private UploadedFile file;
 	private StreamedContent imagen;
-
 	private List<DataMensaje> msjs;
 	
+	public String getAsunto() {
+		return asunto;
+	}
+
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
+	}
+
+	public boolean isRecibido() {
+		return recibido;
+	}
+
+	public void setRecibido(boolean recibido) {
+		this.recibido = recibido;
+	}
 	
 	public List<DataMensaje> getMsjs() {
 		return msjs;
@@ -312,6 +328,7 @@ public class UsuarioBean implements Serializable
 			HttpSession session = SesionBean.getSession();
 			String nick = (String) session.getAttribute("nickname");
 			msjs=cusu.getMensajesEnviados(nick);
+			recibido=false;
 			return msjs;
 			
 	}
@@ -320,6 +337,7 @@ public class UsuarioBean implements Serializable
 			HttpSession session = SesionBean.getSession();
 			String nick = (String) session.getAttribute("nickname");
 			msjs = cusu.getMensajesRecibidos(nick);
+			recibido=true;
 			return msjs;
 			
 	}
@@ -327,6 +345,27 @@ public class UsuarioBean implements Serializable
 	{
 			HttpSession session = SesionBean.getSession();
 			String remitente = (String) session.getAttribute("nickname");
-			boolean msjCreado= cusu.enviarMensaje(remitente, destinatario, mensaje);
+			boolean msjCreado= cusu.enviarMensaje(remitente, destinatario, mensaje,asunto);
+	}
+	public void cargarMensaje(long idMsj) throws MensajeNoEncotrado 
+	{
+			
+			dmsj= cusu.getMensaje(idMsj);
+			cusu.marcarMensajeComoLeido(idMsj);
+	}
+	public void eliminarMensajeRecibido(long idMsj) throws MensajeNoEncotrado, UsuarioNoEncontrado 
+	{
+			HttpSession session = SesionBean.getSession();
+			String usuario = (String) session.getAttribute("nickname");
+			if(recibido){
+				cusu.eliminarMensajeRecibido(usuario, idMsj);
+				msjs = cusu.getMensajesRecibidos(usuario);
+
+			}else{
+				cusu.eliminarMensajeEnviado(usuario, idMsj);
+				msjs=cusu.getMensajesEnviados(usuario);
+
+			}
+			
 	}
 }

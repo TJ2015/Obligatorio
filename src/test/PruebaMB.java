@@ -38,7 +38,7 @@ import negocio.interfases.IControladorUsuario;
 public class PruebaMB implements Serializable {
 
 	private Map<String, Boolean> tests;
-	private boolean allok = true;
+/*	private boolean allok = true;
 	private long ID_AV;
 	private long ID_AV2;
 	
@@ -1051,5 +1051,5 @@ public class PruebaMB implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }
