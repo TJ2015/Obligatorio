@@ -174,7 +174,7 @@
 									</div>
 								</div>
 								<div class="box-body chat" id="chat-box">
-									<div id="mesnajesRecibidosChat"></div>
+									<div id="mensajesRecibidosChat"></div>
 								</div>
 								<!-- /.chat -->
 								<div class="box-footer">
@@ -238,6 +238,9 @@
 			</div>
 			<script type="text/javascript">
 				$(document).ready(function() {
+					//$("#contenedorChat div.slimScrollDiv div.slimScrollBar").slimScroll({
+				    //    start: 'bottom'
+					//});
 				})
 				
 				
@@ -248,43 +251,57 @@
 				});
 				
 				var websockets = new WebSocket("ws://localhost:8080/Obligatorio/chat"); 			
-			
+		
 				websockets.onmessage = function(e){
 					mostrarMensaje(e.data)
 				}
 				
 				function enviarMensaje(){
-					var mensaje = $(".mensajeDeChat").val();		
-					websockets.send(mensaje);
+					var mensaje = $(".mensajeDeChat").val();
 					$(".mensajeDeChat").val("");
+					if(mensaje != null){
+						if(mensaje != "")
+						websockets.send(mensaje);
+					}
 				}
-			
-				function mostrarMensaje(mensaje){
+
+				function mostrarMensaje(data){
+					var datos = JSON.parse(data);
 					var fecha = document.createElement("i");
 					$(fecha).addClass("fa fa-clock-o");
 					var contFecha = document.createElement("small");
 					$(contFecha).addClass("text-muted pull-right");
 					contFecha.appendChild(fecha);
-					contFecha.innerHTML += "  2:15"; //Agregarle la fecha 
+					contFecha.innerHTML += " " + datos.fecha; //Fecha del Mensaje
 					var nombre = document.createElement("a");
 					$(nombre).addClass("name");
 					$(nombre).attr('href','#');
 					nombre.appendChild(contFecha);
-					nombre.innerHTML += "Nombre del Usuario"; //Agregar Nombre del usuario
+					nombre.innerHTML += datos.nombreCompleto; //Nombre del usuario
 					var contMensaje = document.createElement("p");
 					$(contMensaje).addClass("message");
 					contMensaje.appendChild(nombre);
-					contMensaje.innerHTML += mensaje;
+					contMensaje.innerHTML += datos.mensaje; //Mensaje
 					var imagen = document.createElement("img");
 					$(imagen).addClass("online");
-					$(imagen).attr('src','#'); // Poner la imagen del usuario
+					contMensaje.style.background = (!datos.soyYo ? "#f3f3f3" : "#cce5ff");
+					contMensaje.style.padding = "15px";
+					contMensaje.style.borderRadius = "10px";
+					$(imagen).attr('src','imagenes/usuario/?nick=' + datos.nickUsuario); // Poner la imagen del usuario
 					$(imagen).attr('alt','U'); //
 					var contChat = document.createElement("div");
 					$(contChat).addClass("item");
+					
 					contChat.appendChild(imagen);
-					contChat.appendChild(contMensaje);
-					var contMensajes = document.getElementById("mesnajesRecibidosChat");
+					contChat.appendChild(contMensaje);	
+					
+					
+					var contMensajes = document.getElementById("mensajesRecibidosChat");
 					contMensajes.appendChild(contChat);
+
+					var scrollTo_val = $('#contenedorChat div.slimScrollDiv').prop('scrollHeight') + 'px';
+					$("#contenedorChat div.slimScrollDiv").slimScroll({ scrollTo : scrollTo_val });	
+					
 				}
 			</script>
 		</ui:define>
