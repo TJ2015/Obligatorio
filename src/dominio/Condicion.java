@@ -1,14 +1,14 @@
 package dominio;
 
-enum Condicional {
-	MAYOR,
-	IGUAL,
-	MENOR,
-	MAYOR_O_IGUAL,
-	MENOR_O_IGUAL
-}
-
 public class Condicion {
+	
+	public enum Condicional {
+		MAYOR,
+		IGUAL,
+		MENOR,
+		MAYOR_O_IGUAL,
+		MENOR_O_IGUAL
+	}
 	
 	private String atributo;
 	private Condicional condicional;
@@ -103,7 +103,7 @@ public class Condicion {
 				cond = ">=";
 				break;
 		}
-		return atributo + cond + valor + ";";
+		return atributo + "[" + cond + "]" + valor + ";";
 	}
-		
+	
 }

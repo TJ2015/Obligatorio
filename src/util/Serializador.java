@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Atributo;
+import dominio.Condicion;
+import dominio.Condicion.Condicional;
 
 public class Serializador {
 	
@@ -31,5 +33,44 @@ public class Serializador {
 		}
 		
 		return attrs;
+	}
+
+	public static Condicion convertirCondicionAString(String condicion) {
+		String[] aux1 = condicion.split("["), 
+				aux2;
+		String attr, val;
+		Condicional cond = null;
+		Condicion condi = null;
+		
+		if( aux1.length > 1 ) {			
+			aux2 = aux1[1].split("]");
+			if( aux2.length > 1 ) { 
+				attr = aux1[0];
+				switch(aux2[0]) {
+					case "<":
+						cond = Condicional.MENOR;
+						break;
+					case "<=":
+						cond = Condicional.MENOR_O_IGUAL;
+						break;
+					case "=":
+						cond = Condicional.IGUAL;
+						break;
+					case ">=":
+						cond = Condicional.MAYOR_O_IGUAL;
+						break;
+					case ">":
+						cond = Condicional.MAYOR;
+					break;
+				}
+				
+				val = aux2[1];
+				
+				condi = new Condicion(attr, cond, val);
+			}
+			
+		}
+		
+		return condi;
 	}
 }

@@ -31,4 +31,24 @@
     <servlet-name>ServletImagenProducto</servlet-name>
     <url-pattern>/imagenes/producto/*</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>PayPal Pagar</servlet-name>
+    <servlet-class>servlets.PayPalPagar</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PayPal Pagar</servlet-name>
+    <url-pattern>/paypal/pagar</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PayPal Preparar</servlet-name>
+    <servlet-class>servlets.PayPalPreparar</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PayPal Preparar</servlet-name>
+    <url-pattern>/paypal/preparar</url-pattern>
+  </servlet-mapping>
 </web-app>

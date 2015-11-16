@@ -27,10 +27,9 @@ import dominio.datatypes.DataProducto;
 @Access(AccessType.FIELD)
 @NamedQueries({
 		@NamedQuery(name = "Producto.buscarPorNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
-		@NamedQuery(name = "Producto.getAll", query = "SELECT p FROM Producto p")
-})
+		@NamedQuery(name = "Producto.getAll", query = "SELECT p FROM Producto p") })
 public class Producto implements Serializable {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProducto;
@@ -44,6 +43,38 @@ public class Producto implements Serializable {
 	@Column(length = 1294967295)
 	private byte[] bytesImagen;
 	private String nombreImagen;
+
+	@Transient
+	private List<Atributo> atributosList = new ArrayList<>();
+
+	private static final long serialVersionUID = 1L;
+
+	public Producto() {
+		super();
+		this.stock = -1;
+	}
+
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
+			int stock) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+		this.stock = stock;
+	}
+	/// Crea producto con Imagen
+	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
+			int stock, byte[] bytesImagen, String nombreImagen) {
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.categoria = categoria;
+		this.atributosList = atributosList;
+		this.stock = stock;
+		this.bytesImagen = bytesImagen;
+		this.nombreImagen = nombreImagen;
+	}
 
 	public byte[] getBytesImagen() {
 		return bytesImagen;
@@ -59,40 +90,6 @@ public class Producto implements Serializable {
 
 	public void setNombreImagen(String nombreImagen) {
 		this.nombreImagen = nombreImagen;
-	}
-
-	/// Crea producto con Imagen
-	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
-			int stock, byte[] bytesImagen, String nombreImagen) {
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.categoria = categoria;
-		this.atributosList = atributosList;
-		this.stock = stock;
-		this.bytesImagen = bytesImagen;
-		this.nombreImagen = nombreImagen;
-	}
-
-	@Transient
-	private List<Atributo> atributosList = new ArrayList<>();
-
-	private static final long serialVersionUID = 1L;
-
-	public Producto() {
-		super();
-		this.stock = -1;
-	}
-
-	public Producto(String nombre, String descripcion, double precio, Categoria categoria, List<Atributo> atributosList,
-			int stock) {
-		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.categoria = categoria;
-		this.atributosList = atributosList;
-		this.stock = stock;
 	}
 
 	public Long getIdProducto() {
@@ -141,7 +138,7 @@ public class Producto implements Serializable {
 	public String getAtributos() {
 		return util.Serializador.convertirAString(atributosList);
 	}
-
+	
 	public void setAtributos(String attrs) {
 		if (!attrs.equals("null")) {
 			this.atributosList = util.Serializador.convertirDesdeString(attrs);
@@ -171,7 +168,8 @@ public class Producto implements Serializable {
 			attr.put(a.getNombre(), a.getValor());
 		}
 
-		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr, bytesImagen);
+		return new DataProducto(idProducto, nombre, descripcion, precio, stock, categoria.getNombre(), attr,
+				bytesImagen);
 	}
 
 	@Override

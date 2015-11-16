@@ -16,6 +16,6 @@
   <mapping class="dominio.Nota"/>
   <mapping class="dominio.Notificacion"/>
   <mapping class="dominio.ProductoAComprar"/>
-  <mapping class="dominio.LogEntry"/>
+  <mapping class="dominio.Alerta"/>
  </session-factory>
 </hibernate-configuration>
