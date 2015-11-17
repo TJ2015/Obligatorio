@@ -48,20 +48,7 @@
                                                     <label style="margin-right: 10px;">
                                                         <input type="checkbox" id="check-all"/>
                                                     </label>
-                                                    <!-- Action button -->
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
-                                                            Action <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li><a href="#">Mark as read</a></li>
-                                                            <li><a href="#">Mark as unread</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#">Move to junk</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#">Delete</a></li>
-                                                        </ul>
-                                                    </div>
+                                                   
 
                                                 </div>
                                                 <div class="col-sm-6 search-form">
@@ -95,13 +82,7 @@
                                         </div><!-- /.col (RIGHT) -->
                                     </div><!-- /.row -->
                                 </div><!-- /.box-body -->
-                                <div class="box-footer clearfix">
-                                    <div class="pull-right">
-                                        <small>Showing 1-12/1,240</small>
-                                        <button class="btn btn-xs btn-primary"><i class="fa fa-caret-left"></i></button>
-                                        <button class="btn btn-xs btn-primary"><i class="fa fa-caret-right"></i></button>
-                                    </div>
-                                </div><!-- box-footer -->
+                                
                             </div><!-- /.box -->
                         </div><!-- /.col (MAIN) -->
                     </div>
@@ -126,8 +107,10 @@
                             </div>
                            
                             <div class="form-group">
-                                <h:inputTextarea name="message" id="email_message" class="form-control" value="#{usuarioBean.mensaje}"  placeholder="Mensaje" style="height: 120px;" />
-                            </div>
+									<h:inputTextarea name="message" id="email_message"
+										class="form-control" value="#{usuarioBean.mensaje}"
+										placeholder="Mensaje" style="height: 120px;" />
+								</div>
                         </div>
                         <div class="modal-footer clearfix">
 

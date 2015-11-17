@@ -6,8 +6,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-	
-	
+
+
 
 <h:head></h:head>
 <h:body>
@@ -15,7 +15,7 @@
 	Hola #{usuarioBean.nick}!!
 <ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
-		
+
 			<div class="container-fluid clearfix">
 				<div class="list-group">
 					<section class="content">
@@ -30,15 +30,17 @@
 								<div class="icon">
 									<i class="ion ion-person-add"></i>
 								</div>
-								
-							
+
+
 								<h:form class="small-box-footer">
-			                        <h:commandLink action="#{avBean.mostrarListaUsuariosCompartidos()}" style="text-decoration:none;color:white;" >
+									<h:commandLink
+										action="#{avBean.mostrarListaUsuariosCompartidos()}"
+										style="text-decoration:none;color:white;">
 			                                Mas información
-			                              <i class="fa fa-arrow-circle-right"></i> 
+			                              <i class="fa fa-arrow-circle-right"></i>
 									</h:commandLink>
 								</h:form>
-								
+
 							</div>
 						</div>
 						<!-- ./col -->
@@ -46,19 +48,21 @@
 							<!-- small box -->
 							<div class="small-box bg-teal">
 								<div class="inner">
-									<h3>14</h3>
+									<h3>#{categoriaBean.cats.size()}</h3>
 									<p>Categorias</p>
 								</div>
 								<div class="icon">
 									<i class="ion ion-ios7-pricetag-outline"></i>
 								</div>
 								<h:form class="small-box-footer">
-			                        <h:commandLink action="verListaCategoria" actionListener="#{categoriaBean.mostrarListaCategoria()}" style="text-decoration:none;color:white;">
+									<h:commandLink action="verListaCategoria"
+										actionListener="#{categoriaBean.mostrarListaCategoria()}"
+										style="text-decoration:none;color:white;">
 			                                Mas información
-			                             <i class="fa fa-arrow-circle-right"></i> 
+			                             <i class="fa fa-arrow-circle-right"></i>
 									</h:commandLink>
 								</h:form>
-								
+
 							</div>
 						</div>
 						<!-- ./col -->
@@ -66,20 +70,20 @@
 							<!-- small box -->
 							<div class="small-box bg-maroon">
 								<div class="inner">
-									<h3>${productoBean.cantProd}</h3>
+									<h3>${productoBean.verCantProd()}</h3>
 									<p>Productos</p>
 								</div>
 								<div class="icon">
 									<i class="ion ion-ios7-pricetag-outline"></i>
 								</div>
 								<h:form class="small-box-footer">
-			                        <h:commandLink action="#{productoBean.mostrarTodosProd()}" style="text-decoration:none;color:white;">
-									   
+									<h:commandLink action="#{productoBean.mostrarTodosProd()}"
+										style="text-decoration:none;color:white;">
 			                                Mas información
-			                             <i class="fa fa-arrow-circle-right"></i> 
+			                             <i class="fa fa-arrow-circle-right"></i>
 									</h:commandLink>
 								</h:form>
-								
+
 							</div>
 						</div>
 						<!-- ./col -->
@@ -152,88 +156,101 @@
 							<!-- /.box -->
 						</div>
 						<!-- /.col -->
-										
-					<div class="row">
-						<div class="col-md-6">				
-						<div class="box box-success">
-								<div class="box-header">
-									<h3 class="box-title">
-										<i class="fa fa-comments-o"></i> Chat
-									</h3>
-									<div class="box-tools pull-right" data-toggle="tooltip"
-										title="Status">
-										<div class="btn-group" data-toggle="btn-toggle">
-										
-											<button type="button" class="btn btn-default btn-sm active">
-												<i class="fa fa-square text-green"></i>
-											</button>
-											<button type="button" class="btn btn-default btn-sm">
-												<i class="fa fa-square text-red"></i>
-											</button>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="box box-success">
+									<div class="box-header">
+										<h3 class="box-title">
+											<i class="fa fa-comments-o"></i> Chat
+										</h3>
+										<div class="box-tools pull-right" data-toggle="tooltip"
+											title="Status">
+											<div class="btn-group" data-toggle="btn-toggle">
+
+												<button type="button" class="btn btn-default btn-sm active">
+													<i class="fa fa-square text-green"></i>
+												</button>
+												<button type="button" class="btn btn-default btn-sm">
+													<i class="fa fa-square text-red"></i>
+												</button>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="box-body chat" id="chat-box">
-									<div id="mesnajesRecibidosChat"></div>
-								</div>
-								<!-- /.chat -->
-								<div class="box-footer">
-									<div class="input-group">
-										<h:inputText styleClass="form-control mensajeDeChat" a:placeholder="Escriba su mensaje..."/>
-										<div class="input-group-btn">
-										<h:form>
-											<h:commandButton type="button" value="Enviar" styleClass="btn btn-success" onclick="javascript:enviarMensaje();" />
-										</h:form>
+									<div class="box-body chat" id="chat-box">
+										<div id="mesnajesRecibidosChat"></div>
+									</div>
+									<!-- /.chat -->
+									<div class="box-footer">
+										<div class="input-group">
+											<h:inputText styleClass="form-control mensajeDeChat"
+												a:placeholder="Escriba su mensaje..." />
+											<div class="input-group-btn">
+												<h:form>
+													<h:commandButton type="button" value="Enviar"
+														styleClass="btn btn-success"
+														onclick="javascript:enviarMensaje();" />
+												</h:form>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-					</div>
-					</div>
+						</div>
 					</div>
 					</section>
-				<section class="content">
-					
-						<div class="col-md-6">
-							<div class="box box-success">
-								<div class="box-header">
-								
-								 <div class="input-group">
-									 <!-- Comments Form -->
-				                   <h3 class="box-title">
+					<section class="content">
+
+					<div class="col-md-6">
+						<div class="box box-success">
+						<h:form>
+						
+							<div class="box-header">
+
+								<div class="input-group">
+									<!-- Comments Form -->
+									<h3 class="box-title">
 										<i class="fa fa-edit"></i> Notas
 									</h3>
-									</div>
-									<div class="box-body">
-				                        <div class="form-group">
-				                            <textarea class="form-control" rows="3" placeholder="Nota ..."></textarea>
-				                        </div>
-				                      <form >
-				                        <button type="submit" class="btn btn-primary">Submit</button>
-				                    </form>
-				                    </div>
 								</div>
-				                <hr>
-				
-				                <!-- Posted Comments -->
-				
-				                <!-- Comment -->
-				                <div class="box-body chat" id="chat-box">
-				                <div class="media">
-				                    
-				                    <div class="media-body">
-				                        <h4 class="media-heading">Start Bootstrap
-				                            <small>August 25, 2014 at 9:30 PM</small>
-				                        </h4>
-				                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-				                    </div>
-				                </div>
-				                </div>
-									</hr>
-					
-				</div>
-			</div>
-		</section>
+								<div class="box-body">
+									<div class="form-group">
+										<h:inputTextarea name="textNota" id="email_message"
+											class="form-control" value="#{avBean.textNota}"
+											placeholder="Nota..." style="height: 120px;" />
+
+									</div>
+										<h:commandButton id="botonEnviar" type="submit"
+											styleClass="btn btn-primary pull-left" value="Enviar"
+											action="mostrarAV" actionListener="#{avBean.crearNota()}"></h:commandButton>
+									
+								</div>
+							</div>
+						</h:form>
+							
+							<c:forEach var="nota" items="${avBean.listNotas}">
+							
+							<hr>
+
+								<!-- Comment -->
+
+									<div class="box-body chat" id="chat-box">
+										<div class="media">
+
+											<div class="media-body">
+												<h4 class="media-heading">#{nota.usuario}</h4>
+												<h6>#{nota.texto}</h6>
+											</div>
+								
+										</div>
+									</div>
+
+							</hr>
+						</c:forEach>
+
+						</div>
+					</div>
+					</section>
 				</div>
 			</div>
 			<script type="text/javascript">

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataNota;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
@@ -35,8 +36,45 @@ public class AvBean implements Serializable {
 	private String mensaje;
 	private String usuarioCreador;
 	private int cantUsuComp;
+	private String textNota;
+	private long idNota;
+	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
+	public AvBean() {
+
+	}
+
 	
+	public List<DataNota> getListNotas() {
+		return listNotas;
+	}
+
+
+	public void setListNotas(List<DataNota> listNotas) {
+		this.listNotas = listNotas;
+	}
+
+
+	public String getTextNota() {
+		return textNota;
+	}
+
+
+	public void setTextNota(String textNota) {
+		this.textNota = textNota;
+	}
+
+
+	public long getIdNota() {
+		return idNota;
+	}
+
+
+	public void setIdNota(long idNota) {
+		this.idNota = idNota;
+	}
+
+
 	public int getCantUsuComp() {
 		return cantUsuComp;
 	}
@@ -63,10 +101,7 @@ public class AvBean implements Serializable {
 		this.nombreAV = nombreAV;
 	}
 
-	public AvBean() {
-
-	}
-
+	
 	public String getMensaje() {
 		return mensaje;
 	}
@@ -169,7 +204,23 @@ public class AvBean implements Serializable {
 			
 	}
 
-	
-	
 
+	public void crearNota() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		String nickname= (String) session.getAttribute("nickname");
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNota(textNota, nickname, idAV1);
+		listNotas= cAV.getNotas(idAV1);
+		textNota=null;
+	}
+	public void mostrarNotas() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+	}
+	
+	public void eliminarNota() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.eliminarNota(idAV1, idNota);;
+	}
 }
