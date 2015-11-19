@@ -138,7 +138,7 @@ public class AvBean implements Serializable {
 		return null;
 	}
 
-	public void agregarAV() {
+	public void agregarAV() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
@@ -149,12 +149,13 @@ public class AvBean implements Serializable {
 			}
 			session.setAttribute("idAV", idAV);
 			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+
 			try {
 				session.setAttribute("dAV", cAV.traerAV(idAV));
+
 			} catch (NoExisteElAV e1) {
 				e1.printStackTrace();
 			}			
-			Url.redireccionarURL("mostrarAV");
 		}
 	}
 
@@ -213,9 +214,12 @@ public class AvBean implements Serializable {
 		listNotas= cAV.getNotas(idAV1);
 		textNota=null;
 	}
-	public void mostrarNotas() throws Exception {
+	public List<DataNota> mostrarNotas() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
+		listNotas= cAV.getNotas(idAV1);
+		return listNotas;
+
 	}
 	
 	public void eliminarNota() throws Exception  {

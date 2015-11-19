@@ -204,6 +204,7 @@
 					<div class="col-md-6">
 						<div class="box box-success">
 						<h:form>
+					<ui:param name="listaNotas" value="${avBean.mostrarNotas()}"></ui:param>
 						
 							<div class="box-header">
 
@@ -228,7 +229,7 @@
 							</div>
 						</h:form>
 							
-							<c:forEach var="nota" items="${avBean.listNotas}">
+							<c:forEach var="nota" items="${listaNotas}">
 							
 							<hr>
 

@@ -163,14 +163,14 @@
 	                                </li>
 	                                <!-- Menu Footer-->
 	                                <li class="user-footer">
+	                                <h:form>                                
 	                                    <div class="pull-left">
-	                                        <a href="usuario_sapo.xhtml" class="btn btn-default btn-flat">Perfil</a>
+	                                    	<h:commandButton  action="usuario_sapo" actionListener="#{usuarioBean.mostrarListaAVCompartidos()}"  value="Perfil" class="btn btn-default btn-flat" />   	
 	                                    </div>
 	                                    <div class="pull-right">
-	                                       <h:form>
 	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />   	
-	                                    	</h:form>
 	                                    </div>
+									</h:form>
 	                                </li>
 	                            </ul>
                             
