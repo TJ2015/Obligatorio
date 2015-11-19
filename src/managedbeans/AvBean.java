@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataNota;
+import dominio.datatypes.DataNotificacion;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
@@ -35,8 +37,67 @@ public class AvBean implements Serializable {
 	private String mensaje;
 	private String usuarioCreador;
 	private int cantUsuComp;
+	private String textNotificacion;
+	private String textNota;
+	private long idNota;
+	private List<DataNotificacion> listNotificacion=new ArrayList<>();
+	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
+	public AvBean() {
+
+	}
+
 	
+	public List<DataNotificacion> getListNotificacion() {
+		return listNotificacion;
+	}
+
+
+	public void setListNotificacion(List<DataNotificacion> listNotificacion) {
+		this.listNotificacion = listNotificacion;
+	}
+
+
+	public String getTextNotificacion() {
+		return textNotificacion;
+	}
+
+
+	public void setTextNotificacion(String textNotificacion) {
+		this.textNotificacion = textNotificacion;
+	}
+
+
+	public List<DataNota> getListNotas() {
+		return listNotas;
+	}
+
+
+	public void setListNotas(List<DataNota> listNotas) {
+		this.listNotas = listNotas;
+	}
+
+
+	public String getTextNota() {
+		return textNota;
+	}
+
+
+	public void setTextNota(String textNota) {
+		this.textNota = textNota;
+	}
+
+
+	public long getIdNota() {
+		return idNota;
+	}
+
+
+	public void setIdNota(long idNota) {
+		this.idNota = idNota;
+	}
+
+
 	public int getCantUsuComp() {
 		return cantUsuComp;
 	}
@@ -63,10 +124,7 @@ public class AvBean implements Serializable {
 		this.nombreAV = nombreAV;
 	}
 
-	public AvBean() {
-
-	}
-
+	
 	public String getMensaje() {
 		return mensaje;
 	}
@@ -103,7 +161,7 @@ public class AvBean implements Serializable {
 		return null;
 	}
 
-	public void agregarAV() {
+	public void agregarAV() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
@@ -114,12 +172,13 @@ public class AvBean implements Serializable {
 			}
 			session.setAttribute("idAV", idAV);
 			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+
 			try {
 				session.setAttribute("dAV", cAV.traerAV(idAV));
+
 			} catch (NoExisteElAV e1) {
 				e1.printStackTrace();
 			}			
-			Url.redireccionarURL("mostrarAV");
 		}
 	}
 
@@ -169,7 +228,45 @@ public class AvBean implements Serializable {
 			
 	}
 
-	
-	
 
+	public void crearNota() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		String nickname= (String) session.getAttribute("nickname");
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNota(textNota, nickname, idAV1);
+		listNotas= cAV.getNotas(idAV1);
+		textNota=null;
+	}
+	public List<DataNota> mostrarNotas() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		listNotas= cAV.getNotas(idAV1);
+		return listNotas;
+
+	}
+	
+	public void eliminarNota() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.eliminarNota(idAV1, idNota);
+	}
+	public void crearNotificacion() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNotificacion(textNotificacion, idAV1);
+		listNotificacion= cAV.getNotificaciones(idAV1);
+		textNotificacion=null;
+	}
+	public List<DataNotificacion> mostrarNotificaciones() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		listNotificacion= cAV.getNotificaciones(idAV1);
+		return listNotificacion;
+
+	}
+	public void eliminarNotificacion() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNotificacion(textNotificacion, idAV1);
+	}
 }

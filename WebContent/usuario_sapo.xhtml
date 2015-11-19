@@ -90,17 +90,20 @@
 		<section class="content">
 		
 			 <div class="col-lg-3 col-xs-6 col-lg-offset-0" style="float:left">
-			 <h3 class="box-title">Notificaciones</h3>
+			 <h3 class="box-title">Lista de Avs compartidos</h3>
 				<ul class="list-group">
-				   <c:forEach var="av" items="${sessionScope.AVs}"  >
+				<h:form>
+				   <c:forEach var="av" items="${usuarioBean.AVsComp}"  >
 				      <li class="list-group-item">
-				       <a href="mostrarAV.xhtml">
-				       <i class="fa fa-angle-double-right" ></i>
-				          ${av.nombreAV}
-				        </a>
+				       <h:commandLink actionListener="${usuarioBean.verAV(av.getIdAV())}" action="mostrarAV">
+					 	<i class="fa fa-angle-double-right"></i>
+					 	${av.nombreAV}
+					 </h:commandLink>
+				       
 				     </li>
 				                               
-				 </c:forEach>   
+				 </c:forEach> 
+				 </h:form>  
 				</ul>
 			</div>
 		</section>

@@ -47,6 +47,7 @@ public class UsuarioBean implements Serializable
 	private String email;
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
+	private List<DataAV> AVsComp = new ArrayList<>();
 	List<DataMensaje> msjsNoLeidos = new ArrayList<>();
 	List<DataMensaje> msjsEnviados = new ArrayList<>();
 	List<DataMensaje> msjsRecibidos = new ArrayList<>();
@@ -74,6 +75,14 @@ public class UsuarioBean implements Serializable
 		this.recibido = recibido;
 	}
 	
+	public List<DataAV> getAVsComp() {
+		return AVsComp;
+	}
+
+	public void setAVsComp(List<DataAV> aVsComp) {
+		AVsComp = aVsComp;
+	}
+
 	public List<DataMensaje> getMsjs() {
 		return msjs;
 	}
@@ -215,6 +224,8 @@ public class UsuarioBean implements Serializable
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				AVsComp = cusu.mostrarListaAvComparidos(nick);
+
 				Url.redireccionarURL("usuario_sapo");
 			} else {
 				Url.redireccionarURL("error");
@@ -263,17 +274,20 @@ public class UsuarioBean implements Serializable
 	
 	public void mostrarListaAV() 
 	{
-		try {
+		
 			HttpSession session = SesionBean.getSession();
 			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 			AVs = cusu.mostrarListaAv(nick);
 
-			Url.redireccionarURL("verListaAV");
+	}
+	public void mostrarListaAVCompartidos() 
+	{
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		AVsComp = cusu.mostrarListaAvComparidos(nick);
+				
+			
 
-		} catch (Exception e) {
-			Url.redireccionarURL("error");
-			e.printStackTrace();
-		}
 	}
 	
 	public boolean existeUsuarioLogeado()
@@ -310,6 +324,8 @@ public class UsuarioBean implements Serializable
 			HttpSession session = SesionBean.getSession();
 			session.setAttribute("dAV", cav.traerAV(idAV));
 			session.setAttribute("idAV", idAV);
+			
+
 		} catch (NoExisteElAV e) {
 			e.printStackTrace();
 		}

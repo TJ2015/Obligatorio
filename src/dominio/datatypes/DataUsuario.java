@@ -17,6 +17,7 @@ public class DataUsuario implements Serializable {
 	private Date fechaNacimiento;
 	private List<String> AVs = new ArrayList<>();
 	private List<String> AVsCompar = new ArrayList<>();
+	private List <Long> AVsComparId = new ArrayList<>();
 	private String nombreImagen;
 	private InputStream imagenIS;
 	private byte[] imagen;
@@ -44,7 +45,7 @@ public class DataUsuario implements Serializable {
 
 	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
 			List<String> aVs, List<String> aVsCompar, String nombreImagen, InputStream imagen, Date fechaRegistro,
-			boolean membresia) {
+			boolean membresia, List <Long> AVsComparId) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -56,6 +57,15 @@ public class DataUsuario implements Serializable {
 		this.nombreImagen = nombreImagen;
 		this.fechaRegistro = fechaRegistro;
 		this.membresia = membresia;
+		this.AVsComparId=AVsComparId;
+	}
+	
+	public List<Long> getAVsComparId() {
+		return AVsComparId;
+	}
+
+	public void setAVsComparId(List<Long> aVsComparId) {
+		AVsComparId = aVsComparId;
 	}
 
 	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,

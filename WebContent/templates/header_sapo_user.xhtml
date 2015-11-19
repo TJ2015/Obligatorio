@@ -14,19 +14,12 @@
 	    <ui:composition>
 			<header class="header">
             
-            <a href="mostrarAV.xhtml" class="logo">${sessionScope.dAV.getNombreAV()} 
-            </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
-                <!-- Sidebar toggle button-->
-                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
+              
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
+                    	<a class="navbar-brand" href="index.xhtml"><img src="resources/img/logo_sapo2.png" alt="logo" style="height:50px;"></img></a>
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -44,7 +37,7 @@
                                    			
                                             <a href="mailbox.xhtml">
                                                 <div class="pull-left">
-                                                    <img src="imagenes/usuario?nick=${m.getRemitente()}" class="img-circle" alt="Usuario" cache="false"></img>
+                                                    <p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" class="img-circle" alt="Usuario" cache="false"></p:graphicImage>
                                                 </div>
                                                 <h4>
                                                     ${m.getRemitente()}
@@ -71,10 +64,10 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-warning">#{avBean.listNotificacion.size()}</span>
+                                <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Tienes #{avBean.listNotificacion.size()} notificaciones</li>
+                                <li class="header">Tienes 10 notificaciones</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
@@ -165,21 +158,21 @@
 	                            <ul class="dropdown-menu">
 	                                <!-- User image -->
 	                                <li class="user-header bg-light-blue">
-	                                	<img src="imagenes/usuario/?nick=${usuarioBean.nick}" class="img-circle" alt="User Image" />
+	                                    
 	                                    <p>
 	                                        ${usuarioBean.nick}
 	                                    </p>
 	                                </li>
 	                                <!-- Menu Footer-->
 	                                <li class="user-footer">
-	                                <h:form>                                
 	                                    <div class="pull-left">
-	                                    	<h:commandButton  action="usuario_sapo" actionListener="#{usuarioBean.mostrarListaAVCompartidos()}"  value="Perfil" class="btn btn-default btn-flat" />   	
+	                                        <a href="usuario_sapo.xhtml" class="btn btn-default btn-flat">Perfil</a>
 	                                    </div>
 	                                    <div class="pull-right">
+	                                       <h:form>
 	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />   	
+	                                    	</h:form>
 	                                    </div>
-									</h:form>
 	                                </li>
 	                            </ul>
                             

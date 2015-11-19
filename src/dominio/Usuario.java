@@ -110,8 +110,9 @@ public class Usuario implements Serializable {
 
 	public DataUsuario getDataUsuario() {
 		DataUsuario dataUsuario = null;
-		List<String> lDataAlmacen = new ArrayList<>();;
-		List<String> lDataCompartidos = new ArrayList<>();;
+		List<String> lDataAlmacen = new ArrayList<>();
+		List<String> lNomCompartidos = new ArrayList<>();
+		List<Long> lIdCompartidos = new ArrayList<>();;
 		try {
 			if (AVs != null) {
 				for (AV almacen : AVs) {
@@ -120,11 +121,12 @@ public class Usuario implements Serializable {
 			}
 			if (AVcompartidos != null) {
 				for (AV almacen : AVcompartidos) {
-					lDataCompartidos.add(almacen.getNombreAV());
+					lNomCompartidos.add(almacen.getNombreAV());
+					lIdCompartidos.add(almacen.getIdAV());
 				}
 			}
-			
-			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lDataCompartidos, nombreImagen, bytesImagen, fechaRegistro, membresia);
+
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lNomCompartidos, nombreImagen, bytesImagen, fechaRegistro,lIdCompartidos);
 
 		} catch (Exception e) {
 			e.printStackTrace();

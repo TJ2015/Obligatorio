@@ -59,7 +59,7 @@ public class ProductoBean implements Serializable {
 		this.dprods2 = dprods2;
 	}
 
-	public int getCantProd() {
+	public int verCantProd() {
 		HttpSession session = SesionBean.getSession();
 		cantProd = 0;
 		long idAV = (long) session.getAttribute("idAV");

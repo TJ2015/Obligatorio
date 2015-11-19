@@ -423,6 +423,19 @@ public class ControladorUsuario implements IControladorUsuario {
 		return davs;
 
 	}
+	@Override
+	public List<DataAV> mostrarListaAvComparidos(String nickname) {
+		Usuario usu = usuarioDAO.buscarUsuario(nickname);
+		List<AV> avs = usu.getAVcompartidos();
+		List<DataAV> davs = new ArrayList<>();
+		DataAV da;
+		for (AV av : avs) {
+			da = av.getDataAV();
+			davs.add(da);
+		}
+		return davs;
+
+	}
 
 	@Override
 	public DataAdministrador loginAdmin(String nick, String pass) throws NoExisteElUsuario {
