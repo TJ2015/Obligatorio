@@ -7,11 +7,14 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import dominio.AV;
+import dominio.Alerta;
+import dominio.Condicion;
 import dominio.Nota;
 import dominio.Notificacion;
+import dominio.Producto;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
-import dominio.datatypes.DataLogEntry;
+import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 import exceptions.NoExisteElAV;
@@ -19,7 +22,9 @@ import exceptions.NombreDeAVInvalido;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import persistencia.implementacion.AvDAO;
+import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
+import persistencia.interfases.IInventarioDAO;
 import persistencia.interfases.IUsuarioDAO;
 
 /**
@@ -34,6 +39,7 @@ public class ControladorAV implements IControladorAV {
 	private IAvDAO avDAO;
 
 	private IAvDAO avDAOTenant = new AvDAO();
+	private IInventarioDAO invDAOTenant = new InventarioDAO();
 
 	public long altaAV(String nombreAV, String usuarioCreador) throws NombreDeAVInvalido {
 
@@ -309,6 +315,79 @@ public class ControladorAV implements IControladorAV {
 			avDAO.actualizarAV(av);
 			usuarioDAO.actualizarUsuario(compa);
 
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public void crearAlerta(String producto, String condicion, long idAV) throws NoExisteElAV {
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			Condicion cond = util.Serializador.convertirCondicionAString(condicion);
+			
+			invDAOTenant.open(tenant);
+			Producto prod = invDAOTenant.buscarProducto(producto, tenant);
+			
+			if( prod != null ) {
+				Alerta alerta = new Alerta(cond, prod);
+				avDAOTenant.open(tenant);
+				avDAOTenant.persistirAlerta(alerta);
+				avDAOTenant.close(tenant);
+			}
+			
+			invDAOTenant.close(tenant);
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public void eliminarAlerta(long idAlerta, long idAV) throws NoExisteElAV {
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			avDAOTenant.open(tenant);
+			Alerta alerta = avDAOTenant.buscarAlerta(idAlerta);
+			avDAOTenant.eliminarAlerta(alerta);
+			avDAOTenant.close(tenant);
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public List<DataAlerta> listaDeAlertas(long idAV) throws NoExisteElAV {
+		List<DataAlerta> da = new ArrayList<>();
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			avDAOTenant.open(tenant);
+			List<Alerta> alertas = avDAOTenant.getAllAlerta();
+			da = new ArrayList<>();
+			
+			for( Alerta a : alertas ) {
+				da.add(a.getDataAlerta());
+			}
+			
+			avDAOTenant.close(tenant);
+
+		} else {
+			throw new exceptions.NoExisteElAV();
+		}
+		return da;
+	}
+
+	@Override
+	public List<DataNotificacion> listaNotificacionesNoLeidas(long idAV) throws NoExisteElAV {
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			avDAOTenant.open(tenant);
+			List<Notificacion> notis = avDAOTenant.buscarNotificacionesNoLeidas();
+			List<DataNotificacion> dns = new ArrayList<>();
+			for( Notificacion n : notis ) {
+				dns.add(n.getDataNotificacion());
+			}
+			avDAOTenant.close(tenant);
+			return dns;			
 		} else {
 			throw new exceptions.NoExisteElAV();
 		}

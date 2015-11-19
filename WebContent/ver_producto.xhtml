@@ -1,49 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head></h:head> 
-<body> 
-<ui:composition template="/templates/layout_user.xhtml">
+<h:head></h:head>
+<body>
+	<ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
-		<div class="container-fluid clearfix">
-		<div class="list-group">
-		 <div class="row">
-		<section class="content">
-		
-			<div class="col-md-6">
-                     <img src="resources/adminlte/img/cebollaverdeo.jpg" class="img-responsive" ></img>   
-            </div><!-- /.col -->
-                       
-         </section>
-           <section class="content">
-              <div class="col-md-6">
-                            <div class="box box-solid">
-                                <div class="box-header">
-                                    <h3 class="box-title">${productoBean.nombre}</h3>
-                                </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <dl class="dl-horizontal">
-                                        <dt>Descripcion</dt>
-                                        <dd>${productoBean.descripcion}</dd>
-                                        <dt>Precio</dt>
-                                        <dd>${productoBean.precio}</dd>
-                                        <dt>Atributos</dt>
-                                        <dd>${productoBean.nombre}</dd>
-                                        <dt>Stock</dt>
-                                        <dd>${productoBean.stock}</dd>
-                                    </dl>
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-                        </div><!-- ./col -->
-               				
-           </section>
-            </div>
-           </div>
-           </div>
-	</ui:define>
-</ui:composition>
-</body> 
+			<div class="container-fluid clearfix">
+				<div class="list-group">
+					<div class="row">
+						<section class="content">
+						<div class="col-md-6">
+							<img
+								src="imagenes/producto?nombre=${productoBean.dataProducto.nombre}&amp;av=${sessionScope.idAV}"
+								class="img-responsive"></img>
+						</div>
+						<!-- /.col --> </section>
+						<section class="content">
+						<div class="col-md-6">
+							<div class="box box-solid">
+								<div class="box-header">
+									<h3 class="box-title">${productoBean.dataProducto.nombre}</h3>
+								</div>
+								<!-- /.box-header -->
+								<div class="box-body">
+									<dl class="dl-horizontal">
+										<dt>Descripcion:</dt>
+										<dd>${productoBean.dataProducto.descripcion}</dd>
+										<dt>Precio:</dt>
+										<dd>${productoBean.dataProducto.precio}</dd>
+										<dt>Stock:</dt>
+										<dd>${productoBean.dataProducto.stock}</dd>
+										<c:forEach var="atr" items="${productoBean.dataProducto.atributosList}" >
+											<dt>${atr.key}:</dt>
+											<dd>${atr.value}</dd>
+										</c:forEach>
+									</dl>
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+						</div>
+						<!-- ./col --> </section>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
 </html>

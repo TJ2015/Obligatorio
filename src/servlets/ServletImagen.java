@@ -1,7 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,8 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorUsuario;
+import util.DBUtil;
 
 
 @WebServlet("/ServletImagen")
@@ -34,16 +39,18 @@ public class ServletImagen extends HttpServlet {
 			try {
 				byte[] img = null;
 				img = dataUsuario.getImagen();
-				if(img != null){
-					response.reset();
-					response.setContentType("image/jpeg");
-					response.setHeader("Content-Disposition", "inline; filename=imagen.jpg");
-					response.setHeader("Cache-control", "public");
-					OutputStream o = response.getOutputStream();
-					o.write(img);
-					o.flush();
-					o.close();
+				if(img == null){
+					InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("resources/default_profile.png");
+					img = IOUtils.toByteArray(in);
 				}
+				response.reset();
+				response.setContentType("image/jpeg");
+				response.setHeader("Content-Disposition", "inline; filename=imagen.jpg");
+				response.setHeader("Cache-control", "public");
+				OutputStream o = response.getOutputStream();
+				o.write(img);
+				o.flush();
+				o.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

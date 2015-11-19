@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataLogEntry;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
@@ -40,9 +41,28 @@ public interface IControladorAV {
 	public void crearNotificacion(String texto, long idAV) throws Exception;
 
 	public void modificarNotificacion(long idAV, long idNoti, String texto, boolean leido) throws Exception;
-
+	
 	public void eliminarNotificacion(long idAV, long idNoti) throws Exception;
 
 	public List<DataNotificacion> getNotificaciones(long idAV) throws Exception;
 
+	/**
+	 * @param producto
+	 *            Nombre del producto
+	 * @param condicion
+	 *            condicion, de la forma 'atributo[condicional]valor' donde:
+	 *            'atributo' es el nombre del atributo, 'condicional' <, <=, =,
+	 *            >=, o >. y valor el valor a comparar.
+	 * @param idAV
+	 *            id del av
+	 * @throws NoExisteElAV 
+	 */
+	public void crearAlerta(String producto, String condicion, long idAV) throws NoExisteElAV;
+
+	public void eliminarAlerta(long idAlerta, long idAV) throws NoExisteElAV;
+
+	public List<DataAlerta> listaDeAlertas(long idAV) throws NoExisteElAV;
+	
+	public List<DataNotificacion> listaNotificacionesNoLeidas(long idAV) throws NoExisteElAV;
+	
 }

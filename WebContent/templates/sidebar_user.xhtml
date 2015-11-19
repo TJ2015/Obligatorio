@@ -74,7 +74,7 @@
 		                            	<c:forEach var="prod" items="${cat.productos}">
 			                                <li>
 			                                	<h:form>
-			                                		<h:commandLink action="#{productoBean.cargarProducto()}" >
+			                                		<h:commandLink action="#{productoBean.cargarDataProducto(prod.nombre)}" >
 									                   <i class="fa fa-angle-double-right"></i> 
 			                                			${prod.nombre}
 													</h:commandLink>

@@ -1,22 +1,39 @@
-package dominio;
+package dominio.datatypes;
 
-public class Condicion {
+public class DataAlerta {
 
-	public enum Condicional {
-		MAYOR, IGUAL, MENOR, MAYOR_O_IGUAL, MENOR_O_IGUAL
+	private DataProducto producto;
+	private String atributo;
+	private String condicional;
+	private String valor;
+	private long id;
+
+	public DataAlerta() {
 	}
 
-	private String atributo;
-	private Condicional condicional;
-	private String valor;
-
-	public Condicion(String atributo, Condicional condicional, String valor) {
+	public DataAlerta(DataProducto producto, String atributo, String condicional, String valor, long id) {
+		super();
+		this.producto = producto;
 		this.atributo = atributo;
 		this.condicional = condicional;
 		this.valor = valor;
+		this.id = id;
 	}
 
-	public Condicion() {
+	public DataProducto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(DataProducto producto) {
+		this.producto = producto;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getAtributo() {
@@ -27,11 +44,11 @@ public class Condicion {
 		this.atributo = atributo;
 	}
 
-	public Condicional getCondicional() {
+	public String getCondicional() {
 		return condicional;
 	}
 
-	public void setCondicional(Condicional condicional) {
+	public void setCondicional(String condicional) {
 		this.condicional = condicional;
 	}
 
@@ -49,6 +66,8 @@ public class Condicion {
 		int result = 1;
 		result = prime * result + ((atributo == null) ? 0 : atributo.hashCode());
 		result = prime * result + ((condicional == null) ? 0 : condicional.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((producto == null) ? 0 : producto.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
@@ -61,13 +80,23 @@ public class Condicion {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Condicion other = (Condicion) obj;
+		DataAlerta other = (DataAlerta) obj;
 		if (atributo == null) {
 			if (other.atributo != null)
 				return false;
 		} else if (!atributo.equals(other.atributo))
 			return false;
-		if (condicional != other.condicional)
+		if (condicional == null) {
+			if (other.condicional != null)
+				return false;
+		} else if (!condicional.equals(other.condicional))
+			return false;
+		if (id != other.id)
+			return false;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
 			return false;
 		if (valor == null) {
 			if (other.valor != null)
@@ -75,29 +104,6 @@ public class Condicion {
 		} else if (!valor.equals(other.valor))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		String cond = "";
-		switch (condicional) {
-			case MENOR:
-				cond = "<";
-				break;
-			case MAYOR:
-				cond = ">";
-				break;
-			case IGUAL:
-				cond = "=";
-				break;
-			case MENOR_O_IGUAL:
-				cond = "<=";
-				break;
-			case MAYOR_O_IGUAL:
-				cond = ">=";
-				break;
-		}
-		return atributo + ":" + cond + ":" + valor;
 	}
 
 }

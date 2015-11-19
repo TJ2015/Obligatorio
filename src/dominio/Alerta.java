@@ -3,29 +3,56 @@ package dominio;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import dominio.datatypes.DataAlerta;
+
 /**
  * Entity implementation class for Entity: Alerta
  *
  */
 @Entity
 @Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name = "Alerta.getAll", query = "SELECT a FROM Alerta a") })
 public class Alerta implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
-	
+
 	@Transient
 	private Condicion cond;
+	@ManyToOne
 	private Producto prod;
-	
+
 	public Alerta() {
 	}
-	
+
 	public Alerta(Condicion cond, Producto prod) {
 		this.cond = cond;
 		this.prod = prod;
+	}
+
+	public DataAlerta getDataAlerta() {
+		String condicional = "";
+		switch (cond.getCondicional()) {
+		case MENOR:
+			condicional = "<";
+			break;
+		case MAYOR:
+			condicional = ">";
+			break;
+		case IGUAL:
+			condicional = "=";
+			break;
+		case MENOR_O_IGUAL:
+			condicional = "<=";
+			break;
+		case MAYOR_O_IGUAL:
+			condicional = ">=";
+			break;
+		}
+		return new DataAlerta(prod.getDataProducto(), cond.getAtributo(), condicional, cond.getValor(), id);
 	}
 
 	public long getId() {
@@ -87,14 +114,16 @@ public class Alerta implements Serializable {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@Column(name = "atributos", nullable = false)
+	@Column(name = "condicion", nullable = false)
 	public String getCondicion() {
-		return cond.toString();
+		if( cond != null)
+			return cond.toString();
+		
+		return null;
 	}
-	
-	
+
 	public void setCondicion(String condicion) {
 		cond = util.Serializador.convertirCondicionAString(condicion);
 	}
-	
+
 }

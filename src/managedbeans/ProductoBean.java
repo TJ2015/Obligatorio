@@ -6,16 +6,20 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
+import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorInventario;
 import util.Url;
 
 @ManagedBean
+@RequestScoped
 public class ProductoBean implements Serializable {
 	@EJB
 	IControladorInventario cinv;
@@ -29,11 +33,11 @@ public class ProductoBean implements Serializable {
 	private int stock;
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
-	private List<DataProducto> dprods2 = new ArrayList<>();
-	
-	
+	private List<DataProducto> dprods2 = new ArrayList<>();	
 	private UploadedFile file;
-		
+	private long idAV;
+	private DataProducto dataProducto;
+	
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -90,10 +94,7 @@ public class ProductoBean implements Serializable {
 		this.nomProd = nomProd;
 	}
 
-	// para descripcion producto
-	private long idAV;
-
-	private DataProducto dataProducto;
+	
 
 	public ProductoBean(long idAV) {
 		super();
@@ -179,14 +180,15 @@ public class ProductoBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
-			cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
-			//cinv.setStockProducto(nombre, idAV, stock);
-			Url.redireccionarURL("ver_producto");
+			dataProducto = cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
+			
+			if( dataProducto == null )
+				Url.redireccionarURL("error");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Url.redireccionarURL("error");
 		}
-
 	}
 
 	public void mostrarListaProducto() {
@@ -229,7 +231,7 @@ public class ProductoBean implements Serializable {
 			long idAV = (long) session.getAttribute("idAV");
 			DataProducto dprod = cinv.getProducto(nombre, idAV);
 			
-			this.dataProducto = dprod;
+			this.setDataProducto(dprod);
 			Url.redireccionarURL("ver_producto");
 			
 		} catch (Exception e) {
@@ -245,6 +247,26 @@ public class ProductoBean implements Serializable {
 			Url.redireccionarURL("index");
 		} catch (Exception e) {
 			e.printStackTrace();
+			Url.redireccionarURL("error");
+		}
+	}
+
+	public DataProducto getDataProducto() {
+		return dataProducto;
+	}
+
+	public void setDataProducto(DataProducto dataProducto) {
+		this.dataProducto = dataProducto;
+	}
+	
+	public void cargarDataProducto(String nombre) {
+		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			dataProducto = cinv.getProducto(nombre, idAV);
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			e.printStackTrace();
+			Url.redireccionarURL("error");
 		}
 	}
 	

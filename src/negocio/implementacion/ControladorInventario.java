@@ -9,8 +9,11 @@ import javax.ejb.Stateless;
 import org.primefaces.model.UploadedFile;
 
 import dominio.AV;
+import dominio.Alerta;
 import dominio.Atributo;
 import dominio.Categoria;
+import dominio.Condicion;
+import dominio.Notificacion;
 import dominio.Producto;
 import dominio.ProductoAComprar;
 import dominio.datatypes.DataCategoria;
@@ -23,6 +26,7 @@ import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.AlgoritmoDeRecomendacion;
 import negocio.interfases.AlgoritmoDeRecomendacionSimple;
 import negocio.interfases.IControladorInventario;
+import persistencia.implementacion.AvDAO;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
@@ -34,7 +38,8 @@ public class ControladorInventario implements IControladorInventario {
 	private IAvDAO avDAO;
 
 	private IInventarioDAO invDAO = new InventarioDAO();
-
+	private IAvDAO	avDAOTenant = new AvDAO();
+	
 	public ControladorInventario() {
 	}
 
@@ -105,9 +110,10 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
+	public DataProducto crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
 			long idAV, int stock, UploadedFile file) throws Exception {
 
+		DataProducto dp = null;
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			
@@ -127,8 +133,11 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.persistirProducto(prod, tenant);
 			cat.addProducto(prod);
 			invDAO.actualizarCategoria(cat, tenant);
+			dp = prod.getDataProducto();
 			invDAO.close(tenant);
+			
 		}
+		return dp;
 	}
 
 	@Override
@@ -140,6 +149,60 @@ public class ControladorInventario implements IControladorInventario {
 			prod.setStock(stock);
 			invDAO.actualizarProducto(prod, tenant);
 			invDAO.close(tenant);
+			
+			avDAOTenant.open(tenant);
+			List<Alerta> alertas = avDAOTenant.getAllAlerta();
+			Condicion cond;
+			int val;
+			String condicion = "";
+			boolean crear = false;
+			for( Alerta a : alertas ) {
+				if( a.getProd().getNombre().equals(nombreProd) ) {
+					cond = a.getCond();
+					if( cond.getAtributo().toLowerCase().equals("stock") ) {
+						val = Integer.valueOf(cond.getValor());
+						switch(cond.getCondicional()) {
+						case MENOR:
+							if( stock < val ) {
+								condicion = "menor";
+								crear = true;
+							}
+							break;
+						case MENOR_O_IGUAL:
+							if( stock <= val ) {
+								condicion = "menor o igual";
+								crear = true;
+							}
+							break;
+						case IGUAL:
+							if( stock == val ) {
+								condicion = "igual";
+								crear = true;
+							}
+							break;
+						case MAYOR:
+							if( stock > val ) {
+								condicion = "mayor";
+								crear = true;
+							}
+							break;
+						case MAYOR_O_IGUAL:
+							if( stock >= val ) {
+								condicion = "mayor o igual";
+								crear = true;
+							}
+							break;
+						}
+					}
+					
+					if( crear ) {
+						Notificacion noti = new Notificacion("El stock del producto " + nombreProd + " es " + condicion + "!");
+						avDAOTenant.persistirNotificacion(noti, tenant);
+						avDAOTenant.close(tenant);
+					}
+				}
+			}
+			
 		}
 	}
 

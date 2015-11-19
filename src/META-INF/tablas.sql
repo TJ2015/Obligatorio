@@ -56,5 +56,12 @@ CREATE TABLE IF NOT EXISTS `productoacomprar` (
   KEY `FK_gvkd86kcd8aqflwon16hc13vu` (`producto_idProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `alerta` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `condicion` varchar(255) NOT NULL,
+  `prod_idProducto` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 ALTER TABLE `productoacomprar`
   ADD CONSTRAINT `FK_gvkd86kcd8aqflwon16hc13vu` FOREIGN KEY (`producto_idProducto`) REFERENCES `producto` (`idProducto`);

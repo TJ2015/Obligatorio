@@ -11,6 +11,7 @@ import javax.ejb.TransactionManagementType;
 import org.hibernate.Session;
 
 import dominio.AV;
+import dominio.Alerta;
 import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Usuario;
@@ -219,6 +220,52 @@ public class AvDAO implements IAvDAO {
 	@Override
 	public void close(String tenant) {
 		session.getSessionFactory().close();
+	}
+
+	@Override
+	public void persistirAlerta(Alerta alerta) {
+		try {
+			session.beginTransaction();
+			session.persist(alerta);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Alerta buscarAlerta(long idAlerta) {
+		try {
+			return session.get(Alerta.class, idAlerta);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public void eliminarAlerta(Alerta alerta) {
+		try {
+			session.beginTransaction();
+			session.merge(alerta);
+			session.delete(alerta);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public List<Alerta> getAllAlerta() {
+		org.hibernate.Query q = session.getNamedQuery("Alerta.getAll");
+		return q.list();
+	}
+
+	@Override
+	public List<Notificacion> buscarNotificacionesNoLeidas() {
+		org.hibernate.Query q = session.getNamedQuery("Alerta.getAllNoLeido");
+		return q.list();
 	}
 
 }

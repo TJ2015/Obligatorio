@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import dominio.datatypes.DataAdministrador;
+import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataNota;
@@ -38,7 +39,7 @@ import negocio.interfases.IControladorUsuario;
 public class PruebaMB implements Serializable {
 
 	private Map<String, Boolean> tests;
-/*	private boolean allok = true;
+	private boolean allok = true;
 	private long ID_AV;
 	private long ID_AV2;
 	
@@ -195,7 +196,7 @@ public class PruebaMB implements Serializable {
 	public boolean testEnviarMensaje() {
 		cUsu.registrarUsuario("Test", "Run 2", "test2", "test2", "test2@example.org", new Date(), null);
 		String mensaje = "Mensaje de prueba";
-		cUsu.enviarMensaje("test", "test2", mensaje);
+		cUsu.enviarMensaje("test", "test2", mensaje, "testAsunto");
 
 		boolean OK = false;
 
@@ -236,7 +237,7 @@ public class PruebaMB implements Serializable {
 	public boolean testMarcarMensajeComoLeido() {
 
 		String mensaje = "Mensaje de prueba 2";
-		cUsu.enviarMensaje("test", "test2", mensaje);
+		cUsu.enviarMensaje("test", "test2", mensaje, "testAsunto");
 
 		List<DataMensaje> recibidos;
 		try {
@@ -275,7 +276,7 @@ public class PruebaMB implements Serializable {
 	public boolean testEliminarMensajeRecibido() {
 
 		String mensaje = "Mensaje de prueba 3";
-		cUsu.enviarMensaje("test", "test2", mensaje);
+		cUsu.enviarMensaje("test", "test2", mensaje, "testAsunto");
 
 		List<DataMensaje> recibidos;
 		try {
@@ -315,7 +316,7 @@ public class PruebaMB implements Serializable {
 	public boolean testEliminarMensajeEnviado() {
 
 		String mensaje = "Mensaje de prueba 3";
-		cUsu.enviarMensaje("test", "test2", mensaje);
+		cUsu.enviarMensaje("test", "test2", mensaje, "testAsunto");
 
 		List<DataMensaje> recibidos;
 		try {
@@ -354,7 +355,7 @@ public class PruebaMB implements Serializable {
 
 	public boolean testEliminarMensaje() {
 		String mensaje = "Mensaje de prueba 5";
-		cUsu.enviarMensaje("test", "test2", mensaje);
+		cUsu.enviarMensaje("test", "test2", mensaje, "testAsunto");
 
 		List<DataMensaje> enviados;
 		try {
@@ -1006,9 +1007,106 @@ public class PruebaMB implements Serializable {
 		return false;
 	}
 	
-	public boolean testPersistirLog() {
-
+	public boolean testCrearAlerta() {
+		try {
+			cAV.crearAlerta("testProd1", "stock:<:5", ID_AV);
+		} catch (NoExisteElAV e) {
+			e.printStackTrace();
+			return false;
+		}
+		List<DataAlerta> das = null; 
+		
+		try {
+			das = cAV.listaDeAlertas(ID_AV);
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if( (das != null) && (das.size() > 0) )
+			return true;
+		
 		return false;
+	}
+	
+	public boolean testEliminarAlerta() {
+		try {
+			cAV.crearAlerta("testProd2", "stock:<:5", ID_AV);
+		} catch (NoExisteElAV e) {
+			e.printStackTrace();
+			return false;
+		}
+		List<DataAlerta> das;
+		try {
+			das = cAV.listaDeAlertas(ID_AV);
+		} catch (NoExisteElAV e1) {
+			e1.printStackTrace();
+			return false;
+		}
+		int cant = das.size();
+		
+		try {
+			cAV.eliminarAlerta(2, ID_AV);
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			das = cAV.listaDeAlertas(ID_AV);
+		} catch (NoExisteElAV e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		if( das.size() == cant-1 )
+			return true;
+		
+		return false;
+	}
+	
+	public boolean testAlertaStockNotificacion() {
+		cInv.crearCategoria("testCatAlerta", ID_AV2);
+		
+		try {
+			cInv.crearProducto("testProdAlerta", "testProdAlerta", 50, "testCatAlerta", "atr:val;", ID_AV2, 50, null);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return false;
+		}		
+		
+		try {
+			cAV.crearAlerta("testProdAlerta", "stock:<:5", ID_AV2);
+		} catch (NoExisteElAV e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		cInv.setStockProducto("testProdAlerta", ID_AV2, 5);
+		List<DataNotificacion> dn = null;
+		try {
+			dn = cAV.getNotificaciones(ID_AV2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if( (dn != null)&&(dn.size() > 0) )
+			return false;
+		
+		cInv.setStockProducto("testProdAlerta", ID_AV2, 4);
+		dn = null;
+		try {
+			dn = cAV.getNotificaciones(ID_AV2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if( (dn != null)&&(dn.size() == 0) )
+			return false;
+		
+		return true;
+		
 	}
 
 	public void testSuitTrucho() {
@@ -1016,7 +1114,7 @@ public class PruebaMB implements Serializable {
 		cleanTests();
 		setTests();
 		tests = new LinkedHashMap<>();
-
+		/*
 		tests.put("Registrar Usuario", testRegistrarUsuario());
 		tests.put("Modificar Info de Usuario", testModificarInfoUsuario());
 		tests.put("Eliminar Usuario", testEliminarUsuario());
@@ -1043,13 +1141,14 @@ public class PruebaMB implements Serializable {
 		tests.put("Modificar Producto", testModificarProducto());
 		tests.put("Set Stock Producto", testSetStockProducto());
 		tests.put("Set Stock Producto", testCambiarCategoriaProducto());
-		tests.put("Eliminar Producto", testEliminarProducto());
-
+		tests.put("Crear Alerta", testCrearAlerta());
+		tests.put("Eliminar Alerta", testEliminarAlerta());		
+		tests.put("Notificaciones de Alerta con Stock", testAlertaStockNotificacion());
+		*/
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().dispatch("/test_result.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-*/
 }

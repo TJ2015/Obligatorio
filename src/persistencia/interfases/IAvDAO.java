@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dominio.AV;
+import dominio.Alerta;
 import dominio.Nota;
 import dominio.Notificacion;
 
@@ -43,4 +44,15 @@ public interface IAvDAO {
 	void open(String tenant);
 
 	void close(String tenant);
+
+	public void persistirAlerta(Alerta alerta);
+
+	public Alerta buscarAlerta(long idAlerta);
+
+	public void eliminarAlerta(Alerta alerta);
+
+	public List<Alerta> getAllAlerta();
+
+	public List<Notificacion> buscarNotificacionesNoLeidas();
+	
 }
