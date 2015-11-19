@@ -190,11 +190,11 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public boolean enviarMensaje(String remitente, String destinatario, String mensaje) {
+	public boolean enviarMensaje(String remitente, String destinatario, String mensaje,String asunto) {
 		if (existeUsuarioNick(remitente) && existeUsuarioNick(destinatario)) {
 			Usuario rem = usuarioDAO.buscarUsuario(remitente);
 			Usuario dest = usuarioDAO.buscarUsuario(destinatario);
-			Mensaje msj = new Mensaje(mensaje, new Date());
+			Mensaje msj = new Mensaje(mensaje, new Date(),asunto);
 
 			msj.setDestinatario(dest);
 			msj.setRemitente(rem);
