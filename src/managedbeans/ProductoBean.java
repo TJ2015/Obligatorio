@@ -176,7 +176,7 @@ public class ProductoBean implements Serializable {
 		this.stock = stock;
 	}
 
-	public void crearProductoDescripción() {
+	public void crearProductoDescripcion() {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
