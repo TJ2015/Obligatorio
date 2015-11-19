@@ -114,9 +114,7 @@
 											</div>
 										</div>
 										<div class="agregarAttr col-xs-12">
-											<h:commandLink action="fuckyou" onclick="agregarAtributos()" >
 											<span class="glyphicon glyphicon-plus"></span>
-											</h:commandLink>
 										</div>
 									</div>
 								</div>
@@ -171,21 +169,16 @@
 					
 					return false;
 				}
-				function agregarAtributos() {
-				$("#attrCont").append(
-					"<div class='attrItem'>" +
-						"<input type='text' class='form-control' placeholder='Nombre de atributo' />" +
-						"<input type='text' class='form-control' placeholder='Valor' />" +
-					"</div>"
-				);
-				
-				return false;
-				}
+				$(".agregarAttr>span").click(function(){
+					$("#attrCont").append(
+						"<div class='attrItem'>" +
+							"<input type='text' class='form-control' placeholder='Nombre de atributo' />" +
+							"<input type='text' class='form-control' placeholder='Valor' />" +
+						"</div>"
+					);
+				});
 			</h:outputScript>
-			
-			<script>
-			
-			</script>
+
 		</ui:define>
 	</ui:composition>
 </h:body>

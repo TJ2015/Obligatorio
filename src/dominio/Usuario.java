@@ -126,7 +126,7 @@ public class Usuario implements Serializable {
 				}
 			}
 
-			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lNomCompartidos, nombreImagen, bytesImagen, fechaRegistro,lIdCompartidos);
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, lDataAlmacen, lNomCompartidos, nombreImagen, bytesImagen, fechaRegistro, membresia, lIdCompartidos);
 
 		} catch (Exception e) {
 			e.printStackTrace();
