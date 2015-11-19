@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import dominio.AV;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataNota;
+import dominio.datatypes.DataNotificacion;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
@@ -36,8 +37,10 @@ public class AvBean implements Serializable {
 	private String mensaje;
 	private String usuarioCreador;
 	private int cantUsuComp;
+	private String textNotificacion;
 	private String textNota;
 	private long idNota;
+	private List<DataNotificacion> listNotificacion=new ArrayList<>();
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
 	public AvBean() {
@@ -45,6 +48,26 @@ public class AvBean implements Serializable {
 	}
 
 	
+	public List<DataNotificacion> getListNotificacion() {
+		return listNotificacion;
+	}
+
+
+	public void setListNotificacion(List<DataNotificacion> listNotificacion) {
+		this.listNotificacion = listNotificacion;
+	}
+
+
+	public String getTextNotificacion() {
+		return textNotificacion;
+	}
+
+
+	public void setTextNotificacion(String textNotificacion) {
+		this.textNotificacion = textNotificacion;
+	}
+
+
 	public List<DataNota> getListNotas() {
 		return listNotas;
 	}
@@ -225,6 +248,25 @@ public class AvBean implements Serializable {
 	public void eliminarNota() throws Exception  {
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
-		cAV.eliminarNota(idAV1, idNota);;
+		cAV.eliminarNota(idAV1, idNota);
+	}
+	public void crearNotificacion() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNotificacion(textNotificacion, idAV1);
+		listNotificacion= cAV.getNotificaciones(idAV1);
+		textNotificacion=null;
+	}
+	public List<DataNotificacion> mostrarNotificaciones() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		listNotificacion= cAV.getNotificaciones(idAV1);
+		return listNotificacion;
+
+	}
+	public void eliminarNotificacion() throws Exception  {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cAV.crearNotificacion(textNotificacion, idAV1);
 	}
 }
