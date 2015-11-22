@@ -48,16 +48,19 @@ como Usuario Pago
 <li>Reportes</li>
 <li>Customización del sitio</li>
 
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="popup">
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick"></input>
+<!-- <input type="hidden" name="cmd" value="_cart"></input> -->
 <input type="hidden" name="hosted_button_id" value="7VWFB8NXVAANA"></input>
 <input type="image" src="https://www.sandbox.paypal.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea." ></input>
 
 
-<input name="notify_url" value="Ipnhandler" type="hidden"></input>
+<input name="notify_url" value="http://localhost:8080/Obligatorio/IpnHandler" type="hidden"></input>
+<input name="business" value="bryan.braz@gmail.com" type="hidden"></input>
+<input name="upload" value="1" type="hidden"></input>
+<input name="return" value="http://localhost:8080/Obligatorio/IpnHandler" type="hidden"></input>
 
-
-<img alt="" border="0" src="https://www.sandbox.paypal.com/es_XC/i/scr/pixel.gif" width="1" height="1" onclick="#{usuarioBean.comprarMembresia()}" ></img>
+<img alt="" border="0" src="https://www.sandbox.paypal.com/es_XC/i/scr/pixel.gif" width="1" height="1"></img>
 
 						
 

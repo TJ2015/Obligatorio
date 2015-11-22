@@ -23,7 +23,7 @@ public class IpnConfig extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	
 	private String ipnUrl="https://www.sandbox.paypal.com/cgi-bin/webscr";
-    private String receiverEmail="sapotecnoinf@gmail.com";
+    private String receiverEmail="usuariosapo@gmail.com";
     private String paymentAmount="1000";
     private String paymentCurrency="USD";
 
