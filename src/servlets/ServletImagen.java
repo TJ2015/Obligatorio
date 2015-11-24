@@ -29,9 +29,6 @@ public class ServletImagen extends HttpServlet {
     public ServletImagen() {
         super();
     }
-    // SI EL PARAMETRO TIPO =  1 ES DESARROLLADOR
-    // SI EL PARAMETRO TIPO =  0 ES CLIENTE
-    // SI ES PARAMETRO TIPO = -1 ES UN JUEGO
     
     private HttpServletResponse mostrarImagen(String nick, HttpServletResponse response){
 		DataUsuario dataUsuario = cUsu.getUsuario(nick);
@@ -39,7 +36,7 @@ public class ServletImagen extends HttpServlet {
 			try {
 				byte[] img = null;
 				img = dataUsuario.getImagen();
-				if(img == null){
+				if( (img == null) || (img.length == 0)){
 					InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("resources/default_profile.png");
 					img = IOUtils.toByteArray(in);
 				}

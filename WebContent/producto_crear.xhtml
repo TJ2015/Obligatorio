@@ -159,9 +159,9 @@
 					
 					console.log(attrs);
 					
-					$("#formulario:atributos").val(attrs);
+					$("#attrCont").children().first().val(attrs);
 					
-					return false;
+					return true;
 				}
 				$(".agregarAttr>span").click(function(){
 					$("#attrCont").append(

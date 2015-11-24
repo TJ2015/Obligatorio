@@ -33,38 +33,37 @@ public class ServletImagenProducto extends HttpServlet {
     public ServletImagenProducto() {
         super();
     }
-    // SI EL PARAMETRO TIPO =  1 ES DESARROLLADOR
-    // SI EL PARAMETRO TIPO =  0 ES CLIENTE
-    // SI ES PARAMETRO TIPO = -1 ES UN JUEGO
     
     private HttpServletResponse mostrarImagen(String nombre, long idAV, HttpServletResponse response){
 		DataProducto dp = null;
-		boolean cancelar = false;
 		try {
 			dp = cInv.getProducto(nombre, idAV);
 		} catch (Exception e1) {
-			cancelar = true;
 		}
 		
-		if (dp != null && !cancelar) {
+		byte[] img = null;
+		if (dp != null) {
+			img = dp.getImagen();
+		}
+		if( (img == null) || (img.length == 0) ) {
+			InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("resources/default_producto.png");
 			try {
-				byte[] img = null;
-				img = dp.getImagen();
-				if(img == null){
-					InputStream in = DBUtil.class.getClassLoader().getResourceAsStream("resurces/default_producto.png");
-					img = IOUtils.toByteArray(in);
-				}
-				response.reset();
-				response.setContentType("image/jpeg");
-				response.setHeader("Content-Disposition", "inline; filename=imagen.jpg");
-				response.setHeader("Cache-control", "public");
-				OutputStream o = response.getOutputStream();
-				o.write(img);
-				o.flush();
-				o.close();
-			} catch(Exception e) {
+				img = IOUtils.toByteArray(in);
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		try {
+			response.reset();
+			response.setContentType("image/jpeg");
+			response.setHeader("Content-Disposition", "inline; filename=imagen.jpg");
+			response.setHeader("Cache-control", "public");
+			OutputStream o = response.getOutputStream();
+			o.write(img);
+			o.flush();
+			o.close();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
     	return response;
     }

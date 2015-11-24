@@ -12,7 +12,7 @@ Reportes administrador:
 	Prducto generico más utilizado usar logs)
 	Deteccion de fraude
 
-Reportes usuario: 
+Reportes usuario:
 	Valorizacion
 	cantidad de movimientos
 
@@ -34,5 +34,3 @@ Usuario
 Modificar Producto
 Modificar stock
 Ver Notificaciones
-
-

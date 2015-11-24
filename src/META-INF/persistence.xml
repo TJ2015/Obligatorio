@@ -11,6 +11,9 @@
 		<class>dominio.Mensaje</class>
 		<class>dominio.Administrador</class>
 		<class>dominio.TipoUsuario</class>
+		<class>dominio.log.Log</class>
+		<class>dominio.log.Objetivo</class>
+		<class>dominio.log.Accion</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>
