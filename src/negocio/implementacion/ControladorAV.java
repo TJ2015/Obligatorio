@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import dominio.AV;
 import dominio.Alerta;
 import dominio.Condicion;
+import dominio.Mensaje;
 import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Producto;
@@ -195,6 +196,20 @@ public class ControladorAV implements IControladorAV {
 			}
 		} else {
 			throw new Exception("Valor de idAV invalido: " + idAV);
+		}
+	}
+	@Override
+	public void marcarNotificacionComoLeida(long idNoti,long idAV) throws Exception {
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			avDAOTenant.open(tenant);
+			Notificacion noti = avDAOTenant.buscarNotificacion(idNoti, tenant);
+			noti.setLeido(true);
+			avDAOTenant.actualizarNotificacion(noti, tenant);
+			avDAOTenant.close(tenant);
+
+		} else {
+			throw new Exception("No existe un AV con id: " + idAV);
 		}
 	}
 
@@ -392,5 +407,6 @@ public class ControladorAV implements IControladorAV {
 			throw new exceptions.NoExisteElAV();
 		}
 	}
+	
 
 }
