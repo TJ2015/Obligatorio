@@ -75,6 +75,15 @@ public class DataChat implements Serializable {
 		this.fecha = fecha;
 	}
 	
+	public DataChat(DataChat dataChat) {
+		this.nickUsuario = dataChat.getNickUsuario();
+		this.idAV = dataChat.getIdAV();
+		this.fecha = dataChat.getFecha();
+		this.mensaje = dataChat.getMensaje();
+		this.nombreCompleto = dataChat.getNombreCompleto();
+		this.soyYo = dataChat.isSoyYo();
+	}
+
 	public String serializar(){
 		String datosSerializados = null;
 		try {

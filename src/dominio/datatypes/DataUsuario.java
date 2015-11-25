@@ -225,5 +225,9 @@ public class DataUsuario implements Serializable {
 	public void setMembresia(boolean membresia) {
 		this.membresia = membresia;
 	}
-
+	
+	public String obtenerNombreCompleto()
+	{
+		return this.nombre + " " + this.apellido;
+	}
 }

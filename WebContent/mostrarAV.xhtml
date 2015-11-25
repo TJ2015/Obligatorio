@@ -107,7 +107,7 @@
 								<div class="box-header">
 									<h3 class="box-title">Producto sugerido</h3>
 								</div>
-								<!-- /.box-header -->
+								<!-- /.box-header ************************************************
 								<div class="box-body">
 									<div id="carousel-example-generic" class="carousel slide"
 										data-ride="carousel">
@@ -146,11 +146,11 @@
 										</a>
 									</div>
 								</div>
-								<!-- /.box-body -->
+								***************************************************************** -->
 							</div>
-							<!-- /.box -->
+						
 						</div>
-						<!-- /.col -->
+						
 
 						<div class="row">
 							<div class="col-md-6">
@@ -174,7 +174,7 @@
 									</div>
 
 									<div class="box-body chat" id="chat-box">
-										<div id="mesnajesRecibidosChat"></div>
+										<div id="mensajesRecibidosChat"></div>
 									</div>
 									<!-- /.chat -->
 									<div class="box-footer">
@@ -275,7 +275,14 @@
 					$(".mensajeDeChat").val("");
 					if(mensaje != null){
 						if(mensaje != "")
-						websockets.send(mensaje);
+						{
+							var enviar = {
+								mensaje: mensaje,
+								nickUsuario: '#{usuarioBean.nick}',
+								nombreCompleto: '#{usuarioBean.obtenerNombreCompleto()}'
+							}
+							websockets.send(JSON.stringify(enviar));
+						}
 					}
 				}
 

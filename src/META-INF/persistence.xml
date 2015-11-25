@@ -4,20 +4,16 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="Obligatorio" transaction-type="JTA">
 		<jta-data-source>java:/Obligatorio</jta-data-source>
-		<!-- <class>dominio.Usuario</class>
+		<class>dominio.Usuario</class>
 		<class>dominio.Producto</class>
 		<class>dominio.AV</class>
 		<class>dominio.Categoria</class>
 		<class>dominio.Mensaje</class>
 		<class>dominio.Administrador</class>
-<<<<<<< HEAD
 		<class>dominio.TipoUsuario</class>
 		<class>dominio.log.Log</class>
 		<class>dominio.log.Objetivo</class>
 		<class>dominio.log.Accion</class>
-=======
-		<class>dominio.TipoUsuario</class> -->
->>>>>>> 389294b4b3efa66cf229399ecaedf1b86a3a4035
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>

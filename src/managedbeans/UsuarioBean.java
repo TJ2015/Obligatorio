@@ -225,7 +225,6 @@ public class UsuarioBean implements Serializable
 				session.setAttribute("dataUsuario", dataUsuario);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				AVsComp = cusu.mostrarListaAvComparidos(nick);
-
 				Url.redireccionarURL("usuario_sapo");
 			} else {
 				Url.redireccionarURL("error");
@@ -384,4 +383,18 @@ public class UsuarioBean implements Serializable
 			}
 			
 	}
+	
+	
+	public String obtenerNombreCompleto()
+	{
+		String nombreCompleto = null;
+		try {
+			DataUsuario dataUsuario = (DataUsuario)SesionBean.getSession().getAttribute("dataUsuario");
+			nombreCompleto = dataUsuario.obtenerNombreCompleto();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nombreCompleto;
+	}
+	
 }
