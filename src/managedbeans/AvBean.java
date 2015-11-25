@@ -40,6 +40,8 @@ public class AvBean implements Serializable {
 	private String textNotificacion;
 	private String textNota;
 	private long idNota;
+	private List<DataNotificacion> listNotificacionNoLeida=new ArrayList<>();
+	
 	private List<DataNotificacion> listNotificacion=new ArrayList<>();
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
@@ -47,7 +49,14 @@ public class AvBean implements Serializable {
 
 	}
 
-	
+	public List<DataNotificacion> getListNotificacionNoLeida() {
+		return listNotificacionNoLeida;
+	}
+
+
+	public void setListNotificacionNoLeida(List<DataNotificacion> listNotificacionNoLeida) {
+		this.listNotificacionNoLeida = listNotificacionNoLeida;
+	}
 	public List<DataNotificacion> getListNotificacion() {
 		return listNotificacion;
 	}
@@ -191,6 +200,12 @@ public class AvBean implements Serializable {
 		}
 
 	}
+	public void descompartirAV(String nickname) throws NoExisteElAV {
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
+		cAV.descompartirAV(idAV, nickname);
+
+	}
 
 	public void eliminarAV() throws Exception {
 		try {
@@ -261,6 +276,19 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
 		listNotificacion= cAV.getNotificaciones(idAV1);
+		return listNotificacion;
+
+	}
+	public void marcarNotificacionComoLeida(long idNoti ) throws Exception{
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
+		cAV.getNotificaciones(idAV);
+		cAV.marcarNotificacionComoLeida(idNoti, idAV);
+	}
+	public List<DataNotificacion> mostrarNotificacionesNoLeidas() throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		listNotificacionNoLeida= cAV.listaNotificacionesNoLeidas(idAV1);
 		return listNotificacion;
 
 	}

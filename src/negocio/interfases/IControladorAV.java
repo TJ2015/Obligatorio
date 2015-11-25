@@ -64,5 +64,7 @@ public interface IControladorAV {
 	public List<DataAlerta> listaDeAlertas(long idAV) throws NoExisteElAV;
 	
 	public List<DataNotificacion> listaNotificacionesNoLeidas(long idAV) throws NoExisteElAV;
+
+	public void marcarNotificacionComoLeida(long idNoti, long idAV) throws Exception;
 	
 }
