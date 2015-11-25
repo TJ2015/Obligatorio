@@ -32,5 +32,10 @@ Mostrar Categoria
 
 Usuario
 Modificar Producto
+Mover y copiar productos
 Modificar stock
 Ver Notificaciones
+
+Eliminar Notas
+
+
