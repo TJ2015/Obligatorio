@@ -125,7 +125,6 @@ public class ControladorUsuario implements IControladorUsuario {
 				usuario = new Usuario(usuarioSocial);
 				usuario.setTipoUsuario(tipoDAO.obtenerTipoUsuarioSocial(redSocial));
 				usuario.setFecchaRegistro(new Date());
-				usuario.setPassword("");
 				usuario = usuarioDAO.altaUsuario(usuario);
 				if (usuario != null) {
 					StringBuilder mensaje = new StringBuilder();

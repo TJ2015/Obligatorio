@@ -273,11 +273,9 @@ public class UsuarioBean implements Serializable
 	
 	public void mostrarListaAV() 
 	{
-		
-			HttpSession session = SesionBean.getSession();
-			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-			AVs = cusu.mostrarListaAv(nick);
-
+		HttpSession session = SesionBean.getSession();
+		session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+		AVs = cusu.mostrarListaAv(nick);
 	}
 	public void mostrarListaAVCompartidos() 
 	{
@@ -395,6 +393,32 @@ public class UsuarioBean implements Serializable
 			e.printStackTrace();
 		}
 		return nombreCompleto;
+	}
+	
+	public void GuardarDatosLoginFace()
+	{
+		try {
+			HttpSession session = SesionBean.getSession();
+			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
+			if (dataUsuario != null) {
+				this.dusu = dataUsuario;
+				this.nick = dataUsuario.getNick();
+				this.logueado = true;
+				session.setAttribute("nickname", nick);
+				session.setAttribute("dataUsuario", dusu);
+				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				AVsComp = cusu.mostrarListaAvComparidos(nick);
+				Url.redireccionarURL("usuario_sapo");
+			}
+			else{
+				Url.redireccionarURL("error");
+			}
+			
+			Url.redireccionarURL("usuario_sapo");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 	
 }

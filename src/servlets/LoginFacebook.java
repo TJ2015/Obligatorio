@@ -3,6 +3,9 @@ package servlets;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NameClassPair;
+import javax.naming.NamingEnumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataUsuario;
 import managedbeans.FacebookBean;
+import managedbeans.UsuarioBean;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
 
@@ -49,9 +53,9 @@ public class LoginFacebook extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		Url.redireccionarURL(dataUsuario != null ? "index" : "login");
-		//response.sendRedirect(dataUsuario != null ? "index.xhtml" : "login.xhtml");
+
+		//Url.redireccionarURL(dataUsuario != null ? "index" : "login");
+		response.sendRedirect("facebook.xhtml");
 		//(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)
 	}
 
@@ -67,5 +71,44 @@ public class LoginFacebook extends HttpServlet {
 	out.println("<h2>Application Main Menu</h2>");
 	out.println("<h3>Bienvenido " + usuario.first_name + " " + usuario.last_name + "</h3>");
 	out.println("<h4>Su correo es: " + usuario.email + "</h4>");
-	out.println("<h5>Su Id es: " + usuario.id + "</h5>");*/
+	out.println("<h5>Su Id es: " + usuario.id + "</h5>");
+	
+	
+	UsuarioBean ejb1 = null;
+		try {
+		    InitialContext ic = new InitialContext();
+		    System.out.println(UsuarioBean.class.getName());
+		    ejb1 = (UsuarioBean) ic.lookup(UsuarioBean.class.getName());
+		    
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
+		try {
+		    InitialContext ic = new InitialContext();
+		    ejb1 = (UsuarioBean) ic.lookup("java:global/Obligatorio/managedbeans.UsuarioBean");
+		    
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
+				
+		try {
+			InitialContext ctx = new InitialContext();
+			NamingEnumeration<NameClassPair> list = ctx.list("");
+			while (list.hasMore()) {
+			  System.out.println(list.next().getName());
+			}
+		} catch (Exception e) {
+			// : handle exception
+		}
+		
+		try {
+			InitialContext ic = new InitialContext();
+			UsuarioBean usuarioBean = (UsuarioBean) ic.lookup("java:comp/env/UsuarioBean");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	
+	
+	*/
 }
