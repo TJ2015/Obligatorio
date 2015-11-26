@@ -28,7 +28,8 @@ import dominio.datatypes.DataUsuario;
 @Entity
 @NamedQueries({ @NamedQuery(name = "AV.findAll", query = "SELECT u FROM AV u"),
 		@NamedQuery(name = "AV.buscarPorId", query = "SELECT a FROM AV a WHERE a.idAV =:idAV"),
-		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV") })
+		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV")
+})
 public class AV implements Serializable {
 
 	@Id

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      > 
+
+<h:head></h:head> 
+<h:body> 
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+			<div class="page-header text-center">
+				<h2>
+					<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+					<span> Reportes</span>
+				</h2>
+			</div>
+			
+			<div class="row">
+				<div class="modal-dialog modal-lg container-fluid">
+					<div class="modal-content container-fluid">
+						<div class="modal-header">        
+							<div class="row">
+								<h:form>
+									<div class="col-sm-10 col-md-10 col-lg-10">
+										<h:selectOneRadio styleClass="radio" value="#{reporteBean.tipoReporte}">
+										   <f:selectItem itemValue="1" itemLabel="Por cantidad de Productos"  />
+										   <f:selectItem itemValue="2" itemLabel="Por precio de Productos" />	   			
+										</h:selectOneRadio>
+									</div>
+									<div class="col-sm-2 col-md-2 col-lg-2">
+										<h:commandButton styleClass="btn btn-primary btn-block" value="Generar" action="#{reporteBean.GenerarReportes()}" />
+									</div>
+								</h:form>
+							</div>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="table-responsive">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th>Nombre producto</th>
+													<th>Cantidad</th>
+												</tr>
+											</thead>
+											<c:forEach var="reporte" items="#{reporteBean.listaReportes}"  >
+												<tr>
+												  <td>#{reporte.nombre}</td>
+												  <td>#{reporte.cantidad}</td>
+												</tr>
+								            </c:forEach> 			
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+				        	<button type="button" class="btn btn-primary">Generar PDF</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</ui:define>
+	</ui:composition>
+</h:body> 
+</html>
