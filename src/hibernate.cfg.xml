@@ -4,9 +4,17 @@
 <hibernate-configuration>
  <session-factory name="fabrica">
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  
+  <!--
   <property name="hibernate.connection.username">sapo_admin</property>
   <property name="hibernate.connection.password">sapo_admin</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/</property>
+  -->
+  
+  <property name="hibernate.connection.username">sapo_admin</property>
+  <property name="hibernate.connection.password">sapo_admin</property>
+  <property name="hibernate.connection.url">jdbc:mysql://56564d530c1e66dcfb00009e-obligatorio.rhcloud.com:64886/</property>
+  
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
   <property name="hibernate.multiTenancy">DATABASE</property>
@@ -20,5 +28,6 @@
   <mapping class="dominio.log.Log"/>
   <mapping class="dominio.log.Objetivo"/>
   <mapping class="dominio.log.Accion"/>
+  
  </session-factory>
 </hibernate-configuration>

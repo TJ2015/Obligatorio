@@ -3,7 +3,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 
-CREATE TABLE IF NOT EXISTS `categoria` (
+CREATE TABLE IF NOT EXISTS `Categoria` (
   `idCategoria` bigint(20) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idCategoria`)
@@ -16,21 +16,21 @@ CREATE TABLE IF NOT EXISTS `categoria_productos` (
   KEY `FK_jmsdgvlcwrq3ynin411rc25il` (`categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `nota` (
+CREATE TABLE IF NOT EXISTS `Nota` (
   `idNota` bigint(20) NOT NULL AUTO_INCREMENT,
   `texto` varchar(255) DEFAULT NULL,
   `usuario` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idNota`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `notificacion` (
+CREATE TABLE IF NOT EXISTS `Notificacion` (
   `idNotificacion` bigint(20) NOT NULL AUTO_INCREMENT,
   `leido` bit(1) NOT NULL,
   `texto` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idNotificacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `producto` (
+CREATE TABLE IF NOT EXISTS `Producto` (
   `idProducto` bigint(20) NOT NULL AUTO_INCREMENT,
   `atributos` varchar(255) NOT NULL,
   `bytesImagen` longblob,
@@ -42,13 +42,13 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `categoria_idCategoria` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`idProducto`),
   KEY `FK_1qlkl3me6n77angtfpnd5gcln` (`categoria_idCategoria`),
-  CONSTRAINT `FK_1qlkl3me6n77angtfpnd5gcln` FOREIGN KEY (`categoria_idCategoria`) REFERENCES `categoria` (`idCategoria`)
+  CONSTRAINT `FK_1qlkl3me6n77angtfpnd5gcln` FOREIGN KEY (`categoria_idCategoria`) REFERENCES `Categoria` (`idCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `categoria_productos`
-  ADD CONSTRAINT `FK_jmsdgvlcwrq3ynin411rc25il` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`idCategoria`),
-  ADD CONSTRAINT `FK_pf8dhv8fvo0g0t5h040ann58x` FOREIGN KEY (`idCategoria`) REFERENCES `producto` (`idProducto`);
+  ADD CONSTRAINT `FK_jmsdgvlcwrq3ynin411rc25il` FOREIGN KEY (`categoria`) REFERENCES `Categoria` (`idCategoria`),
+  ADD CONSTRAINT `FK_pf8dhv8fvo0g0t5h040ann58x` FOREIGN KEY (`idCategoria`) REFERENCES `Producto` (`idProducto`);
   
-CREATE TABLE IF NOT EXISTS `productoacomprar` (
+CREATE TABLE IF NOT EXISTS `ProductoAComprar` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cantidad` int(11) NOT NULL,
   `producto_idProducto` bigint(20) DEFAULT NULL,
@@ -56,21 +56,21 @@ CREATE TABLE IF NOT EXISTS `productoacomprar` (
   KEY `FK_gvkd86kcd8aqflwon16hc13vu` (`producto_idProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `alerta` (
+CREATE TABLE IF NOT EXISTS `Alerta` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `condicion` varchar(255) NOT NULL,
   `prod_idProducto` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `accion` (
+CREATE TABLE IF NOT EXISTS `Accion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE IF NOT EXISTS `log` (
+CREATE TABLE IF NOT EXISTS `Log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(255) DEFAULT NULL,
   `accion_id` bigint(20) DEFAULT NULL,
@@ -78,20 +78,20 @@ CREATE TABLE IF NOT EXISTS `log` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `objetivo` (
+CREATE TABLE IF NOT EXISTS `Objetivo` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
   `idObjetivo` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE `log`
+ALTER TABLE `Log`
   ADD KEY `FK_4qxrgm43ttukmy3myom4340di` (`accion_id`),
   ADD KEY `FK_l5s490bot2ufjoka0jwv16jjd` (`objetivo_id`);
 
-ALTER TABLE `log`
-  ADD CONSTRAINT `FK_4qxrgm43ttukmy3myom4340di` FOREIGN KEY (`accion_id`) REFERENCES `accion` (`id`),
-  ADD CONSTRAINT `FK_l5s490bot2ufjoka0jwv16jjd` FOREIGN KEY (`objetivo_id`) REFERENCES `objetivo` (`id`);
+ALTER TABLE `Log`
+  ADD CONSTRAINT `FK_4qxrgm43ttukmy3myom4340di` FOREIGN KEY (`accion_id`) REFERENCES `Accion` (`id`),
+  ADD CONSTRAINT `FK_l5s490bot2ufjoka0jwv16jjd` FOREIGN KEY (`objetivo_id`) REFERENCES `Objetivo` (`id`);
   
-ALTER TABLE `productoacomprar`
-  ADD CONSTRAINT `FK_gvkd86kcd8aqflwon16hc13vu` FOREIGN KEY (`producto_idProducto`) REFERENCES `producto` (`idProducto`);
+ALTER TABLE `ProductoAComprar`
+  ADD CONSTRAINT `FK_gvkd86kcd8aqflwon16hc13vu` FOREIGN KEY (`producto_idProducto`) REFERENCES `Producto` (`idProducto`);

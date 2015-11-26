@@ -29,7 +29,7 @@ public class DatosPrecargados {
 
 	@PostConstruct
 	void atStartup(){
-
+		/*
 		util.DBUtil.modificarBase("sapo_master");
 		
 		// CARGAR DATOS
@@ -44,7 +44,7 @@ public class DatosPrecargados {
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date(), null);
 		
 		System.out.println("...Datos cargados con éxito!");
-		
+		*/
 	}
 
 	@PreDestroy

@@ -33,7 +33,7 @@ public class AvDAO implements IAvDAO {
 		boolean seRegistro = false;
 		try {
 			em.persist(av);
-			String idTenant = "SAPo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+			String idTenant = "sapo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
 			util.DBUtil.crearBase(idTenant);
 
 			seRegistro = true;
@@ -98,7 +98,7 @@ public class AvDAO implements IAvDAO {
 		boolean baja = false;
 		try {
 			// em.persist(av);
-			String idTenant = "SAPo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
+			String idTenant = "sapo_" + av.getUsuarioCreador().getNick() + "_" + av.getNombreAV();
 			// util.DBUtil.crearBase(idTenant);
 
 			baja = true;
