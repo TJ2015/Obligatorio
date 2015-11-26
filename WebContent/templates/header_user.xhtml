@@ -107,45 +107,31 @@
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-book"></i>
-                                <span class="label label-danger">9</span>
+                                <span class="label label-danger">#{avBean.mostrarListaDeCompra().size()}</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">Hay 9 productos por comprar</li>
+                            <ui:param name="listaCompra" value="${avBean.mostrarListaDeCompra()}"/>
+						<ul class="dropdown-menu">
+                                <li class="header">Hay #{avBean.mostrarListaDeCompra().size()} productos por comprar</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
+                                    	<c:forEach var="prod" items="#{listaCompra}"  >                    
                                         <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Leche x2
-                                                </h3>
-                                            </a>
+                                         <h3>
+                                         	${prod.getProducto().getNombre()}
+                                         </h3> 
+                                         <h3>
+                                         	${prod.getCantidad()}
+                                         </h3>    
+                                          <a href="#" data-toggle="modal" data-target="#myModal">
+											  <i class="fa fa-trash-o" style="float:right" ></i>
+										  </a>
                                         </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Queso x1
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Lechuga x2
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Cebolla x3
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
+                                       </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="footer">
-                                    <a href="#">Ver lista completa</a>
+                                    <a href="verListaCompra">Ver lista completa</a>
                                 </li>
                             </ul>
                         </li>
@@ -182,7 +168,31 @@
                 </div>
             </nav>
         </header>
-				
+				 <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Eliminar AV</h4>
+        </div>
+        <div class="modal-body">
+          <p>¿Esta seguro que desea eliminar este AV?.</p>
+        </div>
+        <div class="modal-footer">
+        <h:form>
+        	  <h:commandButton  action="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
+        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+        </h:form>
+        
+         
+        </div>
+      </div>
+      
+    </div>
+  </div>
 	    </ui:composition>
     </body>
 </html>

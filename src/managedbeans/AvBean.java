@@ -15,10 +15,15 @@ import dominio.AV;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataProductoAComprar;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import exceptions.NombreDeAVInvalido;
+import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
 
@@ -30,6 +35,8 @@ public class AvBean implements Serializable {
 	IControladorAV cAV;
 	@EJB
 	IControladorUsuario cUsu;
+	@EJB
+	IControladorInventario cInv;
 
 	private long idAV;
 	private String nickname;
@@ -40,13 +47,42 @@ public class AvBean implements Serializable {
 	private String textNotificacion;
 	private String textNota;
 	private long idNota;
+	private String prueba;
+	private int cantidad;
+	private boolean reemplazar;
 	private List<DataNotificacion> listNotificacionNoLeida=new ArrayList<>();
 	
+	private DataProductoAComprar dPrdAComp;
+	private List<DataProductoAComprar> listCompra;
 	private List<DataNotificacion> listNotificacion=new ArrayList<>();
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
 	public AvBean() {
 
+	}
+
+	public String getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(String prueba) {
+		this.prueba = prueba;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public boolean isReemplazar() {
+		return reemplazar;
+	}
+
+	public void setReemplazar(boolean reemplazar) {
+		this.reemplazar = reemplazar;
 	}
 
 	public List<DataNotificacion> getListNotificacionNoLeida() {
@@ -57,6 +93,27 @@ public class AvBean implements Serializable {
 	public void setListNotificacionNoLeida(List<DataNotificacion> listNotificacionNoLeida) {
 		this.listNotificacionNoLeida = listNotificacionNoLeida;
 	}
+
+	public DataProductoAComprar getdPrdAComp() {
+		return dPrdAComp;
+	}
+
+
+	public void setdPrdAComp(DataProductoAComprar dPrdAComp) {
+		this.dPrdAComp = dPrdAComp;
+	}
+
+
+	public List<DataProductoAComprar> getListCompra() {
+		return listCompra;
+	}
+
+
+	public void setListCompra(List<DataProductoAComprar> listCompra) {
+		this.listCompra = listCompra;
+	}
+
+
 	public List<DataNotificacion> getListNotificacion() {
 		return listNotificacion;
 	}
@@ -296,5 +353,33 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
 		cAV.crearNotificacion(textNotificacion, idAV1);
+	}
+	public List<DataProductoAComprar> mostrarListaDeCompra() throws NoExisteElAV {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		listCompra=cInv.getListaDeCompra(idAV1);
+		return listCompra;
+	}
+	public void cargarProductoAComprar(long idProdComp) {
+		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			DataProductoAComprar dProdC=cInv.getProductoAComprar(idAV, idProdComp);
+			this.setdPrdAComp(dProdC);
+			Url.redireccionarURL("ver_productoAComprar");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void agregarEnListaDeCompra( String producto,boolean reemplazar) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		cInv.agregarEnListaDeCompra(idAV1, producto, cantidad, reemplazar);
+		
+	}
+	public String pruebaNom(String prue){
+		prueba=prue;
+		return prueba;
 	}
 }

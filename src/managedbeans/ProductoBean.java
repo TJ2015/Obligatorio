@@ -30,6 +30,7 @@ public class ProductoBean implements Serializable {
 	private double precio;
 	private String categoria;
 	private String atributos;
+	private String prueba;
 	private int stock;
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
@@ -38,7 +39,17 @@ public class ProductoBean implements Serializable {
 	private long idAV;
 	private DataProducto dataProducto;
 	private String prodEliminar;
+	List<String> nomProd=new ArrayList<>();
 	
+	
+	public String getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(String prueba) {
+		this.prueba = prueba;
+	}
+
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -48,7 +59,7 @@ public class ProductoBean implements Serializable {
 	}
 	
 
-	List<String> nomProd=new ArrayList<>();
+	
 
 	
 
@@ -279,6 +290,10 @@ public class ProductoBean implements Serializable {
 			e.printStackTrace();
 			Url.redireccionarURL("error");
 		}
+	}
+	public String pruebaNom(String prue){
+		prueba=prue;
+		return prueba;
 	}
 	
 }
