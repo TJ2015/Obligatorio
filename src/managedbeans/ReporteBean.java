@@ -72,7 +72,7 @@ public class ReporteBean {
 		HttpSession session = SesionBean.getSession();
 		long idAlmacen = (long)session.getAttribute("idAV");
 		this.dataReportes = cReportes.obtenerReportesUsuario(idAlmacen, tipoReporte);
-		
+		session.setAttribute("reporteGenerado", this.dataReportes);
 	}
 
 

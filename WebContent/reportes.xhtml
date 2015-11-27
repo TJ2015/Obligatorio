@@ -30,7 +30,7 @@
 										</h:selectOneRadio>
 									</div>
 									<div class="col-sm-2 col-md-2 col-lg-2">
-										<h:commandButton styleClass="btn btn-primary btn-block" value="Generar" action="#{reporteBean.GenerarReportes()}" />
+										<h:commandButton styleClass="btn btn-primary btn-block btn-sm" value="Generar" action="#{reporteBean.GenerarReportes()}" />
 									</div>
 								</h:form>
 							</div>
@@ -71,7 +71,10 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-				        	<button type="button" class="btn btn-primary">Generar PDF</button>
+							<a href="ServletPDF" class="btn btn-primary btn-sm">
+								<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+								<span> PDF</span>
+							</a>
 						</div>
 					</div>
 				</div>
