@@ -41,6 +41,11 @@ Modificar stock
 Ver Notificaciones
 Vista de Categoria
 Agregar stock en vista de productos
+Despues de eliminar AV ir a perfil de usuario
+Recargar la lista de avs, cuando se va al perfil
+
+chequear que exista av! siempre!
+recargar las categorias en sesion despues de crear una categoria
 
 Restringir acceso a crear producto cuando no hay categorias.
 
