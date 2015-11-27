@@ -30,7 +30,6 @@ Admin
 Mostrar Productos y Producto
 Mostrar Categorias y Categoria
 Arreglar eliminar producto de AV que te devuelva a la vista del AV
-Sacar boton en logout de admin
 Contar usuarios premium no esta andando bien
 
 Usuario
@@ -38,7 +37,7 @@ Arreglar Ver Productos de AV
 Modificar Producto
 Mover y copiar productos
 Modificar stock
-Ver Notificaciones
+Ver Notificaciones (hecho, funca?)
 Vista de Categoria
 Agregar stock en vista de productos
 Despues de eliminar AV ir a perfil de usuario

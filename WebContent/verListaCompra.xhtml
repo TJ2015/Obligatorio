@@ -31,21 +31,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <h:form>
                                              <c:forEach var="compra" items="${avBean.listCompra}"  >
 											     <tr>
 											    <!--  #{avBean.pruebaNom(compra.getProducto().getNombre())} -->
 											       <td> <label> ${compra.getProducto().getNombre()}</label>
 											        </td>
 											        <td> <label>  ${compra.cantidad} </label>
-											          
-                                          <a href="#" data-toggle="modal" data-target="#myModal1">
+											 <a href="#" data-toggle="modal" data-target="#myModal1">
 											  <i class="fa fa-trash-o" style="float:right" ></i>
-										  </a>
+										     </a>
+											  <h:commandLink action="#{productoBean.cargarDataProducto(avBean.nombreProducto)}" actionListener="#{avBean.productoComprado(avBean.nombreProducto)}">
+											     <i class="fa fa-check" style="float:right" ></i>
+											     </h:commandLink>         
+                                         
 											        
 											        </td>
 											     </tr>                        
-											 </c:forEach> 
+											 </c:forEach>
+											 </h:form> 
                                         </tbody>
                                         <tfoot>
                                             <tr>
