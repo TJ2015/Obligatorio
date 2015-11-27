@@ -57,7 +57,7 @@ public class ServletPDF extends HttpServlet {
             DataReportes dataReportes = (DataReportes)session.getAttribute("reporteGenerado");
             
             PdfPTable tabla = new PdfPTable(CANTIDAD_COLUMNA);                
-            if (dataReportes != null && dataReportes.getListaReporte() != null) {
+            if (dataReportes != null && dataReportes.getTipoReporte() != null && dataReportes.getListaReporte() != null) {
                 tabla.addCell(crearTitulo(dataReportes.getTipoReporte().getDescripcion()));
 				if (dataReportes.getListaReporte().size() > 0) {
 					tabla.addCell(crearCabecera("Nombre Producto"));

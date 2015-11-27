@@ -13,6 +13,7 @@ import exceptions.NombreDeAVInvalido;
 import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
+import negocio.interfases.IControladorLog;
 import negocio.interfases.IControladorUsuario;
 
 @Startup
@@ -26,6 +27,9 @@ public class DatosPrecargados {
 	@EJB
 	IControladorInventario cInv;
 	
+	@EJB
+	IControladorLog cLog;
+	
 
 	@PostConstruct
 	void atStartup(){
@@ -37,9 +41,16 @@ public class DatosPrecargados {
 		
 		cUsu.crearNuevoTipo("comun");
 		cUsu.crearNuevoTipo("facebook");
+		
+		cLog.agregarAccion("Crear", "Se crea ");
+		cLog.agregarAccion("Modificar", "Se modifica ");
+		cLog.agregarAccion("Eliminar", "Se elimina ");
+		cLog.agregarAccion("Aumentar", "Se Aumenta el Stock a ");
+		cLog.agregarAccion("Disminuir", "Se disminuye el Stock a ");
 
-		cUsu.registrarUsuario("Lautaro", "Acosta", "lautaroa14", "lautaroa14", "lautaroa14@gmail.com", new Date(), null);
-		cUsu.registrarUsuario("Santiago", "Callejas", "sancagon87", "sancagon87", "sancagon87@gmail.com", new Date(), null);
+		cLog.agregarObjetivo("Producto", "El producto");
+		cLog.agregarObjetivo("Categoria", "La Categoria");
+		
 		cUsu.registrarUsuario("1", "1", "1", "1", "1@1.com", new Date(), null);
 		cUsu.registrarUsuario("2", "2", "2", "2", "2@2.com", new Date(), null);
 		

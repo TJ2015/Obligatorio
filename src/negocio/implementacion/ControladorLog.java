@@ -1,45 +1,66 @@
 package negocio.implementacion;
 
-import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
-import dominio.datatypes.DataLog;
+import dominio.datatypes.log.DataLog;
+import dominio.log.Accion;
+import dominio.log.Objetivo;
 import negocio.interfases.IControladorLog;
+import persistencia.interfases.ILogDAO;
 
+@Stateless
 public class ControladorLog implements IControladorLog {
 
+	
+	@EJB
+	private ILogDAO logDao;
+	
+	
+	
 	@Override
-	public void crearLog(String usuario, String objetivo, String accion, long idAV) {
-		
+	public boolean agregarAccion(String nombre, String descripcion){
+		boolean agrego = false;
+		try {
+			if(!existeAccion(nombre)){
+				logDao.persistirAccion(new Accion(nombre, descripcion));
+				agrego = true;
+			}
+		} catch (Exception e) {
+			
+		}
+		return agrego;
+	}
+	
+	public boolean existeAccion(String nombre){
+		return (logDao.buscarAccionPorNombre(nombre) != null);
+	}
+	
+
+	@Override
+	public boolean agregarObjetivo(String nombre, String descripcion) {
+		boolean agrego = false;
+		try {
+			if(!existeObjetivo(descripcion)){
+				logDao.persistirObjetivo(new Objetivo(nombre, descripcion));
+				agrego = true;
+			}
+		} catch (Exception e) {
+			
+		}
+		return agrego;
+	}
+	
+	public boolean existeObjetivo(String nombre){
+		return (logDao.buscarObjetivoPorNombre(nombre.toUpperCase()) != null);
 	}
 
 	@Override
-	public List<DataLog> listaLogUsuario(String usuario) {
+	public boolean agregarLog(DataLog dataLog, String tenant) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
-
-	@Override
-	public List<DataLog> listaLogAV(long idAV) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int cantidadCopiasProducto(String prod) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void existeObjetivo(String descripcion) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void existeAccion(String descripcion) {
-		// TODO Auto-generated method stub
-
-	}
+	
+	
 
 }

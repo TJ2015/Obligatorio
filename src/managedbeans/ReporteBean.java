@@ -75,6 +75,11 @@ public class ReporteBean {
 		session.setAttribute("reporteGenerado", this.dataReportes);
 	}
 
-
+	public void ActualizarDatos(){
+		if (dataReportes == null || dataReportes.getTipoReporte() == null || dataReportes.getListaReporte() == null) {
+			HttpSession session = SesionBean.getSession();
+			session.setAttribute("reporteGenerado", null);
+		}
+	}
 
 }

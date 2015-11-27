@@ -26,6 +26,7 @@ import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.AlgoritmoDeRecomendacion;
 import negocio.interfases.AlgoritmoDeRecomendacionSimple;
 import negocio.interfases.IControladorInventario;
+import negocio.interfases.IControladorLog;
 import persistencia.implementacion.AvDAO;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
@@ -39,6 +40,8 @@ public class ControladorInventario implements IControladorInventario {
 
 	private IInventarioDAO invDAO = new InventarioDAO();
 	private IAvDAO	avDAOTenant = new AvDAO();
+	
+	private IControladorLog cLog = new ControladorLog();
 	
 	public ControladorInventario() {
 	}
@@ -134,6 +137,12 @@ public class ControladorInventario implements IControladorInventario {
 			cat.addProducto(prod);
 			invDAO.actualizarCategoria(cat, tenant);
 			dp = prod.getDataProducto();
+			
+			/************************************************************/
+			//DataLog dataLog = new DataLog();
+			//cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
+			
 			invDAO.close(tenant);
 			
 		}

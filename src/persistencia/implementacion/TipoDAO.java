@@ -6,10 +6,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
-import dominio.Mensaje;
 import dominio.TipoUsuario;
-import dominio.Usuario;
-import dominio.datatypes.DataMensaje;
 import persistencia.interfases.ITipoDAO;
 
 @Stateless

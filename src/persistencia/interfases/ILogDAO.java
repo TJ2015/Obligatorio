@@ -9,16 +9,23 @@ import dominio.log.Objetivo;
 @Local
 public interface ILogDAO {
 	
-	public void persistirLog(Log log);
-	public void persistirObjetivo(Objetivo obj);
-	public void persistirAccion(Accion accion);
+	public boolean persistirLog(Log log);
+	public boolean persistirObjetivo(Objetivo objetivo);
+	public boolean persistirAccion(Accion accion);
+	
+	public Accion buscarAccionPorNombre(String nombre);
+	public Objetivo buscarObjetivoPorNombre(String nombre);
+	
+	public boolean crearLog(Log log, String tenant);
+	
+	/*
+	public Log buscarLogPorObjetivoDescripcion(String desc);
 	public Log buscarLog(long idLog);
 	public Objetivo buscarObjetivoPorDescripcion(String desc);
 	public Accion buscarAccionPorDescripcion(String desc);
 	public Log buscarLogPorUsuario(String nick);
-	public Log buscarLogPorObjetivoDescripcion(String desc);
-	public Log buscarLogPorAccionDescripcion(String desc);
 	public Log buscarLogPorObjetivoId(long id);
 	public Log buscarLogPorObjetivoIdDescripcion(String desc, long id);
+	*/
 	
 }

@@ -10,6 +10,9 @@
 <h:body> 
 	<ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
+			
+			#{reporteBean.ActualizarDatos()}
+		
 			<div class="page-header text-center">
 				<h2>
 					<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
@@ -38,7 +41,7 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<c:if test="#{reporteBean.dataReportes != null}">
+									<c:if test="#{reporteBean.dataReportes != null and reporteBean.dataReportes.tipoReporte != null}">
 										<div class="table-responsive">
 											<div class="page-header text-center">
 												<h4>
