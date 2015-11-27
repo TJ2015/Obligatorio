@@ -71,12 +71,13 @@
 									            <!-- /.box-footer -->
 									            <h:form>
 									            <div class="box-footer">
-									              <div class="pull-right">
-									              <h:commandButton id="boton" styleClass="btn btn-default" value="Responder" 
-																	data-toggle="modal" data-target="#compose-modal"/>	
-									              </div>
-									              	<h:commandButton id="botonEliminar" styleClass="btn btn-default" value="Eliminar" 
-																	action="mailbox" actionListener="#{usuarioBean.eliminarMensajeRecibido(usuarioBean.dmsj.id)}"/>		
+									              
+									              
+									             <center> <h:commandButton  id="botonEliminar" styleClass="btn btn-default" value="Eliminar" 
+													action="mailbox" actionListener="#{usuarioBean.eliminarMensajeRecibido(usuarioBean.dmsj.id)}"/>	</center>	
+									              
+									             
+									              	
 									            </div>
 									            </h:form>
 									            <!-- /.box-footer -->

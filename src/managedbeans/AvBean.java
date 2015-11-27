@@ -466,4 +466,27 @@ public class AvBean implements Serializable {
 		}
 		return cats;
 	}
+	public void productoComprado(String nomProd) {
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		 DataProducto dprod=null;
+		try {
+			dprod = cInv.getProducto(nomProd, idAV1);
+		} catch (NoExisteElAV | NoExisteElProducto e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			try {
+				cInv.productoComprado(idAV1, dprod.getIdProducto());
+			} catch (NoExisteElAV e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (NoExisteElProductoAComprar e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
