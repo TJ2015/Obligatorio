@@ -21,6 +21,7 @@ import dominio.datatypes.DataProductoAComprar;
 import dominio.datatypes.DataUsuario;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
+import exceptions.NoExisteElProductoAComprar;
 import exceptions.NombreDeAVInvalido;
 import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorAV;
@@ -285,7 +286,9 @@ public class AvBean implements Serializable {
 	public void compartirAV() throws NoExisteElAV {
 		HttpSession session = SesionBean.getSession();
 		long idAV= (long) session.getAttribute("idAV");
+		
 		if (cUsu.existeUsuarioNick(nickname)) {
+			cantUsuComp=cUsu.getUsuario(nickname).getAVsCompar().size();
 			cAV.compartirAV(idAV, nickname);
 			cantUsuComp++;
 		}
@@ -410,6 +413,18 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
 		cInv.agregarEnListaDeCompra(idAV1, producto, cantidad, reemplazar);
+		
+	}
+	public void eliminarEnListaDeCompra( String producto) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
+		HttpSession session = SesionBean.getSession();
+		long idAV1= (long) session.getAttribute("idAV");
+		 DataProducto dprod=cInv.getProducto(producto, idAV1);
+		try {
+			cInv.eliminarProductoDeListaDeCompra(idAV1, dprod.getIdProducto());
+		} catch (NoExisteElProductoAComprar e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	public String pruebaNom(String prue){
