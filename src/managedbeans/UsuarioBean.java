@@ -384,4 +384,5 @@ public class UsuarioBean implements Serializable
 			}
 			
 	}
+
 }

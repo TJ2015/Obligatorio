@@ -9,9 +9,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dominio.AV;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataNota;
@@ -61,11 +61,20 @@ public class AvBean implements Serializable {
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
 	private List<DataCategoria> cats = new ArrayList<>();
+	private String errorAV;
 	
 	public AvBean() {
 
 	}
 	
+	public String getErrorAV() {
+		return errorAV;
+	}
+
+	public void setErrorAV(String errorAV) {
+		this.errorAV = errorAV;
+	}
+
 	public List<DataCategoria> getCats() {
 		return cats;
 	}
@@ -305,11 +314,10 @@ public class AvBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV= (long) session.getAttribute("idAV");
-			String nickname= (String) session.getAttribute("nickname");
 			cAV.eliminarAV(idAV);
-			Url.redireccionarURL("index");
 		} catch (IOException e) {
 			e.printStackTrace();
+			Url.redireccionarURL("error");
 		}
 	}
 		
@@ -466,4 +474,21 @@ public class AvBean implements Serializable {
 		}
 		return cats;
 	}
+	
+	public boolean existeAV() {
+
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+
+		if (cAV.existeAV(idAV)) {
+			return true;
+		} else {
+			errorAV = "El AV que estaba viendo ha sido eliminado!";
+			Url.redireccionarURL("usuario_sapo");
+			return false;
+		}
+
+	}
 }
+
+	

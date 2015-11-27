@@ -31,12 +31,23 @@
 <h:body>
 <ui:composition template="/templates/layout.xhtml">
 <ui:define name="contenido">
+
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
 		  <h1>Hola ${usuarioBean.nick}</h1>
 		</div>
+		<c:if test="${avBean.errorAV != null}">
+		
+			<div class="col-xs-12 col-md-6 col-md-offset-3">
+				${avBean.errorAV}
+			</div>
+		</c:if>
 		<section class="content">
+		
+		
+		
 		<div class="col-lg-5 col-xs-8">
+		
 		<h3 class="box-title">Crear AV</h3>
 			<div class="panel panel-primary">
 				
@@ -123,7 +134,7 @@
         </div>
         <div class="modal-footer">
         <h:form>
-        	  <h:commandButton  action="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
+        	  <h:commandButton  action="usuario_sapo" actionListener="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
         	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
         </h:form>
         
