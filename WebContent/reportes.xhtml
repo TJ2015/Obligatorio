@@ -38,22 +38,35 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-sm-12 col-md-12 col-lg-12">
-									<div class="table-responsive">
-										<table class="table table-hover">
-											<thead>
-												<tr>
-													<th>Nombre producto</th>
-													<th>Cantidad</th>
-												</tr>
-											</thead>
-											<c:forEach var="reporte" items="#{reporteBean.listaReportes}"  >
-												<tr>
-												  <td>#{reporte.nombre}</td>
-												  <td>#{reporte.cantidad}</td>
-												</tr>
-								            </c:forEach> 			
-										</table>
-									</div>
+									<c:if test="#{reporteBean.dataReportes != null}">
+										<div class="table-responsive">
+											<div class="page-header text-center">
+												<h4>
+													<span>#{reporteBean.dataReportes.tipoReporte.descripcion}</span>
+												</h4>
+											</div>
+											<table class="table table-hover">
+												<thead>
+													<tr>
+														<th>Nombre producto</th>
+														<th>#{reporteBean.dataReportes.tipoReporte.nombre}</th>
+													</tr>
+												</thead>
+												<c:forEach var="reporte" items="#{reporteBean.dataReportes.listaReporte}"  >
+													<tr>
+													  <td>#{reporte.nombre}</td>
+													  <td>#{reporte.valor}</td>
+													</tr>
+									            </c:forEach>
+									            <tfoot>
+													<tr>
+														<th>Total</th>
+														<th>#{reporteBean.dataReportes.total}</th>
+													</tr>
+												</tfoot>			
+											</table>
+										</div>
+									</c:if>
 								</div>
 							</div>
 						</div>

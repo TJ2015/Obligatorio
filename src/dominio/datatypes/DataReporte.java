@@ -3,31 +3,32 @@ package dominio.datatypes;
 public class DataReporte {
 	
 	private String nombre;
-	private String cantidad;
+	private String valor;
 	
 	public DataReporte() {
 		
 	}
 	
-	public DataReporte(String nombre, String cantidad) {
+	public DataReporte(String nombre, String valor) {
 		this.nombre = nombre;
-		this.cantidad = cantidad;
+		this.valor = valor;
 	}
-	
-	
 	
 	public String getNombre() {
 		return nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(String cantidad) {
-		this.cantidad = cantidad;
+	
+	public String getValor() {
+		return valor;
 	}
 	
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
 	
 }

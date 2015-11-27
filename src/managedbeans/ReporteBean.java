@@ -1,13 +1,11 @@
 package managedbeans;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.servlet.http.HttpSession;
 
-import dominio.datatypes.DataReporte;
+import dominio.datatypes.DataReportes;
 import negocio.interfases.IControladorReporte;
 
 @ManagedBean
@@ -25,27 +23,44 @@ public class ReporteBean {
 	
 	/************************************************************/
 	
-	private String tipoReporte;
+	private int tipoReporte;
 	
-	private List<DataReporte> listaReportes;
+	private int tipoReporteActual;
 	
+	private DataReportes dataReportes;
 	
 	/*************************************************************/
 	
-	public String getTipoReporte() {
+	public IControladorReporte getcReportes() {
+		return cReportes;
+	}
+	
+	public void setcReportes(IControladorReporte cReportes) {
+		this.cReportes = cReportes;
+	}
+	
+	public int getTipoReporte() {
 		return tipoReporte;
 	}
-
-	public void setTipoReporte(String tipoReporte) {
+	
+	public void setTipoReporte(int tipoReporte) {
 		this.tipoReporte = tipoReporte;
 	}
 	
-	public List<DataReporte> getListaReportes() {
-		return listaReportes;
+	public int getTipoReporteActual() {
+		return tipoReporteActual;
 	}
 	
-	public void setListaReportes(List<DataReporte> listaReportes) {
-		this.listaReportes = listaReportes;
+	public void setTipoReporteActual(int tipoReporteActual) {
+		this.tipoReporteActual = tipoReporteActual;
+	}
+	
+	public DataReportes getDataReportes() {
+		return dataReportes;
+	}
+	
+	public void setDataReportes(DataReportes dataReportes) {
+		this.dataReportes = dataReportes;
 	}
 	
 	
@@ -56,8 +71,10 @@ public class ReporteBean {
 	public void GenerarReportes(){
 		HttpSession session = SesionBean.getSession();
 		long idAlmacen = (long)session.getAttribute("idAV");
-		this.listaReportes = cReportes.obtenerReportesUsuario(idAlmacen, tipoReporte);
+		this.dataReportes = cReportes.obtenerReportesUsuario(idAlmacen, tipoReporte);
+		
 	}
+
 
 
 }

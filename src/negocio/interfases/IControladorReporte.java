@@ -1,20 +1,19 @@
 package negocio.interfases;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Local;
 
-import dominio.datatypes.DataReporte;
+import dominio.datatypes.DataReportes;
 import dominio.datatypes.DataUsuario;
 
 @Local
 public interface IControladorReporte {
 
 	/*********************************************************/
-	public List<DataReporte> obtenerReportesUsuario(long idAlmacen, String tipoReporte );
-	public void obtenerReportesUsuarioPorLapso(long idAlmacen, String tipoReporte, Date fechaInicio, Date fechaFinal );
+	public DataReportes obtenerReportesUsuario(long idAlmacen, int tipoReporte );
+	public void obtenerReportesUsuarioPorLapso(long idAlmacen, int tipoReporte, Date fechaInicio, Date fechaFinal );
 	
 	/*********************************************************/
-	public void obtenerReportesAdministrador(DataUsuario dataUsuario, String tipoReporte );
+	public void obtenerReportesAdministrador(DataUsuario dataUsuario, int tipoReporte );
 }
