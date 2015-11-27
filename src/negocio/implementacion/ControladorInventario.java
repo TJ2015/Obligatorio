@@ -519,7 +519,7 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public DataProducto getProducto(String nombre) throws NoExisteElProducto {
-		return getProducto(nombre, "sapo_master");
+		return getProducto(nombre, "master");
 	}
 
 	@Override

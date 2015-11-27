@@ -45,38 +45,7 @@
                                             </div>
                                         </div><!-- /.col (LEFT) -->
                                         <div class="col-md-9 col-sm-8">
-                                            <div class="row pad">
-                                                <div class="col-sm-6">
-                                                    <label style="margin-right: 10px;">
-                                                        <input type="checkbox" id="check-all"/>
-                                                    </label>
-                                                    <!-- Action button -->
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
-                                                            Action <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li><a href="#">Mark as read</a></li>
-                                                            <li><a href="#">Mark as unread</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#">Move to junk</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#">Delete</a></li>
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-                                                <div class="col-sm-6 search-form">
-                                                    <form action="#" class="text-right">
-                                                        <div class="input-group">                                                            
-                                                            <input type="text" class="form-control input-sm" placeholder="Search"/>
-                                                            <div class="input-group-btn">
-                                                                <button type="submit" name="q" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button>
-                                                            </div>
-                                                        </div>                                                     
-                                                    </form>
-                                                </div>
-                                            </div><!-- /.row -->
+                                           
 
                                             <div class="box box-primary">
 									            <div class="box-header with-border">
@@ -88,7 +57,7 @@
 									            <div class="box-body no-padding">
 									              <div class="mailbox-read-info">
 									                <h3> #{usuarioBean.dmsj.asunto}</h3>
-									                <h5>De: #{usuarioBean.dmsj.destinatario}
+									                <h5>De: #{usuarioBean.dmsj.remitente}
 									                  <span class="mailbox-read-time pull-right">#{usuarioBean.dmsj.fecha}</span></h5>
 									              </div>
 									             

@@ -34,9 +34,13 @@
 		                   </c:if>
 		                    <c:if test="${usuarioBean.logueado == true}">
 		                    <li>
+		                    
   								<h:form>
-                                  <h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" />   	
+  								<h:commandLink action="#{usuarioBean.logout()}">
+									Cerrar sesion
+									</h:commandLink>
                                  </h:form>	
+                                 
                              </li>	                
                              	<h:form styleClass="form">
 		                	   	 <li ><a href="chat.xhtml" target="_blank" >Ingresar al chat</a></li>
