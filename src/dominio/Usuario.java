@@ -62,17 +62,17 @@ public class Usuario implements Serializable {
 	@ManyToMany
 	@ElementCollection
 	@JoinTable(name = "usuario_avcompartidos")
-	private List<AV> AVcompartidos;
+	private List<AV> AVcompartidos = new ArrayList<>();
 
 	@OneToMany
 	@ElementCollection
 	@JoinTable(name = "us_msj_enviados")
-	private List<Mensaje> mensajesEnviados;
+	private List<Mensaje> mensajesEnviados = new ArrayList<>();;
 
 	@OneToMany
 	@ElementCollection
 	@JoinTable(name = "us_msj_recibidos")
-	private List<Mensaje> mensajesRecibidos;
+	private List<Mensaje> mensajesRecibidos = new ArrayList<>();;
 
 	private static final long serialVersionUID = 1L;
 

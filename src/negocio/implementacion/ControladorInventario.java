@@ -336,7 +336,13 @@ public class ControladorInventario implements IControladorInventario {
 
 			Categoria cat = prod.getCategoria();
 			cat.removeProducto(prod);
-
+				
+			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(prod.getIdProducto(), tenant);
+			try {
+				eliminarProductoDeListaDeCompra(idAV, prod.getIdProducto());
+			} catch (Exception e) {
+			}
+			
 			invDAO.actualizarCategoria(cat, tenant);
 			invDAO.eliminarProducto(prod, tenant);
 			invDAO.close(tenant);
@@ -412,15 +418,15 @@ public class ControladorInventario implements IControladorInventario {
 
 				if (pacAux != null) {
 					if (reemplazar) {
-						invDAO.eliminarProductoAComprar(pacAux, tenant);
+						pacAux.setCantidad(cantidad);
 					} else {
-						throw new exceptions.YaExisteElProductoAComprar();
+						pacAux.setCantidad(pacAux.getCantidad() + cantidad);
 					}
+					invDAO.actualizarProductoAComprar(pacAux);
+				} else {
+					ProductoAComprar pac = new ProductoAComprar(prod, cantidad);
+					invDAO.persistirProductoAComprar(pac, tenant);
 				}
-
-				ProductoAComprar pac = new ProductoAComprar(prod, cantidad);
-
-				invDAO.persistirProductoAComprar(pac, tenant);
 				invDAO.close(tenant);
 			} else {
 				throw new exceptions.NoExisteElProducto();

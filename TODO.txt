@@ -22,20 +22,34 @@ Ganar membresia con facebook
 
 Controlar que los nombres de usuario, categoria y producto sean alfanumericos
 
-Controlar que no se pueda crar más de un producto con el mismo nombre (en el controlador)
-Controlar que no se pueda crar más de un producto con el mismo nombre (en la vista)
+Controlar que no se pueda crear más de un producto con el mismo nombre (en el controlador)
+Controlar que no se pueda crear más de un producto con el mismo nombre (en la vista)
 	Mostrar mensaje de error!
 
 Admin
-Mostrar Producto
-Mostrar Categoria
+Mostrar Productos y Producto
+Mostrar Categorias y Categoria
+Arreglar eliminar producto de AV que te devuelva a la vista del AV
+Sacar boton en logout de admin
+Contar usuarios premium no esta andando bien
 
 Usuario
+Arreglar Ver Productos de AV
 Modificar Producto
 Mover y copiar productos
 Modificar stock
 Ver Notificaciones
+Vista de Categoria
+Agregar stock en vista de productos
+
+Restringir acceso a crear producto cuando no hay categorias.
 
 Eliminar Notas
 
+En eliminar usuario, desvincular todas las referencias a otras entidades.
 
+Cambiar iconos del registro de usuario, hay 3 lupas.
+
+No mostrar boton de inicio en perfil de usuario, o cambiar la barra en perfil
+
+Poner en negrita u otra forma los mensajes no leidos

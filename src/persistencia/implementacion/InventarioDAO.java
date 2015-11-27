@@ -230,4 +230,11 @@ public class InventarioDAO implements IInventarioDAO {
 		return q.list();
 	}
 
+	@Override
+	public void actualizarProductoAComprar(ProductoAComprar pacAux) {
+		session.beginTransaction();
+		session.merge(pacAux);
+		session.getTransaction().commit();
+	}
+
 }

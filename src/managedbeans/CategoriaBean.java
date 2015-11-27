@@ -31,8 +31,10 @@ public class CategoriaBean implements Serializable {
 	private String nombre;
 	private long idAV;
 	private AV av;
-	private List<DataCategoria> cats = new ArrayList<>();
 	private String[] str = { "hola", "noe" };
+
+	private String nombreAV;
+	private static final long serialVersionUID = 1L;
 
 	public String[] getStr() {
 		return str;
@@ -42,9 +44,21 @@ public class CategoriaBean implements Serializable {
 		this.str = str;
 	}
 
-	private static final long serialVersionUID = 1L;
+	public IControladorAV getcAV() {
+		return cAV;
+	}
 
-	private String nombreAV;
+	public void setcAV(IControladorAV cAV) {
+		this.cAV = cAV;
+	}
+
+	public AV getAv() {
+		return av;
+	}
+
+	public void setAv(AV av) {
+		this.av = av;
+	}
 
 	public String getNombreAV() {
 		return nombreAV;
@@ -94,26 +108,6 @@ public class CategoriaBean implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public List<DataCategoria> getCats() {
-		return cats;
-	}
-
-	public void setCats(List<DataCategoria> cats) {
-		this.cats = cats;
-	}
-
-	public List<DataCategoria> mostrarListaCategoria() {
-		try {
-			HttpSession session = SesionBean.getSession();
-			idAV = (long) session.getAttribute("idAV");
-			cats = cinv.mostrarListaCategoria(idAV);
-		} catch (Exception e) {
-			// TODO 505
-			e.printStackTrace();
-		}
-		return cats;
 	}
 
 }

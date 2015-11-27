@@ -43,7 +43,7 @@
 							<!-- small box -->
 							<div class="small-box bg-teal">
 								<div class="inner">
-									<h3>#{categoriaBean.cats.size()}</h3>
+									<h3>#{avBean.cats.size()}</h3>
 									<p>Categorias</p>
 								</div>
 								<div class="icon">
@@ -51,7 +51,7 @@
 								</div>
 								<h:form class="small-box-footer">
 									<h:commandLink action="verListaCategoria"
-										actionListener="#{categoriaBean.mostrarListaCategoria()}"
+										actionListener="#{avBean.mostrarListaCategoria()}"
 										style="text-decoration:none;color:white;">
 			                                Mas información
 			                             <i class="fa fa-arrow-circle-right"></i>
@@ -72,13 +72,13 @@
 									<i class="ion ion-ios7-pricetag-outline"></i>
 								</div>
 								<h:form class="small-box-footer">
-									<h:commandLink action="#{productoBean.mostrarTodosProd()}"
+									<h:commandLink action="verListaProducto" actionListener="#{productoBean.mostrarTodosProd()}"
 										style="text-decoration:none;color:white;">
 			                                Mas información
 			                             <i class="fa fa-arrow-circle-right"></i>
 									</h:commandLink>
 								</h:form>
-
+								
 							</div>
 						</div>
 						<!-- ./col -->

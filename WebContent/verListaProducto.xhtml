@@ -46,47 +46,16 @@
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
-                                                <th>Categoria</th> 
-                                                
+                                                <th>Categoria</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                           
 				  								 <c:forEach var="p" items="${productoBean.dprods2}"  >                            
-											     
 											      <tr>
 											       <td> <a href="ver_producto.xhtml">
 											          ${p.nombre} 
-											        </a>
-											        <a href="#" data-toggle="modal" data-target="#myModal">
-											        
-											        <i class="fa fa-trash-o" style="float:right" ></i>
-											        </a>
-											        	 <!-- Modal -->
-													  <div class="modal fade" id="myModal" role="dialog">
-													    <div class="modal-dialog">
-													    
-													      <!-- Modal content-->
-													      <div class="modal-content">
-													        <div class="modal-header">
-													          <button type="button" class="close" data-dismiss="modal">&times;</button>
-													          <h4 class="modal-title">Eliminar Producto</h4>
-													        </div>
-													        <div class="modal-body">
-													          <p>¿Esta seguro que desea eliminar este Producto?.</p>
-													        </div>
-													        <div class="modal-footer">
-													        <h:form>
-													        	  <h:commandButton  value="Aceptar" class="btn btn-default" />  
-													        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
-													        </h:form>
-													        
-													         
-													        </div>
-													      </div>
-													      
-													    </div>
-													  </div>
+											        </a>											  
 											        </td>
 											        <td>#{p.categoria}</td>
 											        </tr>
@@ -107,31 +76,6 @@
                 </section><!-- /.content -->
 		
 	</div>
-	 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Eliminar Producto</h4>
-        </div>
-        <div class="modal-body">
-          <p>¿Esta seguro que desea eliminar este Producto?.</p>
-        </div>
-        <div class="modal-footer">
-        <h:form>
-        	  <h:commandButton  action="#{productoBean.eliminarProducto()}" value="Aceptar" class="btn btn-default" />  
-        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
-        </h:form>
-        
-         
-        </div>
-      </div>
-      
-    </div>
-  </div>
 	</ui:define>
 	</ui:composition>
 	

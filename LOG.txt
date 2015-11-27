@@ -1,5 +1,5 @@
-
-Mon Oct 26 14:11:43 2015:	
+﻿
+Mon Oct 26 14:11:43 2015:
 	Se agrega clase para encriptar texto, y evaluar si un texto es igual a uno encriptado.
 	Se cambia Registro y Login de Usuario para usar contraseñas encriptadas.
 	Fix en AVBean, ahora toma el nickname de la sesion.

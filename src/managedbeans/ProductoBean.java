@@ -38,9 +38,7 @@ public class ProductoBean implements Serializable {
 	private UploadedFile file;
 	private long idAV;
 	private DataProducto dataProducto;
-	private String prodEliminar;
 	List<String> nomProd=new ArrayList<>();
-	
 	
 	public String getPrueba() {
 		return prueba;
@@ -58,11 +56,6 @@ public class ProductoBean implements Serializable {
 		this.file = file;
 	}
 	
-
-	
-
-	
-
 	private static final long serialVersionUID = 1L;
 	public List<DataProducto> getDprods2() {
 		return dprods2;
@@ -113,14 +106,6 @@ public class ProductoBean implements Serializable {
 	}
 
 	public ProductoBean() {
-	}
-	
-	public String getProdEliminar() {
-		return prodEliminar;
-	}
-
-	public void setProdEliminar(String prodEliminar) {
-		this.prodEliminar = prodEliminar;
 	}
 
 	public int getCantProd() {
@@ -241,7 +226,6 @@ public class ProductoBean implements Serializable {
 					dprods2.add(prods);
 				}
 			}
-			Url.redireccionarURL("verListaProducto");
 		} catch (Exception e) {
 			Url.redireccionarURL("error");
 			e.printStackTrace();
@@ -262,10 +246,10 @@ public class ProductoBean implements Serializable {
 		}
 
 	}
-	public void eliminarProducto() throws Exception {
+	public void eliminarProducto(String prodEliminar) throws Exception {
 		try {
 			HttpSession session = SesionBean.getSession();
-			long idAV= (long) session.getAttribute("idAV");
+			long idAV = (long) session.getAttribute("idAV");
 			cinv.eliminarProducto(prodEliminar, idAV);
 		} catch (Exception e) {
 			e.printStackTrace();

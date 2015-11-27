@@ -25,17 +25,17 @@
 	<ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
 			<style>
-.attrItem>input {
-	width: 50%;
-	float: left;
-}
-
-.agregarAttr>span {
-	float: right;
-	margin-top: 5px;
-	cursor: pointer;
-}
-</style>
+				.attrItem>input {
+						width: 50%;
+						float: left;
+				}
+				
+				.agregarAttr>span {
+					float: right;
+					margin-top: 5px;
+					cursor: pointer;
+				}
+			</style>
 			<div class="container-fluid clearfix">
 				<section class="content">
 				<div class="page-header text-center">
@@ -86,7 +86,7 @@
 										<h:selectOneMenu class="form-control"
 											value="#{productoBean.categoria}">
 											<c:forEach var="cat"
-												items="${categoriaBean.mostrarListaCategoria()}">
+												items="${avBean.mostrarListaCategoria()}">
 												<f:selectItem itemValue="${cat.nombre}"
 													itemLabel="${cat.nombre}" />
 											</c:forEach>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
 import dominio.datatypes.DataProducto;
@@ -47,26 +48,61 @@ public class AvBean implements Serializable {
 	private String textNotificacion;
 	private String textNota;
 	private long idNota;
-	private String prueba;
+	private String nombreProducto;
 	private int cantidad;
 	private boolean reemplazar;
 	private List<DataNotificacion> listNotificacionNoLeida=new ArrayList<>();
-	
+	private String categoriaEliminar;
+	private boolean eliminarCategoria;
 	private DataProductoAComprar dPrdAComp;
 	private List<DataProductoAComprar> listCompra;
 	private List<DataNotificacion> listNotificacion=new ArrayList<>();
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
+	private List<DataCategoria> cats = new ArrayList<>();
+	
 	public AvBean() {
 
 	}
-
-	public String getPrueba() {
-		return prueba;
+	
+	public List<DataCategoria> getCats() {
+		return cats;
 	}
 
-	public void setPrueba(String prueba) {
-		this.prueba = prueba;
+	public void setCats(List<DataCategoria> cats) {
+		this.cats = cats;
+	}
+
+	public String getCategoriaEliminar() {
+		return categoriaEliminar;
+	}
+
+	public void setCategoriaEliminar(String categoriaEliminar) {
+		this.categoriaEliminar = categoriaEliminar;
+	}
+
+	public boolean isEliminarCategoria() {
+		return eliminarCategoria;
+	}
+
+	public void setEliminarCategoria(boolean eliminarCategoria) {
+		this.eliminarCategoria = eliminarCategoria;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getNombreProducto() {
+		return nombreProducto;
+	}
+
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
 	}
 
 	public int getCantidad() {
@@ -179,8 +215,6 @@ public class AvBean implements Serializable {
 	public void setUsus(List<DataUsuario> usus) {
 		this.usus = usus;
 	}
-
-	
 
 	public String getNombreAV() {
 		return nombreAV;
@@ -379,7 +413,42 @@ public class AvBean implements Serializable {
 		
 	}
 	public String pruebaNom(String prue){
-		prueba=prue;
-		return prueba;
+		nombreProducto = prue;
+		return nombreProducto;
+	}
+	
+	public void prepararParaEliminar(String nombre) {
+		categoriaEliminar = nombre;
+		eliminarCategoria = true;
+	}
+	
+	public void eliminarCategoria() {
+		HttpSession session = SesionBean.getSession();
+		idAV = (long) session.getAttribute("idAV");
+		try {
+			cInv.eliminarCategoria(categoriaEliminar, idAV);
+			mostrarListaCategoria();
+			categoriaEliminar = null;
+			eliminarCategoria = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void cancelarEliminar() {
+		categoriaEliminar = null;
+		eliminarCategoria = false;
+	}
+	
+	public List<DataCategoria> mostrarListaCategoria() {
+		try {
+			HttpSession session = SesionBean.getSession();
+			idAV = (long) session.getAttribute("idAV");
+			cats = cInv.mostrarListaCategoria(idAV);
+		} catch (Exception e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+		return cats;
 	}
 }

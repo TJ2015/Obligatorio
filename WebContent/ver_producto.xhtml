@@ -28,7 +28,7 @@
 						<div class="col-md-6">
 							<div class="box box-solid">
 								<ui:param name="nombre" value="${productoBean.dataProducto.nombre}" />
-											#{avBean.pruebaNom(nombre)}
+									#{avBean.pruebaNom(nombre)}
 								<div class="box-header">
 									<h3 class="box-title">${productoBean.dataProducto.nombre}</h3>
 								</div>
@@ -78,26 +78,26 @@
 
 		<!-- Modal content-->
 		<div class="modal-content">
+		
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Eliminar Producto</h4>
 			</div>
+			
 			<div class="modal-body">
 				<p>Producto a eliminar: ${nombre}</p>
 				<p>¿Esta seguro que desea eliminar este Producto?</p>
 			</div>
+			
 			<div class="modal-footer">
 				<h:form>
-					<h:inputHidden value="${productoBean.prodEliminar}" />
-					<h:commandButton action="mostrarAV" actionListener="${productoBean.eliminarProducto()}"
-						value="Aceptar" class="btn btn-default" />
+					<h:commandButton action="mostrarAV" actionListener="${productoBean.eliminarProducto(avBean.nombreProducto)}"
+						value="Aceptar" class="btn btn-default" onclick="return cargarProducto();" />
 					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
 				</h:form>
-
-
 			</div>
+			
 		</div>
-
 	</div>
 </div>
 <!-- Modal -->
@@ -119,9 +119,9 @@
 			</div>
 			<div class="modal-footer">
 				
-					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.prueba,true)}"
+					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.nombreProducto,true)}"
 						value="Remplazar" class="btn btn-default" />
-					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.prueba,false)}"
+					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.nombreProducto,false)}"
 						value="Agregar" class="btn btn-default" />
 					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
 

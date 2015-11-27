@@ -60,5 +60,7 @@ public interface IInventarioDAO {
 	void close(String tenant);
 
 	public List<Producto> getAllProducto(String tenant);
+
+	public void actualizarProductoAComprar(ProductoAComprar pacAux);
 	
 }
