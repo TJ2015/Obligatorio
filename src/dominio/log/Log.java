@@ -1,7 +1,12 @@
 package dominio.log;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Entity implementation class for Entity: Log
@@ -15,19 +20,24 @@ public class Log implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String usuario; // id del usuario que ejecuta la accion
-	@OneToOne
+	private String nickUsuario; // id del usuario que ejecuta la accion
+	//@OneToOne
 	private Objetivo objetivo;
-	@OneToOne
+	//@OneToOne
 	private Accion accion;
-
+	
+	private String valor;
+	
+	private Date fecha;
+	
 	public Log() {
 	}
 
-	public Log(String usuario, Objetivo objetivo, Accion accion) {
-		this.usuario = usuario;
+	public Log(String nickUsuario, Objetivo objetivo, Accion accion) {
+		this.nickUsuario = nickUsuario;
 		this.objetivo = objetivo;
 		this.accion = accion;
+		this.fecha = new Date();
 	}
 
 	public long getId() {
@@ -39,11 +49,11 @@ public class Log implements Serializable {
 	}
 
 	public String getUsuario() {
-		return usuario;
+		return nickUsuario;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsuario(String nickUsuario) {
+		this.nickUsuario = nickUsuario;
 	}
 
 	public Objetivo getObjetivo() {
@@ -61,6 +71,22 @@ public class Log implements Serializable {
 	public void setAccion(Accion accion) {
 		this.accion = accion;
 	}
+	
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+	
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 	@Override
 	public int hashCode() {
@@ -69,7 +95,7 @@ public class Log implements Serializable {
 		result = prime * result + ((accion == null) ? 0 : accion.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((objetivo == null) ? 0 : objetivo.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + ((nickUsuario == null) ? 0 : nickUsuario.hashCode());
 		return result;
 	}
 
@@ -94,12 +120,14 @@ public class Log implements Serializable {
 				return false;
 		} else if (!objetivo.equals(other.objetivo))
 			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
+		if (nickUsuario == null) {
+			if (other.nickUsuario != null)
 				return false;
-		} else if (!usuario.equals(other.usuario))
+		} else if (!nickUsuario.equals(other.nickUsuario))
 			return false;
 		return true;
 	}
 
+
+	
 }

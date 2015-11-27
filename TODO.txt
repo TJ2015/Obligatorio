@@ -58,3 +58,19 @@ Cambiar iconos del registro de usuario, hay 3 lupas.
 No mostrar boton de inicio en perfil de usuario, o cambiar la barra en perfil
 
 Poner en negrita u otra forma los mensajes no leidos
+
+/***********************************************************/
+
+MODIFICACIONES IMPORTANTES:
+	- en el archivo de Tablas: comente las tablas de accion y objetivo y las FK a la tabla de LOG
+
+Reporte paa usuario:
+
+Producto:
+	- crear
+	- eliminar
+	- modificar stock
+	
+
+Reporte Para administrador
+	-chralar

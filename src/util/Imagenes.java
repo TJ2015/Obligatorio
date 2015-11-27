@@ -38,7 +38,8 @@ public final class Imagenes {
 		try {
 			URL url = new URL(urlString);
 			InputStream is = url.openStream();
-			bytes = new byte[1048576*8];
+			//bytes = new byte[4194304];
+			bytes = new byte[is.available()];
 			//InputStream in = file.getInputstream();
 			OutputStream out = new FileOutputStream(new File("imagen.jpg"));
 			out.write(bytes, 0, is.read(bytes));

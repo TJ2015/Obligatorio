@@ -50,7 +50,7 @@ public class Usuario implements Serializable {
 	private byte[] bytesImagen;
 	private String nombreImagen;
 	private String idSocial;
-
+	
 	@ManyToOne
 	private TipoUsuario tipoUsuario;
 
@@ -93,11 +93,11 @@ public class Usuario implements Serializable {
 	}
 
 	public Usuario(DataUsuarioSocial usuarioSocial) {
-		super();
 		this.nombre = usuarioSocial.first_name;
 		this.apellido = usuarioSocial.last_name;
 		this.email = usuarioSocial.email;
 		this.fechaNacimiento = new Date();
+		this.fechaRegistro = new Date();
 		this.idSocial = usuarioSocial.id;
 		this.nombreImagen = "imagenSocial.jpg";
 		this.nick = "FB_" + usuarioSocial.id.toString();

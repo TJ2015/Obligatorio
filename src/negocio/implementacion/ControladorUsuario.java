@@ -124,6 +124,7 @@ public class ControladorUsuario implements IControladorUsuario {
 			if (usuario == null) {
 				usuario = new Usuario(usuarioSocial);
 				usuario.setTipoUsuario(tipoDAO.obtenerTipoUsuarioSocial(redSocial));
+				usuario.setFecchaRegistro(new Date());
 				usuario = usuarioDAO.altaUsuario(usuario);
 				if (usuario != null) {
 					StringBuilder mensaje = new StringBuilder();

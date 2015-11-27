@@ -13,7 +13,6 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ServletImagen</servlet-name>
     <servlet-class>servlets.ServletImagen</servlet-class>
@@ -22,7 +21,6 @@
     <servlet-name>ServletImagen</servlet-name>
     <url-pattern>/imagenes/usuario/*</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>ServletImagenProducto</servlet-name>
     <servlet-class>servlets.ServletImagenProducto</servlet-class>
@@ -31,8 +29,7 @@
     <servlet-name>ServletImagenProducto</servlet-name>
     <url-pattern>/imagenes/producto/*</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>PayPal Pagar</servlet-name>
     <servlet-class>servlets.PayPalPagar</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -41,7 +38,6 @@
     <servlet-name>PayPal Pagar</servlet-name>
     <url-pattern>/paypal/pagar</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>PayPal Preparar</servlet-name>
     <servlet-class>servlets.PayPalPreparar</servlet-class>

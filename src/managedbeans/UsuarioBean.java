@@ -225,7 +225,6 @@ public class UsuarioBean implements Serializable
 				session.setAttribute("dataUsuario", dataUsuario);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				AVsComp = cusu.mostrarListaAvComparidos(nick);
-
 				Url.redireccionarURL("usuario_sapo");
 			} else {
 				Url.redireccionarURL("error");
@@ -274,20 +273,15 @@ public class UsuarioBean implements Serializable
 	
 	public void mostrarListaAV() 
 	{
-		
-			HttpSession session = SesionBean.getSession();
-			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-			AVs = cusu.mostrarListaAv(nick);
-
+		HttpSession session = SesionBean.getSession();
+		session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+		AVs = cusu.mostrarListaAv(nick);
 	}
 	public void mostrarListaAVCompartidos() 
 	{
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		AVsComp = cusu.mostrarListaAvComparidos(nick);
-				
-			
-
 	}
 	
 	public boolean existeUsuarioLogeado()
@@ -324,8 +318,6 @@ public class UsuarioBean implements Serializable
 			HttpSession session = SesionBean.getSession();
 			session.setAttribute("dAV", cav.traerAV(idAV));
 			session.setAttribute("idAV", idAV);
-			
-
 		} catch (NoExisteElAV e) {
 			e.printStackTrace();
 		}
@@ -365,10 +357,10 @@ public class UsuarioBean implements Serializable
 	}
 	public void cargarMensaje(long idMsj) throws MensajeNoEncotrado 
 	{
-			
-			dmsj= cusu.getMensaje(idMsj);
-			cusu.marcarMensajeComoLeido(idMsj);
+		dmsj= cusu.getMensaje(idMsj);
+		cusu.marcarMensajeComoLeido(idMsj);
 	}
+	
 	public void eliminarMensajeRecibido(long idMsj) throws MensajeNoEncotrado, UsuarioNoEncontrado 
 	{
 			HttpSession session = SesionBean.getSession();
@@ -382,7 +374,53 @@ public class UsuarioBean implements Serializable
 				msjs=cusu.getMensajesEnviados(usuario);
 
 			}
-			
-	}
 
+	}
+	
+	
+	public String obtenerNombreCompleto()
+	{
+		String nombreCompleto = null;
+		try {
+			DataUsuario dataUsuario = (DataUsuario)SesionBean.getSession().getAttribute("dataUsuario");
+			nombreCompleto = dataUsuario.obtenerNombreCompleto();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nombreCompleto;
+	}
+	
+	public void GuardarDatosLoginFace()
+	{
+		try {
+			Url.redireccionarURL(ActualizarDatos() ? "usuario_sapo" : "login");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public boolean ActualizarDatos()
+	{
+		boolean actualizo = false;
+		try {
+			HttpSession session = SesionBean.getSession();
+			DataUsuario dataUsuarioSesion = (DataUsuario)session.getAttribute("dataUsuario");
+			if (dataUsuarioSesion != null) {
+				DataUsuario dataUsuario = cusu.getUsuario(dataUsuarioSesion.getNick());
+				this.dusu = dataUsuario;
+				this.nick = dataUsuario.getNick();
+				this.AVsComp = cusu.mostrarListaAvComparidos(nick);
+				this.logueado = true;
+				session.setAttribute("nickname", nick);
+				session.setAttribute("dataUsuario", dusu);
+				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
+				actualizo = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return actualizo;
+	}
+	
 }

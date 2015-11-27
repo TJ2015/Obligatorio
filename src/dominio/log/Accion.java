@@ -8,6 +8,10 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({ 
+	@NamedQuery(name = "Accion.getAll", query = "SELECT a FROM Accion a"),
+	@NamedQuery(name = "Accion.buscarPorNombre", query = "SELECT a FROM Accion a WHERE a.nombre = :nombre"),
+})
 public class Accion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -15,13 +19,15 @@ public class Accion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	private String nombre;
 	private String descripcion;
 
 	public Accion() {
 	}
 
-	public Accion(String descripcion) {
+	public Accion(String nombre, String descripcion) {
 		this.descripcion = descripcion;
+		this.nombre = nombre.toUpperCase();
 	}
 
 	public long getId() {
@@ -32,40 +38,20 @@ public class Accion implements Serializable {
 		this.id = id;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre.toUpperCase();
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Accion other = (Accion) obj;
-		if (descripcion == null) {
-			if (other.descripcion != null)
-				return false;
-		} else if (!descripcion.equals(other.descripcion))
-			return false;
-		if (id != other.id)
-			return false;
-		return true;
 	}
 
 }

@@ -17,8 +17,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.Gson;
+
 import dominio.datatypes.DataChat;
 import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataUsuarioSocial;
 
 
 @ServerEndpoint(value="/chat", configurator=ServletAwareConfig.class)
@@ -64,18 +67,21 @@ public class ChatEndpoint  {
     @OnMessage
     public void onMessage(String message, Session session) {
     	System.out.println(message);
+    	Gson gson = new Gson();
+		DataChat mensaje = gson.fromJson(message, DataChat.class);
+    	System.out.println(session.getId());
     	DataChat usuarioActual = USUARIOS.get(session.getId());
-    	DataChat usuarioAux = null;
     	Iterator<Session> iter = SESSIONES.iterator();
-    	Session sessionAux = null;
     	while (iter.hasNext()) {
 			try {
-				sessionAux = iter.next();
-				usuarioAux = USUARIOS.get(sessionAux.getId());
+				Session sessionAux = iter.next();
+				DataChat usuarioAux = new DataChat(USUARIOS.get(sessionAux.getId()));
 				if (usuarioActual != null && usuarioAux != null && usuarioActual.getIdAV() == usuarioAux.getIdAV()) {
-					usuarioAux.setMensaje(message);
+					usuarioAux.setMensaje(mensaje.getMensaje());
+					usuarioAux.setNombreCompleto(mensaje.getNombreCompleto());
+					usuarioAux.setSoyYo(usuarioAux.getNickUsuario().equals(mensaje.getNickUsuario()));
+					usuarioAux.setNickUsuario(mensaje.getNickUsuario());
 					usuarioAux.setFecha(Fecha.convertirParaChat(new Date(), "dd-MM-yyyy - HH:mm:ss"));
-					usuarioAux.setSoyYo(usuarioActual.getNickUsuario().equals(usuarioAux.getNickUsuario()));
 					sessionAux.getBasicRemote().sendObject(usuarioAux.serializar());
 				}
 			} catch (Exception e) {
