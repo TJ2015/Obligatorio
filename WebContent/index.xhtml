@@ -34,19 +34,19 @@
 					</ol>
 					<div class="carousel-inner">
 						<div class="item">
-							<img src="resources/img/slide1.jpg" alt="First slide" class="tales"></img>
+							<img src="resources/img/slide1.jpg" alt="First slide" class="tales" style="height: 450px; width: 100%"></img>
 							<div class="carousel-caption">First Slide</div>
 						</div>
 						<div class="item">
-							<img src="resources/img/slide2.jpg" alt="Second slide" class="tales"></img>
+							<img src="resources/img/slide2.jpg" alt="Second slide" class="tales" style="height: 450px; width: 100%"></img>
 							<div class="carousel-caption">Second Slide</div>
 						</div>
 						<div class="item">
-							<img src="resources/img/slide3.jpg" alt="Third slide" class="tales"></img>
+							<img src="resources/img/slide3.jpg" alt="Third slide" class="tales" style="height: 450px; width: 100%"></img>
 							<div class="carousel-caption">Third Slide</div>
 						</div>
 						<div class="item active">
-							<img src="resources/img/slide4.jpg" alt="Fourth slide" class="tales"></img>
+							<img src="resources/img/slide4.jpg" alt="Fourth slide" class="tales" style="height: 450px; width: 100%"></img>
 							<div class="carousel-caption">Fourth Slide</div>
 						</div>
 					</div>
@@ -64,17 +64,9 @@
 					<div class="btn-group-vertical" role="group"
 						aria-label="Vertical button group">
 
-						<h:form styleClass="form">
-
-							<h:commandButton id="botonVerAv" styleClass="btn btn-success"
-								value="Ver lista de AV" action="#{usuarioBean.mostrarListaAV()}" />
-						</h:form>
-
+						
 						<div class="btn-group" role="group">
-							<button id="btnGroupDrop1" type="button"
-								class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Almacén
-								Virtual</button>
+							
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								<a class="dropdown-item" href="av_crear.xhtml">Crear AV</a> <br></br>
 								<a class="dropdown-item" href="compartirAv.xhtml">Compartir
@@ -84,9 +76,7 @@
 						</div>
 
 						<div class="btn-group" role="group">
-							<button id="btnGroupDrop2" type="button"
-								class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Categoria</button>
+							
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
 								<a class="dropdown-item" href="categoria_crear.xhtml">Crear
 									Categoria</a> <br></br>
@@ -94,20 +84,14 @@
 						</div>
 
 						<div class="btn-group" role="group">
-							<button id="btnGroupDrop3" type="button"
-								class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">Producto</button>
+							
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
 								<a class="dropdown-item" href="producto_crear.xhtml">Crear
 									Producto</a> <br></br> <a class="dropdown-item"
 									href="categoria_crear.xhtml">Eliminar Producto</a> <br></br>
 							</div>
 						</div>
-						<!-- <li><a href="categoria_crear.xhtml" style="color: white;">Crear Categoria</a> <br /></li>
-						<li><a href="producto_crear.xhtml" style="color: white;">Crear Producto</a> <br /></li>
-						 -->
-
-						<!--  </ul>-->
+					
 					</div>
 				</c:if>
 
