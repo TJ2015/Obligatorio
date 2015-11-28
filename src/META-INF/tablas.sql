@@ -63,6 +63,19 @@ CREATE TABLE IF NOT EXISTS `Alerta` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+CREATE TABLE IF NOT EXISTS `Log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime DEFAULT NULL,
+  `idAccion` bigint(20) NOT NULL,
+  `idObjetivo` bigint(20) NOT NULL,
+  `idRefenecia` bigint(20) NOT NULL,
+  `nickUsuario` varchar(255) DEFAULT NULL,
+  `valor` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/*
 CREATE TABLE IF NOT EXISTS `Log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(255) DEFAULT NULL,
@@ -70,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `Log` (
   `objetivo_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*
+
 CREATE TABLE IF NOT EXISTS `Accion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,

@@ -24,6 +24,7 @@ import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 
 import util.PayPalUtil;
+import util.Url;
 
 @WebServlet("/PayPal")
 public class PayPalPreparar extends HttpServlet {
@@ -77,8 +78,11 @@ public class PayPalPreparar extends HttpServlet {
 				.setTransactions(transactions);
 		
 		// Redirect URLs
-		redirectUrls.setReturnUrl("http://sapito-obligatorio.rhcloud.com/PayPalTest/paypal/pagar?approved=true")
-				.setCancelUrl("http://sapito-obligatorio.rhcloud.com/PayPalTest/paypal/pagar?approved=false");
+		
+		String url = Url.obtenerActualURL(request);
+		
+		redirectUrls.setReturnUrl(url + "paypal/pagar?approved=true")
+				.setCancelUrl(url + "paypal/pagar?approved=false");
 		
 		//redirectUrls.setReturnUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=true")
 		//.setCancelUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=false");

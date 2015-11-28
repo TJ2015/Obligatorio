@@ -37,7 +37,10 @@ public class LoginFacebook extends HttpServlet {
 		if (code == null || code.equals("")) {
 			throw new RuntimeException("ERROR: No se obtuvo el parametro 'Code' desde Facebook.");
 		}
-		FacebookBean facebook = new FacebookBean();
+		
+		String url = Url.obtenerActualURL(request);
+		
+		FacebookBean facebook = new FacebookBean(url);
 		String accessToken = facebook.getAccessToken(code);
 
 		facebook.setAccessToken(accessToken);

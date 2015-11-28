@@ -8,10 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * Entity implementation class for Entity: Log
- *
- */
+import dominio.datatypes.log.DataLog;
+
+
 @Entity
 public class Log implements Serializable {
 
@@ -20,11 +19,14 @@ public class Log implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	private long idRefenecia;
+	
 	private String nickUsuario; // id del usuario que ejecuta la accion
 	//@OneToOne
-	private Objetivo objetivo;
+	private long idObjetivo;
 	//@OneToOne
-	private Accion accion;
+	private long idAccion;
 	
 	private String valor;
 	
@@ -33,10 +35,12 @@ public class Log implements Serializable {
 	public Log() {
 	}
 
-	public Log(String nickUsuario, Objetivo objetivo, Accion accion) {
-		this.nickUsuario = nickUsuario;
-		this.objetivo = objetivo;
-		this.accion = accion;
+	public Log(DataLog dataLog) {
+		this.idRefenecia = dataLog.getIdReferencia();
+		this.nickUsuario = dataLog.getNickUsuario();
+		this.idAccion = dataLog.getIdAccion();
+		this.idObjetivo = dataLog.getIdObjetivo();
+		this.valor = dataLog.getValor();
 		this.fecha = new Date();
 	}
 
@@ -56,21 +60,7 @@ public class Log implements Serializable {
 		this.nickUsuario = nickUsuario;
 	}
 
-	public Objetivo getObjetivo() {
-		return objetivo;
-	}
-
-	public void setObjetivo(Objetivo objetivo) {
-		this.objetivo = objetivo;
-	}
-
-	public Accion getAccion() {
-		return accion;
-	}
-
-	public void setAccion(Accion accion) {
-		this.accion = accion;
-	}
+	
 	
 	public String getValor() {
 		return valor;
@@ -88,45 +78,31 @@ public class Log implements Serializable {
 		this.fecha = fecha;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((accion == null) ? 0 : accion.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((objetivo == null) ? 0 : objetivo.hashCode());
-		result = prime * result + ((nickUsuario == null) ? 0 : nickUsuario.hashCode());
-		return result;
+	public long getIdAccion() {
+		return idAccion;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Log other = (Log) obj;
-		if (accion == null) {
-			if (other.accion != null)
-				return false;
-		} else if (!accion.equals(other.accion))
-			return false;
-		if (id != other.id)
-			return false;
-		if (objetivo == null) {
-			if (other.objetivo != null)
-				return false;
-		} else if (!objetivo.equals(other.objetivo))
-			return false;
-		if (nickUsuario == null) {
-			if (other.nickUsuario != null)
-				return false;
-		} else if (!nickUsuario.equals(other.nickUsuario))
-			return false;
-		return true;
+	public void setIdAccion(long idAccion) {
+		this.idAccion = idAccion;
 	}
+
+	public long getIdObjetivo() {
+		return idObjetivo;
+	}
+
+	public void setIdObjetivo(long idObjetivo) {
+		this.idObjetivo = idObjetivo;
+	}
+
+	public long getIdRefenecia() {
+		return idRefenecia;
+	}
+
+	public void setIdRefenecia(long idRefenecia) {
+		this.idRefenecia = idRefenecia;
+	}
+
+	
 
 
 	

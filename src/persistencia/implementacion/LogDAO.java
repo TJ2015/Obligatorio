@@ -6,98 +6,42 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
-import dominio.log.Accion;
+import org.hibernate.Session;
+
 import dominio.log.Log;
-import dominio.log.Objetivo;
 import persistencia.interfases.ILogDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class LogDAO implements ILogDAO {
 
+	private Session session;
 	
-	@javax.persistence.PersistenceContext(unitName="Obligatorio")
-	private javax.persistence.EntityManager em;
+	@Override
+	public void openTenant(String tenant) {
+		session = util.DBUtil.crearSession(tenant);
+	}
 	
-	
-	
+	@Override
+	public void closeTenant(String tenant) {
+		session.getSessionFactory().close();
+	}
+
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean persistirLog(Log log) {
-		boolean persistio = false;
+		boolean crea = false;
 		try {
-			em.persist(log);
-			persistio = true;
+			session.beginTransaction();
+			session.persist(log);
+			session.getTransaction().commit();
+			crea = true;
+
 		} catch (Exception e) {
+			System.out.println("No se guarda el Log");
 		}
-		return persistio;
-	}
-
-
-
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean persistirObjetivo(Objetivo objetivo) {
-		boolean persistio = false;
-		try {
-			em.persist(objetivo);
-			persistio = true;
-		} catch (Exception e) {
-		}
-		return persistio;
-	}
-
-
-
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean persistirAccion(Accion accion) {
-		boolean persistio = false;
-		try {
-			em.persist(accion);
-			persistio = true;
-		} catch (Exception e) {
-		}
-		return persistio;
-	}
-
-
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Accion buscarAccionPorNombre(String nombre) {
-		Accion accion = null;
-		try {
-			accion = em.createNamedQuery("Accion.buscarPorNombre", Accion.class)
-			.setParameter("nombre", nombre)
-			.getSingleResult();
-		} catch (Exception e) {
-			System.out.println("No existe la Accion " + nombre);
-		}
-		return accion;
-	}
-
-
-
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Objetivo buscarObjetivoPorNombre(String nombre) {
-		Objetivo objetivo = null;
-		try {
-			objetivo = em.createNamedQuery("Objetivo.buscarPorNombre", Objetivo.class)
-			.setParameter("nombre", nombre)
-			.getSingleResult();
-		} catch (Exception e) {
-			System.out.println("No existe el Objetivo " + nombre);
-		}
-		return objetivo;
-	}
-
-
-
-	@Override
-	public boolean crearLog(Log log, String tenant) {
-		// TODO Auto-generated method stub
-		return false;
+		return crea;
 	}
 
 	
