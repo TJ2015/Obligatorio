@@ -28,6 +28,7 @@
 								<tr>
 									<th>Nombre</th>
 									<th>Cantidad de Productos</th>
+									<th>Acciones</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -36,12 +37,14 @@
 										<tr>
 											<td>
 												<a href="mostrarAV.xhtml"> ${cat.nombre} </a>
-												<h:commandLink action="verListaCategoria" actionListener="${avBean.prepararParaEliminar(cat.nombre)}" value="" style="float: right">
-													<i class="fa fa-trash-o" style="float: right"></i>
-												</h:commandLink>
 											</td>
 											<td>
 												${cat.productos.size()}
+											</td>
+											<td>
+												<h:commandLink action="verListaCategoria" actionListener="${avBean.prepararParaEliminar(cat.nombre)}" value="" style="float: right">
+													<i class="fa fa-trash-o" style="float: right"></i>
+												</h:commandLink>
 											</td>
 										</tr>
 									</c:forEach>
@@ -51,6 +54,7 @@
 								<tr>
 									<th>Nombre</th>
 									<th>Cantidad de Productos</th>
+									<th>Acciones</th>
 								</tr>
 							</tfoot>
 						</table>

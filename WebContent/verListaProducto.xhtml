@@ -55,7 +55,11 @@ li i {
 
 								<c:forEach var="p" items="${productoBean.mostrarTodosProd()}">
 									<tr>
-										<td><a href="ver_producto.xhtml"> ${p.nombre} </a></td>
+										<td>
+											<h:form>
+												<h:commandLink action="ver_producto" actionListener="${productoBean.cargarDataProducto(p.nombre)}" value="${p.nombre}" />
+											</h:form>
+										</td>
 										<td>#{p.categoria}</td>
 										<td>
 											${p.stock}
