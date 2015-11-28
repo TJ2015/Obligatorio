@@ -16,6 +16,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
@@ -28,8 +29,7 @@ import util.Url;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable 
-{
+public class UsuarioBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -48,17 +48,26 @@ public class UsuarioBean implements Serializable
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsComp = new ArrayList<>();
+	private List<DataAV> todosAV = new ArrayList<>();
 	List<DataMensaje> msjsNoLeidos = new ArrayList<>();
 	List<DataMensaje> msjsEnviados = new ArrayList<>();
 	List<DataMensaje> msjsRecibidos = new ArrayList<>();
 	private boolean logueado;
 	private DataMensaje dmsj;
 	private DataUsuario dusu;
-	private boolean recibido=false;
+	private boolean recibido = false;
 	private UploadedFile file;
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
-	
+
+	public List<DataAV> getTodosAV() {
+		return todosAV;
+	}
+
+	public void setTodosAV(List<DataAV> todosAV) {
+		this.todosAV = todosAV;
+	}
+
 	public String getAsunto() {
 		return asunto;
 	}
@@ -74,7 +83,7 @@ public class UsuarioBean implements Serializable
 	public void setRecibido(boolean recibido) {
 		this.recibido = recibido;
 	}
-	
+
 	public List<DataAV> getAVsComp() {
 		return AVsComp;
 	}
@@ -98,6 +107,7 @@ public class UsuarioBean implements Serializable
 	public void setMsjsRecibidos(List<DataMensaje> msjsRecibidos) {
 		this.msjsRecibidos = msjsRecibidos;
 	}
+
 	public List<DataMensaje> getMsjsEnviados() {
 		return msjsEnviados;
 	}
@@ -105,6 +115,7 @@ public class UsuarioBean implements Serializable
 	public void setMsjsEnviados(List<DataMensaje> msjsEnviados) {
 		this.msjsEnviados = msjsEnviados;
 	}
+
 	public DataMensaje getDmsj() {
 		return dmsj;
 	}
@@ -112,6 +123,7 @@ public class UsuarioBean implements Serializable
 	public void setDmsj(DataMensaje dmsj) {
 		this.dmsj = dmsj;
 	}
+
 	public String getDestinatario() {
 		return destinatario;
 	}
@@ -127,6 +139,7 @@ public class UsuarioBean implements Serializable
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
+
 	public List<DataMensaje> getMsjsNoLeidos() {
 		return msjsNoLeidos;
 	}
@@ -134,7 +147,7 @@ public class UsuarioBean implements Serializable
 	public void setMsjsNoLeidos(List<DataMensaje> msjsNoLeidos) {
 		this.msjsNoLeidos = msjsNoLeidos;
 	}
-		
+
 	public boolean isLogueado() {
 		return logueado;
 	}
@@ -142,9 +155,7 @@ public class UsuarioBean implements Serializable
 	public void setLogueado(boolean logueado) {
 		this.logueado = logueado;
 	}
-	
-	
-	
+
 	public UsuarioBean() {
 
 	}
@@ -213,13 +224,12 @@ public class UsuarioBean implements Serializable
 		this.dusu = dusu;
 	}
 
-	public void login() throws IOException 
-	{
+	public void login() throws IOException {
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
-			
+
 			if (dataUsuario != null) {
-				logueado=true;
+				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dataUsuario);
@@ -229,18 +239,16 @@ public class UsuarioBean implements Serializable
 			} else {
 				Url.redireccionarURL("error");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
 	}
 
-	public void logout() throws IOException 
-	{
+	public void logout() throws IOException {
 		try {
 			HttpSession session = SesionBean.getSession();
-			logueado=false;
+			logueado = false;
 			Url.redireccionarURL("index");
 			session.invalidate();
 		} catch (Exception e) {
@@ -248,48 +256,54 @@ public class UsuarioBean implements Serializable
 			e.printStackTrace();
 		}
 	}
-		
-	
-	public void registroUsuario() 
-	{
+
+	public void registroUsuario() {
 		try {
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
-				logueado=true;
+				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dusu);
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				Url.redireccionarURL("usuario_sapo");
-			} 
-			else {
+			} else {
 				Url.redireccionarURL("error");
 			}
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void mostrarListaAV() 
-	{
+
+	public List<DataAV> mostrarListaAV() {
+
 		HttpSession session = SesionBean.getSession();
 		session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-		AVs = cusu.mostrarListaAv(nick);
+		return AVs = cusu.mostrarListaAv(nick);
 	}
-	public void mostrarListaAVCompartidos() 
-	{
+
+	public List<DataAV> mostrarListaAVCompartidos() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		return AVsComp = cusu.mostrarListaAvComparidos(nick);
+	}
+
+	public List<DataAV> mostrarTodosAV() {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		AVsComp = cusu.mostrarListaAvComparidos(nick);
+
+		todosAV = AVs;
+		todosAV.addAll(AVsComp);
+
+		return todosAV;
 	}
-	
-	public boolean existeUsuarioLogeado()
-	{
+
+	public boolean existeUsuarioLogeado() {
 		boolean existeUsuario = false;
 		try {
 			HttpSession session = SesionBean.getSession();
-			DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
+			DataUsuario dataUsuario = (DataUsuario) session.getAttribute("dataUsuario");
 			existeUsuario = dataUsuario != null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -305,14 +319,14 @@ public class UsuarioBean implements Serializable
 		this.file = file;
 	}
 
-	public StreamedContent  getImagen() {
+	public StreamedContent getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(StreamedContent  imagen) {
+	public void setImagen(StreamedContent imagen) {
 		this.imagen = imagen;
 	}
-	
+
 	public void verAV(long idAV) {
 		try {
 			HttpSession session = SesionBean.getSession();
@@ -323,89 +337,83 @@ public class UsuarioBean implements Serializable
 		}
 	}
 
-	public List<DataMensaje> mostrarListaMsjNoLeidos() throws UsuarioNoEncontrado 
-	{
-			HttpSession session = SesionBean.getSession();
-			String nick = (String) session.getAttribute("nickname");
-			msjsNoLeidos=cusu.getMensajesRecibidosNoLeidos(nick);
-			return msjsNoLeidos;
-			
+	public List<DataMensaje> mostrarListaMsjNoLeidos() throws UsuarioNoEncontrado {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		msjsNoLeidos = cusu.getMensajesRecibidosNoLeidos(nick);
+		return msjsNoLeidos;
+
 	}
-	public List<DataMensaje> listMensajesEnviados() throws UsuarioNoEncontrado 
-	{
-			HttpSession session = SesionBean.getSession();
-			String nick = (String) session.getAttribute("nickname");
-			msjs=cusu.getMensajesEnviados(nick);
-			recibido=false;
-			return msjs;
-			
+
+	public List<DataMensaje> listMensajesEnviados() throws UsuarioNoEncontrado {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		msjs = cusu.getMensajesEnviados(nick);
+		recibido = false;
+		return msjs;
+
 	}
-	public List<DataMensaje> listMensajesRecibidos() throws UsuarioNoEncontrado 
-	{
-			HttpSession session = SesionBean.getSession();
-			String nick = (String) session.getAttribute("nickname");
-			msjs = cusu.getMensajesRecibidos(nick);
-			recibido=true;
-			return msjs;
-			
+
+	public List<DataMensaje> listMensajesRecibidos() throws UsuarioNoEncontrado {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		msjs = cusu.getMensajesRecibidos(nick);
+		recibido = true;
+		return msjs;
+
 	}
-	public void crearMensaje() 
-	{
-			HttpSession session = SesionBean.getSession();
-			String remitente = (String) session.getAttribute("nickname");
-			boolean msjCreado= cusu.enviarMensaje(remitente, destinatario, mensaje,asunto);
+
+	public void crearMensaje() {
+		HttpSession session = SesionBean.getSession();
+		String remitente = (String) session.getAttribute("nickname");
+		boolean msjCreado = cusu.enviarMensaje(remitente, destinatario, mensaje, asunto);
 	}
-	public void cargarMensaje(long idMsj) throws MensajeNoEncotrado 
-	{
-		dmsj= cusu.getMensaje(idMsj);
+
+	public void cargarMensaje(long idMsj) throws MensajeNoEncotrado {
+		dmsj = cusu.getMensaje(idMsj);
 		cusu.marcarMensajeComoLeido(idMsj);
 	}
-	
-	public void eliminarMensajeRecibido(long idMsj) throws MensajeNoEncotrado, UsuarioNoEncontrado 
-	{
-			HttpSession session = SesionBean.getSession();
-			String usuario = (String) session.getAttribute("nickname");
-			if(recibido){
-				cusu.eliminarMensajeRecibido(usuario, idMsj);
-				msjs = cusu.getMensajesRecibidos(usuario);
 
-			}else{
-				cusu.eliminarMensajeEnviado(usuario, idMsj);
-				msjs=cusu.getMensajesEnviados(usuario);
+	public void eliminarMensajeRecibido(long idMsj) throws MensajeNoEncotrado, UsuarioNoEncontrado {
+		HttpSession session = SesionBean.getSession();
+		String usuario = (String) session.getAttribute("nickname");
+		if (recibido) {
+			cusu.eliminarMensajeRecibido(usuario, idMsj);
+			msjs = cusu.getMensajesRecibidos(usuario);
 
-			}
+		} else {
+			cusu.eliminarMensajeEnviado(usuario, idMsj);
+			msjs = cusu.getMensajesEnviados(usuario);
+
+		}
 
 	}
-	
-	
-	public String obtenerNombreCompleto()
-	{
+
+	public String obtenerNombreCompleto() {
 		String nombreCompleto = null;
 		try {
-			DataUsuario dataUsuario = (DataUsuario)SesionBean.getSession().getAttribute("dataUsuario");
+			DataUsuario dataUsuario = (DataUsuario) SesionBean.getSession().getAttribute("dataUsuario");
 			nombreCompleto = dataUsuario.obtenerNombreCompleto();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return nombreCompleto;
 	}
-	
-	public void GuardarDatosLoginFace()
-	{
+
+	public void GuardarDatosLoginFace() {
 		try {
 			Url.redireccionarURL(ActualizarDatos() ? "usuario_sapo" : "login");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public boolean ActualizarDatos()
-	{
+
+	public boolean ActualizarDatos() {
 		boolean actualizo = false;
 		try {
 			HttpSession session = SesionBean.getSession();
-			DataUsuario dataUsuarioSesion = (DataUsuario)session.getAttribute("dataUsuario");
+			DataUsuario dataUsuarioSesion = (DataUsuario) session.getAttribute("dataUsuario");
 			if (dataUsuarioSesion != null) {
 				DataUsuario dataUsuario = cusu.getUsuario(dataUsuarioSesion.getNick());
 				this.dusu = dataUsuario;
@@ -422,5 +430,5 @@ public class UsuarioBean implements Serializable
 		}
 		return actualizo;
 	}
-	
+
 }

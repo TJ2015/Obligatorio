@@ -65,15 +65,15 @@
 										<a data-toggle="modal" data-target="#modalEliminar">
 											<i class="fa fa-trash-o botonProd" style="float:right; font-size: 40px;"></i>
 										</a>
-										<h:commandLink action="mostrarAV" >
+										<a data-toggle="modal" data-target="#modalEliminar">
 											<i class="fa fa-pencil botonProd" style="float:right; font-size: 40px;"></i>
-										</h:commandLink>
-										<h:commandLink action="mostrarAV" >
+										</a>
+										<a data-toggle="modal" data-target="#modalCopiar">
 											<i class="fa fa-copy botonProd" style="float:right; font-size: 40px;"></i>
-										</h:commandLink>
-										<h:commandLink action="mostrarAV" >
+										</a>
+										<a data-toggle="modal" data-target="#modalCortar">
 											<i class="fa fa-cut botonProd" style="float:right; font-size: 40px;"></i>
-										</h:commandLink>
+										</a>
 									</h:form>
 							<!-- /.box -->
 						</div>
@@ -132,6 +132,74 @@
 						value="Remplazar" class="btn btn-default" />
 					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.nombreProducto,false)}"
 						value="Agregar" class="btn btn-default" />
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+
+
+			</div>
+			</h:form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalCopiar" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Copiar producto</h4>
+			</div>
+			<h:form>
+			
+			<div class="modal-body">
+				<p>Elige el av a donde copiar el producto</p>
+				 <h:selectOneMenu class="form-control" value="#{productoBean.idAvCopiar}">
+				<c:forEach var="av" items="${usuarioBean.mostrarTodosAV()}">
+					<f:selectItem itemValue="${av.getIdAV()}" itemLabel="${av.getNombreAV()}" />
+				</c:forEach>
+			</h:selectOneMenu>
+			</div>
+			<div class="modal-footer">
+				
+					<h:commandButton action="mostrarAV" actionListener="${productoBean.copiarProducto(avBean.nombreProducto)}"
+						value="Copiar" class="btn btn-default" />
+					
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+
+
+			</div>
+			</h:form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalCortar" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Cortar producto</h4>
+			</div>
+			<h:form>
+			
+			<div class="modal-body">
+				<p>Elige el av a donde mover el producto</p>
+				 <h:selectOneMenu class="form-control" value="#{productoBean.idAvCopiar}">
+				<c:forEach var="av" items="${usuarioBean.mostrarTodosAV()}">
+					<f:selectItem itemValue="${av.getIdAV()}" itemLabel="${av.getNombreAV()}" />
+				</c:forEach>
+			</h:selectOneMenu>
+			</div>
+			<div class="modal-footer">
+				
+					<h:commandButton action="mostrarAV" actionListener="${productoBean.cortarProducto(avBean.nombreProducto)}"
+						value="Copiar" class="btn btn-default" />
+					
 					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
 
 
