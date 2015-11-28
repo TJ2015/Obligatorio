@@ -45,7 +45,7 @@ public class AvBean implements Serializable {
 	private String nombreAV;
 	private String mensaje;
 	private String usuarioCreador;
-	private int cantUsuComp;
+	private List<String> cantUsuComp;
 	private String textNotificacion;
 	private String textNota;
 	private long idNota;
@@ -208,15 +208,23 @@ public class AvBean implements Serializable {
 	public void setIdNota(long idNota) {
 		this.idNota = idNota;
 	}
+	
+	
+	
+	
+	
 
-
-	public int getCantUsuComp() {
+	public List<String> getCantUsuComp() {
 		return cantUsuComp;
 	}
 
-	public void setCantUsuComp(int cantUsuComp) {
+	public void setCantUsuComp(List<String> cantUsuComp) {
 		this.cantUsuComp = cantUsuComp;
 	}
+	
+	
+	
+	
 
 	public List<DataUsuario> getUsus() {
 		return usus;
@@ -297,12 +305,31 @@ public class AvBean implements Serializable {
 		long idAV= (long) session.getAttribute("idAV");
 		
 		if (cUsu.existeUsuarioNick(nickname)) {
-			cantUsuComp=cUsu.getUsuario(nickname).getAVsCompar().size();
 			cAV.compartirAV(idAV, nickname);
-			cantUsuComp++;
+			
 		}
-
+		
 	}
+	
+	
+	public int cantUsuariosCompartidos(){
+		HttpSession session = SesionBean.getSession();
+		long idAV= (long) session.getAttribute("idAV");
+		try {
+			return cAV.traerAV(idAV).getUsuariosCompartidos().size();
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
+	
+	
+	
+	
+	
+	
 	public void descompartirAV(String nickname) throws NoExisteElAV {
 		HttpSession session = SesionBean.getSession();
 		long idAV= (long) session.getAttribute("idAV");
