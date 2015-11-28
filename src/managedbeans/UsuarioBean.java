@@ -2,6 +2,8 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -421,6 +424,13 @@ public class UsuarioBean implements Serializable
 			e.printStackTrace();
 		}
 		return actualizo;
+	}
+	
+	public String obtenerActualURL()
+	{
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		String url = Url.obtenerActualURL(request);
+		return url;
 	}
 	
 }

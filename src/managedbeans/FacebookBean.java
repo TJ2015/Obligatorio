@@ -11,12 +11,18 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+
+import util.Url;
 
 
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
+//@SessionScoped
 public class FacebookBean implements Serializable 
 {
 	
@@ -25,7 +31,7 @@ public class FacebookBean implements Serializable
 	public static final String FB_APP_ID = "1149280135099672"; 
 	public static final String FB_APP_SECRET = "b941542f1ec36169afbe391e5317b0e1";
 	//public static final String REDIRECT_URI = "http://localhost:8080/Obligatorio/LoginFacebook";
-	public static final String REDIRECT_URI = "http://sapito-obligatorio.rhcloud.com/Obligatorio/LoginFacebook";
+	public String REDIRECT_URI = "http://sapito-obligatorio.rhcloud.com/Obligatorio/LoginFacebook";
 	
 	public static final String PERMISOS_DE_SCOPE = "&scope=public_profile,user_friends,email";
 
@@ -35,6 +41,16 @@ public class FacebookBean implements Serializable
 	public static final String DATOS_DE_FIELDS_Y = DATOS_DE_FIELDS + "&";
 
 	private String accessToken;
+	
+	public FacebookBean() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		String url = Url.obtenerActualURL(request);
+		this.REDIRECT_URI = url + "LoginFacebook";
+	}
+	
+	public FacebookBean(String url) {
+		this.REDIRECT_URI = url + "LoginFacebook";
+	}
 		
 	public String obtenerUrlLogin()
 	{
