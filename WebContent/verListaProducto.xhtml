@@ -50,17 +50,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          
+                                        
+                                        <form>
 				  								 <c:forEach var="p" items="${productoBean.dprods2}"  >                            
 											      <tr>
-											       <td> <a href="ver_producto.xhtml">
+											       <td> 
 											          ${p.nombre} 
-											        </a>											  
+											          					  
 											        </td>
 											        <td>#{p.categoria}</td>
 											        </tr>
 											                           
 											 </c:forEach> 
+											 
+										</form>
                                             
                                         </tbody>
                                         <tfoot>

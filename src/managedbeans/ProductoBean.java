@@ -224,6 +224,7 @@ public class ProductoBean implements Serializable {
 				dprodT=cats.getProductos();
 				for(DataProducto prods:dprodT){
 					dprods2.add(prods);
+					
 				}
 			}
 		} catch (Exception e) {

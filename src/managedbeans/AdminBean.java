@@ -485,6 +485,8 @@ public class AdminBean implements Serializable {
 	public void crearCategoria() {
 		if (logueado)
 			cInv.crearCategoria(nombreCategoria, -1);
+		//MARIANELA	
+		Url.redireccionarURL("backend/admin");
 	}
 
 	public List<DataCategoria> mostrarListaCategoria() {
@@ -502,6 +504,8 @@ public class AdminBean implements Serializable {
 		try {
 			cInv.crearProducto(nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
 					fileProd);
+			//MARIANELA	
+			Url.redireccionarURL("backend/admin");
 		} catch (Exception e) {
 			// TODO 505
 			e.printStackTrace();
