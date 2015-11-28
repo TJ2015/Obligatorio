@@ -339,7 +339,7 @@ public class ControladorInventario implements IControladorInventario {
 				
 			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(prod.getIdProducto(), tenant);
 			try {
-				eliminarProductoDeListaDeCompra(idAV, prod.getIdProducto());
+				eliminarProductoDeListaDeCompra(idAV, pac.getId());
 			} catch (Exception e) {
 			}
 			

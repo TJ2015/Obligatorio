@@ -279,7 +279,8 @@ public class AvBean implements Serializable {
 
 			} catch (NoExisteElAV e1) {
 				e1.printStackTrace();
-			}			
+			}
+			nombreAV=null;
 		}
 	}
 
@@ -415,10 +416,10 @@ public class AvBean implements Serializable {
 		cInv.agregarEnListaDeCompra(idAV1, producto, cantidad, reemplazar);
 		
 	}
-	public void eliminarEnListaDeCompra( String producto) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
+	public void eliminarEnListaDeCompra() throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
-		 DataProducto dprod=cInv.getProducto(producto, idAV1);
+		 DataProducto dprod=cInv.getProducto(nombreProducto, idAV1);
 		try {
 			cInv.eliminarProductoDeListaDeCompra(idAV1, dprod.getIdProducto());
 		} catch (NoExisteElProductoAComprar e) {

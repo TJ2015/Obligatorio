@@ -34,18 +34,20 @@
                                             <h:form>
                                              <c:forEach var="compra" items="${avBean.listCompra}"  >
 											     <tr>
-											    <!--  #{avBean.pruebaNom(compra.getProducto().getNombre())} -->
 											       <td> <label> ${compra.getProducto().getNombre()}</label>
 											        </td>
 											        <td> <label>  ${compra.cantidad} </label>
-											 <a href="#" data-toggle="modal" data-target="#myModal1">
-											  <i class="fa fa-trash-o" style="float:right" ></i>
-										     </a>
-											  <h:commandLink action="#{productoBean.cargarDataProducto(avBean.nombreProducto)}" actionListener="#{avBean.productoComprado(avBean.nombreProducto)}">
+											        											     #{avBean.pruebaNom(compra.getProducto().getNombre())}
+											        
+											   <h:commandLink  action="#{avBean.eliminarEnListaDeCompra()}" actionListener="#{avBean.pruebaNom(compra.getProducto().getNombre())}">
+											     <i class="fa fa-trash-o" style="float:right" ></i>
+											     </h:commandLink>   
+											        											     #{avBean.pruebaNom(compra.getProducto().getNombre())}
+											        
+											
+											  <h:commandLink action="#{productoBean.cargarDataProducto(nombre)}" actionListener="#{avBean.productoComprado(nombre)}">
 											     <i class="fa fa-check" style="float:right" ></i>
 											     </h:commandLink>         
-                                         
-											        
 											        </td>
 											     </tr>                        
 											 </c:forEach>

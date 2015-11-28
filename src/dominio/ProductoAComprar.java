@@ -11,7 +11,9 @@ import dominio.datatypes.DataProductoAComprar;
  */
 @Entity
 @NamedQueries({
-	@NamedQuery(name="ProductoAComprar.getAll", query="SELECT pc FROM ProductoAComprar pc")
+	@NamedQuery(name="ProductoAComprar.getAll", query="SELECT pc FROM ProductoAComprar pc"),
+	@NamedQuery(name="ProductoAComprar.buscarPorProductoId", query="SELECT pc FROM ProductoAComprar pc JOIN pc.producto p WHERE p.idProducto=:idProd")
+
 })
 public class ProductoAComprar implements Serializable {
 	

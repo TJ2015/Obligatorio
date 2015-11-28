@@ -16,6 +16,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
@@ -48,6 +49,7 @@ public class UsuarioBean implements Serializable
 	private Date fechaNacimiento;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsComp = new ArrayList<>();
+	private List<DataAV> todosAV= new ArrayList<>();
 	List<DataMensaje> msjsNoLeidos = new ArrayList<>();
 	List<DataMensaje> msjsEnviados = new ArrayList<>();
 	List<DataMensaje> msjsRecibidos = new ArrayList<>();
@@ -59,6 +61,15 @@ public class UsuarioBean implements Serializable
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
 	
+	
+	public List<DataAV> getTodosAV() {
+		return todosAV;
+	}
+
+	public void setTodosAV(List<DataAV> todosAV) {
+		this.todosAV = todosAV;
+	}
+
 	public String getAsunto() {
 		return asunto;
 	}
@@ -272,22 +283,30 @@ public class UsuarioBean implements Serializable
 		}
 	}
 	
-	public void mostrarListaAV() 
+	public List<DataAV> mostrarListaAV() 
 	{
 		
 			HttpSession session = SesionBean.getSession();
 			session.setAttribute("AVs", cusu.mostrarListaAv(nick));
-			AVs = cusu.mostrarListaAv(nick);
+			return AVs = cusu.mostrarListaAv(nick);
 
 	}
-	public void mostrarListaAVCompartidos() 
+	public List<DataAV> mostrarListaAVCompartidos() 
+	{
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		return AVsComp = cusu.mostrarListaAvComparidos(nick);
+	}
+	public List<DataAV> mostrarTodosAV() 
 	{
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		AVsComp = cusu.mostrarListaAvComparidos(nick);
-				
-			
-
+		todosAV=AVs;
+	    todosAV.addAll(AVsComp);
+		
+		
+		return todosAV;
 	}
 	
 	public boolean existeUsuarioLogeado()

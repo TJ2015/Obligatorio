@@ -15,6 +15,7 @@ import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
+import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import util.Url;
 
@@ -23,6 +24,8 @@ import util.Url;
 public class ProductoBean implements Serializable {
 	@EJB
 	IControladorInventario cinv;
+	@EJB
+	IControladorAV cAV;
 
 	private String nombre;
 	private String nombreCat;
@@ -33,13 +36,34 @@ public class ProductoBean implements Serializable {
 	private String prueba;
 	private int stock;
 	private int cantProd;
+	private boolean accionProd=false;
 	private List<DataProducto> dprods = new ArrayList<>();
 	private List<DataProducto> dprods2 = new ArrayList<>();	
 	private UploadedFile file;
 	private long idAV;
+	private long idAvCopiar;
 	private DataProducto dataProducto;
 	List<String> nomProd=new ArrayList<>();
 	
+	
+	
+
+	public boolean isAccionProd() {
+		return accionProd;
+	}
+
+	public void setAccionProd(boolean accionProd) {
+		this.accionProd = accionProd;
+	}
+
+	public long getIdAvCopiar() {
+		return idAvCopiar;
+	}
+
+	public void setIdAvCopiar(long idAvCopiar) {
+		this.idAvCopiar = idAvCopiar;
+	}
+
 	public String getPrueba() {
 		return prueba;
 	}
@@ -280,4 +304,41 @@ public class ProductoBean implements Serializable {
 		return prueba;
 	}
 	
+	public void copiarProducto(String nombreProducto) {
+		
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			
+			try {
+				
+				accionProd=cinv.copiarProducto(nombreProducto,idAV,idAvCopiar);
+				if (accionProd){
+					Url.redireccionarURL("exito");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Url.redireccionarURL("error");
+
+			}
+	}
+	
+	public void cortarProducto(String nombreProducto) {
+		
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		try {
+			
+			accionProd=cinv.moverProducto(nombreProducto,idAV,idAvCopiar);
+			if (accionProd){
+				Url.redireccionarURL("exito");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Url.redireccionarURL("error");
+
+		}
+}
 }

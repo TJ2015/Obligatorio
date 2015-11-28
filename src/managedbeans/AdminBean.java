@@ -497,6 +497,17 @@ public class AdminBean implements Serializable {
 		}
 		return cats;
 	}
+	public List<DataAV> mostrarListaAVs() {
+		List<DataAV> cats = new ArrayList<>();
+		try {
+			
+			cats = cusu.mostrarListaAv(usuario.getNick());
+		} catch (Exception e) {
+			// TODO 505
+			e.printStackTrace();
+		}
+		return cats;
+	}
 
 	public void crearProducto() {
 		try {
