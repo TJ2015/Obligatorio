@@ -268,7 +268,8 @@
 				    }
 				});
 				
-				var websockets = new WebSocket("ws://localhost:8080/Obligatorio/chat"); 			
+				//var websockets = new WebSocket("ws://localhost:8080/Obligatorio/chat"); 		
+				var websockets = new WebSocket("ws://sapito-obligatorio.rhcloud.com/Obligatorio/chat"); 	
 		
 				websockets.onmessage = function(e){
 					mostrarMensaje(e.data)

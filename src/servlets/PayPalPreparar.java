@@ -77,8 +77,11 @@ public class PayPalPreparar extends HttpServlet {
 				.setTransactions(transactions);
 		
 		// Redirect URLs
-		redirectUrls.setReturnUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=true")
-				.setCancelUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=false");
+		redirectUrls.setReturnUrl("http://sapito-obligatorio.rhcloud.com/PayPalTest/paypal/pagar?approved=true")
+				.setCancelUrl("http://sapito-obligatorio.rhcloud.com/PayPalTest/paypal/pagar?approved=false");
+		
+		//redirectUrls.setReturnUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=true")
+		//.setCancelUrl("http://localhost:8080/PayPalTest/paypal/pagar?approved=false");
 		
 		payment.setRedirectUrls(redirectUrls);
 		

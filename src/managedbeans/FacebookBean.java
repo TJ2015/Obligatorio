@@ -24,7 +24,8 @@ public class FacebookBean implements Serializable
 	
 	public static final String FB_APP_ID = "1149280135099672"; 
 	public static final String FB_APP_SECRET = "b941542f1ec36169afbe391e5317b0e1";
-	public static final String REDIRECT_URI = "http://localhost:8080/Obligatorio/LoginFacebook";
+	//public static final String REDIRECT_URI = "http://localhost:8080/Obligatorio/LoginFacebook";
+	public static final String REDIRECT_URI = "http://sapito-obligatorio.rhcloud.com/Obligatorio/LoginFacebook";
 	
 	public static final String PERMISOS_DE_SCOPE = "&scope=public_profile,user_friends,email";
 
