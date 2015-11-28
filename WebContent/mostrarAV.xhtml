@@ -271,6 +271,7 @@
 				//var websockets = new WebSocket("ws://localhost:8080/Obligatorio/chat");
 				var url = '#{usuarioBean.obtenerActualURL()}'; //Se obtiene la URL dinamiacamente
 				url = url.replace("http://", ""); //Se elimina el http://
+				url = url.replace("com:80/", "com:8000/"); //En la nube funciona en el puerto 8000
 				var websockets = new WebSocket("ws://" + url + "chat"); 	
 		
 				websockets.onmessage = function(e){

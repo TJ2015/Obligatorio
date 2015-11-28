@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "Objetivo.getAll", query = "SELECT o FROM Objetivo o"),
-	@NamedQuery(name = "Objetivo.buscarPorNombre", query = "SELECT o FROM Accion o WHERE o.nombre = :nombre"),
+	@NamedQuery(name = "Objetivo.buscarPorNombre", query = "SELECT o FROM Objetivo o WHERE o.nombre = :nombre"),
 })
 public class Objetivo implements Serializable {
 

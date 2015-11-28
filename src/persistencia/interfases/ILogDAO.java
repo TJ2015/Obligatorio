@@ -2,21 +2,16 @@ package persistencia.interfases;
 
 import javax.ejb.Local;
 
-import dominio.log.Accion;
 import dominio.log.Log;
-import dominio.log.Objetivo;
 
 @Local
 public interface ILogDAO {
 	
+	public void openTenant(String tenant);
+	public void closeTenant(String tenant);
+	
 	public boolean persistirLog(Log log);
-	public boolean persistirObjetivo(Objetivo objetivo);
-	public boolean persistirAccion(Accion accion);
 	
-	public Accion buscarAccionPorNombre(String nombre);
-	public Objetivo buscarObjetivoPorNombre(String nombre);
-	
-	public boolean crearLog(Log log, String tenant);
 	
 	/*
 	public Log buscarLogPorObjetivoDescripcion(String desc);

@@ -19,6 +19,7 @@ import dominio.ProductoAComprar;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataProductoAComprar;
+import dominio.datatypes.log.DataLog;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
@@ -41,7 +42,8 @@ public class ControladorInventario implements IControladorInventario {
 	private IInventarioDAO invDAO = new InventarioDAO();
 	private IAvDAO	avDAOTenant = new AvDAO();
 	
-	private IControladorLog cLog = new ControladorLog();
+	@EJB
+	private IControladorLog cLog;
 	
 	public ControladorInventario() {
 	}
@@ -56,9 +58,14 @@ public class ControladorInventario implements IControladorInventario {
 			Categoria cate = invDAO.buscarCategoria(nombre, tenant);
 			if (cate != null)
 				return false;
-
 			invDAO.persistirCategoria(cat, tenant);
 			invDAO.close(tenant);
+			
+			/************************************************************/
+			long idCategoria = cat.getIdCategoria();
+			DataLog dataLog = new DataLog(idCategoria, "Usuario", "CREAR", "CATEGORIA", nombre);
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
 		} else {
 			return false;
 		}
@@ -137,13 +144,13 @@ public class ControladorInventario implements IControladorInventario {
 			cat.addProducto(prod);
 			invDAO.actualizarCategoria(cat, tenant);
 			dp = prod.getDataProducto();
-			
-			/************************************************************/
-			//DataLog dataLog = new DataLog();
-			//cLog.agregarLog(dataLog, tenant);
-			/************************************************************/
-			
 			invDAO.close(tenant);
+			
+			/************************************************************/
+			DataLog dataLog = new DataLog();
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
+			
 			
 		}
 		return dp;

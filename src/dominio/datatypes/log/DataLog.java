@@ -9,6 +9,9 @@ public class DataLog {
 	private String apellidoUsuario;
 	private String nombreAccion;
 	private String nombreObjetivo;
+	private long idObjetivo;
+	private long idAccion;
+	private long idReferencia;
 	private String valor;
 	private Date fecha;
 	private String descripcionGeneral;
@@ -18,7 +21,8 @@ public class DataLog {
 
 	}
 	
-	public DataLog(String nickUsuario, String nombreAccion, String nombreObjetivo, String valor) {
+	public DataLog(long idRefencia, String nickUsuario, String nombreAccion, String nombreObjetivo, String valor) {
+		this.idReferencia = idRefencia;
 		this.nickUsuario = nickUsuario;
 		this.nombreAccion = nombreAccion;
 		this.nombreObjetivo = nombreObjetivo;
@@ -26,11 +30,11 @@ public class DataLog {
 		this.fecha = new Date();		 
 	}
 	
-	public String getIdUsuario() {
+	public String getNickUsuario() {
 		return nickUsuario;
 	}
 	
-	public void setIdUsuario(String nickUsuario) {
+	public void setNickUsuario(String nickUsuario) {
 		this.nickUsuario = nickUsuario;
 	}
 	
@@ -88,6 +92,30 @@ public class DataLog {
 
 	public void setDescripcionGeneral(String descripcionGeneral) {
 		this.descripcionGeneral = descripcionGeneral;
+	}
+
+	public long getIdObjetivo() {
+		return idObjetivo;
+	}
+
+	public void setIdObjetivo(long idObjetivo) {
+		this.idObjetivo = idObjetivo;
+	}
+
+	public long getIdAccion() {
+		return idAccion;
+	}
+
+	public void setIdAccion(long idAccion) {
+		this.idAccion = idAccion;
+	}
+
+	public long getIdReferencia() {
+		return idReferencia;
+	}
+
+	public void setIdReferencia(long idReferencia) {
+		this.idReferencia = idReferencia;
 	}
 
 

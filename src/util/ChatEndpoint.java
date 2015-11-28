@@ -10,12 +10,15 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.EndpointConfig;
+import javax.websocket.HandshakeResponse;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpoint;
+import javax.websocket.server.ServerEndpointConfig;
 
 import com.google.gson.Gson;
 
@@ -31,7 +34,6 @@ public class ChatEndpoint  {
 	
 	static Map<String, DataChat> USUARIOS = Collections.synchronizedMap(new HashMap<String, DataChat>());
 	
-	//private EndpointConfig config;
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
