@@ -100,7 +100,7 @@ public class CategoriaBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			idAV = (long) session.getAttribute("idAV");
-			if (cinv.crearCategoria(nombre, idAV)) {
+			if (cinv.crearCategoria((String)session.getAttribute("nickname"), nombre, idAV)) {
 				Url.redireccionarURL("mostrarAV");
 			} else {
 				Url.redireccionarURL("error");

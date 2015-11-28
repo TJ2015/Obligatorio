@@ -2,6 +2,7 @@ package dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,9 +177,13 @@ public class Producto implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((atributosList == null) ? 0 : atributosList.hashCode());
+		result = prime * result + Arrays.hashCode(bytesImagen);
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
 		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((nombreImagen == null) ? 0 : nombreImagen.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(precio);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -195,6 +200,18 @@ public class Producto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Producto other = (Producto) obj;
+		if (atributosList == null) {
+			if (other.atributosList != null)
+				return false;
+		} else if (!atributosList.equals(other.atributosList))
+			return false;
+		if (!Arrays.equals(bytesImagen, other.bytesImagen))
+			return false;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
 		if (descripcion == null) {
 			if (other.descripcion != null)
 				return false;
@@ -210,6 +227,11 @@ public class Producto implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
+		if (nombreImagen == null) {
+			if (other.nombreImagen != null)
+				return false;
+		} else if (!nombreImagen.equals(other.nombreImagen))
+			return false;
 		if (Double.doubleToLongBits(precio) != Double.doubleToLongBits(other.precio))
 			return false;
 		if (stock != other.stock)
@@ -217,4 +239,11 @@ public class Producto implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Producto [id=" + idProducto + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", precio=" + precio + ", stock=" + stock + ", categoria=" + categoria  + "]";
+	}
+
+	
 }

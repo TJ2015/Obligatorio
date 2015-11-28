@@ -209,8 +209,10 @@ public class ProductoBean implements Serializable {
 	public void crearProductoDescripcion() {
 		try {
 			HttpSession session = SesionBean.getSession();
+
 			long idAV = (long) session.getAttribute("idAV");
-			dataProducto = cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
+			dataProducto = cinv.crearProducto((String) session.getAttribute("nickname"), nombre, descripcion, precio,
+					categoria, atributos, idAV, stock, file);
 
 			if (dataProducto == null)
 				Url.redireccionarURL("error");
@@ -258,7 +260,7 @@ public class ProductoBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
-			cinv.eliminarProducto(prodEliminar, idAV);
+			cinv.eliminarProducto((String) session.getAttribute("nickname"), prodEliminar, idAV);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Url.redireccionarURL("error");
@@ -292,10 +294,11 @@ public class ProductoBean implements Serializable {
 	public void aumentarStock(String prod) {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
 
 		try {
 			DataProducto dataProducto = cinv.getProducto(prod, idAV);
-			cinv.setStockProducto(prod, idAV, dataProducto.getStock() + 1);
+			cinv.setStockProducto(nick, prod, idAV, dataProducto.getStock() + 1);
 			mostrarTodosProd();
 		} catch (Exception e) {
 			Url.redireccionarURL("error");
@@ -305,9 +308,11 @@ public class ProductoBean implements Serializable {
 	public void disminuirStock(String prod) {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+
 		try {
 			DataProducto dataProducto = cinv.getProducto(prod, idAV);
-			cinv.setStockProducto(prod, idAV, dataProducto.getStock() - 1);
+			cinv.setStockProducto(nick, prod, idAV, dataProducto.getStock() - 1);
 			mostrarTodosProd();
 		} catch (Exception e) {
 			Url.redireccionarURL("error");
@@ -318,10 +323,10 @@ public class ProductoBean implements Serializable {
 
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
 
 		try {
-
-			accionProd = cinv.copiarProducto(nombreProducto, idAV, idAvCopiar);
+			accionProd = cinv.copiarProducto(nick, nombreProducto, idAV, idAvCopiar);
 			if (accionProd) {
 				Url.redireccionarURL("exito");
 			}
@@ -337,10 +342,10 @@ public class ProductoBean implements Serializable {
 
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
 
 		try {
-
-			accionProd = cinv.moverProducto(nombreProducto, idAV, idAvCopiar);
+			accionProd = cinv.moverProducto(nick, nombreProducto, idAV, idAvCopiar);
 			if (accionProd) {
 				Url.redireccionarURL("exito");
 			}

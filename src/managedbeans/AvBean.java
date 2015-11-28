@@ -448,7 +448,7 @@ public class AvBean implements Serializable {
 	public void agregarEnListaDeCompra( String producto,boolean reemplazar) throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
 		HttpSession session = SesionBean.getSession();
 		long idAV1= (long) session.getAttribute("idAV");
-		cInv.agregarEnListaDeCompra(idAV1, producto, cantidad, reemplazar);
+		cInv.agregarEnListaDeCompra((String)session.getAttribute("nickname"), idAV1, producto, cantidad, reemplazar);
 		
 	}
 	public void eliminarEnListaDeCompra() throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar{
@@ -456,7 +456,7 @@ public class AvBean implements Serializable {
 		long idAV1= (long) session.getAttribute("idAV");
 		 DataProducto dprod=cInv.getProducto(nombreProducto, idAV1);
 		try {
-			cInv.eliminarProductoDeListaDeCompra(idAV1, dprod.getIdProducto());
+			cInv.eliminarProductoDeListaDeCompra((String)session.getAttribute("nickname"), idAV1, dprod.getIdProducto());
 		} catch (NoExisteElProductoAComprar e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -477,7 +477,7 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		idAV = (long) session.getAttribute("idAV");
 		try {
-			cInv.eliminarCategoria(categoriaEliminar, idAV);
+			cInv.eliminarCategoria((String)session.getAttribute("nickname"), categoriaEliminar, idAV);
 			mostrarListaCategoria();
 			categoriaEliminar = null;
 			eliminarCategoria = false;
@@ -516,7 +516,7 @@ public class AvBean implements Serializable {
 		}
 		try {
 			try {
-				cInv.productoComprado(idAV1, dprod.getIdProducto());
+				cInv.productoComprado((String)session.getAttribute("nickname"), idAV1, dprod.getIdProducto());
 			} catch (NoExisteElAV e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

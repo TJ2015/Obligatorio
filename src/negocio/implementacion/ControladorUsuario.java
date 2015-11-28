@@ -74,7 +74,7 @@ public class ControladorUsuario implements IControladorUsuario {
 			if (!existeUsuarioNick(nick) && !existeUsuarioEmail(email)) {
 				String passEncriptado = seguridad.Encriptador.encriptar(pasword);
 				Usuario usu = new Usuario(nombre, apellido, nick, passEncriptado, email, fechaNacimiento,
-				Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
+						Imagenes.convertirInputStreamToArrayByte(file), Imagenes.obtenerNombreImagen(file));
 				usu.setTipoUsuario(tipoDAO.obtenerTipoUsuarioParaLogin());
 				dataUsuario = usuarioDAO.altaUsuario(usu).getDataUsuario();
 			} else {
@@ -191,11 +191,11 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public boolean enviarMensaje(String remitente, String destinatario, String mensaje,String asunto) {
+	public boolean enviarMensaje(String remitente, String destinatario, String mensaje, String asunto) {
 		if (existeUsuarioNick(remitente) && existeUsuarioNick(destinatario)) {
 			Usuario rem = usuarioDAO.buscarUsuario(remitente);
 			Usuario dest = usuarioDAO.buscarUsuario(destinatario);
-			Mensaje msj = new Mensaje(mensaje, new Date(),asunto);
+			Mensaje msj = new Mensaje(mensaje, new Date(), asunto);
 
 			msj.setDestinatario(dest);
 			msj.setRemitente(rem);
@@ -285,7 +285,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
-		//devuelve lista de mensaje cant q queres
+		// devuelve lista de mensaje cant q queres
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 
 		if (usu != null) {
@@ -302,13 +302,13 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesEnviados(String usuario) throws UsuarioNoEncontrado {
-		//todos los del usuario
+		// todos los del usuario
 		return getMensajesEnviados(usuario, 0, 0);
 	}
 
 	@Override
 	public List<DataMensaje> getMensajesRecibidos(String usuario, int offset, int cant) throws UsuarioNoEncontrado {
-		//lista de la cant q queres
+		// lista de la cant q queres
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 
 		if (usu != null) {
@@ -325,19 +325,20 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public List<DataMensaje> getMensajesRecibidos(String usuario) throws UsuarioNoEncontrado {
-		//todos los recibidos
+		// todos los recibidos
 		return getMensajesRecibidos(usuario, 0, 0);
 	}
+
 	public List<DataMensaje> getMensajesRecibidosNoLeidos(String usuario) throws UsuarioNoEncontrado {
-		//todos los recibidos
+		// todos los recibidos
 		Usuario usu = usuarioDAO.buscarUsuario(usuario);
 
 		if (usu != null) {
 			List<Mensaje> mensajes = usu.getMensajesRecibidos();
 			List<DataMensaje> msjs = new ArrayList<>();
 			for (Mensaje m : mensajes) {
-				if(!m.isLeido())
-				msjs.add(m.getDataMensaje());
+				if (!m.isLeido())
+					msjs.add(m.getDataMensaje());
 			}
 			return msjs;
 		} else {
@@ -346,7 +347,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	private List<DataMensaje> getMensajes(List<Mensaje> msjs, int offset, int cant) {
-		
+
 		List<DataMensaje> mensajes = new ArrayList<>();
 		int ini = 0, fin = msjs.size();
 
@@ -373,7 +374,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensaje(long id) throws MensajeNoEncotrado {
-		//cualquier msj
+		// cualquier msj
 		Mensaje msj = usuarioDAO.buscarMensaje(id);
 
 		if (msj != null) {
@@ -385,7 +386,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensajeEnviado(String nick, long id) throws MensajeNoEncotrado {
-		//levanta 1 msj es al pedooooooooooooo
+		// levanta 1 msj es al pedooooooooooooo
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for (Mensaje m : usu.getMensajesEnviados()) {
@@ -399,7 +400,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
 	@Override
 	public DataMensaje getMensajeRecibido(String nick, long id) throws MensajeNoEncotrado {
-		//al pedooooo
+		// al pedooooo
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
 		DataMensaje res = null;
 		for (Mensaje m : usu.getMensajesRecibidos()) {
@@ -424,6 +425,7 @@ public class ControladorUsuario implements IControladorUsuario {
 		return davs;
 
 	}
+
 	@Override
 	public List<DataAV> mostrarListaAvComparidos(String nickname) {
 		Usuario usu = usuarioDAO.buscarUsuario(nickname);
@@ -464,15 +466,14 @@ public class ControladorUsuario implements IControladorUsuario {
 	@Override
 	public void registrarAdmin(String nick, String pass, String email) throws exceptions.YaExisteElUsuario {
 		Administrador admin = usuarioDAO.buscarAdmin(nick);
-		
+
 		if (admin == null) {
 			pass = seguridad.Encriptador.randomString("wertyuiopasdfghjklzxcvbnm1234567890", 10);
 			admin = new Administrador(nick, seguridad.Encriptador.encriptar(pass), email);
 			Mensajeria msg = new Mensajeria();
-			msg.enviarCorreo(email, "SAPo - Administrador", 
-					"Ud. ha sido registrado como administrador en el sitio SAPo.com. \n"
-					+ "Nombre de usuario: " + nick + "\n"
-					+ "Contraseña: " + pass);
+			msg.enviarCorreo(email, "SAPo - Administrador",
+					"Ud. ha sido registrado como administrador en el sitio SAPo.com. \n" + "Nombre de usuario: " + nick
+							+ "\n" + "Contraseña: " + pass);
 			usuarioDAO.persistirAdmin(admin);
 		} else {
 			throw new exceptions.YaExisteElUsuario();
@@ -542,13 +543,13 @@ public class ControladorUsuario implements IControladorUsuario {
 	public List<DataUsuario> getUsuarios() {
 		List<Usuario> usus = usuarioDAO.getAllUsuarios();
 		List<DataUsuario> dusus = new ArrayList<>();
-		
-		if( usus != null ) {
-			for( Usuario usu : usus ) {
+
+		if (usus != null) {
+			for (Usuario usu : usus) {
 				dusus.add(usu.getDataUsuario());
 			}
 		}
-		
+
 		return dusus;
 	}
 

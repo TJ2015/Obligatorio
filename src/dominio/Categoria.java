@@ -120,5 +120,12 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Categoria [idCategoria=" + idCategoria + ", nombre=" + nombre + "]";
+	}
+	
+	
 	
 }

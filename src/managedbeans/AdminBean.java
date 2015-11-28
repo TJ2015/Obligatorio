@@ -425,7 +425,7 @@ public class AdminBean implements Serializable {
 		eliminarProducto = false;
 
 		if (!generico) {
-			cInv.eliminarProducto(prodEliminar, avUsu.getIdAV());
+			cInv.eliminarProducto(avUsu.getNickname(), prodEliminar, avUsu.getIdAV());
 			try {
 				avUsu = cAV.traerAVPorNombre(avUsu.getNombreAV(), avUsu.getNickname());
 				prodsUsu = cInv.getProductos(avUsu.getIdAV());
@@ -433,7 +433,7 @@ public class AdminBean implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			cInv.eliminarProducto(prodEliminar, -1);
+			cInv.eliminarProducto(avUsu.getNickname(), prodEliminar, -1);
 		}
 		prodEliminar = null;
 	}
@@ -483,10 +483,10 @@ public class AdminBean implements Serializable {
 	}
 
 	public void crearCategoria() {
-		if (logueado)
-			cInv.crearCategoria(nombreCategoria, -1);
-		//MARIANELA	
-		Url.redireccionarURL("backend/admin");
+		if (logueado) {
+			cInv.crearCategoria(nick, nombreCategoria, -1);
+			Url.redireccionarURL("backend/admin");
+		}
 	}
 
 	public List<DataCategoria> mostrarListaCategoria() {
@@ -513,7 +513,7 @@ public class AdminBean implements Serializable {
 
 	public void crearProducto() {
 		try {
-			cInv.crearProducto(nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
+			cInv.crearProducto(avUsu.getNickname(), nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
 					fileProd);
 			//MARIANELA	
 			Url.redireccionarURL("backend/admin");
@@ -557,7 +557,7 @@ public class AdminBean implements Serializable {
 	public void eliminarCategoria() {
 		eliminarCategoria = false;
 		try {
-			cInv.eliminarCategoria(categoriaEliminar, -1);
+			cInv.eliminarCategoria(avUsu.getNickname(), categoriaEliminar, -1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
