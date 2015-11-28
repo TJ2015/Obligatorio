@@ -31,8 +31,11 @@
 								</c:if>
 								<c:if test="${usuarioBean.logueado == true}">
 									<li>
-									<h:commandLink action="paypal" value="Comprar Membresía" />  
-											
+									<h:commandLink action="usuario_sapo" value="Perfil" />  		
+									</li>
+
+									<li>
+									<h:commandLink action="paypal" value="Comprar Membresía" />  		
 									</li>	                
 									<li>
 									<h:commandLink action="#{usuarioBean.logout()}" value="Cerrar sesión" />   
