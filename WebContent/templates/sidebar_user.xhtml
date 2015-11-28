@@ -26,6 +26,8 @@
 				</div>
 			</div>
 			
+			<ui:param name="cats" value="${avBean.mostrarListaCategoria()}"></ui:param>
+			
 			<!-- sidebar menu: : style can be found in sidebar.less -->
 			<ul class="sidebar-menu">
 				<li >
@@ -40,7 +42,7 @@
 				<li><a href="categoria_crear.xhtml"> <i
 						class="fa fa-plus-square"></i> <span>Crear categoría</span>
 				</a></li>
-				  <c:if test="${!avBean.cats.isEmpty()}">
+				  <c:if test="${!cats.isEmpty()}">
 				<li><a href="producto_crear.xhtml"> <i
 						class="fa fa-plus-square"></i> <span>Crear Producto</span>
 				</a></li>
@@ -50,8 +52,7 @@
 				</a>
 
 					<ul class="treeview-menu">
-						<ui:param name="cats"
-							value="${avBean.mostrarListaCategoria()}"></ui:param>
+						
 						<c:forEach var="cat" items="${cats}">
 							<li class="treeview"><a href="#"> <span>${cat.nombre}</span>
 									<i class="fa fa-angle-left pull-right"></i>

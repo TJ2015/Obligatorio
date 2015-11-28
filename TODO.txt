@@ -35,7 +35,7 @@ Contar usuarios premium no esta andando bien
 Usuario
 Arreglar Ver Productos de AV
 Modificar Producto
-Mover y copiar productos
+Mover y copiar productos (Noelia)
 Modificar stock
 Ver Notificaciones (hecho, funca?)
 Vista de Categoria

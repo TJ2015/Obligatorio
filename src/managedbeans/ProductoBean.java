@@ -34,12 +34,12 @@ public class ProductoBean implements Serializable {
 	private int stock;
 	private int cantProd;
 	private List<DataProducto> dprods = new ArrayList<>();
-	private List<DataProducto> dprods2 = new ArrayList<>();	
+	private List<DataProducto> dprods2 = new ArrayList<>();
 	private UploadedFile file;
 	private long idAV;
 	private DataProducto dataProducto;
-	List<String> nomProd=new ArrayList<>();
-	
+	List<String> nomProd = new ArrayList<>();
+
 	public String getPrueba() {
 		return prueba;
 	}
@@ -55,8 +55,9 @@ public class ProductoBean implements Serializable {
 	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
-	
+
 	private static final long serialVersionUID = 1L;
+
 	public List<DataProducto> getDprods2() {
 		return dprods2;
 	}
@@ -64,13 +65,13 @@ public class ProductoBean implements Serializable {
 	public void setDprods2(List<DataProducto> dprods2) {
 		this.dprods2 = dprods2;
 	}
-	
+
 	public int verCantProd() {
 		HttpSession session = SesionBean.getSession();
 		cantProd = 0;
 		long idAV = (long) session.getAttribute("idAV");
 		try {
-			for(DataCategoria cats : cinv.mostrarListaCategoria(idAV)){
+			for (DataCategoria cats : cinv.mostrarListaCategoria(idAV)) {
 				cantProd += cats.getProductos().size();
 			}
 		} catch (Exception e) {
@@ -84,7 +85,7 @@ public class ProductoBean implements Serializable {
 		cantProd = 0;
 		long idAV = (long) session.getAttribute("idAV");
 		try {
-			for(DataCategoria cats : cinv.mostrarListaCategoria(idAV)){
+			for (DataCategoria cats : cinv.mostrarListaCategoria(idAV)) {
 				cantProd += cats.getProductos().size();
 			}
 		} catch (Exception e) {
@@ -98,7 +99,7 @@ public class ProductoBean implements Serializable {
 
 	public void setNomProd(List<String> nomProd) {
 		this.nomProd = nomProd;
-	}	
+	}
 
 	public ProductoBean(long idAV) {
 		super();
@@ -189,8 +190,8 @@ public class ProductoBean implements Serializable {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
 			dataProducto = cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
-			
-			if( dataProducto == null )
+
+			if (dataProducto == null)
 				Url.redireccionarURL("error");
 
 		} catch (Exception e) {
@@ -210,42 +211,28 @@ public class ProductoBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
 
-	public void mostrarTodosProd(){
-		try {
-			HttpSession session = SesionBean.getSession();
-			long idAV = (long) session.getAttribute("idAV");
-			List <DataCategoria> dcats= new ArrayList<>();
-			List <DataProducto> dprodT= new ArrayList<>();
-			dcats=cinv.mostrarListaCategoria(idAV);
-			
-			for(DataCategoria cats:dcats){
-				dprodT=cats.getProductos();
-				for(DataProducto prods:dprodT){
-					dprods2.add(prods);
-				}
-			}
-		} catch (Exception e) {
-			Url.redireccionarURL("error");
-			e.printStackTrace();
-		}
+	public List<DataProducto> mostrarTodosProd() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		return cinv.getProductos(idAV);
 	}
-	
+
 	public void cargarProducto() {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
 			DataProducto dprod = cinv.getProducto(nombre, idAV);
-			
+
 			this.setDataProducto(dprod);
 			Url.redireccionarURL("ver_producto");
-			
+
 		} catch (Exception e) {
+			Url.redireccionarURL("error");
 			e.printStackTrace();
 		}
-
 	}
+
 	public void eliminarProducto(String prodEliminar) throws Exception {
 		try {
 			HttpSession session = SesionBean.getSession();
@@ -264,7 +251,7 @@ public class ProductoBean implements Serializable {
 	public void setDataProducto(DataProducto dataProducto) {
 		this.dataProducto = dataProducto;
 	}
-	
+
 	public void cargarDataProducto(String nombre) {
 		try {
 			HttpSession session = SesionBean.getSession();
@@ -275,9 +262,35 @@ public class ProductoBean implements Serializable {
 			Url.redireccionarURL("error");
 		}
 	}
-	public String pruebaNom(String prue){
-		prueba=prue;
+
+	public String pruebaNom(String prue) {
+		prueba = prue;
 		return prueba;
 	}
-	
+
+	public void aumentarStock(String prod) {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+
+		try {
+			DataProducto dataProducto = cinv.getProducto(prod, idAV);
+			cinv.setStockProducto(prod, idAV, dataProducto.getStock() + 1);
+			mostrarTodosProd();
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+		}
+	}
+
+	public void disminuirStock(String prod) {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		try {
+			DataProducto dataProducto = cinv.getProducto(prod, idAV);
+			cinv.setStockProducto(prod, idAV, dataProducto.getStock() - 1);
+			mostrarTodosProd();
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+		}
+	}
+
 }

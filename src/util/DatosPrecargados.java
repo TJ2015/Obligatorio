@@ -35,8 +35,8 @@ public class DatosPrecargados {
 	void atStartup(){
 		
 		if( !cUsu.existeUsuarioNick("1") ) {
-			util.DBUtil.modificarBase("sapo_master");
-			/*
+			//util.DBUtil.modificarBase("sapo_master");
+			
 			System.out.println("Cargando datos...");
 			
 			cUsu.crearNuevoTipo("comun");
@@ -72,8 +72,7 @@ public class DatosPrecargados {
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
-			}*/
-			
+			}			
 			
 			System.out.println("...Datos cargados con éxito!");
 		}

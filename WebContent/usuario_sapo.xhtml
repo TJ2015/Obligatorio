@@ -19,10 +19,10 @@
 	
 	<style>
 	#ListaAVsCreados li{
-	width:100%;
+		width:100%;
 	}
 	li i{
-	float:right;
+		float:right;
 	}
 	</style>
 
@@ -34,17 +34,17 @@
 
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
-		  <h1>Hola ${usuarioBean.nick}</h1>
+		  <h1>Hola ${sessionScope.nickname}</h1>
 		</div>
-		<c:if test="${avBean.errorAV != null}">
+		<c:if test="${sessionScope.errorAV != null}">
 		
 			<div class="col-xs-12 col-md-6 col-md-offset-3">
-				${avBean.errorAV}
+				${sessionScope.errorAV}
+				<!-- ${errorBean.reset(errorAV)} -->
 			</div>
 		</c:if>
+		
 		<section class="content">
-		
-		
 		
 		<div class="col-lg-5 col-xs-8">
 		

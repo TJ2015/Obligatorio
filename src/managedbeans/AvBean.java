@@ -472,20 +472,8 @@ public class AvBean implements Serializable {
 			// TODO 505
 			e.printStackTrace();
 		}
+		
 		return cats;
-	}
-	public boolean existeAV() {
-
-		HttpSession session = SesionBean.getSession();
-		long idAV = (long) session.getAttribute("idAV");
-
-		if (cAV.existeAV(idAV)) {
-			return true;
-		} else {
-			errorAV = "El AV que estaba viendo ha sido eliminado!";
-			Url.redireccionarURL("usuario_sapo");
-			return false;
-		}
 	}
 	
 	public void productoComprado(String nomProd) {

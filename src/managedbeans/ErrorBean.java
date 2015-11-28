@@ -18,16 +18,6 @@ public class ErrorBean {
 	@EJB
 	IControladorAV cAV;
 	
-	private String error;
-
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-	
 	public boolean existeAV() {
 
 		HttpSession session = SesionBean.getSession();
@@ -36,13 +26,16 @@ public class ErrorBean {
 		if (cAV.existeAV(idAV)) {
 			return true;
 		} else {
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
-					.getResponse();
-			error = "El AV que estaba viendo ha sido eliminado!";
+			session.setAttribute("errorAV", "El AV que estaba viendo ha sido eliminado!");
 			Url.redireccionarURL("usuario_sapo");
 			return false;
 		}
 
+	}
+	
+	public void reset(String variable) {
+		HttpSession session = SesionBean.getSession();
+		session.removeAttribute(variable);
 	}
 
 }

@@ -6,7 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head></h:head>
-<body>
+<h:body>
 	<ui:composition template="/templates/layout_user.xhtml">
 		<ui:define name="contenido">
 			<style>
@@ -28,7 +28,7 @@
 						<div class="col-md-6">
 							<div class="box box-solid">
 								<ui:param name="nombre" value="${productoBean.dataProducto.nombre}" />
-									#{avBean.pruebaNom(nombre)}
+									<!-- #{avBean.pruebaNom(nombre)} -->
 								<div class="box-header">
 									<h3 class="box-title">${productoBean.dataProducto.nombre}</h3>
 								</div>
@@ -40,7 +40,17 @@
 										<dt>Precio:</dt>
 										<dd>${productoBean.dataProducto.precio}</dd>
 										<dt>Stock:</dt>
-										<dd>${productoBean.dataProducto.stock}</dd>
+										<dd>
+											${productoBean.dataProducto.stock}
+											<h:form>
+												<h:commandLink actionListener="#{productoBean.aumentarStock(nombre)}" >
+													<span class="fa fa-plus pull-right"></span>
+												</h:commandLink>
+												<h:commandLink actionListener="#{productoBean.disminuirStock(nombre)}" >
+													<span class="fa fa-minus pull-right"></span>
+												</h:commandLink>
+											</h:form>										
+										</dd>
 										<c:forEach var="atr" items="${productoBean.dataProducto.atributosList}" >
 											<dt>${atr.key}:</dt>
 											<dd>${atr.value}</dd>
@@ -118,7 +128,6 @@
 			 <p>Si este producto ya existe en la lista ¿qué desea hacer?</p>
 			</div>
 			<div class="modal-footer">
-				
 					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.nombreProducto,true)}"
 						value="Remplazar" class="btn btn-default" />
 					<h:commandButton action="mostrarAV" actionListener="${avBean.agregarEnListaDeCompra(avBean.nombreProducto,false)}"
@@ -136,5 +145,5 @@
 		</ui:define>
 	</ui:composition>
 	
-</body>
+</h:body>
 </html>
