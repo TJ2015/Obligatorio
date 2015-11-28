@@ -19,7 +19,8 @@ public class ControladorLog implements IControladorLog {
 	private IMovimientoLogDAO movimeintoDAO;
 	
 	private ILogDAO logDAO = new LogDAO();
-
+	
+	
 	
 	@Override
 	public boolean agregarAccion(String nombre, String descripcion){

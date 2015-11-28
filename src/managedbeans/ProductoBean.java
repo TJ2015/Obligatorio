@@ -188,7 +188,7 @@ public class ProductoBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
-			dataProducto = cinv.crearProducto(nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
+			dataProducto = cinv.crearProducto((String)session.getAttribute("nickname"), nombre, descripcion, precio, categoria, atributos, idAV, stock, file);
 			
 			if( dataProducto == null )
 				Url.redireccionarURL("error");
@@ -250,7 +250,7 @@ public class ProductoBean implements Serializable {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");
-			cinv.eliminarProducto(prodEliminar, idAV);
+			cinv.eliminarProducto((String)session.getAttribute("nickname"), prodEliminar, idAV);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Url.redireccionarURL("error");

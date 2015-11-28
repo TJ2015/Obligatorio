@@ -49,7 +49,7 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean crearCategoria(String nombre, long idAV) {
+	public boolean crearCategoria(String nickUsuario, String nombre, long idAV) {
 		Categoria cat = new Categoria(nombre);
 
 		String tenant = getTenant(idAV);
@@ -63,7 +63,7 @@ public class ControladorInventario implements IControladorInventario {
 			
 			/************************************************************/
 			long idCategoria = cat.getIdCategoria();
-			DataLog dataLog = new DataLog(idCategoria, "Usuario", "CREAR", "CATEGORIA", nombre);
+			DataLog dataLog = new DataLog(idCategoria, nickUsuario, IControladorLog.CREAR, IControladorLog.CATEGORIA, nombre);
 			cLog.agregarLog(dataLog, tenant);
 			/************************************************************/
 		} else {
@@ -89,7 +89,7 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void modificarNombreCategoria(String nombre, long idAV, String nuevoNombre) throws Exception {
+	public void modificarNombreCategoria(String nickUsuario, String nombre, long idAV, String nuevoNombre) throws Exception {
 		if (existeCategoria(nombre, idAV)) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
@@ -98,6 +98,12 @@ public class ControladorInventario implements IControladorInventario {
 				cat.setNombre(nuevoNombre);
 				invDAO.actualizarCategoria(cat, tenant);
 				invDAO.close(tenant);
+				
+				/************************************************************/
+				long idCategoria = cat.getIdCategoria();
+				DataLog dataLog = new DataLog(idCategoria, nickUsuario, IControladorLog.MODIFICAR, IControladorLog.CATEGORIA, nombre + " por " + nuevoNombre);
+				cLog.agregarLog(dataLog, tenant);
+				/************************************************************/
 			}
 		} else {
 			throw new Exception("No existe la categoría");
@@ -105,14 +111,21 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void eliminarCategoria(String nombre, long idAV) throws Exception {
+	public void eliminarCategoria(String nickUsuario, String nombre, long idAV) throws Exception {
 		if (existeCategoria(nombre, idAV)) {
 			String tenant = getTenant(idAV);
 			if (tenant != null) {
+				
 				invDAO.open(tenant);
 				Categoria cat = invDAO.buscarCategoria(nombre, tenant);
+				long idCategoria = cat.getIdCategoria();
 				invDAO.eliminarCategoria(cat, tenant);
 				invDAO.close(tenant);
+				
+				/************************************************************/
+				DataLog dataLog = new DataLog(idCategoria, nickUsuario, IControladorLog.ELIMINAR, IControladorLog.CATEGORIA, nombre);
+				cLog.agregarLog(dataLog, tenant);
+				/************************************************************/
 			}
 		} else {
 			throw new Exception("No existe la categoría");
@@ -120,7 +133,7 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public DataProducto crearProducto(String nombre, String descripcion, double precio, String categoria, String atributosList,
+	public DataProducto crearProducto(String nickUsuario, String nombre, String descripcion, double precio, String categoria, String atributosList,
 			long idAV, int stock, UploadedFile file) throws Exception {
 
 		DataProducto dp = null;
@@ -147,17 +160,17 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.close(tenant);
 			
 			/************************************************************/
-			DataLog dataLog = new DataLog();
+			long idProducto = prod.getIdProducto();
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.CREAR, IControladorLog.PRODUCTO, prod.toString());
 			cLog.agregarLog(dataLog, tenant);
 			/************************************************************/
-			
 			
 		}
 		return dp;
 	}
 
 	@Override
-	public void setStockProducto(String nombreProd, long idAV, int stock) {
+	public void setStockProducto(String nickUsuario, String nombreProd, long idAV, int stock) {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
@@ -223,11 +236,14 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void cambiarCategoriaProducto(String categoria, String producto, long idAV) {
+	public void cambiarCategoriaProducto(String nickUsuario, String categoria, String producto, long idAV) {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
 			Producto prod = invDAO.buscarProducto(producto, tenant);
+			
+			String produtco = prod.toString();
+			
 			Categoria catNueva = invDAO.buscarCategoria(categoria, tenant);
 			Categoria catVieja = prod.getCategoria();
 
@@ -236,6 +252,12 @@ public class ControladorInventario implements IControladorInventario {
 			prod.getCategoria().setProductos(prods);
 			prod.setCategoria(catNueva);
 			catNueva.addProducto(prod);
+			
+			/************************************************************/
+			long idProducto = prod.getIdProducto();
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.MODIFICAR, IControladorLog.PRODUCTO, producto + " por la " + catNueva.toString());
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
 
 			invDAO.actualizarProducto(prod, tenant);
 			invDAO.actualizarCategoria(catVieja, tenant);
@@ -245,14 +267,16 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void modificarProducto(String nombreProd, long idAV, String nombre, String descripcion, double precio,
+	public void modificarProducto(String nickUsuario, String nombreProd, long idAV, String nombre, String descripcion, double precio,
 			String atributos) throws Exception {
 
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
 			if (invDAO.buscarProducto(nombre, tenant) == null) {
+				
 				Producto prod = invDAO.buscarProducto(nombreProd, tenant);
+				String productoViejo = prod.toString();
 
 				prod.setNombre(nombre);
 				prod.setDescripcion(descripcion);
@@ -263,6 +287,13 @@ public class ControladorInventario implements IControladorInventario {
 				prod.setAtributosList(attrs);
 
 				invDAO.actualizarProducto(prod, tenant);
+				String productoNuevo = prod.toString();
+				
+				/************************************************************/
+				long idProducto = prod.getIdProducto();
+				DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.MODIFICAR, IControladorLog.PRODUCTO, productoViejo + " por " + productoNuevo);
+				cLog.agregarLog(dataLog, tenant);
+				/************************************************************/
 			} else {
 				throw new Exception("Ya existe un producto con ese nombre.");
 			}
@@ -272,7 +303,7 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean copiarProducto(String nombreProducto, long idAVOrigen, long idAVDestino) throws Exception {
+	public boolean copiarProducto(String nickUsuario, String nombreProducto, long idAVOrigen, long idAVDestino) throws Exception {
 
 		if (idAVOrigen == idAVDestino) {
 			throw new Exception("El AV de origen y destino son el mismo.");
@@ -317,10 +348,10 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean moverProducto(String producto, long idAVOrigen, long idAVDestino) throws Exception {
+	public boolean moverProducto(String nickUsuario, String producto, long idAVOrigen, long idAVDestino) throws Exception {
 		try {
-			copiarProducto(producto, idAVOrigen, idAVDestino);
-			eliminarProducto(producto, idAVOrigen);
+			copiarProducto(nickUsuario, producto, idAVOrigen, idAVDestino);
+			eliminarProducto(nickUsuario, producto, idAVOrigen);
 		} catch (Exception e) {
 			throw new Exception("Error al mover el producto " + producto + ". Causa: " + e.getMessage());
 		}
@@ -329,11 +360,11 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public boolean moverProductos(List<String> productos, long idAVOrigen, long idAVDestino) {
+	public boolean moverProductos(String nickUsuario, List<String> productos, long idAVOrigen, long idAVDestino) {
 		boolean OK = true;
 		for (String prod : productos) {
 			try {
-				moverProducto(prod, idAVOrigen, idAVDestino);
+				moverProducto(nickUsuario, prod, idAVOrigen, idAVDestino);
 			} catch (Exception e) {
 				OK = false;
 				e.printStackTrace();
@@ -343,7 +374,7 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void eliminarProducto(String nombre, long idAV) {
+	public void eliminarProducto(String nickUsuario, String nombre, long idAV) {
 
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
@@ -355,7 +386,7 @@ public class ControladorInventario implements IControladorInventario {
 				
 			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(prod.getIdProducto(), tenant);
 			try {
-				eliminarProductoDeListaDeCompra(idAV, prod.getIdProducto());
+				eliminarProductoDeListaDeCompra(nickUsuario, idAV, prod.getIdProducto());
 			} catch (Exception e) {
 			}
 			
@@ -406,13 +437,13 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad)
+	public void agregarEnListaDeCompra(String nickUsuario, long idAV, String producto, int cantidad)
 			throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
-		agregarEnListaDeCompra(idAV, producto, cantidad, false);
+		agregarEnListaDeCompra(nickUsuario, idAV, producto, cantidad, false);
 	}
 
 	@Override
-	public void agregarEnListaDeCompra(long idAV, String producto, int cantidad, boolean reemplazar)
+	public void agregarEnListaDeCompra(String nickUsuario, long idAV, String producto, int cantidad, boolean reemplazar)
 			throws NoExisteElAV, NoExisteElProducto, YaExisteElProductoAComprar {
 
 		String tenant = getTenant(idAV);
@@ -455,15 +486,21 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void eliminarProductoDeListaDeCompra(long idAV, long idProdComp)
+	public void eliminarProductoDeListaDeCompra(String nickUsuario, long idAV, long idProdComp)
 			throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-
 			if (pac != null) {
+				String producto = pac.toString();
 				invDAO.eliminarProductoAComprar(pac, tenant);
+				
+				/************************************************************/
+				long idProducto = pac.getId();
+				DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.ELIMINAR_EN_LISTA, IControladorLog.PRODUCTO, producto);
+				cLog.agregarLog(dataLog, tenant);
+				/************************************************************/
 			} else {
 				throw new exceptions.NoExisteElProductoAComprar();
 			}
@@ -474,14 +511,22 @@ public class ControladorInventario implements IControladorInventario {
 	}
 
 	@Override
-	public void productoComprado(long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+	public void productoComprado(String nickUsuario, long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-			eliminarProductoDeListaDeCompra(idAV, idProdComp);
+			eliminarProductoDeListaDeCompra(nickUsuario, idAV, idProdComp);
 			Producto prod = pac.getProducto();
-			setStockProducto(prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
+			String producto = pac.toString();
+			setStockProducto(nickUsuario, prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
+			
+			/************************************************************/
+			long idProducto = pac.getId();
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.COMPRAR, IControladorLog.PRODUCTO, producto);
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
+			
 			invDAO.close(tenant);
 		}
 	}

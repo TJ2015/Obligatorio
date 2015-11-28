@@ -7,6 +7,17 @@ import dominio.datatypes.log.DataLog;
 @Local
 public interface IControladorLog {
 	
+	public String CREAR = "CREAR";
+	public String MODIFICAR = "MODIFICAR";
+	public String MODIFICAR_STOCK = "MODIFICAR_STOCK";
+	public String ELIMINAR = "ELIMINAR";
+	public String ELIMINAR_EN_LISTA = "ELIMINAR_EN_LISTA";
+	public String MOVER = "MOVER";
+	public String COMPRAR = "COMPRAR";
+
+	public String PRODUCTO = "PRODUCTO";
+	public String CATEGORIA = "CATEGORIA";
+
 	public boolean agregarAccion(String nombre, String descripcion);
 	public boolean agregarObjetivo(String nombre, String descripcion);
 	

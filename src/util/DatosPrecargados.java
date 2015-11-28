@@ -38,13 +38,16 @@ public class DatosPrecargados {
 			
 			cUsu.crearNuevoTipo("comun");
 			cUsu.crearNuevoTipo("facebook");
-
+					
 			cLog.agregarAccion("CREAR", "Se crea ");
-			cLog.agregarAccion("CREAR", "Se crea ");
-//			cLog.agregarAccion("MODIFICAR", "Se modifica ");
-//			cLog.agregarAccion("ELIMINAR", "Se elimina ");
-//			cLog.agregarAccion("AUMENTAR", "Se Aumenta el Stock a ");
-//			cLog.agregarAccion("DISMINUIR", "Se disminuye el Stock a ");
+			cLog.agregarAccion("MODIFICAR", "Se modifica ");
+			cLog.agregarAccion("MODIFICAR_STOCK", "Se modifica el Stock del ");
+			cLog.agregarAccion("ELIMINAR", "Se elimina ");
+			cLog.agregarAccion("ELIMINAR_EN_LISTA", "Se elimina de la lista de compra el ");
+			cLog.agregarAccion("AUMENTAR", "Se Aumenta el Stock a ");
+			cLog.agregarAccion("DISMINUIR", "Se disminuye el Stock a ");
+			cLog.agregarAccion("MOVER", "Se mueve ");
+			cLog.agregarAccion("COMPRAR", "Se compra el ");
 
 			cLog.agregarObjetivo("PRODUCTO", "El producto");
 			cLog.agregarObjetivo("CATEGORIA", "La Categoria");
