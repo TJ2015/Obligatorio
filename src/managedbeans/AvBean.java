@@ -60,13 +60,34 @@ public class AvBean implements Serializable {
 	private List<DataNotificacion> listNotificacion=new ArrayList<>();
 	private List<DataNota> listNotas=new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
+	private List<DataCategoria> catsGene = new ArrayList<>();
 	private List<DataCategoria> cats = new ArrayList<>();
 	private String errorAV;
+	private DataProducto dprodGen;
 	
 	public AvBean() {
 
 	}
 	
+	
+	public DataProducto getDprodGen() {
+		return dprodGen;
+	}
+
+
+	public void setDprodGen(DataProducto dprodGen) {
+		this.dprodGen = dprodGen;
+	}
+
+
+	public List<DataCategoria> getCatsGene() {
+		return catsGene;
+	}
+
+	public void setCatsGene(List<DataCategoria> catsGene) {
+		this.catsGene = catsGene;
+	}
+
 	public String getErrorAV() {
 		return errorAV;
 	}
@@ -503,6 +524,32 @@ public class AvBean implements Serializable {
 		
 		return cats;
 	}
+
+	public List<DataCategoria> mostrarListaCategoriaGenerica() {
+		
+			try {
+				catsGene = cInv.mostrarListaCategoria(-1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+		return catsGene;
+	}
+	public boolean existeAV() {
+
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+
+		if (cAV.existeAV(idAV)) {
+			return true;
+		} else {
+			errorAV = "El AV que estaba viendo ha sido eliminado!";
+			Url.redireccionarURL("usuario_sapo");
+			return false;
+		}
+	}
+
 	
 	public void productoComprado(String nomProd) {
 		HttpSession session = SesionBean.getSession();
@@ -524,6 +571,14 @@ public class AvBean implements Serializable {
 		} catch (NoExisteElProductoAComprar e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	public void cargarDataProductoGenerico(String nombre) {
+		try {
+			dprodGen = cInv.getProducto(nombre,-1);
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			e.printStackTrace();
+			Url.redireccionarURL("error");
 		}
 	}
 }

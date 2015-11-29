@@ -337,10 +337,29 @@ public class ProductoBean implements Serializable {
 
 		}
 	}
+	public void agregarProductoGenerico(String nombreProducto) {
+		
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		try {
+			accionProd = cinv.copiarProducto(nick, nombreProducto, -1, idAV);
+			if (accionProd) {
+				Url.redireccionarURL("exito");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Url.redireccionarURL("error");
 
+		}
+		
+		
+	}
 	public void cortarProducto(String nombreProducto) {
 
 		HttpSession session = SesionBean.getSession();
+		
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 
