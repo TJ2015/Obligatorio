@@ -13,18 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import dominio.datatypes.DataReporte;
 import dominio.datatypes.DataReportes;
+import util.TablasPDF;
 
 
 @WebServlet("/ServletPDF")
@@ -58,24 +53,24 @@ public class ServletPDF extends HttpServlet {
             
             PdfPTable tabla = new PdfPTable(CANTIDAD_COLUMNA);                
             if (dataReportes != null && dataReportes.getTipoReporte() != null && dataReportes.getListaReporte() != null) {
-                tabla.addCell(crearTitulo(dataReportes.getTipoReporte().getDescripcion()));
+                tabla.addCell(TablasPDF.crearTitulo(dataReportes.getTipoReporte().getDescripcion(), CANTIDAD_COLUMNA));
 				if (dataReportes.getListaReporte().size() > 0) {
-					tabla.addCell(crearCabecera("Nombre Producto"));
-					tabla.addCell(crearCabecera(dataReportes.getTipoReporte().getNombre()));
+					tabla.addCell(TablasPDF.crearCabecera("Nombre Producto"));
+					tabla.addCell(TablasPDF.crearCabecera(dataReportes.getTipoReporte().getNombre()));
 					for (Iterator iReporte = dataReportes.getInterator(); iReporte.hasNext();) {
 						DataReporte dataReporte = (DataReporte) iReporte.next();
-						tabla.addCell(crearCelda(dataReporte.getNombre()));
-						tabla.addCell(crearCeldaDato(dataReporte.getValor()));
+						tabla.addCell(TablasPDF.crearCelda(dataReporte.getNombre()));
+						tabla.addCell(TablasPDF.crearCeldaDato(dataReporte.getValor()));
 					}
-					tabla.addCell(crearCabecera("TOTAL"));
-					tabla.addCell(crearCabecera(dataReportes.getTotal()));
+					tabla.addCell(TablasPDF.crearCabecera("TOTAL"));
+					tabla.addCell(TablasPDF.crearCabecera(dataReportes.getTotal()));
 				}
 				else{
-	            	tabla.addCell(crearError("No hay datos en el reporte"));
+	            	tabla.addCell(TablasPDF.crearError("No hay datos en el reporte", CANTIDAD_COLUMNA));
 				}
 			}
             else{
-            	tabla.addCell(crearError("No se genero correctamente el Reporte"));
+            	tabla.addCell(TablasPDF.crearError("No se genero correctamente el Reporte", CANTIDAD_COLUMNA));
             }
                   
             document.add(tabla);
@@ -112,24 +107,24 @@ public class ServletPDF extends HttpServlet {
             
             PdfPTable tabla = new PdfPTable(CANTIDAD_COLUMNA);                
             if (dataReportes != null && dataReportes.getListaReporte() != null) {
-                tabla.addCell(crearTitulo(dataReportes.getTipoReporte().getDescripcion()));
+                tabla.addCell(TablasPDF.crearTitulo(dataReportes.getTipoReporte().getDescripcion(), CANTIDAD_COLUMNA));
 				if (dataReportes.getListaReporte().size() > 0) {
-					tabla.addCell(crearCabecera("Nombre Producto"));
-					tabla.addCell(crearCabecera(dataReportes.getTipoReporte().getNombre()));
+					tabla.addCell(TablasPDF.crearCabecera("Nombre Producto"));
+					tabla.addCell(TablasPDF.crearCabecera(dataReportes.getTipoReporte().getNombre()));
 					for (Iterator iReporte = dataReportes.getInterator(); iReporte.hasNext();) {
 						DataReporte dataReporte = (DataReporte) iReporte.next();
-						tabla.addCell(crearCelda(dataReporte.getNombre()));
-						tabla.addCell(crearCeldaDato(dataReporte.getValor()));
+						tabla.addCell(TablasPDF.crearCelda(dataReporte.getNombre()));
+						tabla.addCell(TablasPDF.crearCeldaDato(dataReporte.getValor()));
 					}
-					tabla.addCell(crearCabecera("TOTAL"));
-					tabla.addCell(crearCabecera(dataReportes.getTotal()));
+					tabla.addCell(TablasPDF.crearCabecera("TOTAL"));
+					tabla.addCell(TablasPDF.crearCabecera(dataReportes.getTotal()));
 				}
 				else{
-	            	tabla.addCell(crearError("No hay datos en el reporte"));
+	            	tabla.addCell(TablasPDF.crearError("No hay datos en el reporte", CANTIDAD_COLUMNA));
 				}
 			}
             else{
-            	tabla.addCell(crearError("No se genero correctamente el Reporte"));
+            	tabla.addCell(TablasPDF.crearError("No se genero correctamente el Reporte", CANTIDAD_COLUMNA));
             }
                   
             document.add(tabla);
@@ -146,45 +141,6 @@ public class ServletPDF extends HttpServlet {
     }
 	
 	
-	private static PdfPCell crearCelda(String dato){
-		PdfPCell celda = new PdfPCell(new Paragraph(dato, FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK))); 
-    	celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-    	celda.setPadding (5.0f);
-    	return celda;
-	}
 	
-	private static PdfPCell crearCeldaDato(String dato){
-		PdfPCell celda = new PdfPCell(new Paragraph(dato, FontFactory.getFont("arial", 12, Font.NORMAL, BaseColor.BLACK))); 
-    	celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
-    	celda.setPadding (5.0f);
-    	celda.setPaddingRight(15.0f);
-    	return celda;
-	}
-	
-	private static PdfPCell crearCabecera(String dato){
-		PdfPCell celda = new PdfPCell(new Paragraph(dato, FontFactory.getFont("arial", 14, Font.NORMAL, BaseColor.RED))); 
-    	celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-    	celda.setPadding (8.0f);
-    	celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
-    	return celda;
-	}
-	
-	private static PdfPCell crearTitulo(String dato){
-		PdfPCell celda = new PdfPCell(new Paragraph(dato, FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.BLUE))); 
-    	celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-    	celda.setPadding (12.0f);
-    	celda.setColspan(CANTIDAD_COLUMNA);
-    	return celda;
-	}
-	
-	private static PdfPCell crearError(String dato){
-		PdfPCell celda = new PdfPCell(new Paragraph(dato, FontFactory.getFont("arial", 20, Font.BOLD, BaseColor.RED))); 
-    	celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-    	celda.setPadding (12.0f);
-    	celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
-    	celda.setColspan(CANTIDAD_COLUMNA);
-    	return celda;
-	}
-   
 	
 }

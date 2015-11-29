@@ -69,7 +69,7 @@ li i {
 			                                                <td>${usu.getNombre()}</td>
 			                                                <td>${usu.getApellido()}</td>
 			                                                <td>${usu.getFechaNacimiento()}</td>
-			                                                <td>FREE</td>
+			                                                <td>#{usu.isMembresia() ? "PREIMUN" : "FREE"}</td>
 			                                            </tr>
 			                                            
 			                                            </c:forEach>
@@ -85,6 +85,11 @@ li i {
 			                                            </tr>
 			                                        </tfoot>
 			                                    </table>
+			                                	
+			                                	<br />
+			                                	<div class="col-sm-offset-8 col-md-offset-10 col-lg-offset-11 col-sm-4 col-md-2 col-lg-1">
+			                                		<h:commandLink class="btn btn-primary" action="#{adminBean.generarReporteUsuario()}" value="Generar" />
+			                                	</div>
 			                                </h:form>
 			                                </div><!-- /.box-body -->
 			                        </div>

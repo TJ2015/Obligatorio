@@ -279,6 +279,7 @@ public class AdminBean implements Serializable {
 			if (da != null) {
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
+				session.setAttribute("admin", nick);
 				logueado = true;
 				error = null;
 				String hash = util.Gravatar.md5Hex(da.getEmail());
@@ -577,6 +578,12 @@ public class AdminBean implements Serializable {
 			// TODO 505
 			e.printStackTrace();
 		}
+	}
+	
+	public void generarReporteUsuario(){
+		HttpSession session = SesionBean.getSession();
+		session.setAttribute("tipoReporteAdmin", "listaUsuarios");
+		Url.redireccionarServlet("ServletAdminPDF");
 	}
 
 }
