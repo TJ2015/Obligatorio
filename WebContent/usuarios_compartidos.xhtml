@@ -33,7 +33,7 @@
 <ui:define name="contenido">
 	<div class="container-fluid clearfix">
 		<div class="page-header text-center">
-		  <h1>Usarios con los que se comparte el av</h1>
+		  <h1>Usuarios con los que se comparte este AV</h1>
 		</div>
 		
 		<section class="content">
@@ -44,10 +44,10 @@
                                 
 				   <c:forEach var="usuComp" items="${usus}"  >
 				      <li class="list-group-item">
-				       <a href="mostrarAV.xhtml">
+				      
 				       <i class="fa fa-angle-double-right"></i>
 				          ${usuComp.nombre} 
-				        </a>
+				       
 				        <a href="#" data-toggle="modal" data-target="#myModal">
 				        <i class="fa fa-trash-o" style="float:right" ></i>
 				        </a>
