@@ -32,6 +32,31 @@ public final class Url {
 		}
 	}
 	
+	
+	public static void redireccionarServlet(String urlServlet){
+		try {
+			redireccionarServlet(urlServlet, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void redireccionarServlet(String urlServlet, String parametros){
+		try {
+			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+			if (parametros != null && !parametros.isEmpty()) {
+				parametros = "?" + parametros;
+			}
+			else{
+				parametros = "";
+			}
+			context.redirect(context.getRequestContextPath() + "/" + urlServlet + parametros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static String obtenerActualURL(HttpServletRequest request){
 		String url = null;
 		try {

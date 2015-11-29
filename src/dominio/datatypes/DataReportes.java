@@ -8,6 +8,7 @@ public class DataReportes {
 	
 	private DataTipoReporte tipoReporte;
 	private List<DataReporte> listaReporte;
+	private List<DataReporteAdmin> listaReporteAdmin;
 	
 	private String total;
 	
