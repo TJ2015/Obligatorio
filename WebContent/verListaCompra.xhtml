@@ -37,17 +37,12 @@
 											       <td> <label> ${compra.getProducto().getNombre()}</label>
 											        </td>
 											        <td> <label>  ${compra.cantidad} </label>
-											        											     #{avBean.pruebaNom(compra.getProducto().getNombre())}
-											        
-											   <h:commandLink  action="#{avBean.eliminarEnListaDeCompra()}" actionListener="#{avBean.pruebaNom(compra.getProducto().getNombre())}">
-											     <i class="fa fa-trash-o" style="float:right" ></i>
-											     </h:commandLink>   
-											        											     #{avBean.pruebaNom(compra.getProducto().getNombre())}
-											        
-											
-											  <h:commandLink action="#{productoBean.cargarDataProducto(nombre)}" actionListener="#{avBean.productoComprado(nombre)}">
-											     <i class="fa fa-check" style="float:right" ></i>
-											     </h:commandLink>         
+													   	 <h:commandLink  action="verListaCompra" actionListener="#{avBean.prepararEliminarCompra(compra.getProducto().getNombre())}">
+													     	<i class="fa fa-trash-o" style="float:right" ></i>
+													     </h:commandLink>
+													  	 <h:commandLink action="verListaCompra" actionListener="#{avBean.productoComprado(compra.getProducto().getNombre())}">
+													     	<i class="fa fa-check" style="float:right" ></i>
+													     </h:commandLink>         
 											        </td>
 											     </tr>                        
 											 </c:forEach>
@@ -67,30 +62,35 @@
                 </section><!-- /.content -->
 	</div>
 	 <!-- Modal -->
-  <div class="modal" id="myModal1" role="dialog">
+  <div class="modal" id="eliminarCompraModal" role="dialog">
     <div class="modal-dialog">
     
 		      <!-- Modal content-->
 		      <div class="modal-content">
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          <h4 class="modal-title">Eliminar Producto</h4>
+		          <h4 class="modal-title">Eliminar Producto de la lista de compras</h4>
 		        </div>
 		        <div class="modal-body">
 		          <p>¿Esta seguro que desea eliminar este producto de la lista de compras?.</p>
 		        </div>
 		        <div class="modal-footer">
 		        <h:form>
-		        	  <h:commandButton  action="#{avBean.eliminarEnListaDeCompra(avBean.nombreProducto)}" value="Aceptar" class="btn btn-default" />  
-		        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+		        	  <h:commandButton  action="#{avBean.eliminarEnListaDeCompra()}" value="Aceptar" class="btn btn-default" />
+		        	  <h:commandButton  action="#{avBean.cancelarEliminarCompra()}" value="Cancelar" class="btn btn-default" />  
 		        </h:form>
-		        
 		         
 		        </div>
 		      </div>
-      
     </div>
     </div>
+    
+    		<c:if test="#{avBean.eliminarCompra}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#eliminarCompraModal").modal('show');
+				</h:outputScript>
+			</c:if>
 		</ui:define>
 </ui:composition>
 </body> 

@@ -2,8 +2,6 @@ LOGICA:
 
 Chequear que el usuario pueda ejecutar los metodos (PRESENTACION => BEANS)
 
-Sincronizar lista de compra con stock
-
 Log de movimientos stock
 Log de movimientos de usuario
 Log de ganancias y proyecciones
@@ -18,7 +16,6 @@ Reportes usuario:
 
 Notificaciones de limites de cuenta
 
-Ganar membresia con facebook
 
 Controlar que los nombres de usuario, categoria y producto sean alfanumericos
 
@@ -33,35 +30,17 @@ Arreglar eliminar producto de AV que te devuelva a la vista del AV
 Contar usuarios premium no esta andando bien
 
 Usuario
-Arreglar Ver Productos de AV
 Modificar Producto
-Mover y copiar productos (Noelia)
-Modificar stock
-Ver Notificaciones (hecho, funca?)
-Vista de Categoria
+
 Agregar stock en vista de productos
-Despues de eliminar AV ir a perfil de usuario
 Recargar la lista de avs, cuando se va al perfil
 
-chequear que exista av! siempre!
-recargar las categorias en sesion despues de crear una categoria
-
-Restringir acceso a crear producto cuando no hay categorias.
-
-Eliminar Notas
-
-En eliminar usuario, desvincular todas las referencias a otras entidades.
-
 Cambiar iconos del registro de usuario, hay 3 lupas.
-
-No mostrar boton de inicio en perfil de usuario, o cambiar la barra en perfil
 
 Poner en negrita u otra forma los mensajes no leidos
 
 /***********************************************************/
 
-MODIFICACIONES IMPORTANTES:
-	- en el archivo de Tablas: comente las tablas de accion y objetivo y las FK a la tabla de LOG
 
 Reporte paa usuario:
 

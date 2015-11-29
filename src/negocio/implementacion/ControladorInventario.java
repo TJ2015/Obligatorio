@@ -29,6 +29,7 @@ import negocio.interfases.AlgoritmoDeRecomendacionSimple;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorLog;
 import persistencia.implementacion.AvDAO;
+import persistencia.implementacion.FabricaDAO;
 import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
@@ -39,8 +40,8 @@ public class ControladorInventario implements IControladorInventario {
 	@EJB // BORRAR CUANDO NO SE USE
 	private IAvDAO avDAO;
 
-	private IInventarioDAO invDAO = new InventarioDAO();
-	private IAvDAO	avDAOTenant = new AvDAO();
+	private IInventarioDAO invDAO = FabricaDAO.getInventarioDAO();
+	private IAvDAO	avDAOTenant = FabricaDAO.getAvDAO();
 	
 	@EJB
 	private IControladorLog cLog;
@@ -377,6 +378,8 @@ public class ControladorInventario implements IControladorInventario {
 	public void eliminarProducto(String nickUsuario, String nombre, long idAV) {
 
 		String tenant = getTenant(idAV);
+		IInventarioDAO invDAO = FabricaDAO.getInventarioDAO();
+		
 		if (tenant != null) {
 			invDAO.open(tenant);
 			Producto prod = invDAO.buscarProducto(nombre, tenant);
@@ -386,7 +389,7 @@ public class ControladorInventario implements IControladorInventario {
 				
 			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(prod.getIdProducto(), tenant);
 			try {
-				eliminarProductoDeListaDeCompra(nickUsuario, idAV, prod.getIdProducto());
+				eliminarProductoDeListaDeCompra(nickUsuario, idAV, pac.getId());
 			} catch (Exception e) {
 			}
 			

@@ -90,9 +90,9 @@
 					 	<i class="fa fa-angle-double-right"></i>
 					 	${av.nombreAV}
 					 </h:commandLink>
-					  <a href="#" data-toggle="modal" data-target="#myModal">
-					  <i class="fa fa-trash-o" style="float:right" ></i>
-					   </a>
+				  	<h:commandLink action="usuario_sapo" actionListener="${avBean.prepararEliminarAV(av.getIdAV())}" >
+				  		<i class="fa fa-trash-o" style="float:right" ></i>
+				  	</h:commandLink>
 					</li> 
 					              
 				 </c:forEach>
@@ -109,9 +109,9 @@
 				   <c:forEach var="av" items="${usuarioBean.AVsComp}"  >
 				      <li class="list-group-item">
 				       <h:commandLink actionListener="${usuarioBean.verAV(av.getIdAV())}" action="mostrarAV">
-					 	<i class="fa fa-angle-double-right"></i>
-					 	${av.nombreAV}
-					 </h:commandLink>
+					 		<i class="fa fa-angle-double-right"></i>
+					 		${av.nombreAV}
+					 	</h:commandLink>
 				       
 				     </li>
 				                               
@@ -122,7 +122,7 @@
 		</section>
 	</div>
 	 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="modalEliminarAV" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -137,15 +137,19 @@
         <div class="modal-footer">
         <h:form>
         	  <h:commandButton  action="usuario_sapo" actionListener="#{avBean.eliminarAV()}" value="Aceptar" class="btn btn-default" />  
-        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+        	  <h:commandButton  action="usuario_sapo" actionListener="#{avBean.cancelarEliminarAV()}" value="Cancelar" class="btn btn-default" />
         </h:form>
-        
-         
         </div>
       </div>
       
     </div>
   </div>
+  			<c:if test="#{avBean.eliminarAV}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#modalEliminarAV").modal('show');
+				</h:outputScript>
+			</c:if>
 	</ui:define>
 	</ui:composition>
 	
