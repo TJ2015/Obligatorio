@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head></h:head>
+<body>
+
+
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+			<div class="container-fluid clearfix">
+				<div class="page-header text-center">
+					<h1>Categorias y Productos Genéricos</h1>
+				</div>
+				<section class="content">
+
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Todas las categorias</h3>
+					</div>
+					<h:form>
+					<ul class="treeview-menu">
+						<ui:param name="cats"
+							value="${avBean.mostrarListaCategoriaGenerica()}"></ui:param>
+						<c:forEach var="cat" items="${cats}">
+							<li class="treeview"> <span>${cat.nombre}</span>
+							
+								<ul class="treeview-menu">
+									<c:forEach var="prod" items="${cat.productos}">
+										<li><h:commandLink action="ver_productoGenerico"
+												actionListener="#{avBean.cargarDataProductoGenerico(prod.nombre)}">
+												<i class="fa fa-angle-double-right"></i> 
+			                                			${prod.nombre}
+													</h:commandLink></li>
+									</c:forEach>
+								</ul></li>
+
+						</c:forEach>
+					</ul>
+					</h:form>
+					
+				</div>
+				<!-- /.box --> </section>
+				<!-- /.content -->
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

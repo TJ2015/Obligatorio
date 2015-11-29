@@ -60,6 +60,7 @@ public class AvBean implements Serializable {
 	private List<DataNotificacion> listNotificacion = new ArrayList<>();
 	private List<DataNota> listNotas = new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
+	private List<DataCategoria> catsGene = new ArrayList<>();
 	private List<DataCategoria> cats = new ArrayList<>();
 	private String errorAV;
 	private long avEliminar = 0;
@@ -67,10 +68,12 @@ public class AvBean implements Serializable {
 	private long prodCompraEliminar;
 	private boolean eliminarCompra;
 
+	private DataProducto dprodGen;
+
 	public AvBean() {
 
 	}
-	
+
 	public long getProdCompraEliminar() {
 		return prodCompraEliminar;
 	}
@@ -86,7 +89,23 @@ public class AvBean implements Serializable {
 	public void setEliminarCompra(boolean eliminarCompra) {
 		this.eliminarCompra = eliminarCompra;
 	}
-	
+
+	public DataProducto getDprodGen() {
+		return dprodGen;
+	}
+
+	public void setDprodGen(DataProducto dprodGen) {
+		this.dprodGen = dprodGen;
+	}
+
+	public List<DataCategoria> getCatsGene() {
+		return catsGene;
+	}
+
+	public void setCatsGene(List<DataCategoria> catsGene) {
+		this.catsGene = catsGene;
+	}
+
 	public String getErrorAV() {
 		return errorAV;
 	}
@@ -464,11 +483,10 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		long idAV1 = (long) session.getAttribute("idAV");
 		try {
-			cInv.eliminarProductoDeListaDeCompra((String) session.getAttribute("nickname"), idAV1,
-					prodCompraEliminar);
+			cInv.eliminarProductoDeListaDeCompra((String) session.getAttribute("nickname"), idAV1, prodCompraEliminar);
 			prodCompraEliminar = 0;
 			eliminarCompra = false;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		prodCompraEliminar = 0;
@@ -533,8 +551,17 @@ public class AvBean implements Serializable {
 			}
 		} catch (NoExisteElProductoAComprar e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
+	}
+
+	public void cargarDataProductoGenerico(String nombre) {
+		try {
+			dprodGen = cInv.getProducto(nombre, -1);
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			e.printStackTrace();
+			Url.redireccionarURL("error");
+		}
 	}
 
 	public void prepararEliminarAV(long idEliminar) {
