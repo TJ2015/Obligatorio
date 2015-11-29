@@ -37,7 +37,7 @@
 											       <td> <label> ${compra.getProducto().getNombre()}</label>
 											        </td>
 											        <td> <label>  ${compra.cantidad} </label>
-													   	 <h:commandLink  action="verListaCompra" actionListener="#{avBean.prepararEliminarCompra(compra.getProducto().getNombre())}">
+													   	 <h:commandLink  action="verListaCompra" actionListener="#{avBean.prepararEliminarCompra(compra.getId())}">
 													     	<i class="fa fa-trash-o" style="float:right" ></i>
 													     </h:commandLink>
 													  	 <h:commandLink action="verListaCompra" actionListener="#{avBean.productoComprado(compra.getProducto().getNombre())}">
@@ -76,8 +76,8 @@
 		        </div>
 		        <div class="modal-footer">
 		        <h:form>
-		        	  <h:commandButton  action="#{avBean.eliminarEnListaDeCompra()}" value="Aceptar" class="btn btn-default" />
-		        	  <h:commandButton  action="#{avBean.cancelarEliminarCompra()}" value="Cancelar" class="btn btn-default" />  
+		        	  <h:commandButton  action="verListaCompra" actionListener="#{avBean.eliminarEnListaDeCompra()}" value="Aceptar" class="btn btn-default" />
+		        	  <h:commandButton  action="verListaCompra" actionListener="#{avBean.cancelarEliminarCompra()}" value="Cancelar" class="btn btn-default" />  
 		        </h:form>
 		         
 		        </div>

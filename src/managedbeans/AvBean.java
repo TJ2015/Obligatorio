@@ -64,18 +64,18 @@ public class AvBean implements Serializable {
 	private String errorAV;
 	private long avEliminar = 0;
 	private boolean eliminarAV = false;
-	private String prodCompraEliminar;
+	private long prodCompraEliminar;
 	private boolean eliminarCompra;
 
 	public AvBean() {
 
 	}
 	
-	public String getProdCompraEliminar() {
+	public long getProdCompraEliminar() {
 		return prodCompraEliminar;
 	}
 
-	public void setProdCompraEliminar(String prodCompraEliminar) {
+	public void setProdCompraEliminar(long prodCompraEliminar) {
 		this.prodCompraEliminar = prodCompraEliminar;
 	}
 
@@ -460,16 +460,19 @@ public class AvBean implements Serializable {
 	}
 
 	public void eliminarEnListaDeCompra() {
+		eliminarCompra = false;
 		HttpSession session = SesionBean.getSession();
 		long idAV1 = (long) session.getAttribute("idAV");
 		try {
-			DataProducto dprod = cInv.getProducto(prodCompraEliminar, idAV1);
 			cInv.eliminarProductoDeListaDeCompra((String) session.getAttribute("nickname"), idAV1,
-					dprod.getIdProducto());
+					prodCompraEliminar);
+			prodCompraEliminar = 0;
+			eliminarCompra = false;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		cancelarEliminarCompra();
+		prodCompraEliminar = 0;
+		eliminarCompra = false;
 	}
 
 	public String pruebaNom(String prue) {
@@ -530,7 +533,8 @@ public class AvBean implements Serializable {
 			}
 		} catch (NoExisteElProductoAComprar e) {
 			e.printStackTrace();
-		}
+		} 
+		
 	}
 
 	public void prepararEliminarAV(long idEliminar) {
@@ -543,13 +547,13 @@ public class AvBean implements Serializable {
 		eliminarAV = false;
 	}
 
-	public void prepararEliminarCompra(String prod) {
+	public void prepararEliminarCompra(long prod) {
 		prodCompraEliminar = prod;
 		eliminarCompra = true;
 	}
 
 	public void cancelarEliminarCompra() {
-		prodCompraEliminar = null;
+		prodCompraEliminar = 0;
 		eliminarCompra = false;
 	}
 
