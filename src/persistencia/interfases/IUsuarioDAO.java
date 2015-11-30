@@ -33,5 +33,8 @@ public interface IUsuarioDAO {
 	public void actualizarAdmin(Administrador admin);
 
 	public List<Usuario> getAllUsuarios();
-
+	
+	/*********************************************************************/
+	
+	public List<String> obtenerNickDeUsuarios();
 }

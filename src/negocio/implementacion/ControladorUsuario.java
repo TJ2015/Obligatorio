@@ -2,6 +2,7 @@ package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -102,7 +103,7 @@ public class ControladorUsuario implements IControladorUsuario {
 	}
 
 	@Override
-	public DataUsuario login(String nickname, String password) {
+	public DataUsuario login(String nickname, String password) {		
 		DataUsuario dataUsuario = null;
 		try {
 			Usuario usuario = usuarioDAO.buscarUsuario(nickname);
@@ -576,6 +577,17 @@ public class ControladorUsuario implements IControladorUsuario {
 			e.printStackTrace();
 		}
 		return dataUsuario;
+	}
+	
+	@Override
+	public List<String> obtenerNicksDeUsuarios(){
+		List<String> lUsuarios = null;
+		try {
+			lUsuarios = usuarioDAO.obtenerNickDeUsuarios();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lUsuarios;
 	}
 	
 	

@@ -31,6 +31,7 @@ import util.Imagenes;
 @NamedQueries({ @NamedQuery(name = "Usuario.getAll", query = "SELECT u FROM Usuario u"),
 		@NamedQuery(name = "Usuario.buscarPorNick", query = "SELECT u FROM Usuario u WHERE u.nick = :nick"),
 		@NamedQuery(name = "Usuario.buscarPorEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
+		@NamedQuery(name = "Usuario.obtenerNicks", query = "SELECT u.nick FROM Usuario u"),
 		@NamedQuery(name = "Usuario.buscarPorIdSocial", query = "SELECT u FROM Usuario u WHERE u.idSocial = :idSocial") })
 public class Usuario implements Serializable {
 

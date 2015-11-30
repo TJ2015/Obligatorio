@@ -2,8 +2,6 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
@@ -27,6 +23,7 @@ import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
 
@@ -39,6 +36,9 @@ public class UsuarioBean implements Serializable {
 	IControladorUsuario cusu;
 	@EJB
 	IControladorAV cav;
+	
+	@EJB
+	private IControladorAlgoritmos cAlgoritmos;
 
 	private String nombre;
 	private String apellido;
@@ -230,7 +230,7 @@ public class UsuarioBean implements Serializable {
 	public void login() throws IOException {
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
-
+			cAlgoritmos.obtenerProductosMasVendidos();
 			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();

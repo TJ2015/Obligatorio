@@ -8,6 +8,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import org.hibernate.Query;
+
 import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.Usuario;
@@ -211,6 +213,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 			usuarios = em.createNamedQuery("Usuario.getAll", Usuario.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return usuarios;
+	}
+	
+	@Override
+	public List<String> obtenerNickDeUsuarios() {
+		List<String> usuarios = null;
+		try {
+			usuarios = em.createNamedQuery("Usuario.obtenerNicks", String.class).getResultList();
+		} catch (Exception e) {
+			System.out.println("No se obtienen la lista de nick de usuarios");
 		}
 		return usuarios;
 	}

@@ -46,4 +46,10 @@ public interface IControladorInventario {
 	
 	public List<DataProducto> recomendarProductos(String nickname); 
 	
+	
+	/**************************************************************************/
+	
+	public List<String> obtenerNombresProductos(String nickUsuario, String nombreAV);
+	public List<String> obtenerNombresProductosGenericos();
+	
 }
