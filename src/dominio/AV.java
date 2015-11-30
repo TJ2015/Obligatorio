@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -16,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import dominio.datatypes.DataAV;
-import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 
 /**
@@ -26,9 +26,11 @@ import dominio.datatypes.DataUsuario;
  *
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "AV.findAll", query = "SELECT u FROM AV u"),
-		@NamedQuery(name = "AV.buscarPorId", query = "SELECT a FROM AV a WHERE a.idAV =:idAV"),
-		@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV")
+@NamedQueries({ 
+	@NamedQuery(name = "AV.findAll", query = "SELECT a FROM AV a"),
+	@NamedQuery(name = "AV.obtenerNombresAV", query = "SELECT a.nombreAV FROM AV a JOIN a.usuarioCreador u WHERE u.idUsuario = :idUsuario "),
+	@NamedQuery(name = "AV.buscarPorId", query = "SELECT a FROM AV a WHERE a.idAV =:idAV"),
+	@NamedQuery(name = "AV.buscarPorNombre", query = "SELECT a FROM AV a WHERE a.nombreAV =:nombreAV")
 })
 public class AV implements Serializable {
 

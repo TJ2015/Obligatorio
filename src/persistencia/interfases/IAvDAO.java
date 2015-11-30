@@ -55,4 +55,5 @@ public interface IAvDAO {
 
 	public List<Notificacion> buscarNotificacionesNoLeidas();
 	
+	
 }

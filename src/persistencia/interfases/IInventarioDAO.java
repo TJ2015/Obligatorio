@@ -63,4 +63,10 @@ public interface IInventarioDAO {
 
 	public void actualizarProductoAComprar(ProductoAComprar pacAux);
 	
+	/*********************************************************************/
+	
+	public List<String> buscarNombresProductos(String tenant);
+	public List<String> buscarNombresProductosGenericos();
+
+	
 }

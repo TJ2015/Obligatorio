@@ -33,10 +33,24 @@
 									<li>
 									<h:commandLink action="usuario_sapo" value="Perfil" />  		
 									</li>
-
-									<li>
-									<h:commandLink action="paypal" value="Comprar Membresía" />  		
-									</li>	                
+									
+									<c:if test="${usuarioBean.esPremium() == true}">
+										<li>
+											<a style="color: yellow;">
+												<h5 style="padding: 0; margin: 0;">
+													<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+													<span>PREMIUM</span>
+												</h5>
+											</a>  		
+										</li>
+									</c:if>	                
+									
+									<c:if test="${usuarioBean.esPremium() == false}">
+										<li>
+											<h:commandLink action="paypal" value="Comprar Membresía" />		
+										</li>
+									</c:if>
+									
 									<li>
 									<h:commandLink action="#{usuarioBean.logout()}" value="Cerrar sesión" />   
 									</li>

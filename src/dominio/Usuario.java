@@ -31,6 +31,7 @@ import util.Imagenes;
 @NamedQueries({ @NamedQuery(name = "Usuario.getAll", query = "SELECT u FROM Usuario u"),
 		@NamedQuery(name = "Usuario.buscarPorNick", query = "SELECT u FROM Usuario u WHERE u.nick = :nick"),
 		@NamedQuery(name = "Usuario.buscarPorEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
+		@NamedQuery(name = "Usuario.obtenerNicks", query = "SELECT u.nick FROM Usuario u"),
 		@NamedQuery(name = "Usuario.buscarPorIdSocial", query = "SELECT u FROM Usuario u WHERE u.idSocial = :idSocial") })
 public class Usuario implements Serializable {
 
@@ -105,8 +106,8 @@ public class Usuario implements Serializable {
 		{
 			this.bytesImagen = Imagenes.convertirUrlToArrayByte(usuarioSocial.getPicture().getData().getUrl());
 		}
-		
 	}
+
 
 	public DataUsuario getDataUsuario() {
 		DataUsuario dataUsuario = null;
@@ -130,6 +131,16 @@ public class Usuario implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return dataUsuario;
+	}
+	
+	public DataUsuario obtenerDataUsuarioSimple(){
+		DataUsuario dataUsuario = null;
+		try {
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, bytesImagen, fechaRegistro, membresia);
+		} catch (Exception e) {
+			System.out.println("Error al obtener el data usuario simple");
 		}
 		return dataUsuario;
 	}

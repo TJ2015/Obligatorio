@@ -237,4 +237,27 @@ public class InventarioDAO implements IInventarioDAO {
 		session.getTransaction().commit();
 	}
 
+	@Override
+	public List<String> buscarNombresProductos(String tenant) {
+		List<String> lNombre = null;
+		try {
+			Query q = session.getNamedQuery("Producto.obtenerNombreProductos");
+			lNombre = q.list();
+		} catch (Exception e) {
+			System.out.println("No se encontraron Nombre de productos del tenant "  + tenant);
+		}
+		return lNombre;
+	}
+
+	@Override
+	public List<String> buscarNombresProductosGenericos() {
+		List<String> lNombre = null;
+		try {
+			lNombre = em.createNamedQuery("Producto.obtenerNombreProductos", String.class).getResultList();
+		} catch (Exception e) {
+			System.out.println("No se encontraron Nombre de productos Genericos");
+		}
+		return lNombre;
+	}
+
 }

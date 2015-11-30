@@ -2,8 +2,6 @@ package managedbeans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +13,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
 import dominio.datatypes.DataUsuario;
@@ -27,6 +23,7 @@ import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorUsuario;
 import util.Mensajeria;
 import util.Url;
@@ -40,6 +37,9 @@ public class UsuarioBean implements Serializable {
 	IControladorUsuario cusu;
 	@EJB
 	IControladorAV cav;
+	
+	@EJB
+	private IControladorAlgoritmos cAlgoritmos;
 
 	private String nombre;
 	private String apellido;
@@ -231,7 +231,7 @@ public class UsuarioBean implements Serializable {
 	public void login() throws IOException {
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
-
+			cAlgoritmos.obtenerProductosMasVendidos();
 			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
@@ -251,8 +251,8 @@ public class UsuarioBean implements Serializable {
 
 	public void logout() throws IOException {
 		try {
+			limpiarDatos();
 			HttpSession session = SesionBean.getSession();
-			logueado = false;
 			Url.redireccionarURL("index");
 			session.invalidate();
 		} catch (Exception e) {
@@ -455,4 +455,41 @@ public class UsuarioBean implements Serializable {
 		return url;
 	}
 	
+	public boolean esPremium(){
+		boolean esPremium = false;
+		try {
+			HttpSession session = SesionBean.getSession();
+			dusu = (DataUsuario)session.getAttribute("dataUsuario");
+			esPremium = (dusu != null && dusu.isMembresia());
+		} catch (Exception e) {
+			System.out.println("No es premium");
+		}
+		return esPremium;
+	}
+	
+	
+	private void limpiarDatos(){
+		nombre = null;
+		apellido = null;
+		destinatario = null;
+		mensaje = null;
+		asunto = null;
+		nick = null;
+		password = null;
+		email = null;
+		fechaNacimiento = null;
+		AVs = null;
+		AVsComp = null;
+		todosAV = null;
+		msjsNoLeidos = null;
+		msjsEnviados = null;
+		msjsRecibidos = null;
+		logueado = false;
+		dmsj = null;
+		dusu = null;
+		recibido = false;
+		file = null;
+		imagen = null;
+		msjs = null;
+	}
 }

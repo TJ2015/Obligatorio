@@ -643,4 +643,29 @@ public class ControladorInventario implements IControladorInventario {
 		return algo.recomendar(nickname);
 	}
 	
+	@Override
+	public List<String> obtenerNombresProductos(String nickUsuario, String nombreAV){
+		List<String> lNombres = null;
+		try {
+			String tenant = nickUsuario + "_" + nombreAV; 
+			invDAO.open(tenant);
+			lNombres = invDAO.buscarNombresProductos(tenant);
+			invDAO.close(tenant);
+		} catch (Exception e) {
+			System.out.println("No se obtienen nombre de AV para el nick de Usuario " + nickUsuario);
+		}
+		return lNombres;
+	}
+	
+	@Override
+	public List<String> obtenerNombresProductosGenericos(){
+		List<String> lNombres = null;
+		try {
+			lNombres = invDAO.buscarNombresProductosGenericos();
+		} catch (Exception e) {
+			System.out.println("No se obtienen nombre de Productos Genericos");
+		}
+		return lNombres;
+	}
+	
 }

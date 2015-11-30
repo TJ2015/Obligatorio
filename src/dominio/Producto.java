@@ -28,7 +28,9 @@ import dominio.datatypes.DataProducto;
 @Access(AccessType.FIELD)
 @NamedQueries({
 		@NamedQuery(name = "Producto.buscarPorNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
-		@NamedQuery(name = "Producto.getAll", query = "SELECT p FROM Producto p") })
+		@NamedQuery(name = "Producto.getAll", query = "SELECT p FROM Producto p"), 
+		@NamedQuery(name = "Producto.obtenerNombreProductos", query = "SELECT p.nombre FROM Producto p") 
+})
 public class Producto implements Serializable {
 	
 	@Id

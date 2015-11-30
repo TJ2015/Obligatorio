@@ -67,6 +67,20 @@ public class DataUsuario implements Serializable {
 		this.imagen = imagen;
 		this.membresia = membresia;
 	}
+	
+	public DataUsuario(String nombre, String apellido, String nick, String email, Date fechaNacimiento,
+			 byte[] imagen, Date fechaRegistro, boolean membresia) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.nick = nick;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.fechaRegistro = fechaRegistro;
+		this.imagen = imagen;
+		this.membresia = membresia;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
