@@ -182,9 +182,9 @@ section#perfil {
 							</div>
 							<div class="modal-footer">
 								<h:form>
-									<h:commandButton action="ver_usuario" actionListener="#{adminBean.eliminarProducto()}"
+									<h:commandButton action="ver_av_usuario" actionListener="#{adminBean.eliminarProducto()}"
 										value="Aceptar" class="btn btn-default" />
-									<h:commandButton action="ver_usuarios" actionListener="#{adminBean.cancelarEliminarProducto()}"
+									<h:commandButton action="ver_av_usuario" actionListener="#{adminBean.cancelarEliminarProducto()}"
 										value="Cancelar" class="btn btn-default" />
 								</h:form>
 
@@ -211,6 +211,7 @@ section#perfil {
 				<h:outputScript target="body">
 				    $ = jQuery;
 				    $("#myModal").modal('show');
+					
 				</h:outputScript>
 			</c:if>
 			</ui:define>

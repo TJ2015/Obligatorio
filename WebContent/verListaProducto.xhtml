@@ -64,10 +64,10 @@ li i {
 										<td>
 											${p.stock}
 											<h:form>
-												<h:commandLink actionListener="#{productoBean.aumentarStock(p.nombre)}" >
+												<h:commandLink actionListener="#{productoBean.aumentarStock(p.nombre)}" onclick="return stockClick()" >
 													<span class="fa fa-plus pull-right"></span>
 												</h:commandLink>
-												<h:commandLink actionListener="#{productoBean.disminuirStock(p.nombre)}" >
+												<h:commandLink actionListener="#{productoBean.disminuirStock(p.nombre)}" onclick="return stockClick()" >
 													<span class="fa fa-minus pull-right"></span>
 												</h:commandLink>
 											</h:form>
@@ -93,6 +93,21 @@ li i {
 				<!-- /.content -->
 
 			</div>
+			
+			
+			<h:outputScript target="body">
+			    $ = jQuery;
+			    $("#myModal").modal('show');
+			    var clickeable = true;
+				function stockClick() {
+					retorno = clickeable;
+					if( clickeable ) {
+						clickeable = false;
+					}
+					return retorno;
+				};
+			</h:outputScript>
+			
 		</ui:define>
 	</ui:composition>
 

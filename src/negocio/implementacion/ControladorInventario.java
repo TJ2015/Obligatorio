@@ -515,11 +515,13 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public void productoComprado(String nickUsuario, long idAV, long idProdComp) throws NoExisteElAV, NoExisteElProductoAComprar {
+		
 		String tenant = getTenant(idAV);
+		IInventarioDAO invDAO = FabricaDAO.getInventarioDAO();
 		if (tenant != null) {
 			invDAO.open(tenant);
-			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
-			eliminarProductoDeListaDeCompra(nickUsuario, idAV, idProdComp);
+			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(idProdComp, tenant);
+			eliminarProductoDeListaDeCompra(nickUsuario, idAV, pac.getId());
 			Producto prod = pac.getProducto();
 			String producto = pac.toString();
 			setStockProducto(nickUsuario, prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
@@ -532,6 +534,7 @@ public class ControladorInventario implements IControladorInventario {
 			
 			invDAO.close(tenant);
 		}
+		
 	}
 
 	@Override

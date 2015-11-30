@@ -62,15 +62,24 @@ public class AdminBean implements Serializable {
 	private double precioProd;
 	private String categoriaProd;
 	private String atributosProd;
-	private int stockProd;
+	private int stockProd = 0;
 	private int cantProdProd;
 	private UploadedFile fileProd;
 	private DataProducto prodVer;
 	private String categoriaEliminar;
 	private boolean eliminarCategoria;
 	private DataCategoria categoriaVer;
-
+	private DataAdministrador adminData;
+	
 	public AdminBean() {
+	}
+	
+	public DataAdministrador getAdminData() {
+		return adminData;
+	}
+
+	public void setAdminData(DataAdministrador adminData) {
+		this.adminData = adminData;
 	}
 
 	public String getCategoriaEliminar() {
@@ -275,14 +284,14 @@ public class AdminBean implements Serializable {
 
 	public void login() throws IOException {
 		try {
-			DataAdministrador da = cusu.loginAdmin(nick, password);
-			if (da != null) {
+			adminData = cusu.loginAdmin(nick, password);
+			if (adminData != null) {
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("admin", nick);
 				logueado = true;
 				error = null;
-				String hash = util.Gravatar.md5Hex(da.getEmail());
+				String hash = util.Gravatar.md5Hex(adminData.getEmail());
 				setImagen("http://www.gravatar.com/avatar/" + hash + "?d=retro");
 				Url.redireccionarURL("backend/admin");
 			} else {
@@ -426,7 +435,7 @@ public class AdminBean implements Serializable {
 		eliminarProducto = false;
 
 		if (!generico) {
-			cInv.eliminarProducto(avUsu.getNickname(), prodEliminar, avUsu.getIdAV());
+			cInv.eliminarProducto(adminData.getNick(), prodEliminar, avUsu.getIdAV());
 			try {
 				avUsu = cAV.traerAVPorNombre(avUsu.getNombreAV(), avUsu.getNickname());
 				prodsUsu = cInv.getProductos(avUsu.getIdAV());
@@ -485,7 +494,8 @@ public class AdminBean implements Serializable {
 
 	public void crearCategoria() {
 		if (logueado) {
-			cInv.crearCategoria(nick, nombreCategoria, -1);
+			cInv.crearCategoria(adminData.getNick(), nombreCategoria, -1);
+			nombreCategoria = null;
 			Url.redireccionarURL("backend/admin");
 		}
 	}
@@ -514,10 +524,19 @@ public class AdminBean implements Serializable {
 
 	public void crearProducto() {
 		try {
-			cInv.crearProducto(avUsu.getNickname(), nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
+			cInv.crearProducto(adminData.getNick(), nombreProd, descripcionProd, precioProd, categoriaProd, atributosProd, -1, stockProd,
 					fileProd);
 			//MARIANELA	
 			Url.redireccionarURL("backend/admin");
+			nombreProd				= null;	
+			nombreCatProd			= null;
+			descripcionProd			= null;
+			fileProd				= null;
+			categoriaProd			= null;
+			atributosProd			= null;
+			precioProd				= 0;
+			stockProd				= 0;
+			cantProdProd			= 0;
 		} catch (Exception e) {
 			// TODO 505
 			e.printStackTrace();
@@ -558,7 +577,7 @@ public class AdminBean implements Serializable {
 	public void eliminarCategoria() {
 		eliminarCategoria = false;
 		try {
-			cInv.eliminarCategoria(avUsu.getNickname(), categoriaEliminar, -1);
+			cInv.eliminarCategoria(adminData.getNick(), categoriaEliminar, -1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

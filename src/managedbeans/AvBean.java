@@ -534,6 +534,32 @@ public class AvBean implements Serializable {
 		return cats;
 	}
 
+	public List<DataCategoria> mostrarListaCategoriaGenerica() {
+
+		try {
+			catsGene = cInv.mostrarListaCategoria(-1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return catsGene;
+	}
+
+	public boolean existeAV() {
+
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+
+		if (cAV.existeAV(idAV)) {
+			return true;
+		} else {
+			errorAV = "El AV que estaba viendo ha sido eliminado!";
+			Url.redireccionarURL("usuario_sapo");
+			return false;
+		}
+	}
+
 	public void productoComprado(String prod) {
 		HttpSession session = SesionBean.getSession();
 		long idAV1 = (long) session.getAttribute("idAV");
