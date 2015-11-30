@@ -1,9 +1,5 @@
 package negocio.implementacion;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +16,7 @@ import dominio.Administrador;
 import dominio.Mensaje;
 import dominio.TipoUsuario;
 import dominio.Usuario;
+import dominio.Venta;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataMensaje;
@@ -30,6 +27,7 @@ import exceptions.NoExisteElUsuario;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import negocio.interfases.IControladorVenta;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.ITipoDAO;
 import persistencia.interfases.IUsuarioDAO;
@@ -50,6 +48,9 @@ public class ControladorUsuario implements IControladorUsuario {
 	IControladorAV cAV;
 	@EJB
 	private ITipoDAO tipoDAO;
+	
+	@EJB
+	private IControladorVenta cVenta;
 
 	public ControladorUsuario() {
 	}
@@ -558,4 +559,24 @@ public class ControladorUsuario implements IControladorUsuario {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public DataUsuario agregarUsuarioPremiun(String nickname) {
+		DataUsuario dataUsuario = null;
+		try {
+			Usuario usuario = usuarioDAO.buscarUsuario(nickname);
+			if (usuario != null) {
+				usuario.setMembresia(true);
+				usuarioDAO.actualizarUsuario(usuario);
+				dataUsuario = usuario.getDataUsuario();
+				Venta venta = new Venta(usuario, 20);
+				cVenta.agregarVenta(venta);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dataUsuario;
+	}
+	
+	
 }

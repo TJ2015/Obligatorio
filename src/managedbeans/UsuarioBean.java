@@ -250,8 +250,8 @@ public class UsuarioBean implements Serializable {
 
 	public void logout() throws IOException {
 		try {
+			limpiarDatos();
 			HttpSession session = SesionBean.getSession();
-			logueado = false;
 			Url.redireccionarURL("index");
 			session.invalidate();
 		} catch (Exception e) {
@@ -441,4 +441,41 @@ public class UsuarioBean implements Serializable {
 		return url;
 	}
 	
+	public boolean esPremium(){
+		boolean esPremium = false;
+		try {
+			HttpSession session = SesionBean.getSession();
+			dusu = (DataUsuario)session.getAttribute("dataUsuario");
+			esPremium = (dusu != null && dusu.isMembresia());
+		} catch (Exception e) {
+			System.out.println("No es premium");
+		}
+		return esPremium;
+	}
+	
+	
+	private void limpiarDatos(){
+		nombre = null;
+		apellido = null;
+		destinatario = null;
+		mensaje = null;
+		asunto = null;
+		nick = null;
+		password = null;
+		email = null;
+		fechaNacimiento = null;
+		AVs = null;
+		AVsComp = null;
+		todosAV = null;
+		msjsNoLeidos = null;
+		msjsEnviados = null;
+		msjsRecibidos = null;
+		logueado = false;
+		dmsj = null;
+		dusu = null;
+		recibido = false;
+		file = null;
+		imagen = null;
+		msjs = null;
+	}
 }

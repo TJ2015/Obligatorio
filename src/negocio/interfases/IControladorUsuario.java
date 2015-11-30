@@ -84,5 +84,7 @@ public interface IControladorUsuario {
 	public int listaUsuariosPremium();
 	
 	public List<DataAV> mostrarListaAvComparidos(String nickname);
+	
+	public DataUsuario agregarUsuarioPremiun(String nickname);
 
 }

@@ -105,8 +105,8 @@ public class Usuario implements Serializable {
 		{
 			this.bytesImagen = Imagenes.convertirUrlToArrayByte(usuarioSocial.getPicture().getData().getUrl());
 		}
-		
 	}
+
 
 	public DataUsuario getDataUsuario() {
 		DataUsuario dataUsuario = null;
@@ -130,6 +130,16 @@ public class Usuario implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return dataUsuario;
+	}
+	
+	public DataUsuario obtenerDataUsuarioSimple(){
+		DataUsuario dataUsuario = null;
+		try {
+			dataUsuario = new DataUsuario(nombre, apellido, nick, email, fechaNacimiento, bytesImagen, fechaRegistro, membresia);
+		} catch (Exception e) {
+			System.out.println("Error al obtener el data usuario simple");
 		}
 		return dataUsuario;
 	}

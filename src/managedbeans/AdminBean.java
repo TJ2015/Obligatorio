@@ -17,6 +17,7 @@ import dominio.datatypes.DataAdministrador;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
+import dominio.datatypes.DataVenta;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElUsuario;
@@ -25,6 +26,7 @@ import exceptions.YaExisteElUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
+import negocio.interfases.IControladorVenta;
 import util.Url;
 
 @ManagedBean
@@ -38,6 +40,9 @@ public class AdminBean implements Serializable {
 	IControladorAV cAV;
 	@EJB
 	IControladorInventario cInv;
+	
+	@EJB
+	private IControladorVenta cVenta;
 
 	private String nick;
 	private String password;
@@ -581,9 +586,26 @@ public class AdminBean implements Serializable {
 	}
 	
 	public void generarReporteUsuario(){
+		generarReporte("listaUsuarios");
+	}
+	
+	public void generarReporteVentas(){
+		generarReporte("listaVentas");
+	}
+	
+	private void generarReporte(String tipoReporte){
 		HttpSession session = SesionBean.getSession();
-		session.setAttribute("tipoReporteAdmin", "listaUsuarios");
+		session.setAttribute("tipoReporteAdmin", tipoReporte);
 		Url.redireccionarServlet("ServletAdminPDF");
 	}
-
+	
+	public List<DataVenta> obtenerVentas(){
+		List<DataVenta> lVentas = null;
+		try {
+			lVentas = cVenta.obtenerVentas();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return lVentas;
+	}
 }
