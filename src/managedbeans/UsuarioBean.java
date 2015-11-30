@@ -28,6 +28,7 @@ import exceptions.NoExisteElAV;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
+import util.Mensajeria;
 import util.Url;
 
 @ManagedBean
@@ -262,14 +263,20 @@ public class UsuarioBean implements Serializable {
 
 	public void registroUsuario() {
 		try {
+			
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dusu);
+				DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
+				String emailEnviar=dataUsuario.getEmail();
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				Url.redireccionarURL("usuario_sapo");
+				Mensajeria enviar = new Mensajeria();
+				String mensaje = "Bienvenido a SAPo " + dataUsuario.getNombre() + " " + dataUsuario.getApellido() + "Agradecemos su preferencia";
+				enviar.enviarCorreo(emailEnviar,"SAPo - Bienvenido al Sistema de Inventarios", mensaje);
 			} else {
 				Url.redireccionarURL("error");
 			}
