@@ -289,7 +289,12 @@ public class AvBean implements Serializable {
 			System.out.println(email);
 			try {
 				if((cantAvPorUsuario()<2)||(miembro)){
-					idAV = cAV.altaAV(nombreAV, nick);					
+					idAV = cAV.altaAV(nombreAV, nick);
+					/************MARIANELA 29/11/15 *************/
+					if(cUsu.mostrarListaAv(nick).size()==2){
+						cAV.crearNotificacion("NOTIFICACION PARA EL 2do AV del LÍMITE DE CUENTA", idAV);
+					}
+					/************MARIANELA 29/11/15 *************/
 				}
 								
 				else if((cantAvPorUsuario()>2)||(!miembro)){
@@ -317,6 +322,7 @@ public class AvBean implements Serializable {
 			}
 			session.setAttribute("idAV", idAV);
 			session.setAttribute("AVs", cUsu.mostrarListaAv(nick));
+			
 
 			try {
 				session.setAttribute("dAV", cAV.traerAV(idAV));
