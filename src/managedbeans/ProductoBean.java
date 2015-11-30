@@ -375,4 +375,31 @@ public class ProductoBean implements Serializable {
 
 		}
 	}
+	public void cargarDatos(String nombreProd){
+
+		HttpSession session = SesionBean.getSession();
+		
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		try {
+			DataProducto dp=cinv.getProducto(nombreProd, idAV);
+			 nombre=dp.getNombre();
+			 categoria=dp.getCategoria();
+			 descripcion=dp.getDescripcion();
+			 precio=dp.getPrecio();
+			 stock=dp.getStock();
+			dataProducto=dp;
+		} catch (NoExisteElAV | NoExisteElProducto e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	public void modificarProducto(String nombreProd) throws Exception {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		cinv.modificarProducto(nick, nombreProd, idAV,nombre,descripcion,precio,atributos);
+		
+	 }
+	
 }
