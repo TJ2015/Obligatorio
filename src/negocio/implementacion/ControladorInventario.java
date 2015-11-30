@@ -333,7 +333,8 @@ public class ControladorInventario implements IControladorInventario {
 			List<Atributo> attrs = util.Serializador.convertirDesdeString(prodOriginal.getAtributos());
 
 			Producto prodNuevo = new Producto(prodOriginal.getNombre(), prodOriginal.getDescripcion(),
-					prodOriginal.getPrecio(), cat, attrs, prodOriginal.getStock());
+					prodOriginal.getPrecio(), cat, attrs, prodOriginal.getStock(), prodOriginal.getBytesImagen(), prodOriginal.getNombreImagen());
+			
 
 			invDAO.persistirProducto(prodNuevo, tenantDestino);
 			cat.addProducto(prodNuevo);
@@ -389,7 +390,8 @@ public class ControladorInventario implements IControladorInventario {
 				
 			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(prod.getIdProducto(), tenant);
 			try {
-				eliminarProductoDeListaDeCompra(nickUsuario, idAV, pac.getId());
+				if( pac != null )
+					eliminarProductoDeListaDeCompra(nickUsuario, idAV, prod.getIdProducto());
 			} catch (Exception e) {
 			}
 			

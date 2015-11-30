@@ -300,13 +300,20 @@ public class UsuarioBean implements Serializable {
 
 	public List<DataAV> mostrarTodosAV() {
 		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 		AVsComp = cusu.mostrarListaAvComparidos(nick);
-
+		List<DataAV> avsUsu = new ArrayList<>();
+		
 		todosAV = AVs;
 		todosAV.addAll(AVsComp);
-
-		return todosAV;
+		
+		for( DataAV da : todosAV ) {
+			if( da.getIdAV() != idAV )
+				avsUsu.add(da);
+		}
+		
+		return avsUsu;
 	}
 
 	public boolean existeUsuarioLogeado() {

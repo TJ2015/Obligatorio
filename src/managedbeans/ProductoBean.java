@@ -256,7 +256,7 @@ public class ProductoBean implements Serializable {
 		}
 	}
 
-	public void eliminarProducto(String prodEliminar) throws Exception {
+	public void eliminarProducto(String prodEliminar) {
 		try {
 			HttpSession session = SesionBean.getSession();
 			long idAV = (long) session.getAttribute("idAV");

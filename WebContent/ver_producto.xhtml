@@ -41,15 +41,7 @@
 										<dd>${productoBean.dataProducto.precio}</dd>
 										<dt>Stock:</dt>
 										<dd>
-											${productoBean.dataProducto.stock}
-											<h:form>
-												<h:commandLink actionListener="#{productoBean.aumentarStock(nombre)}" >
-													<span class="fa fa-plus pull-right"></span>
-												</h:commandLink>
-												<h:commandLink actionListener="#{productoBean.disminuirStock(nombre)}" >
-													<span class="fa fa-minus pull-right"></span>
-												</h:commandLink>
-											</h:form>										
+											${productoBean.dataProducto.stock}										
 										</dd>
 										<c:forEach var="atr" items="${productoBean.dataProducto.atributosList}" >
 											<dt>${atr.key}:</dt>
