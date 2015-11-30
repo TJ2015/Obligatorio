@@ -8,8 +8,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataAV;
@@ -28,6 +26,7 @@ import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
+import util.Mensajeria;
 
 @ManagedBean
 @SessionScoped
@@ -313,9 +312,37 @@ public class AvBean implements Serializable {
 	public void agregarAV() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
+		boolean miembro=false;
+		String email = "correo";
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
+			miembro=cUsu.getUsuario(nick).isMembresia();
+			email=((DataUsuario)session.getAttribute("dataUsuario")).getEmail();
+			System.out.println(email);
 			try {
-				idAV = cAV.altaAV(nombreAV, nick);
+				if((cantAvPorUsuario()<2)||(miembro)){
+					idAV = cAV.altaAV(nombreAV, nick);					
+				}
+								
+				else if((cantAvPorUsuario()>2)||(!miembro)){
+					
+					Url.redireccionarURL("paypal");
+					Mensajeria enviar = new Mensajeria();
+					enviar.enviarCorreo(email,"SAPo - Límite de cuenta", "Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
+					
+				}
+				
+				else {
+						if(miembro){
+							idAV = cAV.altaAV(nombreAV, nick);
+						}
+						else {
+							
+							Url.redireccionarURL("paypal");
+							Mensajeria enviar = new Mensajeria();
+							enviar.enviarCorreo(email,"SAPo - Límite de cuenta", "Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
+						}
+				}
+				
 			} catch (NombreDeAVInvalido e1) {
 				e1.printStackTrace();
 			}
@@ -331,6 +358,22 @@ public class AvBean implements Serializable {
 			nombreAV = null;
 		}
 	}
+	
+	
+	/*MARIANELA 291115*/
+	
+	public int cantAvPorUsuario(){
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		return cUsu.mostrarListaAv(nick).size();
+		
+	}
+	/*MARIANELA 291115*/
+	
+	
+	
+	
+	
 
 	public void compartirAV() throws NoExisteElAV {
 		HttpSession session = SesionBean.getSession();
@@ -412,8 +455,8 @@ public class AvBean implements Serializable {
 		long idAV1 = (long) session.getAttribute("idAV");
 		cAV.eliminarNota(idAV1, idNota);
 	}
-
-	public void crearNotificacion() throws Exception {
+	//esta función es para enviar notificaciones del sistema
+	public void crearNotificacion() throws Exception  {
 		HttpSession session = SesionBean.getSession();
 		long idAV1 = (long) session.getAttribute("idAV");
 		cAV.crearNotificacion(textNotificacion, idAV1);
