@@ -56,6 +56,7 @@ public class AvBean implements Serializable {
 	private String textNota;
 	private long idNota;
 	private String nombreProducto;
+	private String nombreUsuComp;
 	private int cantidad;
 	private boolean reemplazar;
 	private String categoriaEliminar;
@@ -70,13 +71,29 @@ public class AvBean implements Serializable {
 	private long avEliminar = 0;
 	private boolean eliminarAV = false;
 	private long prodCompraEliminar;
-	private boolean eliminarCompra;
-
+	private boolean eliminarCompra=false;
+	private boolean eliminarUsuComp=false;
 	private DataProducto dprodGen;
 	private UploadedFile newFile;
 
 	public AvBean() {
 
+	}
+
+	public boolean isEliminarUsuComp() {
+		return eliminarUsuComp;
+	}
+
+	public void setEliminarUsuComp(boolean eliminarUsuComp) {
+		this.eliminarUsuComp = eliminarUsuComp;
+	}
+
+	public String getNombreUsuComp() {
+		return nombreUsuComp;
+	}
+
+	public void setNombreUsuComp(String nombreUsuComp) {
+		this.nombreUsuComp = nombreUsuComp;
 	}
 
 	public long getProdCompraEliminar() {
@@ -393,6 +410,8 @@ public class AvBean implements Serializable {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
 		cAV.descompartirAV(idAV, nickname);
+		
+
 
 	}
 
@@ -508,6 +527,10 @@ public class AvBean implements Serializable {
 		nombreProducto = prue;
 		return nombreProducto;
 	}
+	public String levantarNombreUsuComp(String prue) {
+		nombreUsuComp = prue;
+		return nombreUsuComp;
+	}
 
 	public UploadedFile levantarImg(UploadedFile file){
 		newFile = file;
@@ -535,6 +558,28 @@ public class AvBean implements Serializable {
 	public void cancelarEliminar() {
 		categoriaEliminar = null;
 		eliminarCategoria = false;
+	}
+	public void prepararParaEliminarUsuComp(String nombre) {
+		nombreUsuComp = nombre;
+		eliminarUsuComp = true;
+	}
+
+	public void eliminarUsuComp() {
+		HttpSession session = SesionBean.getSession();
+		idAV = (long) session.getAttribute("idAV");
+		try {
+			cAV.descompartirAV(idAV, nombreUsuComp);
+			mostrarListaCategoria();
+			nombreUsuComp = null;
+			eliminarUsuComp = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void cancelarEliminarUsuComp() {
+		nombreUsuComp = null;
+		eliminarUsuComp = false;
 	}
 
 	public List<DataCategoria> mostrarListaCategoria() {

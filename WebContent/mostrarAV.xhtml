@@ -270,9 +270,12 @@
 										        <tr>
 										            <td>${producto.getNombre()}</td>
 										            <td>${producto.getStock()}</td>
-										            <td>
-										            	<h:commandButton value="Agregar a Lista de Compra" class="btn btn-primary" 
-										            	onclick="return seleccionarProductoParaListaCompra('${producto.getNombre()}');" />
+										            <td class="text-center">
+										             
+										            	<h:commandLink 
+										            	onclick="return seleccionarProductoParaListaCompra('${producto.getNombre()}');" >
+										            	<i class="fa fa-check"  ></i>
+													     </h:commandLink>  
 									            	</td>
 										        </tr>
 									        </c:forEach>

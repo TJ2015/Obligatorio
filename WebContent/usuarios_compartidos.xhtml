@@ -39,6 +39,7 @@
 		<section class="content">
 			 <div class="col-lg-3 col-xs-6">
 			 <h3 class="box-title">Lista de usuarios</h3>
+			 <h:form>
 				<ul class="list-group" id="ListaUsuariosCompartidos">
 				<ui:param name="usus" value="${avBean.usus}"></ui:param>
                                 
@@ -48,19 +49,21 @@
 				       <i class="fa fa-angle-double-right"></i>
 				          ${usuComp.nombre} 
 				       
-				        <a href="#" data-toggle="modal" data-target="#myModal">
-				        <i class="fa fa-trash-o" style="float:right" ></i>
-				        </a>
+				       <h:commandLink action="usuario_compartidos" actionListener="${avBean.prepararParaEliminarUsuComp(usuComp.nombre)}" value="" style="float: right">
+							<i class="fa fa-trash-o" style="float: right"></i>
+						</h:commandLink>
 				     </li>
 				                               
 				 </c:forEach>   
 				</ul>
+								        </h:form>
+				
 			</div>
 		</section>
 		
 	</div>
 	 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="eliminarUsuComp" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -74,8 +77,9 @@
         </div>
         <div class="modal-footer">
         <h:form>
-        	  <h:commandButton  action="#{avBean.descompartirAV()}" value="Aceptar" class="btn btn-default" />  
-        	   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> 	
+        	  <h:commandButton  action="usuarios_compartidos" actionListener="#{avBean.eliminarUsuComp()}" value="Aceptar" class="btn btn-default" />  
+        	   <h:commandButton action="usuarios_compartidos" actionListener="#{avBean.cancelarEliminarUsuComp()}"
+							value="Cancelar" class="btn btn-default" />	
         </h:form>
         
          
@@ -84,6 +88,12 @@
       
     </div>
   </div>
+  	<c:if test="#{avBean.eliminarUsuComp}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#eliminarUsuComp").modal('show');
+				</h:outputScript>
+			</c:if>
 	</ui:define>
 	</ui:composition>
 	
