@@ -15,9 +15,11 @@ import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataProductoVendido;
 import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorInventario;
 import util.Url;
 
@@ -28,6 +30,9 @@ public class ProductoBean implements Serializable {
 	IControladorInventario cinv;
 	@EJB
 	IControladorAV cAV;
+	
+	@EJB
+	private IControladorAlgoritmos cAlgoritmos;
 
 	private String nombre;
 	private String nombreCat;
@@ -434,4 +439,14 @@ public class ProductoBean implements Serializable {
 		cinv.cambiarImagenProducto(nick, newFile, producto, idAV);
 	}
 
+	public List<DataProductoVendido> obtenerTopProductos(int cantidad, boolean distinguir){
+		List<DataProductoVendido> lProductos = null; 
+		try {
+			lProductos = cAlgoritmos.obtenerProductosMasVendidos(cantidad, distinguir);
+		} catch (Exception e) {
+			System.out.println("Error al obtener la lista de los productos mas utilizados");
+		}
+		return lProductos;
+	}
+	
 }

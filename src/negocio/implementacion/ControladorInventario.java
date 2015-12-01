@@ -24,13 +24,10 @@ import exceptions.NoExisteElAV;
 import exceptions.NoExisteElProducto;
 import exceptions.NoExisteElProductoAComprar;
 import exceptions.YaExisteElProductoAComprar;
-import negocio.interfases.AlgoritmoDeRecomendacion;
-import negocio.interfases.AlgoritmoDeRecomendacionSimple;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorLog;
-import persistencia.implementacion.AvDAO;
 import persistencia.implementacion.FabricaDAO;
-import persistencia.implementacion.InventarioDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
 import util.Imagenes;
@@ -700,7 +697,7 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public List<DataProducto> recomendarProductos(String nickname) {
-		AlgoritmoDeRecomendacion algo = new AlgoritmoDeRecomendacionSimple();
+		IControladorAlgoritmos algo = new ControladorAlgoritmos();
 		return algo.recomendar(nickname);
 	}
 	

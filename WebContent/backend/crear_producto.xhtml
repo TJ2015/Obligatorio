@@ -33,11 +33,11 @@
 					<div class="page-header text-center">
 						<h1>Crear Producto</h1>
 					</div>
-					<div class="col-lg-10">
+					<div class="col-lg-6">
 						<div class="panel panel-primary">
 							<div class="panel-body">
 
-								<h:form styleClass="form-horizontal" enctype="multipart/form-data">
+								<h:form id="formProductoGenerico" styleClass="form-horizontal" enctype="multipart/form-data">
 
 									<div class="form-group">
 										<label for="nombre" class="col-lg-2 control-label">Nombre</label>
@@ -115,15 +115,73 @@
 											onclick="return cargarAtributos();" />
 										<h:outputText value="&#160;" />
 										<h:outputText value="&#160;" />
-										<button action="clear">Limpiar</button>
+										<button class="btn btn-default" action="clear">Limpiar</button>
 									</center>
 								</h:form>
 							</div>
 						</div>
 					</div>
-
+					
+					<div class="col-lg-6">
+	                    <div class="col-xs-12">
+	                    	<div class="panel panel-primary">
+								<div class="panel-body">
+									
+									<div class="page-header text-center">
+								  		<h3 style="margin-top: 0; padding-top: 0;"><small>Productos más actualizados</small></h3>
+									</div>
+								
+		                            <div class="box-body table-responsive">
+			                            <h:form>
+			                                <table id="example1" class="table table-bordered table-striped">
+			                                    <thead>
+			                                        <tr>
+			                                            <th>Nombre Producto</th>
+			                                            <th>Cantidad</th>
+			                                            <th>Agregar</th>
+			                                        </tr>
+			                                    </thead>
+			                                    <tbody>
+			                                        <ui:param name="listaTopProductos" value="#{productoBean.obtenerTopProductos(3, true)}"></ui:param>
+					 							<c:forEach var="producto" items="${listaTopProductos}" >
+					 							
+			                                        <tr>
+			                                            <td>${producto.getNombreProducto()}</td>
+			                                            <td>${producto.getCantidad()}</td>
+			                                            <td>
+			                                            	<button class="btn btn-primary btn-xs" type="button" onclick="agregarNombreProducto('${producto.getNombreProducto()}')" >
+			                                            		<span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+			                                            		Agrgear
+		                                            		</button>
+		                                            	</td>
+			                                        </tr>
+			                                        
+			                                        </c:forEach>
+			                                    </tbody>
+			                                    <tfoot>
+			                                        <tr>
+			                                            <th>Nombre Producto</th>
+			                                            <th>Cantidad</th>
+			                                            <th>Agregar</th>
+			                                        </tr>
+			                                    </tfoot>
+			                                </table>
+			                            </h:form>
+		                           	</div><!-- /.box-body -->
+			                    </div>
+		                    </div>
+	                    </div>
+	                </div>
+					
 					</section>
 				</div>
+				
+				<script>
+					function agregarNombreProducto(nombreProducto){
+						$("[id='formProductoGenerico:nombre']").val(nombreProducto); 
+						$("[id='formProductoGenerico:nombre']").focus(); 
+					}
+				</script>
 				
 				<h:outputScript target="body">
 				//<![CDATA[

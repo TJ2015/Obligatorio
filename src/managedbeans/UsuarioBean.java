@@ -42,9 +42,6 @@ public class UsuarioBean implements Serializable {
 	@EJB
 	IControladorAV cav;
 
-	@EJB
-	private IControladorAlgoritmos cAlgoritmos;
-
 	private String nombre;
 	private String apellido;
 	private String destinatario;
@@ -255,9 +252,6 @@ public class UsuarioBean implements Serializable {
 	public void login() throws IOException {
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
-			//TODO: Hay que eliminar esta sguiente linea
-			cAlgoritmos.obtenerProductosMasVendidos();
-			//TODO: Hay que eliminar la linea anterior
 			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
@@ -279,7 +273,6 @@ public class UsuarioBean implements Serializable {
 		try {
 			limpiarDatos();
 			HttpSession session = SesionBean.getSession();
-			Url.redireccionarURL("index");
 			session.invalidate();
 		} catch (Exception e) {
 			Url.redireccionarURL("error");

@@ -627,4 +627,8 @@ public class AdminBean implements Serializable {
 		}
 		return lVentas;
 	}
+	
+	public void generarReporteProductosMasUtilizados(){
+		generarReporte("listaProsuctosMasUtilizados");
+	}
 }

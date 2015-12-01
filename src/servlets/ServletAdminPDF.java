@@ -18,8 +18,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import dominio.datatypes.DataProductoVendido;
 import dominio.datatypes.DataUsuario;
 import dominio.datatypes.DataVenta;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorUsuario;
 import negocio.interfases.IControladorVenta;
 import util.TablasPDF;
@@ -34,6 +36,9 @@ public class ServletAdminPDF extends HttpServlet {
 	
 	@EJB
 	private IControladorVenta cVenta;
+	
+	@EJB
+	private IControladorAlgoritmos cAlgoritmos;
 	
     public ServletAdminPDF() {
     }
@@ -55,6 +60,9 @@ public class ServletAdminPDF extends HttpServlet {
 					break;
 				case "listaVentas":
 					crearReporteGanancia(request, response);
+					break;
+				case "listaProsuctosMasUtilizados":
+					crearReporteProductosMasUtilizados(request, response);
 					break;
 				}
 			}else{
@@ -212,5 +220,48 @@ public class ServletAdminPDF extends HttpServlet {
 			System.out.println("Error al generar el reporte de ventas");
 		}
 	}
-
+	
+	
+	@SuppressWarnings("rawtypes")
+	private void crearReporteProductosMasUtilizados(HttpServletRequest request, HttpServletResponse response)
+	{
+		try {
+			Document document = new Document(); 
+        	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter.getInstance(document, baos);
+            document.open();
+            int cantidadColumna = 2;
+            PdfPTable tabla = new PdfPTable(cantidadColumna);
+            tabla.setWidthPercentage(100);
+            
+			List<DataProductoVendido> lProductos = cAlgoritmos.obtenerProductosMasVendidos(20, false);
+            if (lProductos != null) 
+            {
+                tabla.addCell(TablasPDF.crearTitulo("Productos más utilizados por los clientes", cantidadColumna));
+				if (lProductos.size() > 0) {
+					tabla.addCell(TablasPDF.crearCabecera("Nombre Producto"));
+					tabla.addCell(TablasPDF.crearCabecera("Cantidad"));
+					for (Iterator iterator = lProductos.iterator(); iterator.hasNext();) {
+						DataProductoVendido dataProducto = (DataProductoVendido) iterator.next();
+						tabla.addCell(TablasPDF.crearCelda(dataProducto.getNombreProducto()));
+						tabla.addCell(TablasPDF.crearCelda(Integer.toString(dataProducto.getCantidad())));
+					}
+				}
+				else{
+	            	tabla.addCell(TablasPDF.crearError("No hay datos en el reporte", cantidadColumna));
+				}
+			}
+            else{
+            	tabla.addCell(TablasPDF.crearError("No se genero correctamente el Reporte", cantidadColumna));
+            }
+            
+            document.add(tabla);
+            document.close();
+            
+            mostrarPDF(request, response, baos);
+			
+		} catch (Exception e) {
+			System.out.println("Error al generar el reporte de ventas");
+		}
+	}
 }
