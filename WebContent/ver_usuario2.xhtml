@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+</h:head>
+
+<h:body>
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+	
+				<ui:param name="usuario" value="${usuarioBean.usuario}"></ui:param>
+				<div class="container-fluid clearfix">
+					<section style="margin-top:20px;">
+					<div class="container">
+						<div class="row">
+							<div
+								class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h2>${usuario.getNick()}</h2>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-3 col-lg-3 " align="center">
+											<img class="img-circle" src="imagenes/usuario?nick=${usuarioBean.nick}" alt="User Image" style="width:100%;"/>
+											<a data-toggle="modal" data-target="#modalModImgUsu">
+											   Cambiar Imagen
+											</a>
+											</div>
+											<div class=" col-md-9 col-lg-9 ">
+												<table class="table table-user-information">
+													<tbody>
+														<tr>
+															<td>Nombre:</td>
+															<td>${usuario.getNombre()}</td>
+														</tr>
+														<tr>
+															<td>Apellido:</td>
+															<td>${usuario.getApellido()}</td>
+														</tr>
+														<tr>
+															<td>Email</td>
+															<td>${usuario.getEmail()}</td>
+														</tr>
+
+														<tr>
+															<td>Fecha de Nacimiento</td>
+															<td>${usuario.getFechaNacimiento()}</td>
+														</tr>
+														<tr>
+															<td>Fecha de Inscripción</td>
+															<td>${usuario.getFechaRegistro()}</td>
+														</tr>
+
+													</tbody>
+												</table>
+												<h:form>
+												<h:commandLink action="modificar_usuario" actionListener="#{usuarioBean.cargarUsuario(usuario.getNick())}" >
+													<i class="fa fa-pencil botonProd" style="float:right; font-size: 20px;"></i>
+				                                </h:commandLink>
+				                                </h:form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</section>
+					
+				</div>
+			<!-- page script -->
+			<script>
+	
+            	$(document).load(function() {
+	                $("#example1").dataTable();
+	                $('#example2').dataTable({
+	                    "bPaginate": true,
+	                    "bLengthChange": false,
+	                    "bFilter": false,
+	                    "bSort": true,
+	                    "bInfo": true,
+	                    "bAutoWidth": false
+	                });
+	            });
+	        </script>
+	        
+	        <c:if test="#{adminBean.eliminarAV}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#myModal").modal('show');
+				</h:outputScript>
+			</c:if>
+			<!-- Modal -->
+<div class="modal fade" id="modalModImgUsu" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Editar imagen</h4>
+			</div>
+			<h:form id="formulario" styleClass="form-horizontal"
+								enctype="multipart/form-data">
+			
+			<div class="modal-body">
+				<p>Elige la nueva imagen</p>
+				<div class="form-group">
+					<div class="col-lg-10">
+						<p:fileUpload value="#{usuarioBean.newFile}" styleClass="form-control" mode="simple" />
+						</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				
+					<h:commandButton action="mostrarAV" actionListener="${usuarioBean.modificarImgUsuario()}"
+						value="Modificar" class="btn btn-default" />
+					
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+
+
+			</div>
+			</h:form>
+		</div>
+
+	</div>
+</div>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

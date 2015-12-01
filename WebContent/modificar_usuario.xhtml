@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      > 
+      
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+
+</h:head> 
+
+<h:body>
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+			<h:form styleClass="form" enctype="multipart/form-data">
+				<div class="container-fluid clearfix">
+					<div class="page-header text-center">
+					  <h1>Modificar datos de Usuario</h1>
+					</div>
+					<div class="col-sm-8 col-md-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">Ingrese sus datos</div>
+							<div class="panel-body">
+									
+									<div class="form-group">
+										<h:outputLabel value="Nombre" styleClass="sr-only" for="nombreUsuario" />
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+											</div>
+										  <h:inputText id="nombreUsuario" value="#{usuarioBean.nombre}" styleClass="form-control" required="true" requiredMessage="Debe ingresar un nombre" a:placeholder="Nombre"/>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<h:outputLabel value="Apellido" styleClass="sr-only" for="apellidoUsuario" />
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+											</div>
+										  <h:inputText id="apellidoUsuario" value="#{usuarioBean.apellido}" styleClass="form-control"  required="true" requiredMessage="Debe ingresar su apellido" a:placeholder="Apellido"/>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<h:outputLabel value="Correo" styleClass="sr-only" for="correoUsuario" />
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+											</div>
+										  <h:inputText id="correoUsuario" value="#{usuarioBean.email}" styleClass="form-control" required="true" requiredMessage="Debe ingresar su correo electrónico" a:placeholder="E-mail"/>
+										</div>
+									</div>
+													
+															
+									<div class="form-group">
+										<h:outputLabel value="Contraseña:" styleClass="sr-only" for="textoContrasenia" />
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+											</div>
+											<h:inputSecret id="textoContrasenia"  value="#{usuarioBean.password}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la contraseña" a:placeholder="Contraseña" />
+										</div>
+									</div>				
+									<div class="form-group">
+										<h:outputLabel value="Fecha" styleClass="sr-only" for="date" />
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+											</div>
+											
+											<h:inputText id="date" value="#{usuarioBean.fechaNacimiento}" styleClass="form-control" required="true" requiredMessage="Debe ingresar la fecha" a:placeholder="dd-mm-aaaa">
+			          								<f:convertDateTime pattern="d-M-yyyy" />
+			        						</h:inputText>
+										</div>
+									</div>
+									
+									<center><h:commandButton id="botonModificar" styleClass="btn btn-primary" value="Modificar" action="mostrarAV" actionListener="#{usuarioBean.modificarInfoUsuario()}"/></center>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div>
+					
+				</div>
+			
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

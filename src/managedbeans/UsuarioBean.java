@@ -22,9 +22,11 @@ import org.primefaces.model.UploadedFile;
 import dominio.Usuario;
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorUsuario;
@@ -49,6 +51,9 @@ public class UsuarioBean implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	private DataUsuario usuario;
+	private UploadedFile file;
+	private UploadedFile newFile;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsComp = new ArrayList<>();
 	private List<DataAV> todosAV = new ArrayList<>();
@@ -59,9 +64,25 @@ public class UsuarioBean implements Serializable {
 	private DataMensaje dmsj;
 	private DataUsuario dusu;
 	private boolean recibido = false;
-	private UploadedFile file;
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
+
+	
+	public UploadedFile getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(UploadedFile newFile) {
+		this.newFile = newFile;
+	}
+
+	public DataUsuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(DataUsuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public List<DataAV> getTodosAV() {
 		return todosAV;
@@ -440,5 +461,39 @@ public class UsuarioBean implements Serializable {
 		String url = Url.obtenerActualURL(request);
 		return url;
 	}
+	public void getUsuario(String nickname) {
+		HttpSession session = SesionBean.getSession();
+		usuario = cusu.getUsuario(nickname);
+		session.setAttribute("dataUsuario", usuario);
+	}
+	public void cargarUsuario(String nick){
+		
+			DataUsuario usu=cusu.getUsuario(nick);
+			 nombre=usu.getNombre();     
+			 apellido=usu.getApellido();              
+			 email=usu.getEmail();         
+			 fechaNacimiento=usu.getFechaNacimiento(); 
+		
+	}
+	public void modificarInfoUsuario() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		if((nombre!=null)&(apellido!=null)&(nick!=null)&(password!=null)&(email!=null)&(fechaNacimiento!=null)){
+		cusu.modificarInfoUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
+		cargarUsuario(nick);
+		}else{
+			Url.redireccionarURL("error");
+
+		}
 	
+	}
+	public void  modificarImgUsuario() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		cusu.modificarImgUsuario(nick, newFile);
+		System.out.println("***********************************************************************************");
+		System.out.println(nick);
+		System.out.println("***********************************************************************************");
+
+		}
 }

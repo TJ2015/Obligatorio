@@ -85,4 +85,6 @@ public interface IControladorUsuario {
 	
 	public List<DataAV> mostrarListaAvComparidos(String nickname);
 
+	void modificarImgUsuario(String nick, UploadedFile file);
+
 }

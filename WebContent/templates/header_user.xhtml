@@ -156,7 +156,7 @@
 	                                <li class="user-footer">
 	                                <h:form>                                
 	                                    <div class="pull-left">
-	                                    	<h:commandButton  action="usuario_sapo" actionListener="#{usuarioBean.mostrarListaAVCompartidos()}"  value="Perfil" class="btn btn-default btn-flat" />   	
+	                                    	<h:commandButton  action="ver_usuario2" actionListener="#{usuarioBean.getUsuario(sessionScope.nickname)}"  value="Perfil" class="btn btn-default btn-flat" />   	
 	                                    </div>
 	                                    <div class="pull-right">
 	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesión" class="btn btn-default btn-flat" />   	

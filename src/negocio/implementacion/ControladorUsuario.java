@@ -91,6 +91,8 @@ public class ControladorUsuario implements IControladorUsuario {
 			Date fechaNacimiento) {
 
 		Usuario usu = usuarioDAO.buscarUsuario(nick);
+		
+		if(usu!=null){
 		usu.setApellido(apellido);
 		usu.setNombre(nombre);
 		usu.setEmail(email);
@@ -98,8 +100,22 @@ public class ControladorUsuario implements IControladorUsuario {
 		usu.setFechaNacimiento(fechaNacimiento);
 
 		usuarioDAO.actualizarUsuario(usu);
+	    }
 	}
+	@Override
+	public void modificarImgUsuario(String nick,UploadedFile file) {
 
+		Usuario usu = usuarioDAO.buscarUsuario(nick);
+		
+		if(usu!=null){
+			byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
+			String nombreImagen = Imagenes.obtenerNombreImagen(file);
+			
+		usu.setBytesImagen(imagen);
+		usu.setNombreImagen(nombreImagen);
+		usuarioDAO.actualizarUsuario(usu);
+	    }
+	}
 	@Override
 	public DataUsuario login(String nickname, String password) {
 		DataUsuario dataUsuario = null;
