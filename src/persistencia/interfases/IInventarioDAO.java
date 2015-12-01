@@ -67,6 +67,7 @@ public interface IInventarioDAO {
 	
 	public List<String> buscarNombresProductos(String tenant);
 	public List<String> buscarNombresProductosGenericos();
+	public List<Producto> getProductosOrdenadosPorStock(String tenant);
 
 	
 }

@@ -1,5 +1,6 @@
 package negocio.implementacion;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import dominio.Producto;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorAlgoritmos;
@@ -129,6 +132,29 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 	    return result;
 	}
 
+	@Override
+	public List<DataProducto> obtenerProductosConMenosStock(long idAV){
+		List<DataProducto> lProductos = null;
+		try {
+			List<DataProducto> lDataProductos = cInventario.getProductosOrdenadosPorStock(idAV);
+			if (lDataProductos != null && lDataProductos.size() > 0) {
+				int cantidad = 10;
+				lProductos = new ArrayList<>();
+				for (Iterator iterator = lDataProductos.iterator(); iterator.hasNext();) {
+					if (cantidad > 0) {
+						lProductos.add((DataProducto) iterator.next());
+						cantidad--;
+					}
+					else{
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lProductos;
+	}
 }
 
 

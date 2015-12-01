@@ -220,7 +220,11 @@ public class InventarioDAO implements IInventarioDAO {
 
 	@Override
 	public void close(String tenant) {
-		session.getSessionFactory().close();
+		try {
+			session.getSessionFactory().close();			
+		} catch (Exception e) {
+			System.out.println("Error al cierra el Tenant " + tenant);
+		}
 	}
 
 	@Override
@@ -228,6 +232,18 @@ public class InventarioDAO implements IInventarioDAO {
 		Query q = session.getNamedQuery("Producto.getAll");
 
 		return q.list();
+	}
+	
+	@Override
+	public List<Producto> getProductosOrdenadosPorStock(String tenant) {
+		List<Producto> lProducto = null;
+		try {
+			Query q = session.getNamedQuery("Producto.obtenerProductosOrdenadosPorStockASC");
+			lProducto = q.list();
+		} catch (Exception e) {
+			System.err.println("No se obtienen productos del avmacen " + tenant);
+		}
+		return lProducto;
 	}
 
 	@Override
