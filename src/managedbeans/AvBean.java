@@ -10,7 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
+import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
@@ -25,8 +28,8 @@ import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
-import util.Url;
 import util.Mensajeria;
+import util.Url;
 
 @ManagedBean
 @SessionScoped
@@ -66,6 +69,7 @@ public class AvBean implements Serializable {
 	private boolean eliminarCompra;
 
 	private DataProducto dprodGen;
+	private UploadedFile newFile;
 
 	public AvBean() {
 
@@ -85,6 +89,14 @@ public class AvBean implements Serializable {
 
 	public void setEliminarCompra(boolean eliminarCompra) {
 		this.eliminarCompra = eliminarCompra;
+	}
+
+	public UploadedFile getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(UploadedFile newFile) {
+		this.newFile = newFile;
 	}
 
 	public DataProducto getDprodGen() {
@@ -294,7 +306,7 @@ public class AvBean implements Serializable {
 	public void agregarAV() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
-		long idAV = (long) session.getAttribute("idAV");
+
 		boolean miembro = false;
 		String email = "correo";
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
@@ -304,9 +316,11 @@ public class AvBean implements Serializable {
 			int cantAV = cantAvPorUsuario();
 			try {
 				if ((cantAV < 2) || (miembro)) {
-					if( cantAV == 1 )
-						cAV.crearNotificacion("Ya has creado tu segundo Almacen Virtual! No podrás crear más mientras seas un usuario gratuito. Compra la membresía de SAPo y podrás crear todos los que quieras!", idAV);
 					idAV = cAV.altaAV(nombreAV, nick);
+					if (cantAV == 1)
+						cAV.crearNotificacion(
+								"Ya has creado tu segundo Almacen Virtual! No podrás crear más mientras seas un usuario gratuito. Compra la membresía de SAPo y podrás crear todos los que quieras!",
+								idAV);
 				} else if ((cantAV > 2) || (!miembro)) {
 					Url.redireccionarURL("paypal");
 					Mensajeria enviar = new Mensajeria();
@@ -491,6 +505,11 @@ public class AvBean implements Serializable {
 		return nombreProducto;
 	}
 
+	public UploadedFile levantarImg(UploadedFile file) {
+		newFile = file;
+		return newFile;
+	}
+
 	public void prepararParaEliminar(String nombre) {
 		categoriaEliminar = nombre;
 		eliminarCategoria = true;
@@ -626,6 +645,55 @@ public class AvBean implements Serializable {
 			Url.redireccionarURL("error");
 		}
 		return notis;
+	}
+	
+	public List<DataNotificacion> mostrarNotificacionesTodas() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		List<DataNotificacion> notis = new ArrayList<>();
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			try {
+				notis.addAll(cAV.getNotificaciones(av.getIdAV()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return notis;
+	}
+	
+	public List<DataNotificacion> mostrarNotificacionesNoLeidasTodas() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		List<DataNotificacion> notis = new ArrayList<>();
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			try {
+				notis.addAll(cAV.listaNotificacionesNoLeidas(av.getIdAV()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return notis;
+	}
+	
+	public List<DataAlerta> cargarAlertas() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		List<DataAlerta> da = new ArrayList<>();
+		
+		try {
+			da = cAV.listaDeAlertas(idAV);
+		} catch (NoExisteElAV e) {
+			e.printStackTrace();
+		}
+		
+		return da;
 	}
 
 }

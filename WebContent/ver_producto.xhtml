@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head></h:head>
 <h:body>
@@ -22,6 +23,11 @@
 							<img
 								src="imagenes/producto?nombre=${productoBean.dataProducto.nombre}&amp;av=${sessionScope.idAV}"
 								class="img-responsive"></img>
+								<h:form>
+									<a data-toggle="modal" data-target="#modalModImg">
+											<i class="fa fa-pencil botonProd" style="font-size: 40px;"></i>
+									</a>
+								</h:form>
 						</div>
 						<!-- /.col --> </section>
 						<section class="content">
@@ -57,7 +63,7 @@
 										<a data-toggle="modal" data-target="#modalEliminar">
 											<i class="fa fa-trash-o botonProd" style="float:right; font-size: 40px;"></i>
 										</a>
-										<a data-toggle="modal" data-target="#modalEliminar">
+										<a href="modificar_producto.xhtml">
 											<i class="fa fa-pencil botonProd" style="float:right; font-size: 40px;"></i>
 										</a>
 										<a data-toggle="modal" data-target="#modalCopiar">
@@ -190,7 +196,42 @@
 			<div class="modal-footer">
 				
 					<h:commandButton action="mostrarAV" actionListener="${productoBean.cortarProducto(avBean.nombreProducto)}"
-						value="Copiar" class="btn btn-default" />
+						value="Cortar" class="btn btn-default" />
+					
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+
+
+			</div>
+			</h:form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalModImg" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Editar imagen</h4>
+			</div>
+			<h:form id="formulario" styleClass="form-horizontal"
+								enctype="multipart/form-data">
+			
+			<div class="modal-body">
+				<p>Elige la nueva imagen</p>
+				<div class="form-group">
+					<div class="col-lg-10">
+						<p:fileUpload value="#{productoBean.newFile}" styleClass="form-control" mode="simple" />
+						</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				
+					<h:commandButton action="mostrarAV" actionListener="${productoBean.cambiarImagenProducto(avBean.nombreProducto)}"
+						value="Modificar" class="btn btn-default" />
 					
 					<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
 

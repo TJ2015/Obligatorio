@@ -45,7 +45,11 @@
     </h:head>
 
     <h:body>
-    
+    	<c:if test="${!usuarioBean.logueado}">
+    		<meta http-equiv="Refresh" content="0; URL=login.xhtml"></meta>
+    	</c:if>
+    	<c:if test="${usuarioBean.logueado}">
+    	
     	<c:if test="${errorBean.existeAV()}">
 
     	<!-- Actualizar datos del Usuario -->
@@ -104,6 +108,7 @@
         <script type="text/javascript">
             $("body").addClass("skin-blue");
         </script>
+        </c:if>
         </c:if>
     </h:body>
 </html>

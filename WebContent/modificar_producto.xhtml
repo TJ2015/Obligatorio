@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<script type="text/javascript" src="resources/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="resources/css/bootstrap.css" />
+
+
+</h:head>
+
+<h:body>
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+			<style>
+				.attrItem>input {
+						width: 50%;
+						float: left;
+				}
+				
+				.agregarAttr>span {
+					float: right;
+					margin-top: 5px;
+					cursor: pointer;
+				}
+			</style>
+			<div class="container-fluid clearfix">
+				<section class="content">
+				<div class="page-header text-center">
+					<h1>Modificar Producto</h1>
+				</div>
+										 <!--#{productoBean.cargarDatos(avBean.nombreProducto)}-->
+				
+				<div class="col-lg-10">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+
+							<h:form id="formulario" styleClass="form-horizontal"
+								enctype="multipart/form-data">
+
+								<div class="form-group">
+									<label for="nombre" class="col-lg-2 control-label">Nombre</label>
+									<div class="col-lg-10">
+										<h:inputText id="nombre" value="#{productoBean.nombre}"
+											styleClass="form-control" required="true" requiredMessage=""
+											a:placeholder="Nombre" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="descripcion" class="col-lg-2 control-label">Descripcion
+									</label>
+
+									<div class="col-lg-10">
+										<h:inputText id="descripcion"
+											value="#{productoBean.descripcion}" styleClass="form-control"
+											required="true" requiredMessage=""
+											a:placeholder="Descripción" />
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label for="precio" class="col-lg-2 control-label">Precio</label>
+									<div class="col-lg-10">
+										<h:inputText id="precio" value="#{productoBean.precio}"
+											styleClass="form-control" required="true"
+											requiredMessage="Debe ingresar el precio"
+											a:placeholder="Precio" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="categoria" class="col-lg-2 control-label">Categoria</label>
+									<div class="col-lg-10">
+										<h:selectOneMenu class="form-control"
+											value="#{productoBean.nuevaCategoria}">
+											<c:forEach var="cat"
+												items="${avBean.mostrarListaCategoria()}">
+												<f:selectItem itemValue="${cat.nombre}"
+													itemLabel="${cat.nombre}" />
+											</c:forEach>
+										</h:selectOneMenu>
+
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="atributos" class="col-lg-2 control-label">Atributos</label>
+									<div class="col-lg-10">
+										<div id="attrCont">
+										
+											<h:inputHidden id="atributos"
+												value="#{productoBean.atributos}" styleClass="form-control"
+												required="false" />
+												<c:forEach var="dp" items="${productoBean.dataProducto.atributosList}">
+													<div class='attrItem'>
+														<input type='text' class='form-control' placeholder='Nombre de atributo' value="${dp.key}" />
+														<input type='text' class='form-control' placeholder='Valor' value="#{dp.value}" />
+													</div>
+												</c:forEach>
+										</div>
+										<div class="agregarAttr col-xs-12">
+											<span class="glyphicon glyphicon-plus"></span>
+										</div>
+									</div>
+								</div>
+								<center>
+									<h:commandButton id="modificarProducto"
+										styleClass="btn btn-primary" value="Modificar producto"
+										action="ver_producto"										
+										actionListener="#{productoBean.modificarProducto(avBean.nombreProducto)}"
+										onclick="return cargarAtributos();" />
+									<h:outputText value="&#160;" />
+									<h:commandButton id="botonCancelar1"
+										styleClass="btn btn-primary" value="Cancelar"
+										action="#{avBean.cancelarAccion()}" />
+								</center>
+							</h:form>
+						</div>
+					</div>
+				</div>
+
+				</section>
+			</div>
+
+			<h:outputScript target="body">
+				//<![CDATA[
+				
+				$ = jQuery;
+				
+				function cargarAtributos() {
+					var attrs = "";
+					$(".attrItem").each(function() {
+						obj = $(this).children();
+						if( (obj.first().val() != "")&&(obj.last().val() != "") )
+							attrs += $(this).children().first().val() + ":" + $(this).children().last().val() + ";";
+					});
+					
+					console.log(attrs);
+					
+					$("#attrCont").children().first().val(attrs);
+					
+					return true;
+				}
+				$(".agregarAttr>span").click(function(){
+					$("#attrCont").append(
+						"<div class='attrItem'>" +
+							"<input type='text' class='form-control' placeholder='Nombre de atributo' />" +
+							"<input type='text' class='form-control' placeholder='Valor' />" +
+						"</div>"
+					);
+				});
+
+				//]]>
+			</h:outputScript>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

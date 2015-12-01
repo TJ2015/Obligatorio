@@ -12,7 +12,7 @@
 	    <ui:composition>
 			<h:form>
 				<header class="navbar navbar-inverse wet-asphalt" role="banner">
-			        <div class="container">
+			        <div class="container" style="min-height: 75px">
 			            <div class="navbar-header">
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 			                    <span class="sr-only">Toggle navigation</span>
@@ -52,7 +52,7 @@
 									</c:if>
 									
 									<li>
-									<h:commandLink action="#{usuarioBean.logout()}" value="Cerrar sesión" />   
+										<h:commandLink action="#{usuarioBean.logout()}" value="Cerrar sesión" />   
 									</li>
 								</c:if>
 			                </ul>

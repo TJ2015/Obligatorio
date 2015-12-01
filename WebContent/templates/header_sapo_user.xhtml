@@ -14,165 +14,105 @@
 	    <ui:composition>
 			<header class="header">
             
+            <a href="usuario_sapo.xhtml" class="logo">Panel de Control</a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
-              
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                    	<a class="navbar-brand" href="index.xhtml"><img src="resources/img/logo_sapo2.png" alt="logo" style="height:50px;"></img></a>
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope"></i>
                                 <ui:param name="msjsNoLeidos" value="${usuarioBean.mostrarListaMsjNoLeidos()}"></ui:param>
-                                <span class="label label-success">#{msjsNoLeidos.size()}</span>
+                                <span class="label label-success">${msjsNoLeidos.size()}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">Tienes #{msjsNoLeidos.size()} mensaje/s</li>
                                 <li>
+                                	<h:form>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                       <c:forEach var="m" items="#{msjsNoLeidos}"  >                            
+                                       <c:forEach var="m" items="#{msjsNoLeidos}"  >   
+                                        
                                         <li><!-- start message -->
                                    			
-                                            <a href="mailbox.xhtml">
-                                                <div class="pull-left">
-                                                    <p:graphicImage value="#{usuarioBean.mostrarImagenUsuario()}" class="img-circle" alt="Usuario" cache="false"></p:graphicImage>
+                                         	<h:commandLink action="mailbox" actionListener="#{usuarioBean.listMensajesRecibidos()}">                         
+                                         
+                                                <div class="pull-left col-xs-4" >
+                                                    <img class="img-circle"  src="imagenes/usuario?nick=${m.getRemitente()}"/>
                                                 </div>
                                                 <h4>
                                                     ${m.getRemitente()}
                                                     <small><i class="fa fa-clock-o"></i> ${m.getFecha()}</small>
                                                 </h4>
-                                                
-                                                <p> #{m.asunto}</p>
+												
+	                                                <p> #{m.asunto}</p>
+	                                              
                                                 <c:if test="#{ fn:length(m.getMensaje()) ge 10}">  
                                                        <p>#{m.getMensaje().substring(0,10)}</p>
                                                 </c:if>
                                                 <c:if test="#{ fn:length(m.getMensaje()) lt 10}">  
 													<p>#{m.getMensaje()}</p>
                                                 </c:if>
-                                               
-                                            </a>
+                                          </h:commandLink>
                                         </li><!-- end message --> 
                                         </c:forEach>
                                     </ul>
+                                    </h:form>
                                 </li>
-                                <li class="footer"><a href="mailbox.xhtml">Ver todos los mensajes</a></li>
+                                <li class="footer"><a href="mailboxUsuario.xhtml">Ver todos los mensajes</a></li>
                             </ul>
+                             
                         </li>
+                        <ui:param name="notisNL" value="#{avBean.mostrarNotificacionesNoLeidasTodas()}" />
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-warning">10</span>
+                                <span class="label label-warning">#{notisNL.size()}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Tienes 10 notificaciones</li>
+                                <li class="header">Tienes #{notisNL.size()} notificaciones</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users warning"></i> 5 new members joined
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-person danger"></i> You changed your username
-                                            </a>
-                                        </li>
+                                    	<h:form>
+											<c:forEach var="notificacion" items="${notisNL}"  >
+												<li class="list-group-item">
+													<p>${notificacion.texto}</p>
+												</li>
+											 </c:forEach>
+										 </h:form>
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">Ver todo</a></li>
-                            </ul>
-                        </li>
-                        <!-- Tasks: style can be found in dropdown.less -->
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-book"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">Hay 9 productos por comprar</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Leche x2
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Queso x1
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Lechuga x2
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Cebolla x3
-                                                </h3>
-                                            </a>
-                                        </li><!-- end task item -->
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">Ver lista completa</a>
-                                </li>
+                                <li class="footer"><a href="notificacionesTodas.xhtml">Ver todo</a></li>
                             </ul>
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>${usuarioBean.nick}<i class="caret"></i></span>
+                                <span>${sessionScope.dataUsuario.nombre}<i class="caret"></i></span>
                             </a>
                             
 	                            <ul class="dropdown-menu">
 	                                <!-- User image -->
 	                                <li class="user-header bg-light-blue">
-	                                    
+	                                    <img class="img-circle" src="imagenes/usuario?nick=${usuarioBean.nick}"/>
 	                                    <p>
-	                                        ${usuarioBean.nick}
+	                                        ${sessionScope.dataUsuario.nombre}
 	                                    </p>
 	                                </li>
 	                                <!-- Menu Footer-->
 	                                <li class="user-footer">
+	                                <h:form>                                
 	                                    <div class="pull-left">
-	                                        <a href="usuario_sapo.xhtml" class="btn btn-default btn-flat">Perfil</a>
+	                                    	<h:commandButton  action="usuario_sapo" actionListener="#{usuarioBean.mostrarListaAVCompartidos()}"  value="Perfil" class="btn btn-default btn-flat" />   	
 	                                    </div>
 	                                    <div class="pull-right">
-	                                       <h:form>
-	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesion" class="btn btn-default btn-flat" />   	
-	                                    	</h:form>
+	                                  			<h:commandButton  action="#{usuarioBean.logout()}" value="Cerrar sesión" class="btn btn-default btn-flat" />   	
 	                                    </div>
+									</h:form>
 	                                </li>
 	                            </ul>
                             
@@ -181,7 +121,6 @@
                 </div>
             </nav>
         </header>
-				
 	    </ui:composition>
     </body>
 </html>

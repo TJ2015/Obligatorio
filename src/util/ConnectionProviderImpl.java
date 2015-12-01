@@ -36,7 +36,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		basicDataSource.setPassword("sapo_admin");
 		basicDataSource.setInitialSize(2);
 		basicDataSource.setMaxTotal(10);
-		
 	}
 	
 	@Override

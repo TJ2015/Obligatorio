@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+      > 
+
+<h:head></h:head> 
+<body> 
+<ui:composition template="/templates/layout_sapo_user.xhtml">
+		<ui:define name="contenido">
+		                <!-- Main content -->
+                <section class="content">
+                    <!-- MAILBOX BEGIN -->
+                    <div class="mailbox row">
+                        <div class="col-xs-12">
+                            <div class="box box-solid">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-4">
+                                            <!-- BOXES are complex enough to move the .box-header around.
+                                                 This is an example of having the box header within the box body -->
+                                            <div class="box-header">
+                                                <i class="fa fa-inbox"></i>
+                                                <h3 class="box-title">Bandeja de Mensajes</h3>
+                                            </div>
+                                            <!-- compose message btn -->
+                                            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>Nuevo Mensaje</a>
+                                            <!-- Navigation - folders-->
+                                            <div style="margin-top: 15px;">
+                                            <h:form>
+                                                <ul class="nav nav-pills nav-stacked">
+                                                    <li class="header">Carpetas</li>
+                                                    <li> <h:commandLink action="mailboxUsuario" actionListener="#{usuarioBean.listMensajesRecibidos()}">
+														<i class="fa fa-inbox"></i> Recibidos</h:commandLink></li>
+														
+                                                    <li> <h:commandLink action="mailboxUsuario" actionListener="#{usuarioBean.listMensajesEnviados()}">
+														<i class="fa fa-mail-forward"></i> Enviados</h:commandLink></li>
+                                                </ul>
+                                                </h:form>
+												<ui:param name="listm" value="${usuarioBean.msjs}"></ui:param>
+                                            </div>
+                                        </div><!-- /.col (LEFT) -->
+                                        <div class="col-md-9 col-sm-8">
+
+                                            <div class="table-responsive">
+                                                <!-- THE MESSAGES -->
+                                               <h:form>
+                                                
+                                                <table class="table table-mailbox">
+                                                <c:forEach var="msj" items="${listm}">
+                                                    <tr >
+                                                        <c:if test="#{usuarioBean.recibido}">
+                                                        <td class="name">
+	                                                        <h:commandLink action="leer_mailUsuario" value="#{msj.getRemitente()}" actionListener="#{usuarioBean.cargarMensaje(msj.getId())}" >
+															</h:commandLink>
+															</td>
+                                                        </c:if>
+                                                        <c:if test="#{not usuarioBean.recibido}">
+                                                        <td class="name">
+	                                                        <h:commandLink action="leer_mailUsuario" value="#{msj.getDestinatario()}" actionListener="#{usuarioBean.cargarMensaje(msj.getId())}" >
+															</h:commandLink>
+															</td>
+                                                        </c:if>
+                                                        <td class="name">
+	                                                        <h:commandLink action="leer_mailUsuario" value="#{msj.asunto}" actionListener="#{usuarioBean.cargarMensaje(msj.getId())}" >
+															</h:commandLink>
+															</td>
+                                                       <c:if test="#{ fn:length(msj.mensaje) ge 10}">  
+                                                        <td class="subject">#{msj.mensaje.substring(0,10)}</td>
+                                                        </c:if>
+                                                         <c:if test="#{ fn:length(msj.mensaje) lt 10}">  
+                                                        <td class="subject">#{msj.mensaje}</td>
+                                                        </c:if>
+                                                        <td class="time">#{msj.fecha}</td>
+                                                    </tr>
+                                                     </c:forEach>
+                                                </table>
+                                                </h:form>
+                                               
+                                            </div><!-- /.table-responsive -->
+                                        </div><!-- /.col (RIGHT) -->
+                                    </div><!-- /.row -->
+                                </div><!-- /.box-body -->
+                                
+                            </div><!-- /.box -->
+                        </div><!-- /.col (MAIN) -->
+                    </div>
+                    <!-- MAILBOX END -->
+
+                </section><!-- /.content -->
+                 <!-- COMPOSE MESSAGE MODAL -->
+        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Nuevo Mensaje</h4>
+                    </div>
+                    <h:form>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Para:</span>
+                                    <h:inputText name="email_to"  class="form-control"  value="#{usuarioBean.destinatario}"  placeholder="Destinatario" />
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Asunto:</span>
+                                    <h:inputText name="subject"  class="form-control"  value="#{usuarioBean.asunto}"  placeholder="Asunto" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+									<h:inputTextarea name="message" id="email_message"
+										class="form-control" value="#{usuarioBean.mensaje}"
+										placeholder="Mensaje" style="height: 120px;" />
+								</div>
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Cancelar</button>
+							
+                            <h:commandButton id="botonEnviar" type="submit" styleClass="btn btn-primary pull-left" icon="fa fa-envelope" value="Enviar" action="#{usuarioBean.crearMensaje()}"></h:commandButton>
+                        </div>
+                    </h:form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+	</ui:define>
+</ui:composition>
+</body> 
+</html>
