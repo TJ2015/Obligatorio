@@ -254,13 +254,6 @@ public class UsuarioBean implements Serializable {
 			DataUsuario dataUsuario = cusu.login(nick, password);
 			//TODO: Hay que eliminar esta sguiente linea
 			cAlgoritmos.obtenerProductosMasVendidos();
-			List<DataProducto> lProductos = cAlgoritmos.obtenerProductosConMenosStock(1);
-			if (lProductos != null && lProductos.size() > 0) {
-				for (Iterator iterator = lProductos.iterator(); iterator.hasNext();) {
-					DataProducto dataProducto = (DataProducto) iterator.next();
-					System.out.println(dataProducto.getNombre() + " - " + dataProducto.getStock());
-				}
-			}
 			//TODO: Hay que eliminar la linea anterior
 			if (dataUsuario != null) {
 				logueado = true;
