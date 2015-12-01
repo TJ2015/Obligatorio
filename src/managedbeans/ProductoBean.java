@@ -431,4 +431,6 @@ public class ProductoBean implements Serializable {
 		cinv.cambiarImagenProducto(nick, newFile, producto, idAV);
 	}
 	
+	
+	
 }
