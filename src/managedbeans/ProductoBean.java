@@ -34,16 +34,35 @@ public class ProductoBean implements Serializable {
 	private String categoria;
 	private String atributos;
 	private String prueba;
+	private String nuevaCategoria;
 	private int stock;
 	private int cantProd;
 	private boolean accionProd = false;
 	private List<DataProducto> dprods = new ArrayList<>();
 	private List<DataProducto> dprods2 = new ArrayList<>();
 	private UploadedFile file;
+	private UploadedFile newFile;
 	private long idAV;
 	private long idAvCopiar;
 	private DataProducto dataProducto;
 	List<String> nomProd = new ArrayList<>();
+
+	
+	public UploadedFile getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(UploadedFile newFile) {
+		this.newFile = newFile;
+	}
+
+	public String getNuevaCategoria() {
+		return nuevaCategoria;
+	}
+
+	public void setNuevaCategoria(String nuevaCategoria) {
+		this.nuevaCategoria = nuevaCategoria;
+	}
 
 	public boolean isAccionProd() {
 		return accionProd;
@@ -399,7 +418,18 @@ public class ProductoBean implements Serializable {
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 		cinv.modificarProducto(nick, nombreProd, idAV,nombre,descripcion,precio,atributos);
-		
+		cinv.cambiarCategoriaProducto(nick, nuevaCategoria, nombreProd, idAV);
+		cargarDataProducto(nombre);
 	 }
+	public void cambiarImagenProducto(String producto){
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		cinv.cambiarImagenProducto(nick, newFile, producto, idAV);
+		System.out.println("*******************************************************************************************");
+		System.out.println(producto);
+		System.out.println("*******************************************************************************************");
+
+	}
 	
 }

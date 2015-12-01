@@ -12,6 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataCategoria;
 import dominio.datatypes.DataNota;
@@ -64,12 +66,23 @@ public class AvBean implements Serializable {
 	private List<DataCategoria> cats = new ArrayList<>();
 	private String errorAV;
 	private DataProducto dprodGen;
+	private UploadedFile newFile;
 	
 	public AvBean() {
 
 	}
 	
 	
+	public UploadedFile getNewFile() {
+		return newFile;
+	}
+
+
+	public void setNewFile(UploadedFile newFile) {
+		this.newFile = newFile;
+	}
+
+
 	public DataProducto getDprodGen() {
 		return dprodGen;
 	}
@@ -487,6 +500,10 @@ public class AvBean implements Serializable {
 	public String pruebaNom(String prue){
 		nombreProducto = prue;
 		return nombreProducto;
+	}
+	public UploadedFile levantarImg(UploadedFile file){
+		newFile = file;
+		return newFile;
 	}
 	
 	public void prepararParaEliminar(String nombre) {

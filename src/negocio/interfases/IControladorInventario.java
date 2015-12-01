@@ -27,6 +27,7 @@ public interface IControladorInventario {
 	public boolean moverProductos(String nickUsuario, List<String> productos, long idAVOrigen, long idAVDestino);
 	public void modificarProducto(String nickUsuario, String nombreProd, long idAV, String nuevoNombre, String descripcion, double precio, String atributos) throws Exception;
 	public void setStockProducto(String nickUsuario, String nombreProd, long idAV, int stock);
+
 	public void cambiarCategoriaProducto(String nickUsuario, String nuevaCategoria, String producto, long idAV);
 	public void eliminarProducto(String nickUsuario, String nombre, long idAV);
 	public List<DataCategoria> mostrarListaCategoria(long idAV) throws Exception;
@@ -44,6 +45,7 @@ public interface IControladorInventario {
 	
 	public List<DataProducto> getProductos(long idAV);
 	
-	public List<DataProducto> recomendarProductos(String nickname); 
+	public List<DataProducto> recomendarProductos(String nickname);
+	void cambiarImagenProducto(String nickUsuario, UploadedFile file, String producto, long idAV); 
 	
 }

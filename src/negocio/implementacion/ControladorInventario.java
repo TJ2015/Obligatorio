@@ -265,6 +265,32 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.close(tenant);
 		}
 	}
+	@Override
+	public void cambiarImagenProducto(String nickUsuario, UploadedFile file, String producto, long idAV){
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			invDAO.open(tenant);
+			Producto prod = invDAO.buscarProducto(producto, tenant);
+			String produtco = prod.toString();
+			
+			byte[] imagen = Imagenes.convertirInputStreamToArrayByte(file);
+			String nombreImagen = Imagenes.obtenerNombreImagen(file);
+			
+			prod.setBytesImagen(imagen);
+			prod.setNombreImagen(nombreImagen);
+			
+			invDAO.actualizarProducto(prod, tenant);
+			String productoNuevo = prod.toString();
+			
+			/************************************************************/
+			long idProducto = prod.getIdProducto();
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.MODIFICAR, IControladorLog.PRODUCTO, produtco + " por " + productoNuevo);
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
+			invDAO.close(tenant);
+		}
+	}
+
 
 	@Override
 	public void modificarProducto(String nickUsuario, String nombreProd, long idAV, String nombre, String descripcion, double precio,
@@ -273,7 +299,7 @@ public class ControladorInventario implements IControladorInventario {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
-			if (invDAO.buscarProducto(nombre, tenant) == null) {
+			if ((invDAO.buscarProducto(nombre, tenant) == null)||(nombreProd.equals(nombre))) {
 				
 				Producto prod = invDAO.buscarProducto(nombreProd, tenant);
 				String productoViejo = prod.toString();

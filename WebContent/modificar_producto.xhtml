@@ -86,7 +86,7 @@
 									<label for="categoria" class="col-lg-2 control-label">Categoria</label>
 									<div class="col-lg-10">
 										<h:selectOneMenu class="form-control"
-											value="#{productoBean.categoria}">
+											value="#{productoBean.nuevaCategoria}">
 											<c:forEach var="cat"
 												items="${avBean.mostrarListaCategoria()}">
 												<f:selectItem itemValue="${cat.nombre}"
@@ -116,22 +116,11 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="form-group">
-									<label for="stock" class="col-lg-2 control-label">Stock</label>
-									<div class="col-lg-10">
-										<h:inputText id="stock" value="#{productoBean.stock}"
-											styleClass="form-control" required="true"
-											requiredMessage="Debe ingresar el stock"
-											a:placeholder="stock" />
-									</div>
-								</div>
-								
 								<center>
 									<h:commandButton id="modificarProducto"
 										styleClass="btn btn-primary" value="Modificar producto"
-										action="ver_producto"
-										actionListener="#{productoBean.modificarProducto()}"
+										action="ver_producto"										
+										actionListener="#{productoBean.modificarProducto(avBean.nombreProducto)}"
 										onclick="return cargarAtributos();" />
 									<h:outputText value="&#160;" />
 									<h:commandButton id="botonCancelar1"
