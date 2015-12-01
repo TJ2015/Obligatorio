@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<!-- Para ingresar las etiquetas de "placeholder" se debe ingresar la referencias a: (xmlns:a="http://xmlns.jcp.org/jsf/passthrough") -->
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+#ListaAVsCreados li {
+	width: 100%;
+}
+
+li i {
+	float: right;
+}
+</style>
+
+</h:head>
+
+<h:body>
+	<c:if test="${!adminBean.logueado}">
+		<meta http-equiv="Refresh" content="0; URL=login_admin.xhtml"></meta>
+	</c:if>
+
+	<c:if test="${adminBean.logueado}">	
+	<ui:composition template="/templates/layout_admin.xhtml">
+		<ui:define name="contenido">
+				<div class="container-fluid clearfix">
+					<div class="page-header text-center">
+						<h1>Lista de Productos más Utilizados</h1>
+					</div>
+
+					<section class="content">
+	                    <div class="row">
+	                        <div class="col-xs-12">
+	                        	
+	                        	<div class="col-xs-12" style="margin-bottom: 10px;">
+	                        		<h:form>
+                                		<h:commandLink class="btn btn-primary" action="#{adminBean.generarReporteProductosMasUtilizados()}" value="Generar PDF" />
+                                	</h:form>
+	                        	</div>
+	                        
+	                        	
+                                <div class="box-body table-responsive">
+	                                <h:form>
+	                                    <table id="example1" class="table table-bordered table-striped">
+	                                        <thead>
+	                                            <tr>
+	                                                <th>Nombre Producto</th>
+	                                                <th>Cantidad</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                            <ui:param name="listaTopProductos" value="#{productoBean.obtenerTopProductos(0, false)}"></ui:param>
+		  			 							<c:forEach var="producto" items="${listaTopProductos}" >
+		  			 							
+	                                            <tr>
+	                                                <td>${producto.getNombreProducto()}</td>
+	                                                <td>${producto.getCantidad()}</td>
+	                                            </tr>
+	                                            
+	                                            </c:forEach>
+	                                        </tbody>
+	                                        <tfoot>
+	                                            <tr>
+	                                                <th>Nombre Producto</th>
+	                                                <th>Cantidad</th>
+	                                            </tr>
+	                                        </tfoot>
+	                                    </table>
+	                                </h:form>
+	                                </div><!-- /.box-body -->
+	                        </div>
+	                    </div>
+					</section>
+				</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Eliminar Usuario</h4>
+			</div>
+			<div class="modal-body">
+				<p>Usuario a eliminar: ${adminBean.usuarioEliminar}</p>
+				<p>¿Esta seguro que desea eliminar este Usuario?</p>
+			</div>
+			<div class="modal-footer">
+				<h:form>
+					<h:commandButton action="ver_usuarios" actionListener="#{adminBean.eliminarUsuario()}"
+						value="Aceptar" class="btn btn-default" />
+					<h:commandButton action="ver_usuarios" actionListener="#{adminBean.cancelarEliminarUsuario()}"
+						value="Cancelar" class="btn btn-default" />
+				</h:form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+			<!-- page script -->
+	        <script>
+	
+            	$(document).load(function() {
+	                $("#example1").dataTable();
+	                $('#example2').dataTable({
+	                    "bPaginate": true,
+	                    "bLengthChange": false,
+	                    "bFilter": false,
+	                    "bSort": true,
+	                    "bInfo": true,
+	                    "bAutoWidth": false
+	                });
+	            });
+	        </script>
+	        
+	        <c:if test="#{adminBean.eliminarUsuario}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#myModal").modal('show');
+				</h:outputScript>
+			</c:if>
+		</ui:define>
+	</ui:composition>
+	</c:if>
+
+</h:body>
+
+</html>

@@ -3,6 +3,7 @@ package managedbeans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,9 @@ public class AvBean implements Serializable {
 	private boolean eliminarUsuComp=false;
 	private DataProducto dprodGen;
 	private UploadedFile newFile;
+	private String nombreCat;
+	private boolean cortar;
+	private long idAVDestino;
 
 	private String alertaProd;
 	private String alertaCond;
@@ -110,6 +114,30 @@ public class AvBean implements Serializable {
 
 	public void setAlertaVal(String alertaVal) {
 		this.alertaVal = alertaVal;
+	}
+
+	public long getIdAVDestino() {
+		return idAVDestino;
+	}
+
+	public void setIdAVDestino(long idAVDestino) {
+		this.idAVDestino = idAVDestino;
+	}
+
+	public boolean getCortar() {
+		return cortar;
+	}
+
+	public void setCortar(boolean cortar) {
+		this.cortar = cortar;
+	}
+
+	public String getNombreCat() {
+		return nombreCat;
+	}
+
+	public void setNombreCat(String nombreCat) {
+		this.nombreCat = nombreCat;
 	}
 
 	public boolean isEliminarUsuComp() {
@@ -559,6 +587,10 @@ public class AvBean implements Serializable {
 		nombreProducto = prue;
 		return nombreProducto;
 	}
+	public String pruebaNomCat(String prue) {
+		nombreCat = prue;
+		return nombreCat;
+	}
 	public String levantarNombreUsuComp(String prue) {
 		nombreUsuComp = prue;
 		return nombreUsuComp;
@@ -612,6 +644,37 @@ public class AvBean implements Serializable {
 	public void cancelarEliminarUsuComp() {
 		nombreUsuComp = null;
 		eliminarUsuComp = false;
+	}
+	public void prepararParaCortarCat(String nombre) {
+		nombreCat = nombre;
+		cortar = true;
+	}
+
+	public void cortarCat() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		DataCategoria cat;
+		try {
+			cat = cInv.getCategoria(nombreCat, idAV);
+			List<DataProducto> productos=cat.getProductos();
+			List<String> nombProds=new ArrayList<>();
+			for (DataProducto p:productos){
+				nombProds.add(p.getNombre());
+				
+			}
+			cInv.moverProductos(nick, nombProds, idAV, idAVDestino);
+			nombreCat = null;
+			cortar = false;
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void cancelarCortarCat() {
+		nombreCat = null;
+		cortar = false;
 	}
 
 	public List<DataCategoria> mostrarListaCategoria() {
@@ -815,13 +878,6 @@ public class AvBean implements Serializable {
 		}
 	}
 	
-	public List<String> cargarMovimientosAV() {
-		return null;
-	}
-	
-	public Map<String, List<String>> cargarMovimientosTodos() {
-		return null;
-	}
 	public String getEstilo() {
 		return estilo;
 	}
@@ -856,6 +912,73 @@ public class AvBean implements Serializable {
 		} catch (Exception e) {
 			estilo = "skin-blue";
 		}
+	}
+	public List<String> cargarMovimientosAV() {
+		return cargarMovimientosAV(0);
+	}
+	public List<String> cargarMovimientosAV(int cant) {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		return cAV.listaDeMovimientosAV(idAV, cant);
+	}
+	
+	public Map<String, List<String>> cargarMovimientosTodos() {
+		return cargarMovimientosTodos();
+	}
+	
+	public Map<String, List<String>> cargarMovimientosTodos(int cant) {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		Map<String, List<String>> ret = new HashMap<>();
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			session.setAttribute("idAV", av.getIdAV());
+			ret.put(av.getNombreAV(), cargarMovimientosAV(cant));
+		}
+		
+		return ret;
+	}
+	
+	public int getCantMov() {
+		return cargarMovimientosAV().size();
+	}
+	
+	public void marcarNotificacionesComoLeidasAV() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		try {
+			List<DataNotificacion> notis = cAV.listaNotificacionesNoLeidas(idAV);
+			
+			for( DataNotificacion not : notis ) {
+				try {
+					cAV.marcarNotificacionComoLeida(not.getIdNotificacion(), idAV);
+				} catch (Exception e) {
+					Url.redireccionarURL("error");
+					e.printStackTrace();
+					break;
+				}
+			}
+			
+		} catch (NoExisteElAV e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
+	}
+	
+	public void marcarNotificacionesComoLeidasTodas() {
+		
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			session.setAttribute("idAV", av.getIdAV());
+			marcarNotificacionesComoLeidasAV();
+		}
+		
 	}
 
 }
