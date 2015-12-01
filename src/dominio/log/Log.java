@@ -7,11 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import dominio.datatypes.log.DataLog;
 
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l") })
 public class Log implements Serializable {
 
 	private static final long serialVersionUID = 1L;

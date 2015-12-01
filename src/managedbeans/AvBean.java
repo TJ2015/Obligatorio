@@ -11,7 +11,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
 import org.primefaces.model.UploadedFile;
+
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataCategoria;
@@ -74,9 +76,37 @@ public class AvBean implements Serializable {
 
 	private DataProducto dprodGen;
 	private UploadedFile newFile;
-
+	
+	private String alertaProd;
+	private String alertaCond;
+	private String alertaVal;
+	
 	public AvBean() {
 
+	}
+	
+	public String getAlertaProd() {
+		return alertaProd;
+	}
+
+	public void setAlertaProd(String alertaProd) {
+		this.alertaProd = alertaProd;
+	}
+
+	public String getAlertaCond() {
+		return alertaCond;
+	}
+
+	public void setAlertaCond(String alertaCond) {
+		this.alertaCond = alertaCond;
+	}
+
+	public String getAlertaVal() {
+		return alertaVal;
+	}
+
+	public void setAlertaVal(String alertaVal) {
+		this.alertaVal = alertaVal;
 	}
 
 	public long getProdCompraEliminar() {
@@ -726,6 +756,24 @@ public class AvBean implements Serializable {
 		}
 		
 		return da;
+	}
+	
+	public void crearAlerta() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		try {
+			cAV.crearAlerta(alertaProd, "stock:" + alertaCond + ":" + alertaVal, idAV);
+		} catch (NoExisteElAV e) {
+			Url.redireccionarURL("error");
+		}
+	}
+	
+	public List<String> cargarMovimientosAV() {
+		return null;
+	}
+	
+	public Map<String, List<String>> cargarMovimientosTodos() {
+		return null;
 	}
 
 }

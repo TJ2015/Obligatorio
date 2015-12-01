@@ -448,7 +448,7 @@ public class AdminBean implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			cInv.eliminarProducto(avUsu.getNickname(), prodEliminar, -1);
+			cInv.eliminarProducto(adminData.getNick(), prodEliminar, -1);
 		}
 		prodEliminar = null;
 	}

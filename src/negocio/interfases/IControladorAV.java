@@ -50,7 +50,7 @@ public interface IControladorAV {
 	 * @param producto
 	 *            Nombre del producto
 	 * @param condicion
-	 *            condicion, de la forma 'atributo[condicional]valor' donde:
+	 *            condicion, de la forma 'atributo:condicional:valor' donde:
 	 *            'atributo' es el nombre del atributo, 'condicional' <, <=, =,
 	 *            >=, o >. y valor el valor a comparar.
 	 * @param idAV
@@ -66,5 +66,7 @@ public interface IControladorAV {
 	public List<DataNotificacion> listaNotificacionesNoLeidas(long idAV) throws NoExisteElAV;
 
 	public void marcarNotificacionComoLeida(long idNoti, long idAV) throws Exception;
+	
+	public List<String> listaDeMovimientosAV(long idAV);
 	
 }

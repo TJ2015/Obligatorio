@@ -34,12 +34,13 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		basicDataSource.setUrl("jdbc:mysql://" + MYSQL_HOST + ":" + MYSQL_PORT + "/" + database); // es para la nube
 		basicDataSource.setUsername("sapo_admin");
 		basicDataSource.setPassword("sapo_admin");
-		basicDataSource.setInitialSize(2);
+		basicDataSource.setInitialSize(1);
 		basicDataSource.setMaxTotal(10);
+		
 	}
 	
 	@Override
-		public boolean isUnwrappableAs(Class arg0) {
+	public boolean isUnwrappableAs(Class arg0) {
 		return false;
 	}
 	
@@ -49,9 +50,10 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	}
 	
 	@Override
-		public void closeConnection(Connection arg0) throws SQLException {
+	public void closeConnection(Connection arg0) throws SQLException {
 		arg0.close();
 	}
+	
 	@Override
 	public Connection getConnection() throws SQLException {
 		return basicDataSource.getConnection();

@@ -1,6 +1,8 @@
 package negocio.implementacion;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,7 +11,6 @@ import javax.ejb.Stateless;
 import dominio.AV;
 import dominio.Alerta;
 import dominio.Condicion;
-import dominio.Mensaje;
 import dominio.Nota;
 import dominio.Notificacion;
 import dominio.Producto;
@@ -18,14 +19,20 @@ import dominio.datatypes.DataAV;
 import dominio.datatypes.DataAlerta;
 import dominio.datatypes.DataNota;
 import dominio.datatypes.DataNotificacion;
+import dominio.log.Accion;
+import dominio.log.Log;
+import dominio.log.Objetivo;
 import exceptions.NoExisteElAV;
 import exceptions.NombreDeAVInvalido;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import persistencia.implementacion.AvDAO;
+import persistencia.implementacion.FabricaDAO;
 import persistencia.implementacion.InventarioDAO;
+import persistencia.implementacion.LogDAO;
 import persistencia.interfases.IAvDAO;
 import persistencia.interfases.IInventarioDAO;
+import persistencia.interfases.ILogDAO;
 import persistencia.interfases.IUsuarioDAO;
 
 /**
@@ -38,7 +45,8 @@ public class ControladorAV implements IControladorAV {
 	private IUsuarioDAO usuarioDAO;
 	@EJB
 	private IAvDAO avDAO;
-
+	
+	private ILogDAO logDAO = new LogDAO();
 	private IAvDAO avDAOTenant = new AvDAO();
 	private IInventarioDAO invDAOTenant = new InventarioDAO();
 
@@ -408,5 +416,62 @@ public class ControladorAV implements IControladorAV {
 		}
 	}
 	
+	@Override
+	public List<String> listaDeMovimientosAV(long idAV) {
+		
+		List<String> movs = new ArrayList<>();
+		
+		ILogDAO logDAOMaster = FabricaDAO.getLogDAO();
+		
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			
+			logDAOMaster.openTenant("sapo_master");
+			logDAO.openTenant(tenant);
+			
+			
+			List<Accion> acciones = logDAOMaster.getAllAccion();
+			List<Objetivo> objetivos = logDAOMaster.getAllObjetivo();
+			
+			List<Log> logs = logDAO.getAllLogs();
+			
+			Collections.sort(logs, new Comparator<Log>(){
+			    public int compare(Log s1, Log s2) {
+			        return s1.getFecha().compareTo(s2.getFecha());
+			    }
+			});
+			
+			for( Log log : logs ) {
+				Objetivo obj = encontrarObjetivo(objetivos, log.getIdObjetivo());
+				Accion acc = encontrarAccion(acciones, log.getIdAccion());
+				
+				movs.add(log.getFecha().toString() + ": " + log.getUsuario() + " " + 
+						acc.getDescripcion().substring(3) +  obj.getDescripcion().substring(3) + ".");
+			}
+			
+			logDAO.closeTenant(tenant);
+			logDAOMaster.closeTenant("sapo_master");
+		}
+		
+		return movs;
+	}
+	
+	private Accion encontrarAccion(List<Accion> lista, long id) {
+		for(Accion a : lista) {
+			if( a.getId() == id )
+				return a;
+		}
+		
+		return null;
+	}
+	
+	private Objetivo encontrarObjetivo(List<Objetivo> lista, long id) {
+		for(Objetivo o : lista) {
+			if( o.getId() == id )
+				return o;
+		}
+		
+		return null;
+	}
 
 }
