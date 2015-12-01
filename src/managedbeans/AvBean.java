@@ -599,7 +599,7 @@ public class AvBean implements Serializable {
 		idAV = (long) session.getAttribute("idAV");
 		try {
 			cAV.descompartirAV(idAV, nombreUsuComp);
-			mostrarListaCategoria();
+			mostrarListaUsuariosCompartidos();
 			nombreUsuComp = null;
 			eliminarUsuComp = false;
 		} catch (Exception e) {
