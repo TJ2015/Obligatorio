@@ -51,12 +51,10 @@ public class AvBean implements Serializable {
 	private String nombreProducto;
 	private int cantidad;
 	private boolean reemplazar;
-	private List<DataNotificacion> listNotificacionNoLeida = new ArrayList<>();
 	private String categoriaEliminar;
 	private boolean eliminarCategoria;
 	private DataProductoAComprar dPrdAComp;
 	private List<DataProductoAComprar> listCompra;
-	private List<DataNotificacion> listNotificacion = new ArrayList<>();
 	private List<DataNota> listNotas = new ArrayList<>();
 	private List<DataUsuario> usus = new ArrayList<>();
 	private List<DataCategoria> catsGene = new ArrayList<>();
@@ -185,14 +183,6 @@ public class AvBean implements Serializable {
 		this.reemplazar = reemplazar;
 	}
 
-	public List<DataNotificacion> getListNotificacionNoLeida() {
-		return listNotificacionNoLeida;
-	}
-
-	public void setListNotificacionNoLeida(List<DataNotificacion> listNotificacionNoLeida) {
-		this.listNotificacionNoLeida = listNotificacionNoLeida;
-	}
-
 	public DataProductoAComprar getdPrdAComp() {
 		return dPrdAComp;
 	}
@@ -207,14 +197,6 @@ public class AvBean implements Serializable {
 
 	public void setListCompra(List<DataProductoAComprar> listCompra) {
 		this.listCompra = listCompra;
-	}
-
-	public List<DataNotificacion> getListNotificacion() {
-		return listNotificacion;
-	}
-
-	public void setListNotificacion(List<DataNotificacion> listNotificacion) {
-		this.listNotificacion = listNotificacion;
 	}
 
 	public String getTextNotificacion() {
@@ -312,37 +294,35 @@ public class AvBean implements Serializable {
 	public void agregarAV() throws Exception {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
-		boolean miembro=false;
+		long idAV = (long) session.getAttribute("idAV");
+		boolean miembro = false;
 		String email = "correo";
 		if (!(cAV.existeAVusuario(nombreAV, usuarioCreador))) {
-			miembro=cUsu.getUsuario(nick).isMembresia();
-			email=((DataUsuario)session.getAttribute("dataUsuario")).getEmail();
+			miembro = cUsu.getUsuario(nick).isMembresia();
+			email = ((DataUsuario) session.getAttribute("dataUsuario")).getEmail();
 			System.out.println(email);
+			int cantAV = cantAvPorUsuario();
 			try {
-				if((cantAvPorUsuario()<2)||(miembro)){
-					idAV = cAV.altaAV(nombreAV, nick);					
-				}
-								
-				else if((cantAvPorUsuario()>2)||(!miembro)){
-					
+				if ((cantAV < 2) || (miembro)) {
+					if( cantAV == 1 )
+						cAV.crearNotificacion("Ya has creado tu segundo Almacen Virtual! No podrás crear más mientras seas un usuario gratuito. Compra la membresía de SAPo y podrás crear todos los que quieras!", idAV);
+					idAV = cAV.altaAV(nombreAV, nick);
+				} else if ((cantAV > 2) || (!miembro)) {
 					Url.redireccionarURL("paypal");
 					Mensajeria enviar = new Mensajeria();
-					enviar.enviarCorreo(email,"SAPo - Límite de cuenta", "Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
-					
+					enviar.enviarCorreo(email, "SAPo - Límite de cuenta",
+							"Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
+				} else {
+					if (miembro) {
+						idAV = cAV.altaAV(nombreAV, nick);
+					} else {
+						Url.redireccionarURL("paypal");
+						Mensajeria enviar = new Mensajeria();
+						enviar.enviarCorreo(email, "SAPo - Límite de cuenta",
+								"Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
+					}
 				}
-				
-				else {
-						if(miembro){
-							idAV = cAV.altaAV(nombreAV, nick);
-						}
-						else {
-							
-							Url.redireccionarURL("paypal");
-							Mensajeria enviar = new Mensajeria();
-							enviar.enviarCorreo(email,"SAPo - Límite de cuenta", "Aviso de límite de cuenta. Usted ya cuenta con 2 AV en el sistema o perdió su membresía.<br> Lo invitamos a comprar la misma y disfrutar de AV ilimitados");
-						}
-				}
-				
+
 			} catch (NombreDeAVInvalido e1) {
 				e1.printStackTrace();
 			}
@@ -358,22 +338,16 @@ public class AvBean implements Serializable {
 			nombreAV = null;
 		}
 	}
-	
-	
-	/*MARIANELA 291115*/
-	
-	public int cantAvPorUsuario(){
+
+	/* MARIANELA 291115 */
+
+	public int cantAvPorUsuario() {
 		HttpSession session = SesionBean.getSession();
 		String nick = (String) session.getAttribute("nickname");
 		return cUsu.mostrarListaAv(nick).size();
-		
+
 	}
-	/*MARIANELA 291115*/
-	
-	
-	
-	
-	
+	/* MARIANELA 291115 */
 
 	public void compartirAV() throws NoExisteElAV {
 		HttpSession session = SesionBean.getSession();
@@ -455,36 +429,12 @@ public class AvBean implements Serializable {
 		long idAV1 = (long) session.getAttribute("idAV");
 		cAV.eliminarNota(idAV1, idNota);
 	}
-	//esta función es para enviar notificaciones del sistema
-	public void crearNotificacion() throws Exception  {
-		HttpSession session = SesionBean.getSession();
-		long idAV1 = (long) session.getAttribute("idAV");
-		cAV.crearNotificacion(textNotificacion, idAV1);
-		listNotificacion = cAV.getNotificaciones(idAV1);
-		textNotificacion = null;
-	}
-
-	public List<DataNotificacion> mostrarNotificaciones() throws Exception {
-		HttpSession session = SesionBean.getSession();
-		long idAV1 = (long) session.getAttribute("idAV");
-		listNotificacion = cAV.getNotificaciones(idAV1);
-		return listNotificacion;
-
-	}
 
 	public void marcarNotificacionComoLeida(long idNoti) throws Exception {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
 		cAV.getNotificaciones(idAV);
 		cAV.marcarNotificacionComoLeida(idNoti, idAV);
-	}
-
-	public List<DataNotificacion> mostrarNotificacionesNoLeidas() throws Exception {
-		HttpSession session = SesionBean.getSession();
-		long idAV1 = (long) session.getAttribute("idAV");
-		listNotificacionNoLeida = cAV.listaNotificacionesNoLeidas(idAV1);
-		return listNotificacion;
-
 	}
 
 	public void eliminarNotificacion() throws Exception {
@@ -651,6 +601,31 @@ public class AvBean implements Serializable {
 	public void cancelarEliminarCompra() {
 		prodCompraEliminar = 0;
 		eliminarCompra = false;
+	}
+
+	public List<DataNotificacion> mostrarNotificacionesNoLeidas() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		List<DataNotificacion> notis = new ArrayList<>();
+		try {
+			notis = cAV.listaNotificacionesNoLeidas(idAV);
+		} catch (NoExisteElAV e) {
+			Url.redireccionarURL("error");
+		}
+		return notis;
+	}
+
+	public List<DataNotificacion> mostrarNotificaciones() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		List<DataNotificacion> notis = new ArrayList<>();
+
+		try {
+			notis = cAV.getNotificaciones(idAV);
+		} catch (Exception e) {
+			Url.redireccionarURL("error");
+		}
+		return notis;
 	}
 
 }

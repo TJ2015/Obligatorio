@@ -161,7 +161,28 @@ public class ControladorUsuario implements IControladorUsuario {
 					e.printStackTrace();
 				}
 			}
-
+			
+			List<Mensaje> msjRec = usu.getMensajesRecibidos();
+			List<Mensaje> msjEnv = usu.getMensajesEnviados();
+			
+			l = msjRec.size();
+			
+			for (int i = l - 1; i >= 0; i--) {
+				Mensaje m = msjRec.get(i);
+				m.setDestinatario(null);
+				msjRec.remove(i);
+				usuarioDAO.actualizarMensaje(m);
+			}
+			
+			l = msjEnv.size();
+			
+			for (int i = l - 1; i >= 0; i--) {
+				Mensaje m = msjEnv.get(i);
+				m.setDestinatario(null);
+				msjEnv.remove(i);
+				usuarioDAO.actualizarMensaje(m);
+			}
+			
 			TipoUsuario tipo = usu.getTipoUsuario();
 			usu.setTipoUsuario(null);
 

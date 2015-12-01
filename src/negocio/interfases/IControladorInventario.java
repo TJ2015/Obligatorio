@@ -19,6 +19,7 @@ public interface IControladorInventario {
 	
 	public boolean crearCategoria(String nickUsuario, String nombre, long idAV);
 	public boolean existeCategoria(String nombre, long idAV);
+	public boolean existeProducto(String nombre, long idAV);
 	public void modificarNombreCategoria(String nickUsuario, String nombre, long idAV, String nuevoNombre) throws Exception;
 	public void eliminarCategoria(String nickUsuario, String nombre, long idAV) throws Exception;
 	public DataProducto crearProducto(String nickUsuario, String nombre, String descripcion, double precio, String categoria, String atributosList, long idAV, int stock, UploadedFile file) throws Exception;

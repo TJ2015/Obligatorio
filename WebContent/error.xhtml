@@ -6,7 +6,12 @@
 
 <h:head></h:head> 
 <h:body>
-	ERROR!
+	<ui:composition template="/templates/layout_user.xhtml">
+		<ui:define name="contenido">
+			<h1>Ooops! Esto es embarazoso!</h1>
+			<h3>Parece que hubo un error!</h3>
+		</ui:define>
+		</ui:composition>
 </h:body> 
 
 </html>

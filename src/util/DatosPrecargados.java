@@ -74,7 +74,9 @@ public class DatosPrecargados {
 						"Marca:Parmalat;Sabor:Frutilla;", idHeladera, 1, null);
 				cInv.crearProducto("1", "Lechuga", "Una cabeza de lechuga.", 10, "Verduras", "Color:Verde;", idHeladera, 2,
 						null);
-
+				
+				cAV.crearNotificacion("Bienvenido a SAPo! Ahora que creaste un av, empieza a crear categorias y productos!", 1);
+				
 			} catch (NombreDeAVInvalido e) {
 				e.printStackTrace();
 			} catch (Exception e) {

@@ -75,37 +75,25 @@
                             </ul>
                              
                         </li>
+                        <ui:param name="notisNL" value="#{avBean.mostrarNotificacionesNoLeidas()}" />
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-warning"></i>
-                                <span class="label label-warning">#{avBean.listNotificacionNoLeida.size()}</span>
+                                <span class="label label-warning">#{notisNL.size()}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Tienes #{avBean.listNotificacionNoLeida.size()} notificaciones</li>
+                                <li class="header">Tienes #{notisNL.size()} notificaciones</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
-                                    <h:form>
-										<c:forEach var="notificacion" items="${avBean.listNotificacionNoLeida}"  >
-											<li class="list-group-item">
-											 <h:commandLink actionListener="${avBean.marcarNotificacionComoLeida(notificacion.getIdNotificacion())}" action="mostrarAV">
-											 	<i class="fa fa-angle-double-right"></i>
-											 	${av.nombreAV}
-											 </h:commandLink>
-											  <a href="#" data-toggle="modal" data-target="#myModal">
-											  <i class="fa fa-trash-o" style="float:right" ></i>
-											   </a>
-											</li> 
-											              
-										 </c:forEach>
-										 </h:form> 
-                                        <li>
-                                            <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                       
+                                    	<h:form>
+											<c:forEach var="notificacion" items="${notisNL}"  >
+												<li class="list-group-item">
+													<p>${notificacion.texto}</p>
+												</li>
+											 </c:forEach>
+										 </h:form>
                                     </ul>
                                 </li>
                                 <li class="footer"><a href="#">Ver todo</a></li>

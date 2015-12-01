@@ -264,7 +264,7 @@ public class AvDAO implements IAvDAO {
 
 	@Override
 	public List<Notificacion> buscarNotificacionesNoLeidas() {
-		org.hibernate.Query q = session.getNamedQuery("Alerta.getAllNoLeido");
+		org.hibernate.Query q = session.getNamedQuery("Notificacion.getAllNoLeido");
 		return q.list();
 	}
 

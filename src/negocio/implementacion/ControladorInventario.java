@@ -51,14 +51,16 @@ public class ControladorInventario implements IControladorInventario {
 
 	@Override
 	public boolean crearCategoria(String nickUsuario, String nombre, long idAV) {
-		Categoria cat = new Categoria(nombre);
-
+		
+		if ( existeCategoria(nombre, idAV) )
+			return false;
+		
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			invDAO.open(tenant);
 			Categoria cate = invDAO.buscarCategoria(nombre, tenant);
-			if (cate != null)
-				return false;
+
+			Categoria cat = new Categoria(nombre);
 			invDAO.persistirCategoria(cat, tenant);
 			invDAO.close(tenant);
 			
@@ -138,6 +140,10 @@ public class ControladorInventario implements IControladorInventario {
 			long idAV, int stock, UploadedFile file) throws Exception {
 
 		DataProducto dp = null;
+		
+		if( existeProducto(nombre, idAV) )
+			return null;
+		
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			
@@ -393,6 +399,7 @@ public class ControladorInventario implements IControladorInventario {
 				if( pac != null )
 					eliminarProductoDeListaDeCompra(nickUsuario, idAV, prod.getIdProducto());
 			} catch (Exception e) {
+				
 			}
 			
 			invDAO.actualizarCategoria(cat, tenant);
@@ -666,6 +673,18 @@ public class ControladorInventario implements IControladorInventario {
 			System.out.println("No se obtienen nombre de Productos Genericos");
 		}
 		return lNombres;
+	}
+
+	@Override
+	public boolean existeProducto(String nombre, long idAV) {
+		Producto prod = null;
+		String tenant = getTenant(idAV);
+		if (tenant != null) {
+			invDAO.open(tenant);
+			prod = invDAO.buscarProducto(nombre, tenant);
+			invDAO.close(tenant);
+		}
+		return prod != null;
 	}
 	
 }
