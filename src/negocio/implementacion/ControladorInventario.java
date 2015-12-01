@@ -628,6 +628,28 @@ public class ControladorInventario implements IControladorInventario {
 		}
 		return dprods;
 	}
+	
+	@Override
+	public List<DataProducto> getProductosOrdenadosPorStock(long idAV) {
+		List<DataProducto> lDataProductos = null;
+		try {
+			String tenant = getTenant(idAV);
+			if (tenant != null) {
+				invDAO.open(tenant);
+				List<Producto> lProductos = invDAO.getProductosOrdenadosPorStock(tenant);
+				if (lProductos != null && lProductos.size() > 0) {
+					lDataProductos = new ArrayList<>();
+					for(Producto p : lProductos) {
+						lDataProductos.add(p.getDataProducto());
+					}
+				}
+				invDAO.close(tenant);
+			}			
+		} catch (Exception e) {
+			System.out.println("Error al obtener la lista de productos ordenados por stock del Almacen " + idAV);
+		}
+		return lDataProductos;
+	}
 
 	@Override
 	public List<DataProducto> recomendarProductos(String nickname) {

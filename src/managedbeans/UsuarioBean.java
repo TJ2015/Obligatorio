@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -18,6 +19,7 @@ import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
@@ -230,7 +232,16 @@ public class UsuarioBean implements Serializable {
 	public void login() throws IOException {
 		try {
 			DataUsuario dataUsuario = cusu.login(nick, password);
+			//TODO: Hay que eliminar esta sguiente linea
 			cAlgoritmos.obtenerProductosMasVendidos();
+			List<DataProducto> lProductos = cAlgoritmos.obtenerProductosConMenosStock(1);
+			if (lProductos != null && lProductos.size() > 0) {
+				for (Iterator iterator = lProductos.iterator(); iterator.hasNext();) {
+					DataProducto dataProducto = (DataProducto) iterator.next();
+					System.out.println(dataProducto.getNombre() + " - " + dataProducto.getStock());
+				}
+			}
+			//TODO: Hay que eliminar la linea anterior
 			if (dataUsuario != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();

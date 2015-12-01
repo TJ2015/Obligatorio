@@ -51,5 +51,6 @@ public interface IControladorInventario {
 	
 	public List<String> obtenerNombresProductos(String nickUsuario, String nombreAV);
 	public List<String> obtenerNombresProductosGenericos();
+	public List<DataProducto> getProductosOrdenadosPorStock(long idAV);
 	
 }
