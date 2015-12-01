@@ -2,11 +2,14 @@ package managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
@@ -353,7 +356,7 @@ public class ProductoBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Url.redireccionarURL("error");
-
 		}
 	}
+		
 }

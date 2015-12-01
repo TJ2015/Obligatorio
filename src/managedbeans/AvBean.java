@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dominio.datatypes.DataAV;
@@ -25,6 +25,7 @@ import exceptions.NoExisteElProductoAComprar;
 import exceptions.NombreDeAVInvalido;
 import exceptions.YaExisteElProductoAComprar;
 import negocio.interfases.IControladorAV;
+import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
 import util.Url;
@@ -39,6 +40,9 @@ public class AvBean implements Serializable {
 	IControladorUsuario cUsu;
 	@EJB
 	IControladorInventario cInv;
+	
+	@EJB
+	private IControladorAlgoritmos cAlgoritmos;
 
 	private long idAV;
 	private String nickname;
@@ -526,6 +530,34 @@ public class AvBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public List<DataProducto> obtenerProductosConBajoStock(){
+		List<DataProducto> lProductos = null;
+		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			lProductos = cAlgoritmos.obtenerProductosConMenosStock(idAV);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lProductos;
+	}
+	
+	
+	public void agregarProductoConBajoStock(boolean reemplazar){
+		try {
+			Map<String, String> value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+			String nombreProducto = value.get("modal_productoSeleccionado:productoSeleccionado");
+			int cantidadStock =  Integer.parseInt(value.get("modal_productoSeleccionado:cantidadProducto"));
+			HttpSession session = SesionBean.getSession();
+			long idAV1= (long) session.getAttribute("idAV");
+			cInv.agregarEnListaDeCompra((String)session.getAttribute("nickname"), idAV1, nombreProducto, cantidadStock, reemplazar);
+		} catch (Exception e) {
+			System.out.println("Error al agreguegar el producto a la lista de compra");
+		}
+	}
+	
 }
 
 	
