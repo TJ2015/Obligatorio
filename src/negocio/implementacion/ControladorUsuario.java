@@ -178,6 +178,13 @@ public class ControladorUsuario implements IControladorUsuario {
 				}
 			}
 			
+			List<AV> avComp = usu.getAVcompartidos();
+			
+			for( AV av : avComp ) {
+				av.removeUsuarioCompartido(usu);
+				avDAO.actualizarAV(av);
+			}
+			
 			List<Mensaje> msjRec = usu.getMensajesRecibidos();
 			List<Mensaje> msjEnv = usu.getMensajesEnviados();
 			

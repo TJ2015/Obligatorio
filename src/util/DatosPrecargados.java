@@ -31,7 +31,7 @@ public class DatosPrecargados {
 	@PostConstruct
 
 	void atStartup() {
-
+		/*
 		if (!cUsu.existeUsuarioNick("1")) {
 			// util.DBUtil.modificarBase("sapo_master");
 			System.out.println("Cargando datos...");
@@ -85,6 +85,7 @@ public class DatosPrecargados {
 
 			System.out.println("...Datos cargados con éxito!");
 		}
+		 */
 	}
 
 	@PreDestroy
