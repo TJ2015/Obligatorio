@@ -147,7 +147,7 @@ public class ControladorUsuario implements IControladorUsuario {
 				if (usuario != null) {
 					StringBuilder mensaje = new StringBuilder();
 					mensaje.append(String.format("<h2>Bienvenid@ a SAPo %s</h2>", usuario.getNombre()));
-					mensaje.append(String.format("<p>Ingrese a %s</p>", "Cambiar esto por la URL Verdadera"));
+					mensaje.append(String.format("<p>Ingrese a %s</p>", "http://sapito-obligatorio.rhcloud.com/Obligatorio/"));
 					mensaje.append("<br/><br/>Saludos<br/>El Equipo de SAPo");
 					new Mensajeria().enviarCorreo(usuario.getEmail(), "SAPo - Bienvenido", mensaje.toString());
 				}
