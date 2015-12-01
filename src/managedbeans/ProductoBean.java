@@ -2,14 +2,13 @@ package managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
@@ -50,7 +49,6 @@ public class ProductoBean implements Serializable {
 	private DataProducto dataProducto;
 	List<String> nomProd = new ArrayList<>();
 
-	
 	public UploadedFile getNewFile() {
 		return newFile;
 	}
@@ -359,8 +357,9 @@ public class ProductoBean implements Serializable {
 
 		}
 	}
+
 	public void agregarProductoGenerico(String nombreProducto) {
-		
+
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
@@ -375,13 +374,13 @@ public class ProductoBean implements Serializable {
 			Url.redireccionarURL("error");
 
 		}
-		
-		
+
 	}
+
 	public void cortarProducto(String nombreProducto) {
 
 		HttpSession session = SesionBean.getSession();
-		
+
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 
@@ -396,39 +395,43 @@ public class ProductoBean implements Serializable {
 			Url.redireccionarURL("error");
 		}
 	}
-	
-	public void cargarDatos(String nombreProd){
+
+	public Map<String, String> cargarDatos(String nombreProd) {
 
 		HttpSession session = SesionBean.getSession();
 		
 		long idAV = (long) session.getAttribute("idAV");
-		String nick = (String) session.getAttribute("nickname");
+		Map<String, String> attrs = new HashMap<>();
 		try {
-			DataProducto dp=cinv.getProducto(nombreProd, idAV);
-			 nombre=dp.getNombre();
-			 categoria=dp.getCategoria();
-			 descripcion=dp.getDescripcion();
-			 precio=dp.getPrecio();
-			 stock=dp.getStock();
-			dataProducto=dp;
+			DataProducto dp = cinv.getProducto(nombreProd, idAV);
+			nombre = dp.getNombre();
+			categoria = dp.getCategoria();
+			descripcion = dp.getDescripcion();
+			precio = dp.getPrecio();
+			stock = dp.getStock();
+			attrs = dp.getAtributosList();
 		} catch (NoExisteElAV | NoExisteElProducto e) {
-			// TODO Auto-generated catch block
+			Url.redireccionarURL("exito");
 			e.printStackTrace();
-		}	
+		}
+		
+		return attrs;
 	}
+
 	public void modificarProducto(String nombreProd) throws Exception {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
-		cinv.modificarProducto(nick, nombreProd, idAV,nombre,descripcion,precio,atributos);
+		cinv.modificarProducto(nick, nombreProd, idAV, nombre, descripcion, precio, atributos);
 		cinv.cambiarCategoriaProducto(nick, nuevaCategoria, nombreProd, idAV);
 		cargarDataProducto(nombre);
-	 }
-	public void cambiarImagenProducto(String producto){
+	}
+
+	public void cambiarImagenProducto(String producto) {
 		HttpSession session = SesionBean.getSession();
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 		cinv.cambiarImagenProducto(nick, newFile, producto, idAV);
 	}
-	
+
 }

@@ -103,6 +103,21 @@
 				 </h:form>  
 				</ul>
 		</section>
+		<section class="col-xs-12 col-md-6 col-md-offset-3">
+			<ui:param name="movsAV" value="${avBean.cargarMovimientosTodos(5)}" />
+			<h3 class="box-title">Ultimos movimientos de Stock</h3>
+			<li class="list-group-item">
+				<c:forEach var="movs" items="${movsAV}">
+					<div class="box" style="padding:2%">
+						<h3>${movs.key}</h3>
+						<c:forEach var="mov" items="${movs.value}">									
+								${mov}
+								<br></br>
+						</c:forEach>
+					</div>						
+				</c:forEach>		       
+		     </li>
+		</section>
 		</div>
 	</div>
 	 <!-- Modal -->

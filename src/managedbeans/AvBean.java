@@ -3,6 +3,7 @@ package managedbeans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -815,13 +816,6 @@ public class AvBean implements Serializable {
 		}
 	}
 	
-	public List<String> cargarMovimientosAV() {
-		return null;
-	}
-	
-	public Map<String, List<String>> cargarMovimientosTodos() {
-		return null;
-	}
 	public String getEstilo() {
 		return estilo;
 	}
@@ -856,6 +850,73 @@ public class AvBean implements Serializable {
 		} catch (Exception e) {
 			estilo = "skin-blue";
 		}
+	}
+	public List<String> cargarMovimientosAV() {
+		return cargarMovimientosAV(0);
+	}
+	public List<String> cargarMovimientosAV(int cant) {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		return cAV.listaDeMovimientosAV(idAV, cant);
+	}
+	
+	public Map<String, List<String>> cargarMovimientosTodos() {
+		return cargarMovimientosTodos();
+	}
+	
+	public Map<String, List<String>> cargarMovimientosTodos(int cant) {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		Map<String, List<String>> ret = new HashMap<>();
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			session.setAttribute("idAV", av.getIdAV());
+			ret.put(av.getNombreAV(), cargarMovimientosAV(cant));
+		}
+		
+		return ret;
+	}
+	
+	public int getCantMov() {
+		return cargarMovimientosAV().size();
+	}
+	
+	public void marcarNotificacionesComoLeidasAV() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		
+		try {
+			List<DataNotificacion> notis = cAV.listaNotificacionesNoLeidas(idAV);
+			
+			for( DataNotificacion not : notis ) {
+				try {
+					cAV.marcarNotificacionComoLeida(not.getIdNotificacion(), idAV);
+				} catch (Exception e) {
+					Url.redireccionarURL("error");
+					e.printStackTrace();
+					break;
+				}
+			}
+			
+		} catch (NoExisteElAV e) {
+			Url.redireccionarURL("error");
+			e.printStackTrace();
+		}
+	}
+	
+	public void marcarNotificacionesComoLeidasTodas() {
+		
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		List<DataAV> avs = cUsu.mostrarListaAv(nick);
+		
+		for( DataAV av : avs ) {
+			session.setAttribute("idAV", av.getIdAV());
+			marcarNotificacionesComoLeidasAV();
+		}
+		
 	}
 
 }

@@ -67,7 +67,7 @@ public interface IControladorAV {
 
 	public void marcarNotificacionComoLeida(long idNoti, long idAV) throws Exception;
 	
-	public List<String> listaDeMovimientosAV(long idAV);
+	public List<String> listaDeMovimientosAV(long idAV, int cant);
 
 	/**********************************************************************/
 	

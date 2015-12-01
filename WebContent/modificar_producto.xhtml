@@ -41,7 +41,7 @@
 				<div class="page-header text-center">
 					<h1>Modificar Producto</h1>
 				</div>
-										 <!--#{productoBean.cargarDatos(avBean.nombreProducto)}-->
+				<ui:param name="attrs" value="#{productoBean.cargarDatos(avBean.nombreProducto)}" />
 				
 				<div class="col-lg-10">
 					<div class="panel panel-primary">
@@ -104,7 +104,7 @@
 											<h:inputHidden id="atributos"
 												value="#{productoBean.atributos}" styleClass="form-control"
 												required="false" />
-												<c:forEach var="dp" items="${productoBean.dataProducto.atributosList}">
+												<c:forEach var="dp" items="${attrs}">
 													<div class='attrItem'>
 														<input type='text' class='form-control' placeholder='Nombre de atributo' value="${dp.key}" />
 														<input type='text' class='form-control' placeholder='Valor' value="#{dp.value}" />

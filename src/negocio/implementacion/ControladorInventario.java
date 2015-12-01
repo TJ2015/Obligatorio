@@ -168,7 +168,7 @@ public class ControladorInventario implements IControladorInventario {
 			
 			/************************************************************/
 			long idProducto = prod.getIdProducto();
-			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.CREAR, IControladorLog.PRODUCTO, prod.toString());
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.CREAR, IControladorLog.PRODUCTO, prod.getNombre());
 			cLog.agregarLog(dataLog, tenant);
 			/************************************************************/
 			
@@ -192,6 +192,11 @@ public class ControladorInventario implements IControladorInventario {
 			int val;
 			String condicion = "";
 			boolean crear = false;
+			/************************************************************/
+			long idProducto = prod.getIdProducto();
+			DataLog dataLog = new DataLog(idProducto, nickUsuario, IControladorLog.MODIFICAR_STOCK, IControladorLog.PRODUCTO, prod.getNombre() + ", stock queda en: " + prod.getStock());
+			cLog.agregarLog(dataLog, tenant);
+			/************************************************************/
 			for( Alerta a : alertas ) {
 				if( a.getProd().getNombre().equals(nombreProd) ) {
 					cond = a.getCond();
@@ -236,6 +241,7 @@ public class ControladorInventario implements IControladorInventario {
 						avDAOTenant.persistirNotificacion(noti, tenant);
 						avDAOTenant.close(tenant);
 					}
+
 				}
 			}
 			
@@ -531,7 +537,7 @@ public class ControladorInventario implements IControladorInventario {
 			invDAO.open(tenant);
 			ProductoAComprar pac = invDAO.buscarProductoDeLista(idProdComp, tenant);
 			if (pac != null) {
-				String producto = pac.toString();
+				String producto = pac.getProducto().getNombre();
 				invDAO.eliminarProductoAComprar(pac, tenant);
 				
 				/************************************************************/
@@ -558,7 +564,7 @@ public class ControladorInventario implements IControladorInventario {
 			ProductoAComprar pac = invDAO.buscarProductoDeListaPorProducto(idProdComp, tenant);
 			eliminarProductoDeListaDeCompra(nickUsuario, idAV, pac.getId());
 			Producto prod = pac.getProducto();
-			String producto = pac.toString();
+			String producto = pac.getProducto().getNombre() + "x" + pac.getCantidad();
 			setStockProducto(nickUsuario, prod.getNombre(), idAV, prod.getStock() + pac.getCantidad());
 			
 			/************************************************************/

@@ -66,7 +66,7 @@ public class UsuarioBean implements Serializable {
 	private boolean logueado;
 	private DataMensaje dmsj;
 	private DataUsuario dusu;
-	private boolean recibido = false;
+	private boolean recibido = true;
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
 	

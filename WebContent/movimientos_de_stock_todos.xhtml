@@ -3,34 +3,38 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      > 
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
 
 <h:head></h:head> 
-<h:body>
+<body> 
 	<ui:composition template="/templates/layout_sapo_user.xhtml">
 	<ui:define name="contenido">
 		
 		<style>
 			
 		</style>
-		<!-- ${avBean.marcarNotificacionesComoLeidasTodas()} -->
-		<ui:param name="notis" value="${avBean.mostrarNotificacionesTodas()}" />
+		
+		<ui:param name="movsAV" value="${avBean.cargarMovimientosTodos()}" />
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<br></br>
 					<br></br>
+					<h1>Movimientos de Stock de todos los Almacenes Virtuales</h1>
 					<br></br>
-					<c:forEach var="noti" items="${notis}">
-						<div class="box leido-${noti.leido}" style="padding:2%">
-							${noti.texto}
-						</div>
+					<c:forEach var="movs" items="${movsAV}">
+						<div class="box" style="padding:2%">
+							<h3>${movs.key}</h3>
+							<c:forEach var="mov" items="${movs.value}">									
+									${mov}
+									<br></br>
+							</c:forEach>
+						</div>						
 					</c:forEach>
 				</div>
 			</div>
 		</div>
 	</ui:define>
 	</ui:composition>
-</h:body> 
+</body> 
 </html>

@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({ 
-	@NamedQuery(name = "Accion.getAll", query = "SELECT a FROM Accion a"),
+	@NamedQuery(name = "Accion.findAll", query = "SELECT a FROM Accion a"),
 	@NamedQuery(name = "Accion.buscarPorNombre", query = "SELECT a FROM Accion a WHERE a.nombre = :nombre"),
 })
 public class Accion implements Serializable {

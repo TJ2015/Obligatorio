@@ -430,7 +430,7 @@ public class ControladorAV implements IControladorAV {
 	}
 	
 	@Override
-	public List<String> listaDeMovimientosAV(long idAV) {
+	public List<String> listaDeMovimientosAV(long idAV, int cant) {
 		
 		List<String> movs = new ArrayList<>();
 		
@@ -439,7 +439,7 @@ public class ControladorAV implements IControladorAV {
 		String tenant = getTenant(idAV);
 		if (tenant != null) {
 			
-			logDAOMaster.openTenant("sapo_master");
+			logDAOMaster.openTenant("master");
 			logDAO.openTenant(tenant);
 			
 			
@@ -453,17 +453,22 @@ public class ControladorAV implements IControladorAV {
 			        return s1.getFecha().compareTo(s2.getFecha());
 			    }
 			});
-			
+			int cont = 1;
 			for( Log log : logs ) {
 				Objetivo obj = encontrarObjetivo(objetivos, log.getIdObjetivo());
 				Accion acc = encontrarAccion(acciones, log.getIdAccion());
 				
 				movs.add(log.getFecha().toString() + ": " + log.getUsuario() + " " + 
-						acc.getDescripcion().substring(3) +  obj.getDescripcion().substring(3) + ".");
+						acc.getDescripcion().substring(3) +  obj.getDescripcion().substring(3) + " - " + log.getValor());
+				
+				if( (cant > 0)&&(cont == cant) )
+					break;
+				
+				cont++;
 			}
 			
 			logDAO.closeTenant(tenant);
-			logDAOMaster.closeTenant("sapo_master");
+			logDAOMaster.closeTenant("master");
 		}
 		
 		return movs;
