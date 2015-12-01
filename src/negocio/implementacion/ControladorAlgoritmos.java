@@ -15,11 +15,13 @@ import javax.ejb.Stateless;
 
 import dominio.Producto;
 import dominio.datatypes.DataProducto;
+import dominio.datatypes.DataProductoVendido;
 import dominio.datatypes.DataUsuario;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorAlgoritmos;
 import negocio.interfases.IControladorInventario;
 import negocio.interfases.IControladorUsuario;
+import persistencia.interfases.IInventarioDAO;
 
 @Stateless
 public class ControladorAlgoritmos implements IControladorAlgoritmos{
@@ -34,26 +36,61 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 	@EJB
 	private IControladorAV cAV;
 	
+	@EJB
+	private IInventarioDAO invDAO;
+
+	public ControladorAlgoritmos() {
+	}
+
+	@Override
+	public List<DataProducto> recomendar(String usuario) {
+		List<Producto> prods = invDAO.getAllProducto("master");
+		List<DataProducto> dprods = new ArrayList<>();
+		int i = 0;
+		for (Producto prod : prods) {
+
+			if (i > 5)
+				break;
+
+			dprods.add(prod.getDataProducto());
+			i++;
+		}
+
+		return dprods;
+	}
 	
-	@SuppressWarnings("rawtypes")
-	public Map<String, Integer> obtenerProductosMasVendidos(){
-		Map<String, Integer> lProductos = null;
+	@Override
+	public List<DataProductoVendido> obtenerProductosMasVendidos(int cantidad, boolean distinguir){
+		List<DataProductoVendido> lProductosVendidos = null;
 		try {
-			lProductos = obtenerRankingProductos();
-			lProductos = ordenarPorValor(lProductos);			
+			Map<String, Integer> lProductos = obtenerRankingProductos(distinguir);
+			if (lProductos != null && lProductos.size() > 0) {
+				lProductos = ordenarPorValor(lProductos);
+				lProductosVendidos = new ArrayList<DataProductoVendido>();
+				int contador = cantidad == 0 ? lProductos.size() + 1 : cantidad ;
+				for(Map.Entry<String, Integer> p : lProductos.entrySet()){
+					if (contador > 0) {
+						lProductosVendidos.add(new DataProductoVendido(p.getKey(), p.getValue()));
+						contador--;
+					}
+					else{
+						break;
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return lProductos;
+		return lProductosVendidos;
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private Map<String, Integer> obtenerRankingProductos(){
+	private Map<String, Integer> obtenerRankingProductos(boolean distinguir){
 		Map<String, Integer> topProductos = new HashMap<String, Integer>();
 		try {
 			List<DataUsuario> lUsuarios = cUsuario.getUsuarios();
 			if (lUsuarios != null && lUsuarios.size() > 0) {
-				List<String> lProductosGenericos = cInventario.obtenerNombresProductosGenericos();
+				List<String> lProductosGenericos = invDAO.buscarNombresProductosGenericos();
 				for (Iterator iterator = lUsuarios.iterator(); iterator.hasNext();) {
 					DataUsuario dataUsuario = (DataUsuario) iterator.next();
 					List<String> lAlmacenes = dataUsuario.getAVs();
@@ -65,7 +102,7 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 								String nombreProducto = (String) iterator3.next();
 								if (nombreProducto != null) {
 									nombreProducto = nombreProducto.toUpperCase();
-									if (!existeEnLista(lProductosGenericos, nombreProducto)) {
+									if (!distinguir || !existeEnLista(lProductosGenericos, nombreProducto)) {
 										Object repeticion = topProductos.get(nombreProducto); 
 										if (repeticion != null) {
 											int nuevoValor = ((int)repeticion);
@@ -90,6 +127,7 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
 	private boolean existeEnLista(List<String> lista, String valor)
 	{
 		boolean existe = false;
@@ -97,7 +135,7 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 			if (lista != null && lista.size() > 0) {
 				for (Iterator iterator = lista.iterator(); iterator.hasNext();) {
 					String string = (String) iterator.next();
-					if (string.equals(valor)) {
+					if (string.toUpperCase().equals(valor.toUpperCase())) {
 						existe = true;
 						break;
 					}
@@ -132,6 +170,7 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 	    return result;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<DataProducto> obtenerProductosConMenosStock(long idAV){
 		List<DataProducto> lProductos = null;
