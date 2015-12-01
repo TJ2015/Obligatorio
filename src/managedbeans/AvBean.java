@@ -78,6 +78,9 @@ public class AvBean implements Serializable {
 	private boolean eliminarUsuComp=false;
 	private DataProducto dprodGen;
 	private UploadedFile newFile;
+	private String nombreCat;
+	private boolean cortar;
+	private long idAVDestino;
 
 	private String alertaProd;
 	private String alertaCond;
@@ -111,6 +114,30 @@ public class AvBean implements Serializable {
 
 	public void setAlertaVal(String alertaVal) {
 		this.alertaVal = alertaVal;
+	}
+
+	public long getIdAVDestino() {
+		return idAVDestino;
+	}
+
+	public void setIdAVDestino(long idAVDestino) {
+		this.idAVDestino = idAVDestino;
+	}
+
+	public boolean getCortar() {
+		return cortar;
+	}
+
+	public void setCortar(boolean cortar) {
+		this.cortar = cortar;
+	}
+
+	public String getNombreCat() {
+		return nombreCat;
+	}
+
+	public void setNombreCat(String nombreCat) {
+		this.nombreCat = nombreCat;
 	}
 
 	public boolean isEliminarUsuComp() {
@@ -560,6 +587,10 @@ public class AvBean implements Serializable {
 		nombreProducto = prue;
 		return nombreProducto;
 	}
+	public String pruebaNomCat(String prue) {
+		nombreCat = prue;
+		return nombreCat;
+	}
 	public String levantarNombreUsuComp(String prue) {
 		nombreUsuComp = prue;
 		return nombreUsuComp;
@@ -613,6 +644,37 @@ public class AvBean implements Serializable {
 	public void cancelarEliminarUsuComp() {
 		nombreUsuComp = null;
 		eliminarUsuComp = false;
+	}
+	public void prepararParaCortarCat(String nombre) {
+		nombreCat = nombre;
+		cortar = true;
+	}
+
+	public void cortarCat() {
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		DataCategoria cat;
+		try {
+			cat = cInv.getCategoria(nombreCat, idAV);
+			List<DataProducto> productos=cat.getProductos();
+			List<String> nombProds=new ArrayList<>();
+			for (DataProducto p:productos){
+				nombProds.add(p.getNombre());
+				
+			}
+			cInv.moverProductos(nick, nombProds, idAV, idAVDestino);
+			nombreCat = null;
+			cortar = false;
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void cancelarCortarCat() {
+		nombreCat = null;
+		cortar = false;
 	}
 
 	public List<DataCategoria> mostrarListaCategoria() {

@@ -449,4 +449,6 @@ public class ProductoBean implements Serializable {
 		return lProductos;
 	}
 	
+	
+	
 }

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import dominio.AV;
 import dominio.datatypes.DataCategoria;
+import dominio.datatypes.DataProducto;
+import exceptions.NoExisteElAV;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorInventario;
 import util.Url;
@@ -32,9 +34,19 @@ public class CategoriaBean implements Serializable {
 	private long idAV;
 	private AV av;
 	private String[] str = { "hola", "noe" };
-
+	private long idAVDestino;
 	private String nombreAV;
 	private static final long serialVersionUID = 1L;
+
+	
+	
+	public long getIdAVDestino() {
+		return idAVDestino;
+	}
+
+	public void setIdAVDestino(long idAVDestino) {
+		this.idAVDestino = idAVDestino;
+	}
 
 	public String[] getStr() {
 		return str;
@@ -108,6 +120,25 @@ public class CategoriaBean implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void moverProductos(String categoria){
+		HttpSession session = SesionBean.getSession();
+		long idAV = (long) session.getAttribute("idAV");
+		String nick = (String) session.getAttribute("nickname");
+		DataCategoria cat;
+		try {
+			cat = cinv.getCategoria(categoria, idAV);
+			List<DataProducto> productos=cat.getProductos();
+			List<String> nombProds=new ArrayList<>();
+			for (DataProducto p:productos){
+				nombProds.add(p.getNombre());
+			}
+			cinv.moverProductos(nick, nombProds, idAV, idAVDestino);
+		} catch (NoExisteElAV e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

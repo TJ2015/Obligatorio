@@ -36,15 +36,21 @@
 									<c:forEach var="cat" items="${avBean.cats}">
 										<tr>
 											<td>
+											<!-- #{avBean.pruebaNomCat(cat.nombre)} -->
 												${cat.nombre}
 											</td>
 											<td>
 												${cat.productos.size()}
 											</td>
-											<td>
+											<td class="text-center">
+											
 												<h:commandLink action="verListaCategoria" actionListener="${avBean.prepararParaEliminar(cat.nombre)}" value="" style="float: right">
 													<i class="fa fa-trash-o" style="float: right"></i>
 												</h:commandLink>
+												<h:commandLink action="verListaCategoria" actionListener="${avBean.prepararParaCortarCat(cat.nombre)}" value="" style="float: right">
+													<i class="fa fa-cut botonProd" style="float: right; font-size: 15px;"></i>
+												</h:commandLink>	
+												
 											</td>
 										</tr>
 									</c:forEach>
@@ -102,6 +108,50 @@
 				    $("#eliminarCategoria").modal('show');
 				</h:outputScript>
 			</c:if>
+			<c:if test="#{avBean.cortar}">
+				<h:outputScript target="body">
+				    $ = jQuery;
+				    $("#modalCortarCat").modal('show');
+				</h:outputScript>
+			</c:if>
+			<!-- Modal -->
+			<div class="modal fade" id="modalCortarCat" role="dialog">
+				<div class="modal-dialog">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Cortar categoría </h4>
+						</div>
+						<h:form>
+
+							<div class="modal-body">
+								<p>Elige el av a donde mover la categoría con todos sus productos</p>
+								<h:selectOneMenu class="form-control"
+									value="#{avBean.idAVDestino}">
+									<c:forEach var="av" items="${usuarioBean.mostrarTodosAV()}">
+										<f:selectItem itemValue="${av.getIdAV()}"
+											itemLabel="${av.getNombreAV()}" />
+									</c:forEach>
+								</h:selectOneMenu>
+							</div>
+							<div class="modal-footer">
+
+								<h:commandButton action="mostrarAV"
+									actionListener="${avBean.cortarCat()}"
+									value="Cortar" class="btn btn-default" />
+
+								<h:commandButton action="verListaCategoria" actionListener="#{avBean.cancelarCortarCat()}"
+							value="Cancelar" class="btn btn-default" />
+
+
+							</div>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </body>
