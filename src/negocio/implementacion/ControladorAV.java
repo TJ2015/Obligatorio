@@ -51,7 +51,7 @@ public class ControladorAV implements IControladorAV {
 
 		if (usu != null) {
 			if (!(this.existeAVusuario(nombreAV, usuarioCreador))) {
-				AV av = new AV(nombreAV, usu);
+				AV av = new AV(nombreAV, usu, "skin-blue");
 				av.setUsuarioCreador(usu);// usu
 				avDAO.altaAV(av);
 				usu.addAV(av);
@@ -405,6 +405,19 @@ public class ControladorAV implements IControladorAV {
 			return dns;			
 		} else {
 			throw new exceptions.NoExisteElAV();
+		}
+	}
+
+	@Override
+	public void modificarColorAV(long idAV, String color) {
+		try {
+			AV av = avDAO.traerAV(idAV);
+			if (av != null && !color.equals(av.getColor())) {
+				av.setColor(color);
+				avDAO.actualizarAV(av);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -68,6 +69,8 @@ public class UsuarioBean implements Serializable {
 	private boolean recibido = false;
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
+	
+	
 
 	public UploadedFile getNewFile() {
 		return newFile;
@@ -550,4 +553,6 @@ public class UsuarioBean implements Serializable {
 		String nick = (String) session.getAttribute("nickname");
 		cusu.modificarImgUsuario(nick, newFile);
 	}
+
+	
 }

@@ -67,4 +67,8 @@ public interface IControladorAV {
 
 	public void marcarNotificacionComoLeida(long idNoti, long idAV) throws Exception;
 	
+	/**********************************************************************/
+	
+	public void modificarColorAV(long idAV, String color);
+	
 }

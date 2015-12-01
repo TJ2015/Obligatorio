@@ -13,6 +13,7 @@ public class DataAV implements Serializable {
 	private long idAV;
 	private String nombreAV;
 	private String nickname;
+	private String color;
 	private List<DataUsuario> usuariosCompartidos = new ArrayList<>();
 	private List<DataCategoria> categorias;
 
@@ -24,10 +25,11 @@ public class DataAV implements Serializable {
 		this.nickname = nickname;
 	}
 
-	public DataAV(String nombreAV, String nickname, List<DataUsuario>ususComp) {
+	public DataAV(String nombreAV, String nickname, String color, List<DataUsuario>ususComp) {
 		this.nombreAV = nombreAV;
 		this.nickname = nickname;
 		this.usuariosCompartidos=ususComp;
+		this.setColor(color);
 		this.setCategorias(new ArrayList<>());
 
 	}
@@ -62,6 +64,14 @@ public class DataAV implements Serializable {
 
 	public void setUsuariosCompartidos(List<DataUsuario> usuariosCompartidos) {
 		this.usuariosCompartidos = usuariosCompartidos;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

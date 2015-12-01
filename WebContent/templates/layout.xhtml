@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+      
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
 		<meta charset="utf-8"></meta>
@@ -40,5 +41,23 @@
 	    <script src="resources/flattheme/js/bootstrap.min.js"></script>
 	    <script src="resources/flattheme/js/jquery.prettyPhoto.js"></script>
 	    <script src="resources/flattheme/js/main.js"></script>
+	    
+	    
+	    <h:form id="estilosPaginaTotal">
+		    <h:inputHidden id="colorSeleccionado" />
+		    <h:commandLink id="estilosPaginaTotalEnviar" action="#{usuarioBean.establecerEstilo()}">
+		        <f:ajax execute="@form" />
+		    </h:commandLink>
+		</h:form>
+		
+		<script>
+			function establecerEstilos(color){
+				$("[id='estilosPaginaTotal:colorSeleccionado']").val(color);    
+				$("[id='estilosPaginaTotal:estilosPaginaTotalEnviar']").click();
+				$("body").removeClass("skin-blue skin-black");
+			    $("body").addClass(color);
+			}
+		</script>
+		
     </h:body>
 </html>

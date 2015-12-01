@@ -138,7 +138,7 @@ public class ControladorAlgoritmos implements IControladorAlgoritmos{
 		try {
 			List<DataProducto> lDataProductos = cInventario.getProductosOrdenadosPorStock(idAV);
 			if (lDataProductos != null && lDataProductos.size() > 0) {
-				int cantidad = 10;
+				int cantidad = 3;
 				lProductos = new ArrayList<>();
 				for (Iterator iterator = lDataProductos.iterator(); iterator.hasNext();) {
 					if (cantidad > 0) {
