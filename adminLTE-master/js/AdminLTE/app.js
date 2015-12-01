@@ -158,8 +158,8 @@ $(function() {
         "width": "200px",
         "z-index": "999999"
     }).addClass("no-print");
-    demo_settings.append(
-            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Layout Options</h4>"
+    demo_settings.append("");
+            /*"<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Layout Options</h4>"
             + "<div class='form-group no-margin'>"
             + "<div class='.checkbox'>"
             + "<label>"
@@ -168,14 +168,14 @@ $(function() {
             + "</label>"
             + "</div>"
             + "</div>"
-            );
+            );*/
     demo_settings.append(
-            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Skins</h4>"
+            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Temas</h4>"
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-black\");' /> "
-            + "Black"
+            + "<input name='skins' type='radio' onchange='establecerEstilos(\"skin-black\");' /> "
+            + "Negro"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -183,13 +183,17 @@ $(function() {
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-blue\");' checked='checked'/> "
-            + "Blue"
+            + "<input name='skins' type='radio' onchange='establecerEstilos(\"skin-blue\");' checked='checked'/> "
+            + "Azul"
             + "</label>"
             + "</div>"
             + "</div>"
             );
+    /************************************* MODIFICACION PARA SAPO ***********************************************/
+    // CAMBIE LA FUNCION change_skin POR establecerEstilo
+    /************************************* MODIFICACION PARA SAPO ***********************************************/
 
+    
     demo.click(function() {
         if (!$(this).hasClass("open")) {
             $(this).css("right", "200px");

@@ -46,14 +46,17 @@ public class AV implements Serializable {
 	private List<Usuario> usuariosCompartidos = new ArrayList<>();
 
 	private static final long serialVersionUID = 1L;
+	
+	private String color;
 
 	public AV() {
 	}
 
-	public AV(String nombreAV, Usuario usuarioCreador) {
+	public AV(String nombreAV, Usuario usuarioCreador, String color) {
 		super();
 		this.nombreAV = nombreAV;
 		this.usuarioCreador = usuarioCreador;
+		this.color = color;
 	}
 
 	public DataAV getDataAV() {
@@ -62,7 +65,7 @@ public class AV implements Serializable {
 		for (Usuario usus : usuariosCompartidos) {
 			listDusu.add(usus.getDataUsuario());
 		}
-		DataAV dav = new DataAV(nombreAV, nombreUsu,listDusu);
+		DataAV dav = new DataAV(nombreAV, nombreUsu, color, listDusu);
 		dav.setIdAV(idAV);
 		return dav;
 	}
@@ -145,6 +148,14 @@ public class AV implements Serializable {
 	public String toString() {
 		return "AV [idAV=" + idAV + ", nombreAV=" + nombreAV + ", usuarioCreador=" + usuarioCreador
 				+ ", usuariosCompartidos=" + usuariosCompartidos + "]";
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 }

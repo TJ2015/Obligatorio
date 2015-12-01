@@ -77,11 +77,13 @@ public class AvBean implements Serializable {
 	private boolean eliminarUsuComp=false;
 	private DataProducto dprodGen;
 	private UploadedFile newFile;
-	
+
 	private String alertaProd;
 	private String alertaCond;
 	private String alertaVal;
-	
+
+	private String estilo = "skin-blue";
+
 	public AvBean() {
 
 	}
@@ -819,6 +821,41 @@ public class AvBean implements Serializable {
 	
 	public Map<String, List<String>> cargarMovimientosTodos() {
 		return null;
+	}
+	public String getEstilo() {
+		return estilo;
+	}
+
+	public void setEstilo(String estilo) {
+		this.estilo = estilo;
+	}
+	
+	public void establecerEstilo(){
+		try {
+			Map<String, String> value = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+			String colorSeleccioando = value.get("estilosPaginaTotal:colorSeleccionado");
+			if (!this.estilo.equals(colorSeleccioando)) {
+				estilo = colorSeleccioando;
+				if (estilo != null) {
+					HttpSession session = SesionBean.getSession();
+					long idAV = (long) session.getAttribute("idAV");
+					cAV.modificarColorAV(idAV, colorSeleccioando);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error al agreguegar el producto a la lista de compra");
+		}
+	}
+	
+	public void mostrarColor(){
+		try {
+			HttpSession session = SesionBean.getSession();
+			long idAV = (long) session.getAttribute("idAV");
+			DataAV dataAV = cAV.traerAV(idAV);
+			this.estilo = dataAV.getColor();
+		} catch (Exception e) {
+			estilo = "skin-blue";
+		}
 	}
 
 }
