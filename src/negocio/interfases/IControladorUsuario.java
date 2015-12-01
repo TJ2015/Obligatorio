@@ -91,4 +91,6 @@ public interface IControladorUsuario {
 	
 	public List<String> obtenerNicksDeUsuarios();
 
+	void modificarImgUsuario(String nick, UploadedFile file);
+
 }

@@ -7,8 +7,9 @@
 
 <h:head></h:head>
 <body>
-	<ui:composition template="/templates/layout_user.xhtml">
+	<ui:composition template="/templates/layout_admin.xhtml">
 		<ui:define name="contenido">
+			<ui:param name="prod" value="${adminBean.prodVer}" />
 			<style>
 				.botonProd {
 					margin-right: 10px;
@@ -20,28 +21,26 @@
 						<section class="content">
 						<div class="col-md-6">
 							<img
-								src="imagenes/producto?nombre=${avBean.dprodGen.nombre}&amp;av=${-1}"
+								src="../imagenes/producto?nombre=${prod.nombre}&amp;av=${-1}"
 								class="img-responsive"></img>
 						</div>
 						<!-- /.col --> </section>
 						<section class="content">
 						<div class="col-md-6">
 							<div class="box box-solid">
-								<ui:param name="nombre" value="${avBean.dprodGen.nombre}" />
-									<!-- #{avBean.pruebaNom(nombre)} -->
 								<div class="box-header">
-									<h3 class="box-title">${avBean.dprodGen.nombre}</h3>
+									<h3 class="box-title">${prod.nombre}</h3>
 								</div>
 								<!-- /.box-header -->
 								<div class="box-body">
 									<dl class="dl-horizontal">
 										<dt>Descripcion:</dt>
-										<dd>${avBean.dprodGen.descripcion}</dd>
+										<dd>${prod.descripcion}</dd>
 										<dt>Precio:</dt>
-										<dd>${avBean.dprodGen.precio}</dd>
+										<dd>${prod.precio}</dd>
 										<dt>Stock:</dt>
-										<dd>${avBean.dprodGen.stock}</dd>
-										<c:forEach var="atr" items="${avBean.dprodGen.atributosList}" >
+										<dd>${prod.stock}</dd>
+										<c:forEach var="atr" items="${prod.atributosList}" >
 											<dt>${atr.key}:</dt>
 											<dd>${atr.value}</dd>
 										</c:forEach>
@@ -50,10 +49,6 @@
 								<!-- /.box-body -->
 								
 							</div>
-						<h:form>
-							<h:commandButton action="mostrarAV" actionListener="${productoBean.agregarProductoGenerico(avBean.nombreProducto)}"
-						value="Agregar a este AV" class="btn btn-primary"  />
-						</h:form>
 							<!-- /.box -->
 						</div>
 						<!-- ./col --> </section>

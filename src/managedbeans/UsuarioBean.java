@@ -18,9 +18,11 @@ import org.primefaces.model.UploadedFile;
 
 import dominio.datatypes.DataAV;
 import dominio.datatypes.DataMensaje;
+import dominio.datatypes.DataProducto;
 import dominio.datatypes.DataUsuario;
 import exceptions.MensajeNoEncotrado;
 import exceptions.NoExisteElAV;
+import exceptions.NoExisteElProducto;
 import exceptions.UsuarioNoEncontrado;
 import negocio.interfases.IControladorAV;
 import negocio.interfases.IControladorAlgoritmos;
@@ -37,7 +39,7 @@ public class UsuarioBean implements Serializable {
 	IControladorUsuario cusu;
 	@EJB
 	IControladorAV cav;
-	
+
 	@EJB
 	private IControladorAlgoritmos cAlgoritmos;
 
@@ -50,6 +52,9 @@ public class UsuarioBean implements Serializable {
 	private String password;
 	private String email;
 	private Date fechaNacimiento;
+	private DataUsuario usuario;
+	private UploadedFile file;
+	private UploadedFile newFile;
 	private List<DataAV> AVs = new ArrayList<>();
 	private List<DataAV> AVsComp = new ArrayList<>();
 	private List<DataAV> todosAV = new ArrayList<>();
@@ -60,9 +65,24 @@ public class UsuarioBean implements Serializable {
 	private DataMensaje dmsj;
 	private DataUsuario dusu;
 	private boolean recibido = false;
-	private UploadedFile file;
 	private StreamedContent imagen;
 	private List<DataMensaje> msjs;
+
+	public UploadedFile getNewFile() {
+		return newFile;
+	}
+
+	public void setNewFile(UploadedFile newFile) {
+		this.newFile = newFile;
+	}
+
+	public DataUsuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(DataUsuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public List<DataAV> getTodosAV() {
 		return todosAV;
@@ -263,20 +283,21 @@ public class UsuarioBean implements Serializable {
 
 	public void registroUsuario() {
 		try {
-			
+
 			dusu = cusu.registrarUsuario(nombre, apellido, nick, password, email, fechaNacimiento, file);
 			if (dusu != null) {
 				logueado = true;
 				HttpSession session = SesionBean.getSession();
 				session.setAttribute("nickname", nick);
 				session.setAttribute("dataUsuario", dusu);
-				DataUsuario dataUsuario = (DataUsuario)session.getAttribute("dataUsuario");
-				String emailEnviar=dataUsuario.getEmail();
+				DataUsuario dataUsuario = (DataUsuario) session.getAttribute("dataUsuario");
+				String emailEnviar = dataUsuario.getEmail();
 				session.setAttribute("AVs", cusu.mostrarListaAv(nick));
 				Url.redireccionarURL("usuario_sapo");
 				Mensajeria enviar = new Mensajeria();
-				String mensaje = "Bienvenido a SAPo " + dataUsuario.getNombre() + " " + dataUsuario.getApellido() + "Agradecemos su preferencia";
-				enviar.enviarCorreo(emailEnviar,"SAPo - Bienvenido al Sistema de Inventarios", mensaje);
+				String mensaje = "Bienvenido a SAPo " + dataUsuario.getNombre() + " " + dataUsuario.getApellido()
+						+ "Agradecemos su preferencia";
+				enviar.enviarCorreo(emailEnviar, "SAPo - Bienvenido al Sistema de Inventarios", mensaje);
 			} else {
 				Url.redireccionarURL("error");
 			}
@@ -304,15 +325,15 @@ public class UsuarioBean implements Serializable {
 		String nick = (String) session.getAttribute("nickname");
 		AVsComp = cusu.mostrarListaAvComparidos(nick);
 		List<DataAV> avsUsu = new ArrayList<>();
-		
+
 		todosAV = AVs;
 		todosAV.addAll(AVsComp);
-		
-		for( DataAV da : todosAV ) {
-			if( da.getIdAV() != idAV )
+
+		for (DataAV da : todosAV) {
+			if (da.getIdAV() != idAV)
 				avsUsu.add(da);
 		}
-		
+
 		return avsUsu;
 	}
 
@@ -447,28 +468,56 @@ public class UsuarioBean implements Serializable {
 		}
 		return actualizo;
 	}
-	
-	public String obtenerActualURL()
-	{
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+
+	public String obtenerActualURL() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		String url = Url.obtenerActualURL(request);
 		return url;
 	}
-	
-	public boolean esPremium(){
+
+	public void getUsuario(String nickname) {
+		HttpSession session = SesionBean.getSession();
+		usuario = cusu.getUsuario(nickname);
+		session.setAttribute("dataUsuario", usuario);
+	}
+
+	public void cargarUsuario(String nick) {
+
+		DataUsuario usu = cusu.getUsuario(nick);
+		nombre = usu.getNombre();
+		apellido = usu.getApellido();
+		email = usu.getEmail();
+		fechaNacimiento = usu.getFechaNacimiento();
+
+	}
+
+	public void modificarInfoUsuario() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		if ((nombre != null) & (apellido != null) & (nick != null) & (password != null) & (email != null)
+				& (fechaNacimiento != null)) {
+			cusu.modificarInfoUsuario(nombre, apellido, nick, password, email, fechaNacimiento);
+			cargarUsuario(nick);
+		} else {
+			Url.redireccionarURL("error");
+
+		}
+	}
+
+	public boolean esPremium() {
 		boolean esPremium = false;
 		try {
 			HttpSession session = SesionBean.getSession();
-			dusu = (DataUsuario)session.getAttribute("dataUsuario");
+			dusu = (DataUsuario) session.getAttribute("dataUsuario");
 			esPremium = (dusu != null && dusu.isMembresia());
 		} catch (Exception e) {
 			System.out.println("No es premium");
 		}
 		return esPremium;
 	}
-	
-	
-	private void limpiarDatos(){
+
+	private void limpiarDatos() {
 		nombre = null;
 		apellido = null;
 		destinatario = null;
@@ -491,5 +540,11 @@ public class UsuarioBean implements Serializable {
 		file = null;
 		imagen = null;
 		msjs = null;
+	}
+
+	public void modificarImgUsuario() {
+		HttpSession session = SesionBean.getSession();
+		String nick = (String) session.getAttribute("nickname");
+		cusu.modificarImgUsuario(nick, newFile);
 	}
 }

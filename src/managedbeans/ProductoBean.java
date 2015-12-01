@@ -426,10 +426,6 @@ public class ProductoBean implements Serializable {
 		long idAV = (long) session.getAttribute("idAV");
 		String nick = (String) session.getAttribute("nickname");
 		cinv.cambiarImagenProducto(nick, newFile, producto, idAV);
-		System.out.println("*******************************************************************************************");
-		System.out.println(producto);
-		System.out.println("*******************************************************************************************");
-
 	}
 	
 }

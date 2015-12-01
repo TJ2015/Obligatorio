@@ -48,11 +48,9 @@ public interface IControladorInventario {
 	
 	public List<DataProducto> recomendarProductos(String nickname);
 	void cambiarImagenProducto(String nickUsuario, UploadedFile file, String producto, long idAV); 
-	
-	
-	/**************************************************************************/
-	
+
 	public List<String> obtenerNombresProductos(String nickUsuario, String nombreAV);
 	public List<String> obtenerNombresProductosGenericos();
+
 	
 }

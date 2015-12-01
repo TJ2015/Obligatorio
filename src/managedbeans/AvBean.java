@@ -505,11 +505,11 @@ public class AvBean implements Serializable {
 		return nombreProducto;
 	}
 
-	public UploadedFile levantarImg(UploadedFile file) {
+	public UploadedFile levantarImg(UploadedFile file){
 		newFile = file;
 		return newFile;
 	}
-
+	
 	public void prepararParaEliminar(String nombre) {
 		categoriaEliminar = nombre;
 		eliminarCategoria = true;
